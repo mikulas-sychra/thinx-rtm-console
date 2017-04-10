@@ -8,6 +8,7 @@ Web application running on AngularJS. Serves as an IoT device management UI. Sho
 * JavaScript enabled browser
 
 
+```
 ssh-keygen -t rsa
 -----------------
 Generating public/private rsa key pair.
@@ -32,3 +33,4 @@ touch post-receive
 git --work-tree=/var/www/rtm/www --git-dir=git@github.com:suculent/thinx-rtm-console.git checkout -f
 -----------------
 chmod +x post-receive
+```
