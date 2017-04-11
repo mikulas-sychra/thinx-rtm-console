@@ -6,8 +6,9 @@ Metronic AngularJS App Main Script
 var RTM = angular.module("RTM", [
     "ui.router", 
     "ui.bootstrap", 
-    "oc.lazyLoad",  
-    "ngSanitize"
+    "oc.lazyLoad",
+    "ngSanitize",
+	"ngCookies"
 ]); 
 
 /* Configure ocLazyLoader(refer: https://github.com/ocombe/ocLazyLoad) */
@@ -67,16 +68,46 @@ RTM.config(['$controllerProvider', function($controllerProvider) {
 *********************************************/
 
 /* Setup global settings */
-RTM.factory('settings', ['$rootScope', '$http', function($rootScope, $http) {
+RTM.factory('settings', ['$rootScope', function($rootScope) {
+
+
+	// supported languages
+    var settings = {
+        layout: {
+            pageSidebarClosed: false, // sidebar state
+            pageAutoScrollOnLoad: 1000 // auto scroll to top on page load
+        },
+        layoutImgPath: Metronic.getAssetsPath() + 'admin/layout/img/',
+        layoutCssPath: Metronic.getAssetsPath() + 'admin/layout/css/'
+    };
+
+    $rootScope.settings = settings;
+
+    return settings;
+}]);
+
+/* Setup App Main Controller */
+RTM.controller('AppController', ['$scope', '$rootScope', '$cookieStore', '$http', function($scope, $rootScope, $cookieStore, $http) {
+    $scope.$on('$viewContentLoaded', function() {
+        Metronic.initComponents(); // init core components
+        //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive
+    });
+
+	var username = 'test';
+	var password = '';
+
+	// TODO $cookieStore will be deprecated since Angular 1.4.x
+	console.log('cookieStore');
+	console.log($cookieStore);
 
 	var req = {
 		method: 'POST',
 		url: 'http://localhost:7442/api/auth',
 		headers: {
-			'Content-Type': 'application/json',
-			'User-Agent': 'THiNX-Web'
+			'Content-Type': 'application/json'
+			//'User-Agent': 'THiNX-Web'
 		},
-		data: { username: 'test' }
+		data: { username: username, password: password }
 	}
 
 	$http(req).then(
@@ -84,6 +115,8 @@ RTM.factory('settings', ['$rootScope', '$http', function($rootScope, $http) {
 			console.log('--success--');
 			console.log(req);
 			console.log(res);
+
+			$cookieStore.put('RTMCookie', res.headers('set-cookie'));
 		},
 		function(res){
 			console.log('--failure--');
@@ -112,32 +145,9 @@ RTM.factory('settings', ['$rootScope', '$http', function($rootScope, $http) {
 
 
 		window.readCookie = readCookie;
-		console.log();
 
 	})();
 
-
-	// supported languages
-    var settings = {
-        layout: {
-            pageSidebarClosed: false, // sidebar state
-            pageAutoScrollOnLoad: 1000 // auto scroll to top on page load
-        },
-        layoutImgPath: Metronic.getAssetsPath() + 'admin/layout/img/',
-        layoutCssPath: Metronic.getAssetsPath() + 'admin/layout/css/'
-    };
-
-    $rootScope.settings = settings;
-
-    return settings;
-}]);
-
-/* Setup App Main Controller */
-RTM.controller('AppController', ['$scope', '$rootScope', function($scope, $rootScope) {
-    $scope.$on('$viewContentLoaded', function() {
-        Metronic.initComponents(); // init core components
-        //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive 
-    });
 }]);
 
 /***
