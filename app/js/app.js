@@ -152,8 +152,9 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                             '../../../assets/global/plugins/morris/raphael-min.js',
                             '../../../assets/global/plugins/jquery.sparkline.min.js',
 
-                            '../../../assets/admin/pages/scripts/index3.js',
                             '../../../assets/admin/pages/scripts/tasks.js',
+
+							'../../../app/js/scripts/dashboard-charts.js',
 
                              'js/controllers/DashboardController.js'
                         ] 
@@ -421,7 +422,7 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        name: 'RTM',
+                        name: 'MetronicApp',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [
                             '../../../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css',
@@ -470,7 +471,7 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({ 
-                        name: 'RTM',
+                        name: 'MetronicApp',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [
                             '../../../assets/global/plugins/bootstrap-datepicker/css/datepicker3.css',
