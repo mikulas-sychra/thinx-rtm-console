@@ -71,7 +71,7 @@ RTM.factory('settings', ['$rootScope', '$http', function($rootScope, $http) {
 
 	var req = {
 		method: 'POST',
-		url: 'localhost:7442/api/auth',
+		url: 'http://localhost:7442/api/auth',
 		headers: {
 			'Content-Type': 'application/json',
 			'User-Agent': 'THiNX-Web'
