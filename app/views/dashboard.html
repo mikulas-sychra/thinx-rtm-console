@@ -1,0 +1,492 @@
+<!-- BEGIN PAGE BREADCRUMB -->
+<ul class="page-breadcrumb breadcrumb hide">
+	<li>
+		<a href="#">Home</a><i class="fa fa-circle"></i>
+	</li>
+	<li class="active">
+		Dashboard
+	</li>
+</ul>
+<!-- END PAGE BREADCRUMB -->
+<!-- BEGIN MAIN CONTENT -->
+<div ng-controller="DashboardController" class="margin-top-10">
+	<div class="note note-success note-bordered">
+		<h3>Meet RTM Console! <span class="close" data-close="note"></span></h3>
+		<p>
+            TODO:
+
+            LOGIN
+            - make login screen
+            - implement API login verification (http://localhost:7442)
+            - save login cookie
+            - implement API fetch data
+
+            DASHBOARD
+            - display table of devices
+		</p>
+    </div>
+	<div class="row">
+		<div class="col-md-12 col-sm-12">
+			<!-- BEGIN PORTLET-->
+			<div class="portlet light ">
+				<div class="portlet-title">
+					<div class="caption caption-md">
+						<i class="icon-bar-chart font-green-haze hide"></i>
+						<span class="caption-subject font-green-haze bold uppercase">Things</span>
+						<span class="caption-helper hide">weekly stats...</span>
+					</div>
+					<div class="actions">
+						<div class="btn-group btn-group-devided" data-toggle="buttons">
+							<label class="btn btn-transparent grey-salsa btn-circle btn-sm active">
+							<input type="radio" name="options" class="toggle" id="option1">Today</label>
+							<label class="btn btn-transparent grey-salsa btn-circle btn-sm">
+							<input type="radio" name="options" class="toggle" id="option2">Week</label>
+							<label class="btn btn-transparent grey-salsa btn-circle btn-sm">
+							<input type="radio" name="options" class="toggle" id="option2">Month</label>
+						</div>
+					</div>
+				</div>
+				<div class="portlet-body">
+					<div class="row number-stats margin-bottom-30">
+						<div class="col-md-6 col-sm-6 col-xs-6">
+							<div class="stat-left">
+								<div class="stat-chart">
+									<!-- do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break -->
+									<div id="sparkline_bar"></div>
+								</div>
+								<div class="stat-number">
+									<div class="title">
+										Total
+									</div>
+									<div class="number">
+										14
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6 col-sm-6 col-xs-6">
+							<div class="stat-right">
+								<div class="stat-chart">
+									<!-- do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break -->
+									<div id="sparkline_bar2"></div>
+								</div>
+								<div class="stat-number">
+									<div class="title">
+										Available
+									</div>
+									<div class="number">
+										10
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="table-scrollable table-scrollable-borderless">
+						<table class="table table-hover table-light">
+							<thead>
+								<tr class="uppercase">
+									<th colspan="2">
+										Owner
+									</th>
+									<th>
+										Alias
+									</th>
+									<th>
+                                        FIRMWARE
+									</th>
+									<th>
+                                        MAC
+									</th>
+                                    <th>
+                                        UPDATED
+                                    </th>
+								</tr>
+							</thead>
+							<tr>
+								<td class="fit">
+									<img class="user-pic" src="../../../assets/admin/layout4/img/avatar4.jpg">
+								</td>
+								<td>
+									<a href="javascript:;" class="primary-link">admin</a>
+								</td>
+								<td>
+                                    test
+								</td>
+								<td>
+                                    EAV-App-0.4.0-beta:2017/04/08
+								</td>
+								<td>
+                                    <span class="bold font-green-haze">00:00:00:00:00:00</span>
+								</td>
+								<td>
+									2017-04-10T15:01:12.958Z
+								</td>
+							</tr>
+
+						</table>
+					</div>
+				</div>
+			</div>
+			<!-- END PORTLET-->
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12 col-sm-12">
+			<!-- BEGIN REGIONAL STATS PORTLET-->
+			<div class="portlet light ">
+				<div class="portlet-title">
+					<div class="caption">
+						<i class="icon-share font-green-haze"></i>
+						<span class="caption-subject font-green-haze bold uppercase">Recent Activities</span>
+					</div>
+					<div class="actions">
+						<div class="btn-group">
+							<a class="btn btn-sm btn-default btn-circle" href="#" data-toggle="dropdown" dropdown-menu-hover data-close-others="true">
+							Filter By <i class="fa fa-angle-down"></i>
+							</a>
+							<div class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
+								<label><input type="checkbox"/> Finance</label>
+								<label><input type="checkbox" checked=""/> Membership</label>
+								<label><input type="checkbox"/> Customer Support</label>
+								<label><input type="checkbox" checked=""/> HR</label>
+								<label><input type="checkbox"/> System</label>
+							</div>
+						</div>
+						<a class="btn btn-circle btn-icon-only btn-default fullscreen" href="#">
+						</a>
+					</div>
+				</div>
+				<div class="portlet-body">
+					<div class="scroller" style="height: 300px;" data-always-visible="1" data-rail-visible="0">
+						<ul class="feeds">
+							<li>
+								<div class="col1">
+									<div class="cont">
+										<div class="cont-col1">
+											<div class="label label-sm label-info">
+												<i class="fa fa-check"></i>
+											</div>
+										</div>
+										<div class="cont-col2">
+											<div class="desc">
+												You have 4 pending tasks. <span class="label label-sm label-warning ">
+												Take action <i class="fa fa-share"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col2">
+									<div class="date">
+										Just now
+									</div>
+								</div>
+							</li>
+							<li>
+								<a href="#">
+									<div class="col1">
+										<div class="cont">
+											<div class="cont-col1">
+												<div class="label label-sm label-success">
+													<i class="fa fa-bar-chart-o"></i>
+												</div>
+											</div>
+											<div class="cont-col2">
+												<div class="desc">
+													Finance Report for year 2013 has been released.
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col2">
+										<div class="date">
+											20 mins
+										</div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<div class="col1">
+									<div class="cont">
+										<div class="cont-col1">
+											<div class="label label-sm label-danger">
+												<i class="fa fa-user"></i>
+											</div>
+										</div>
+										<div class="cont-col2">
+											<div class="desc">
+												You have 5 pending membership that requires a quick review.
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col2">
+									<div class="date">
+										24 mins
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="col1">
+									<div class="cont">
+										<div class="cont-col1">
+											<div class="label label-sm label-info">
+												<i class="fa fa-shopping-cart"></i>
+											</div>
+										</div>
+										<div class="cont-col2">
+											<div class="desc">
+												New order received with <span class="label label-sm label-success">
+												Reference Number: DR23923 </span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col2">
+									<div class="date">
+										30 mins
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="col1">
+									<div class="cont">
+										<div class="cont-col1">
+											<div class="label label-sm label-success">
+												<i class="fa fa-user"></i>
+											</div>
+										</div>
+										<div class="cont-col2">
+											<div class="desc">
+												You have 5 pending membership that requires a quick review.
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col2">
+									<div class="date">
+										24 mins
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="col1">
+									<div class="cont">
+										<div class="cont-col1">
+											<div class="label label-sm label-default">
+												<i class="fa fa-bell-o"></i>
+											</div>
+										</div>
+										<div class="cont-col2">
+											<div class="desc">
+												Web server hardware needs to be upgraded. <span class="label label-sm label-default ">
+												Overdue </span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col2">
+									<div class="date">
+										2 hours
+									</div>
+								</div>
+							</li>
+							<li>
+								<a href="#">
+									<div class="col1">
+										<div class="cont">
+											<div class="cont-col1">
+												<div class="label label-sm label-default">
+													<i class="fa fa-briefcase"></i>
+												</div>
+											</div>
+											<div class="cont-col2">
+												<div class="desc">
+													IPO Report for year 2013 has been released.
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col2">
+										<div class="date">
+											20 mins
+										</div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<div class="col1">
+									<div class="cont">
+										<div class="cont-col1">
+											<div class="label label-sm label-info">
+												<i class="fa fa-check"></i>
+											</div>
+										</div>
+										<div class="cont-col2">
+											<div class="desc">
+												You have 4 pending tasks. <span class="label label-sm label-warning ">
+												Take action <i class="fa fa-share"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col2">
+									<div class="date">
+										Just now
+									</div>
+								</div>
+							</li>
+							<li>
+								<a href="#">
+									<div class="col1">
+										<div class="cont">
+											<div class="cont-col1">
+												<div class="label label-sm label-danger">
+													<i class="fa fa-bar-chart-o"></i>
+												</div>
+											</div>
+											<div class="cont-col2">
+												<div class="desc">
+													Finance Report for year 2013 has been released.
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col2">
+										<div class="date">
+											20 mins
+										</div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<div class="col1">
+									<div class="cont">
+										<div class="cont-col1">
+											<div class="label label-sm label-default">
+												<i class="fa fa-user"></i>
+											</div>
+										</div>
+										<div class="cont-col2">
+											<div class="desc">
+												You have 5 pending membership that requires a quick review.
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col2">
+									<div class="date">
+										24 mins
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="col1">
+									<div class="cont">
+										<div class="cont-col1">
+											<div class="label label-sm label-info">
+												<i class="fa fa-shopping-cart"></i>
+											</div>
+										</div>
+										<div class="cont-col2">
+											<div class="desc">
+												New order received with <span class="label label-sm label-success">
+												Reference Number: DR23923 </span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col2">
+									<div class="date">
+										30 mins
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="col1">
+									<div class="cont">
+										<div class="cont-col1">
+											<div class="label label-sm label-success">
+												<i class="fa fa-user"></i>
+											</div>
+										</div>
+										<div class="cont-col2">
+											<div class="desc">
+												You have 5 pending membership that requires a quick review.
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col2">
+									<div class="date">
+										24 mins
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="col1">
+									<div class="cont">
+										<div class="cont-col1">
+											<div class="label label-sm label-warning">
+												<i class="fa fa-bell-o"></i>
+											</div>
+										</div>
+										<div class="cont-col2">
+											<div class="desc">
+												Web server hardware needs to be upgraded. <span class="label label-sm label-default ">
+												Overdue </span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col2">
+									<div class="date">
+										2 hours
+									</div>
+								</div>
+							</li>
+							<li>
+								<a href="#">
+									<div class="col1">
+										<div class="cont">
+											<div class="cont-col1">
+												<div class="label label-sm label-info">
+													<i class="fa fa-briefcase"></i>
+												</div>
+											</div>
+											<div class="cont-col2">
+												<div class="desc">
+													IPO Report for year 2013 has been released.
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col2">
+										<div class="date">
+											20 mins
+										</div>
+									</div>
+								</a>
+							</li>
+						</ul>
+					</div>
+					<div class="scroller-footer">
+						<div class="btn-arrow-link pull-right">
+							<a href="#">See All Records</a>
+							<i class="icon-arrow-right"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- END REGIONAL STATS PORTLET-->
+		</div>
+	</div>
+</div>
+<!-- END MAIN CONTENT -->
+<!-- BEGIN MAIN JS & CSS -->
+<script>
+	Index.init();    
+	Tasks.initDashboardWidget();
+</script>
+<!-- BEGIN MAIN JS & CSS -->
