@@ -67,8 +67,57 @@ RTM.config(['$controllerProvider', function($controllerProvider) {
 *********************************************/
 
 /* Setup global settings */
-RTM.factory('settings', ['$rootScope', function($rootScope) {
-    // supported languages
+RTM.factory('settings', ['$rootScope', '$http', function($rootScope, $http) {
+
+	var req = {
+		method: 'POST',
+		url: 'localhost:7442/api/auth',
+		headers: {
+			'Content-Type': 'application/json',
+			'User-Agent': 'THiNX-Web'
+		},
+		data: { username: 'test' }
+	}
+
+	$http(req).then(
+		function(res){
+			console.log('--success--');
+			console.log(req);
+			console.log(res);
+		},
+		function(res){
+			console.log('--failure--');
+			console.log(req);
+			console.log(res);
+		}
+	);
+
+
+	(function(){
+		var cookies;
+
+		function readCookie(name,c,C,i){
+			if(cookies){ return cookies[name]; }
+
+			c = document.cookie.split('; ');
+			cookies = {};
+
+			for(i=c.length-1; i>=0; i--){
+				C = c[i].split('=');
+				cookies[C[0]] = C[1];
+			}
+
+			return cookies[name];
+		}
+
+
+		window.readCookie = readCookie;
+		console.log();
+
+	})();
+
+
+	// supported languages
     var settings = {
         layout: {
             pageSidebarClosed: false, // sidebar state
