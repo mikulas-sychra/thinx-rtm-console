@@ -3,7 +3,7 @@ Metronic AngularJS App Main Script
 ***/
 
 /* Metronic App */
-var MetronicApp = angular.module("MetronicApp", [
+var RTM = angular.module("RTM", [
     "ui.router", 
     "ui.bootstrap", 
     "oc.lazyLoad",  
@@ -11,7 +11,7 @@ var MetronicApp = angular.module("MetronicApp", [
 ]); 
 
 /* Configure ocLazyLoader(refer: https://github.com/ocombe/ocLazyLoad) */
-MetronicApp.config(['$ocLazyLoadProvider', function($ocLazyLoadProvider) {
+RTM.config(['$ocLazyLoadProvider', function($ocLazyLoadProvider) {
     $ocLazyLoadProvider.config({
         cssFilesInsertBefore: 'ng_load_plugins_before' // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
     });
@@ -56,7 +56,7 @@ angular.module('myModule').config(['$controllerProvider', function($controllerPr
 **/
 
 //AngularJS v1.3.x workaround for old style controller declarition in HTML
-MetronicApp.config(['$controllerProvider', function($controllerProvider) {
+RTM.config(['$controllerProvider', function($controllerProvider) {
   // this option might be handy for migrating old apps, but please don't use it
   // in new ones!
   $controllerProvider.allowGlobals();
@@ -67,7 +67,7 @@ MetronicApp.config(['$controllerProvider', function($controllerProvider) {
 *********************************************/
 
 /* Setup global settings */
-MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
+RTM.factory('settings', ['$rootScope', function($rootScope) {
     // supported languages
     var settings = {
         layout: {
@@ -84,7 +84,7 @@ MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
 }]);
 
 /* Setup App Main Controller */
-MetronicApp.controller('AppController', ['$scope', '$rootScope', function($scope, $rootScope) {
+RTM.controller('AppController', ['$scope', '$rootScope', function($scope, $rootScope) {
     $scope.$on('$viewContentLoaded', function() {
         Metronic.initComponents(); // init core components
         //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive 
@@ -98,35 +98,35 @@ initialization can be disabled and Layout.init() should be called on page load c
 ***/
 
 /* Setup Layout Part - Header */
-MetronicApp.controller('HeaderController', ['$scope', function($scope) {
+RTM.controller('HeaderController', ['$scope', function($scope) {
     $scope.$on('$includeContentLoaded', function() {
         Layout.initHeader(); // init header
     });
 }]);
 
 /* Setup Layout Part - Sidebar */
-MetronicApp.controller('SidebarController', ['$scope', function($scope) {
+RTM.controller('SidebarController', ['$scope', function($scope) {
     $scope.$on('$includeContentLoaded', function() {
         Layout.initSidebar(); // init sidebar
     });
 }]);
 
 /* Setup Layout Part - Sidebar */
-MetronicApp.controller('PageHeadController', ['$scope', function($scope) {
+RTM.controller('PageHeadController', ['$scope', function($scope) {
     $scope.$on('$includeContentLoaded', function() {        
         Demo.init(); // init theme panel
     });
 }]);
 
 /* Setup Layout Part - Footer */
-MetronicApp.controller('FooterController', ['$scope', function($scope) {
+RTM.controller('FooterController', ['$scope', function($scope) {
     $scope.$on('$includeContentLoaded', function() {
         Layout.initFooter(); // init footer
     });
 }]);
 
 /* Setup Rounting For All Pages */
-MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
     // Redirect any unmatched url
     $urlRouterProvider.otherwise("/dashboard.html");
@@ -142,7 +142,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        name: 'MetronicApp',
+                        name: 'RTM',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [
                             '../../../assets/global/plugins/morris/morris.css',
@@ -176,7 +176,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../../../assets/global/plugins/angularjs/plugins/angular-file-upload/angular-file-upload.min.js',
                         ] 
                     }, {
-                        name: 'MetronicApp',
+                        name: 'RTM',
                         files: [
                             'js/controllers/GeneralPageController.js'
                         ]
@@ -201,7 +201,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../../../assets/global/plugins/angularjs/plugins/ui-select/select.min.js'
                         ] 
                     }, {
-                        name: 'MetronicApp',
+                        name: 'RTM',
                         files: [
                             'js/controllers/UISelectController.js'
                         ] 
@@ -219,7 +219,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load([{
-                        name: 'MetronicApp',
+                        name: 'RTM',
                         files: [
                             'js/controllers/GeneralPageController.js'
                         ] 
@@ -237,7 +237,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load([{
-                        name: 'MetronicApp',
+                        name: 'RTM',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [
                             '../../../assets/global/plugins/jstree/dist/themes/default/style.min.css',
@@ -260,7 +260,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load([{
-                        name: 'MetronicApp',
+                        name: 'RTM',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [
                             '../../../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css',
@@ -298,7 +298,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load([{
-                        name: 'MetronicApp',
+                        name: 'RTM',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [
                             '../../../assets/global/plugins/clockface/css/clockface.css',
@@ -334,7 +334,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load([{
-                        name: 'MetronicApp',
+                        name: 'RTM',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [
                             '../../../assets/global/plugins/bootstrap-select/bootstrap-select.min.css',
@@ -363,7 +363,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        name: 'MetronicApp',
+                        name: 'RTM',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [
                             '../../../assets/global/plugins/select2/select2.css',                             
@@ -391,7 +391,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        name: 'MetronicApp',
+                        name: 'RTM',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [
                             '../../../assets/global/plugins/select2/select2.css',                             
@@ -421,7 +421,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        name: 'MetronicApp',  
+                        name: 'RTM',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [
                             '../../../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css',
@@ -470,7 +470,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({ 
-                        name: 'MetronicApp',  
+                        name: 'RTM',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [
                             '../../../assets/global/plugins/bootstrap-datepicker/css/datepicker3.css',
@@ -492,6 +492,6 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
 }]);
 
 /* Init global settings and run the app */
-MetronicApp.run(["$rootScope", "settings", "$state", function($rootScope, settings, $state) {
+RTM.run(["$rootScope", "settings", "$state", function($rootScope, settings, $state) {
     $rootScope.$state = $state; // state to be accessed from view
 }]);

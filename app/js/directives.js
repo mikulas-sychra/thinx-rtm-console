@@ -3,7 +3,7 @@ GLobal Directives
 ***/
 
 // Route State Load Spinner(used on page or content load)
-MetronicApp.directive('ngSpinnerBar', ['$rootScope',
+RTM.directive('ngSpinnerBar', ['$rootScope',
     function($rootScope) {
         return {
             link: function(scope, element, attrs) {
@@ -42,7 +42,7 @@ MetronicApp.directive('ngSpinnerBar', ['$rootScope',
 ])
 
 // Handle global LINK click
-MetronicApp.directive('a',
+RTM.directive('a',
     function() {
         return {
             restrict: 'E',
@@ -57,7 +57,7 @@ MetronicApp.directive('a',
     });
 
 // Handle Dropdown Hover Plugin Integration
-MetronicApp.directive('dropdownMenuHover', function () {
+RTM.directive('dropdownMenuHover', function () {
   return {
     link: function (scope, elem) {
       elem.dropdownHover();
