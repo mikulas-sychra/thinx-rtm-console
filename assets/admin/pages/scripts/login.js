@@ -45,8 +45,22 @@ var Login = function() {
                 error.insertAfter(element.closest('.input-icon'));
             },
 
-            submitHandler: function(form) {
-                form.submit(); // form validation success, call ajax form submit
+            submitHandler: function() {
+				var url = 'http://thinx.cloud:7442/api/login';
+				$.ajax({
+					url: url,
+					data: { username: $('input[name=username]').val(), password: $('input[name=password]').val() }, //parameters go here in object literal form
+					type: 'POST',
+					datatype: 'json',
+					success: function(data) {
+						console.log('--login success--');
+						window.location = '/app';
+					},
+					error: function() {
+						console.log('--login failure--');
+						$('.alert-warning', $('.login-form')).show();
+					}
+				});
             }
         });
 
