@@ -102,27 +102,27 @@
                                     </th>
 								</tr>
 							</thead>
-							<tr>
+
+                            <tr ng-repeat="device in $root.devices track by device.id">
 								<td class="fit">
 									<img class="user-pic" src="../../../assets/admin/layout4/img/avatar4.jpg">
 								</td>
 								<td>
-									<a href="javascript:;" class="primary-link">admin</a>
+									<a href="javascript:;" class="primary-link">{{device.value.owner}}</a>
 								</td>
 								<td>
-                                    test
+                                    {{device.value.alias}}
 								</td>
 								<td>
-                                    EAV-App-0.4.0-beta:2017/04/08
+                                    {{device.value.firmware}}
 								</td>
 								<td>
-                                    <span class="bold font-green-haze">00:00:00:00:00:00</span>
+                                    <span class="bold font-green-haze">{{device.id}}</span>
 								</td>
 								<td>
-									2017-04-10T15:01:12.958Z
+									{{device.value.lastupdate}}
 								</td>
-							</tr>
-
+                            </tr>
 						</table>
 					</div>
 				</div>
