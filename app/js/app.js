@@ -1,8 +1,8 @@
 /***
-Metronic AngularJS App Main Script
+RTM Console App Main Script
 ***/
 
-/* Metronic App */
+/* RTM App */
 var RTM = angular.module("RTM", [
     "ui.router", 
     "ui.bootstrap", 
@@ -63,6 +63,11 @@ RTM.config(['$controllerProvider', function($controllerProvider) {
   $controllerProvider.allowGlobals();
 }]);
 
+RTM.config(['$httpProvider', function($httpProvider) {
+	// to enable cookeis
+	$httpProvider.defaults.withCredentials = true;
+}]);
+
 /********************************************
  END: BREAKING CHANGE in AngularJS v1.3.x:
 *********************************************/
@@ -87,66 +92,57 @@ RTM.factory('settings', ['$rootScope', function($rootScope) {
 }]);
 
 /* Setup App Main Controller */
-RTM.controller('AppController', ['$scope', '$rootScope', '$cookieStore', '$http', function($scope, $rootScope, $cookieStore, $http) {
+RTM.controller('AppController', ['$scope', '$rootScope', '$cookieStore', '$cookies', '$timeout', '$http', function($scope, $rootScope, $cookieStore, $cookies, $timeout, $http) {
     $scope.$on('$viewContentLoaded', function() {
         Metronic.initComponents(); // init core components
         //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive
     });
 
-	var username = 'test';
-	var password = '';
+	$http.defaults.headers.post = { 'Content-Type': 'application/json' }
 
-	// TODO $cookieStore will be deprecated since Angular 1.4.x
-	console.log('cookieStore');
-	console.log($cookieStore);
+	var username = 'test';
+	var password = 'tset';
 
 	var req = {
 		method: 'POST',
-		url: 'http://localhost:7442/api/auth',
-		headers: {
-			'Content-Type': 'application/json'
-			//'User-Agent': 'THiNX-Web'
-		},
+		url: 'http://thinx.cloud:7442/api/login',
 		data: { username: username, password: password }
 	}
 
 	$http(req).then(
 		function(res){
-			console.log('--success--');
+			console.log('--login success--');
 			console.log(req);
 			console.log(res);
 
-			$cookieStore.put('RTMCookie', res.headers('set-cookie'));
+			var testcookie = {
+				method: 'POST',
+				url: 'http://thinx.cloud:7442/api/view/devices',
+				data: { query: false }
+			}
+
+			$http(testcookie).then(
+				function(res){
+					console.log('--data success--');
+					console.log(testcookie);
+					console.log(res);
+
+					$rootScope.devices = res.data.devices;
+				},
+				function(res){
+					console.log('--data failure--');
+					console.log(testcookie);
+					console.log(res);
+				}
+			);
+
 		},
 		function(res){
-			console.log('--failure--');
+			console.log('--login failure--');
 			console.log(req);
 			console.log(res);
 		}
 	);
-
-
-	(function(){
-		var cookies;
-
-		function readCookie(name,c,C,i){
-			if(cookies){ return cookies[name]; }
-
-			c = document.cookie.split('; ');
-			cookies = {};
-
-			for(i=c.length-1; i>=0; i--){
-				C = c[i].split('=');
-				cookies[C[0]] = C[1];
-			}
-
-			return cookies[name];
-		}
-
-
-		window.readCookie = readCookie;
-
-	})();
 
 }]);
 
@@ -481,7 +477,7 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        name: 'MetronicApp',
+                        name: 'RTM',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [
                             '../../../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css',
@@ -530,7 +526,7 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({ 
-                        name: 'MetronicApp',
+                        name: 'RTM',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [
                             '../../../assets/global/plugins/bootstrap-datepicker/css/datepicker3.css',
@@ -554,4 +550,7 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 /* Init global settings and run the app */
 RTM.run(["$rootScope", "settings", "$state", function($rootScope, settings, $state) {
     $rootScope.$state = $state; // state to be accessed from view
+
+	console.log('rootscope');
+	console.log($rootScope);
 }]);
