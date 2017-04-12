@@ -109,6 +109,8 @@ RTM.controller('AppController', ['$scope', '$rootScope', '$cookieStore', '$cooki
 		data: { username: username, password: password }
 	}
 
+if (false) {
+
 	$http(req).then(
 		function(res){
 			console.log('--login success--');
@@ -143,6 +145,29 @@ RTM.controller('AppController', ['$scope', '$rootScope', '$cookieStore', '$cooki
 			console.log(res);
 		}
 	);
+
+};
+
+    var testcookie = {
+        method: 'POST',
+        url: 'http://thinx.cloud:7442/api/view/devices',
+        data: { query: false }
+    }
+
+    $http(testcookie).then(
+        function(res){
+            console.log('--data success--');
+            console.log(testcookie);
+            console.log(res);
+
+            $rootScope.devices = res.data.devices;
+        },
+        function(res){
+            console.log('--data failure--');
+            console.log(testcookie);
+            console.log(res);
+        }
+    );
 
 }]);
 

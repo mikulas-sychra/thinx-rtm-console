@@ -54,7 +54,18 @@ var Login = function() {
 					datatype: 'json',
 					success: function(data) {
 						console.log('--login success--');
-						window.location = '/app';
+                        console.log(data);
+                        
+                        var response = JSON.parse(data);
+                        
+                        console.log('response');
+                        console.log(response);
+
+                        if (typeof(response) !== 'undefined') {
+                            console.log('Redirecting to ' + response.redirectURL);
+                            window.location = response.redirectURL;
+                        }
+						
 					},
 					error: function() {
 						console.log('--login failure--');
