@@ -5,6 +5,6 @@ RTM.controller('UserProfileController', function($rootScope, $scope, $http, $tim
         Metronic.initAjax(); // initialize core components
         Layout.setSidebarMenuActiveLink('set', $('#sidebar_menu_link_profile')); // set profile link active in sidebar menu
 
-        $rootScope.settings.layout.pageSidebarClosed = true; 
+        $rootScope.settings.layout.pageSidebarClosed = true;
     });
-}); 
+});
