@@ -100,72 +100,23 @@ RTM.controller('AppController', ['$scope', '$rootScope', '$cookieStore', '$cooki
 
 	$http.defaults.headers.post = { 'Content-Type': 'application/json' }
 
-	var username = 'test';
-	var password = 'tset';
-
-	var req = {
-		method: 'POST',
-		url: 'http://thinx.cloud:7442/api/login',
-		data: { username: username, password: password }
-	}
-
-if (false) {
-
-	$http(req).then(
-		function(res){
-			console.log('--login success--');
-			console.log(req);
-			console.log(res);
-
-			var testcookie = {
-				method: 'POST',
-				url: 'http://thinx.cloud:7442/api/view/devices',
-				data: { query: false }
-			}
-
-			$http(testcookie).then(
-				function(res){
-					console.log('--data success--');
-					console.log(testcookie);
-					console.log(res);
-
-					$rootScope.devices = res.data.devices;
-				},
-				function(res){
-					console.log('--data failure--');
-					console.log(testcookie);
-					console.log(res);
-				}
-			);
-
-		},
-		function(res){
-			console.log('--login failure--');
-			console.log(req);
-			console.log(res);
-		}
-	);
-
-};
-
-    var testcookie = {
+    var fetch = {
         method: 'POST',
         url: 'http://thinx.cloud:7442/api/view/devices',
         data: { query: false }
     }
 
-    $http(testcookie).then(
-        function(res){
-            console.log('--data success--');
-            console.log(testcookie);
-            console.log(res);
+    $http(fetch).then(
+        function(response){
+            console.log('--devices fetch success--');
+            console.log(response);
 
-            $rootScope.devices = res.data.devices;
+            $rootScope.devices = response.data.devices;
         },
-        function(res){
+        function(response){
             console.log('--data failure--');
-            console.log(testcookie);
-            console.log(res);
+            console.log(fetch);
+            console.log(response);
         }
     );
 
