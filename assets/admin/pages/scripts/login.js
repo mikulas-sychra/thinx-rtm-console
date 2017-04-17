@@ -54,15 +54,15 @@ var Login = function() {
 					datatype: 'json',
 					success: function(data) {
 						console.log('--login success--');
-                        console.log(data);
+                        // console.log(data);
                         
                         var response = JSON.parse(data);
                         
-                        console.log('response');
+                        // console.log('response');
                         console.log(response);
 
                         if (typeof(response) !== 'undefined') {
-                            console.log('Redirecting to ' + response.redirectURL);
+                            console.log('--Redirecting to "' + response.redirectURL + '"--' );
                             window.location = response.redirectURL;
                         }
 						
