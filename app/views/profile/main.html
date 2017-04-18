@@ -18,22 +18,21 @@
 			<div class="portlet light profile-sidebar-portlet">
 				<!-- SIDEBAR USERPIC -->
 				<div class="profile-userpic">
-					<img src="../../../assets/admin/pages/media/profile/profile_user.jpg" class="img-responsive" alt="">
+					<img src="{{$root.profile['avatar']}}" class="img-responsive" alt="">
 				</div>
 				<!-- END SIDEBAR USERPIC -->
 				<!-- SIDEBAR USER TITLE -->
 				<div class="profile-usertitle">
 					<div class="profile-usertitle-name">
-						Marcus Doe
+						{{$root.profile['first_name']}} {{$root.profile['last_name']}}
 					</div>
 					<div class="profile-usertitle-job">
-						Developer
+						{{$root.profile['e-mail']}}
 					</div>
 				</div>
 				<!-- END SIDEBAR USER TITLE -->
 				<!-- SIDEBAR BUTTONS -->
 				<div class="profile-userbuttons">
-					<button type="button" class="btn btn-circle green-haze btn-sm">Follow</button>
 					<button type="button" class="btn btn-circle btn-danger btn-sm">Message</button>
 				</div>
 				<!-- END SIDEBAR BUTTONS -->
@@ -49,16 +48,6 @@
 							<a ui-sref="profile.account">
 							<i class="icon-settings"></i>
 							Account Settings </a>
-						</li>
-						<li>
-							<a href="#/todo">
-							<i class="icon-check"></i>
-							Tasks </a>
-						</li>
-						<li ng-class="{active: $state.includes('profile.help')}">
-							<a ui-sref="profile.help">
-							<i class="icon-info"></i>
-							Help </a>
 						</li>
 					</ul>
 				</div>
@@ -95,22 +84,6 @@
 					</div>
 				</div>
 				<!-- END STAT -->
-				<div>
-					<h4 class="profile-desc-title">About Marcus Doe</h4>
-					<span class="profile-desc-text"> Lorem ipsum dolor sit amet diam nonummy nibh dolore. </span>
-					<div class="margin-top-20 profile-desc-link">
-						<i class="fa fa-globe"></i>
-						<a href="http://www.keenthemes.com">www.keenthemes.com</a>
-					</div>
-					<div class="margin-top-20 profile-desc-link">
-						<i class="fa fa-twitter"></i>
-						<a href="http://www.twitter.com/keenthemes/">@keenthemes</a>
-					</div>
-					<div class="margin-top-20 profile-desc-link">
-						<i class="fa fa-facebook"></i>
-						<a href="http://www.facebook.com/keenthemes/">keenthemes</a>
-					</div>
-				</div>
 			</div>
 			<!-- END PORTLET MAIN -->
 		</div>
