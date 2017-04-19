@@ -86,6 +86,7 @@ var Login = function() {
     }
 
     var handleForgetPassword = function() {
+
         $('.forget-form').validate({
             errorElement: 'span', //default input error message container
             errorClass: 'help-block', // default input error message class
@@ -123,7 +124,32 @@ var Login = function() {
             },
 
             submitHandler: function(form) {
-                form.submit();
+				var url = 'http://thinx.cloud:7442/api/user/password/reset';
+				$.ajax({
+					url: url,
+					data: { email: $('.forget-form input[name=email]').val() }, //parameters go here in object literal form
+					type: 'POST',
+					datatype: 'json',
+					success: function(data) {
+						console.log('--password reset request success--');
+						// console.log(data);
+
+						var response = JSON.parse(data);
+
+						// console.log('response');
+						console.log(response);
+
+						if (typeof(response) !== 'undefined') {
+							console.log('--show info what now--');
+							$('.msg-success', $('.forget-form')).show();
+							$('.hide-on-success', $('.forget-form')).hide();
+						}
+
+					},
+					error: function() {
+						console.log('--password reset request failure--');
+					}
+				});
             }
         });
 
@@ -179,24 +205,17 @@ var Login = function() {
             ignore: "",
             rules: {
 
-                fullname: {
+                first_name: {
                     required: true
                 },
+				last_name: {
+					required: true
+				},
                 email: {
                     required: true,
                     email: true
                 },
-                address: {
-                    required: true
-                },
-                city: {
-                    required: true
-                },
-                country: {
-                    required: true
-                },
-
-                username: {
+                owner: {
                     required: true
                 },
                 password: {
@@ -241,9 +260,41 @@ var Login = function() {
                 }
             },
 
-            submitHandler: function(form) {
-                form.submit();
-            }
+			submitHandler: function(form) {
+				var url = 'http://thinx.cloud:7442/api/user/create';
+				$.ajax({
+					url: url,
+					data: {
+						first_name: $('.register-form input[name=first_name]').val(),
+						last_name: $('.register-form input[name=last_name]').val(),
+						email: $('.register-form input[name=email]').val(),
+						owner: $('.register-form input[name=owner]').val(),
+						password: $('.register-form input[name=password]').val()
+					}, //parameters go here in object literal form
+
+					type: 'POST',
+					datatype: 'json',
+					success: function(data) {
+						console.log('--user create request success--');
+						// console.log(data);
+
+						var response = JSON.parse(data);
+
+						// console.log('response');
+						console.log(response);
+
+						if (typeof(response) !== 'undefined') {
+							console.log('--show info what now--');
+							// $('.msg-success', $('.forget-form')).show();
+							// $('.hide-on-success', $('.forget-form')).hide();
+						}
+
+					},
+					error: function() {
+						console.log('--user create request failure--');
+					}
+				});
+			}
         });
 
         $('.register-form input').keypress(function(e) {
