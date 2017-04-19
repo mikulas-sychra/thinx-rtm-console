@@ -23,7 +23,7 @@
 
 						<span class="caption-helper hide">weekly stats...</span>
 					</div>
-					<div class="actions">
+					<div class="actions hidden">
 						<div class="btn-group btn-group-devided" data-toggle="buttons">
 							<label class="btn btn-transparent grey-salsa btn-circle btn-sm active">
 							<input type="radio" name="options" class="toggle" id="option1">Active</label>
@@ -47,12 +47,12 @@
                                         Reserved
 									</th>
                                     <th>
-                                        Reserved
+                                        Actions
                                     </th>
 								</tr>
 							</thead>
 
-                            <tr ng-repeat="apikey in $root.apikeys">
+                            <tr ng-repeat="apikey in $root.profile.api_keys">
 								<td class="fit">
 									{{apikey}}
 								</td>
@@ -60,7 +60,7 @@
                                     
 								</td>
 								<td>
-                                    
+                                    <button type="button" class="btn btn-danger btn-tiny" ng-click="revokeApikey(apikey, $index)"><i class="fa fa-cross"></i> Revoke</button>
 								</td>
                             </tr>
 						</table>
@@ -88,7 +88,7 @@
 									<div class="form-group last">
 										<label class="control-label col-md-3">API Key</label>
 										<div class="col-md-8">
-											Press button to create a new key...
+											<span>{{newApikey}}</span>
 										</div>
 										<div class="col-md-1">
 											<button type="button" class="btn btn-tiny">Copy</button>
@@ -98,7 +98,7 @@
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-								<button type="button" class="btn btn-primary"><i class="fa fa-check"></i> Create</button>
+								<button type="button" class="btn btn-primary" ng-click="createApikey()"><i class="fa fa-check"></i> Create</button>
 							</div>
 						</div>
 					</div>
