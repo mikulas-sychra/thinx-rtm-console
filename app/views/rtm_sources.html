@@ -17,8 +17,9 @@
 				<div class="portlet-title">
 					<div class="caption caption-md">
 						<i class="icon-bar-chart font-green-haze hide"></i>
-						<span class="caption-subject font-green-haze bold uppercase">Sources</span>
-						<span class="caption-helper hide">weekly stats...</span>
+
+						<a href="#" class="btn green-haze" data-target="#pageModal" data-toggle="modal">Add Source</a>
+
 					</div>
 					<div class="actions">
 						<div class="btn-group btn-group-devided" data-toggle="buttons">
@@ -59,7 +60,7 @@
 		                            </span>
 								</td>
 								<td>
-                                    
+                                    <button type="button" class="btn btn-danger btn-tiny" ng-click="removeSource($index)"><i class="fa fa-cross"></i> Remove</button>
 								</td>
                             </tr>
 						</table>
@@ -72,46 +73,28 @@
 </div>
 
 
-
-<!-- BEGIN FORM-->
+                <!-- BEGIN FORM-->
 				<form action="#" class="form-horizontal form-bordered">
-					<div id="myModal" class="modal fade" role="dialog" aria-hidden="true">
+					<div id="pageModal" class="modal fade" role="dialog" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-								<h4 class="modal-title">Bootstrap switches</h4>
+								<h4 class="modal-title">Add Source</h4>
 							</div>
 							<div class="modal-body">
 								<form action="#" class="form-horizontal">
-									<div class="form-group">
-										<label class="control-label col-md-3">Default Sizes</label>
-										<div class="col-md-9">
-											<input type="checkbox" checked class="make-switch" data-size="small">
-											<input type="checkbox" checked class="make-switch" data-size="normal">
-											<input type="checkbox" checked class="make-switch" data-size="large">
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="control-label col-md-3">Colors</label>
-										<div class="col-md-9">
-											<input type="checkbox" class="make-switch" checked data-on-color="primary" data-off-color="info">
-											<input type="checkbox" class="make-switch" checked data-on-color="success" data-off-color="warning">
-											<input type="checkbox" class="make-switch" checked data-on-color="warning" data-off-color="danger">
-										</div>
-									</div>
 									<div class="form-group last">
-										<label class="control-label col-md-3">Disabled / Readonly</label>
+										<label class="control-label col-md-3">Source URL</label>
 										<div class="col-md-9">
-											<input type="checkbox" checked disabled class="make-switch"/>
-											<input type="checkbox" checked readonly class="make-switch"/>
+                                            <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="git@123" name="source_url"/>
 										</div>
 									</div>
 								</form>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-								<button type="button" class="btn btn-primary"><i class="fa fa-check"></i> Save changes</button>
+								<button type="button" class="btn btn-primary" ng-click="addSource()"><i class="fa fa-check"></i> Add</button>
 							</div>
 						</div>
 					</div>

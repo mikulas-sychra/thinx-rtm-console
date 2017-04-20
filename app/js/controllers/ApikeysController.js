@@ -11,18 +11,15 @@ RTM.controller('ApikeysController', function($rootScope, $scope, $http, $timeout
 
 	$http.defaults.headers.post = { 'Content-Type': 'application/json' }
 
-
 	$scope.createApikey = function() {
 		getKey();
 	};
-
 
 	$scope.revokeApikey = function(keyToRevoke, index) {
 		console.log('--revoking key--')
 		revokeKey(keyToRevoke);
 		$rootScope.profile.api_keys.splice(index, 1);
 	};
-
 
 	// Contignous database update notifications
 	var counter = 30;
