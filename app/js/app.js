@@ -176,6 +176,13 @@ RTM.controller('AppController', ['$scope', '$rootScope', '$cookieStore', '$cooki
                 console.log(profileFetch);
                 console.log('profile fetch response:');
                 console.log(profileFetchResponse);
+
+                // TODO this should do the server
+                if (profileFetchResponse.data.success == false) {
+                	alert('Your session has expired.');
+					//window.location = "/";
+				}
+
             }
         );
     }
