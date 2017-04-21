@@ -9,9 +9,10 @@ RTM.controller('ApikeysController', function($rootScope, $scope, $http, $timeout
 
 
 
-	function resetModal() {
+	$scope.resetModal = function() {
 		$scope.newApikey = null;
 		$scope.createButtonVisible = true;
+		$scope.apikeyModal.$setPristine();
 	}
 
 
@@ -34,8 +35,7 @@ RTM.controller('ApikeysController', function($rootScope, $scope, $http, $timeout
 	};
 
 	$scope.copyToClipboard = function() {
-		resetModal();
-		$scope.apikeyModal.$setPristine();
+		
 	}
 
 	// Contignous database update notifications

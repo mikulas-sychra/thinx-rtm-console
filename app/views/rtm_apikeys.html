@@ -19,7 +19,7 @@
 						<i class="icon-bar-chart font-green-haze hide"></i>
 						<!--<span class="caption-subject font-green-haze bold uppercase">API Keys</span>-->
 
-						<a href="#" class="btn green-haze" data-target="#pageModal" data-toggle="modal">New API Key</a>
+						<a href="#" class="btn green-haze" ng-click="resetModal()" data-target="#pageModal" data-toggle="modal">New API Key</a>
 
 						<span class="caption-helper hide">weekly stats...</span>
 					</div>
@@ -85,7 +85,7 @@
                         <div class="form-group last">
                             <label class="control-label col-md-3">API Key</label>
                             <div class="col-md-9">
-                                {{newApikey}}
+                                <h3 style="max-width: 300px">{{newApikey}}</h3>
                             </div>
                         </div>
                     </form>
