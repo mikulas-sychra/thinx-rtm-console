@@ -53,7 +53,7 @@ RTM.controller('ApikeysController', function($rootScope, $scope, $http, $timeout
 			// console.log("Refreshing keys in " + counter + " seconds...");
 			fetchKeys();
 		}
-		setTimeout(fetchKeysUdater, 200);
+		setTimeout(fetchKeysUdater, 500);
 	}
 
 
