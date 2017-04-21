@@ -74,8 +74,6 @@ RTM.config(['$httpProvider', function($httpProvider) {
 
 /* Setup global settings */
 RTM.factory('settings', ['$rootScope', function($rootScope) {
-
-
 	// supported languages
     var settings = {
         layout: {
@@ -105,22 +103,24 @@ RTM.controller('AppController', ['$scope', '$rootScope', '$cookieStore', '$cooki
 
     $(function() {
         fetchProfile();
-        fetchDevices();
-        update();
+		fetchDevices();
+		autoUpdater();
     });
 
-    function update() {
-        counter--;
+	function autoUpdater() {
+		counter--;
 
-        if (counter == 0) {
-            counter = 30;
-            console.log("Refreshing in " + counter + " seconds...");
-            fetchProfile();
-        }
+		if (counter == 0) {
+			counter = 30;
+			console.log("Refreshing data in " + counter + " seconds...");
 
-        setTimeout(update, 1000);
-    }
+			fetchProfile();
 
+			fetchDevices();
+		}
+
+		setTimeout(autoUpdater, 2000);
+	}
 
     function fetchDevices() {
         var devicesFetch = {
@@ -145,13 +145,11 @@ RTM.controller('AppController', ['$scope', '$rootScope', '$cookieStore', '$cooki
         );
     }
 
-
     function fetchProfile() {
         var profileFetch = {
             method: 'GET',
             url: 'http://thinx.cloud:7442/api/user/profile'
         }
-
 
         $http(profileFetch).then(
             function(profileFetchResponse){
@@ -164,8 +162,8 @@ RTM.controller('AppController', ['$scope', '$rootScope', '$cookieStore', '$cooki
 
                 console.log('profile:');
                 console.log($rootScope.profile);
-                console.log('apikeys:');
-                console.log($rootScope.apikeys);
+                // console.log('apikeys:');
+                // console.log($rootScope.apikeys);
                 console.log('sources:');
                 console.log($rootScope.sources);
                 
@@ -179,8 +177,9 @@ RTM.controller('AppController', ['$scope', '$rootScope', '$cookieStore', '$cooki
 
                 // TODO this should do the server
                 if (profileFetchResponse.data.success == false) {
-                	alert('Your session has expired.');
-					//window.location = "/";
+					console.error('Your session has expired ');
+					// TODO
+					// window.location = "/";
 				}
 
             }
