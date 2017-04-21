@@ -7,11 +7,23 @@ RTM.controller('ApikeysController', function($rootScope, $scope, $http, $timeout
 
     });
 
-	$scope.newApikey = "Press button to create a new key...";
+
+
+	function resetModal() {
+		$scope.newApikey = null;
+		$scope.createButtonVisible = true;
+	}
+
+
+	// $scope.pageModal.result.then(
+	// 	resetModal,
+	// 	resetModal
+	// );
 
 	$http.defaults.headers.post = { 'Content-Type': 'application/json' }
 
 	$scope.createApikey = function() {
+		$scope.createButtonVisible = false;
 		getKey();
 	};
 
@@ -21,25 +33,27 @@ RTM.controller('ApikeysController', function($rootScope, $scope, $http, $timeout
 		$rootScope.profile.api_keys.splice(index, 1);
 	};
 
+	$scope.copyToClipboard = function() {
+		resetModal();
+		$scope.apikeyModal.$setPristine();
+	}
+
 	// Contignous database update notifications
 	var counter = 30;
 
 	$(function() {
 		fetchKeys();
-		update();
-		console.log("Refreshing keys in " + counter + " seconds...");
+		fetchKeysUdater();
 	});
 
-	function update() {
+	function fetchKeysUdater() {
 		counter--;
-
 		if (counter == 0) {
 			counter = 30;
-			console.log("Refreshing keys in " + counter + " seconds...");
+			// console.log("Refreshing keys in " + counter + " seconds...");
 			fetchKeys();
 		}
-
-		setTimeout(update, 1000);
+		setTimeout(fetchKeysUdater, 100);
 	}
 
 
@@ -56,12 +70,12 @@ RTM.controller('ApikeysController', function($rootScope, $scope, $http, $timeout
 
 				$rootScope.profile.api_keys = keysFetchResponse.data.api_keys;
 
-				console.log($rootScope.profile.api_keys);
+				// console.log($rootScope.profile.api_keys);
 			},
 			function(keysFetchResponse){
 				console.log('--apikeys fetch failure--');
-				console.log('apikeys fetch request');
-				console.log(keysFetch);
+				// console.log('apikeys fetch request');
+				// console.log(keysFetch);
 				console.log('apikeys fetch response');
 				console.log(keysFetchResponse);
 			}
@@ -85,10 +99,10 @@ RTM.controller('ApikeysController', function($rootScope, $scope, $http, $timeout
 				console.log('apikey:');
 				console.log(apikey);
 
-				$scope.newApiKey = apikey;
+				$scope.newApikey = apikey;
 
 				console.log('scope apikey:');
-				console.log($scope.newApiKey);
+				console.log($scope.newApikey);
 
 			},
 			function(newApikeyFetchResponse){
@@ -97,6 +111,9 @@ RTM.controller('ApikeysController', function($rootScope, $scope, $http, $timeout
 				console.log(newApikeyFetch);
 				console.log('profile fetch response:');
 				console.log(newApikeyFetchResponse);
+
+				$scope.newApikey = newApikeyFetchResponse.data.reason;
+				console.log($scope.newApikey);
 			}
 		);
 	}
