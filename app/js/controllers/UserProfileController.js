@@ -1,10 +1,10 @@
-'use strict';
-
-RTM.controller('UserProfileController', function($rootScope, $scope, $http, $timeout) {
+angular.module('MetronicApp').controller('UserProfileController', function($rootScope, $scope, $http, $timeout, $state) {
     $scope.$on('$viewContentLoaded', function() {   
-        Metronic.initAjax(); // initialize core components
-        Layout.setSidebarMenuActiveLink('set', $('#sidebar_menu_link_profile')); // set profile link active in sidebar menu
-
-        $rootScope.settings.layout.pageSidebarClosed = true;
+        App.initAjax(); // initialize core components
+        Layout.setAngularJsSidebarMenuActiveLink('set', $('#sidebar_menu_link_profile'), $state); // set profile link active in sidebar menu 
     });
-});
+
+    // set sidebar closed and body solid layout mode
+    $rootScope.settings.layout.pageBodySolid = true;
+    $rootScope.settings.layout.pageSidebarClosed = true;
+}); 

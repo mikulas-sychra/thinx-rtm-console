@@ -1,11 +1,10 @@
-'use strict';
-
-RTM.controller('TodoController', function($rootScope, $scope, $http, $timeout) {
+angular.module('MetronicApp').controller('TodoController', function($rootScope, $scope, $http, $timeout) {
     $scope.$on('$viewContentLoaded', function() {   
-        Metronic.initAjax(); // initialize core components        
+        App.initAjax(); // initialize core components        
     });
 
     // set sidebar closed and body solid layout mode
-    $rootScope.settings.layout.pageAutoScrollOnLoad = 1500;
+    $rootScope.settings.layout.pageContentWhite = true;
+    $rootScope.settings.layout.pageBodySolid = true;
     $rootScope.settings.layout.pageSidebarClosed = true;
 });

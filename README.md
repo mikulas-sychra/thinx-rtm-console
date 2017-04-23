@@ -34,3 +34,38 @@ git --work-tree=/var/www/rtm/www --git-dir=git@github.com:suculent/thinx-rtm-con
 -----------------
 chmod +x post-receive
 ```
+
+
+
+
+
+fixes:
+
+--- on wrong username/password
+XMLHttpRequest cannot load http://rtm.thinx.cloud/. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'null' is therefore not allowed access.
+
+
+owners (users)
+- firstname
+- lastname
+- email
+---> api ---> email to user
+
+registratin form
+-- password
+-- password-verify
+---> api ---> user will get apiKey
+
+
+
+/user/profile GET
+/user/profile POST
+
+/user/password/set POST
+/user/password/reset POST
+
+/user/apikey/new GET
+/user/apikey/list GET
+/user/apikey/revoke POST
+
+

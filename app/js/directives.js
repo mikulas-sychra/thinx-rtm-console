@@ -3,8 +3,8 @@ GLobal Directives
 ***/
 
 // Route State Load Spinner(used on page or content load)
-RTM.directive('ngSpinnerBar', ['$rootScope',
-    function($rootScope) {
+MetronicApp.directive('ngSpinnerBar', ['$rootScope', '$state',
+    function($rootScope, $state) {
         return {
             link: function(scope, element, attrs) {
                 // by defult hide the spinner bar
@@ -12,19 +12,19 @@ RTM.directive('ngSpinnerBar', ['$rootScope',
 
                 // display the spinner bar whenever the route changes(the content part started loading)
                 $rootScope.$on('$stateChangeStart', function() {
-                    element.removeClass('hide'); // show spinner bar  
+                    element.removeClass('hide'); // show spinner bar
                 });
 
                 // hide the spinner bar on rounte change success(after the content loaded)
-                $rootScope.$on('$stateChangeSuccess', function() {
+                $rootScope.$on('$stateChangeSuccess', function(event) {
                     element.addClass('hide'); // hide spinner bar
                     $('body').removeClass('page-on-load'); // remove page loading indicator
-                    Layout.setSidebarMenuActiveLink('match'); // activate selected link in the sidebar menu
-
+                    Layout.setAngularJsSidebarMenuActiveLink('match', null, event.currentScope.$state); // activate selected link in the sidebar menu
+                   
                     // auto scorll to page top
                     setTimeout(function () {
-                        Metronic.scrollTop(); // scroll to the top on content load
-                    }, $rootScope.settings.layout.pageAutoScrollOnLoad);                    
+                        App.scrollTop(); // scroll to the top on content load
+                    }, $rootScope.settings.layout.pageAutoScrollOnLoad);     
                 });
 
                 // handle errors
@@ -42,22 +42,21 @@ RTM.directive('ngSpinnerBar', ['$rootScope',
 ])
 
 // Handle global LINK click
-RTM.directive('a',
-    function() {
-        return {
-            restrict: 'E',
-            link: function(scope, elem, attrs) {
-                if (attrs.ngClick || attrs.href === '' || attrs.href === '#') {
-                    elem.on('click', function(e) {
-                        e.preventDefault(); // prevent link click for above criteria
-                    });
-                }
+MetronicApp.directive('a', function() {
+    return {
+        restrict: 'E',
+        link: function(scope, elem, attrs) {
+            if (attrs.ngClick || attrs.href === '' || attrs.href === '#') {
+                elem.on('click', function(e) {
+                    e.preventDefault(); // prevent link click for above criteria
+                });
             }
-        };
-    });
+        }
+    };
+});
 
 // Handle Dropdown Hover Plugin Integration
-RTM.directive('dropdownMenuHover', function () {
+MetronicApp.directive('dropdownMenuHover', function () {
   return {
     link: function (scope, elem) {
       elem.dropdownHover();
