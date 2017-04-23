@@ -52,7 +52,7 @@
 								</tr>
 							</thead>
 
-                            <tr ng-repeat="apikey in $root.profile.api_keys">
+                            <tr ng-repeat="apikey in $root.apiKeys">
 								<td class="fit">
 									{{apikey}}
 								</td>
@@ -85,15 +85,17 @@
                         <div class="form-group last">
                             <label class="control-label col-md-3">API Key</label>
                             <div class="col-md-9">
-                                <h3 style="max-width: 300px">{{newApikey}}</h3>
+                            	<div style="max-width: 400px">
+                                <h3 ng-bind="newApikey" id="keyString"></h3>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
+                	<p>WARNING: Now is the last time you can save your key!</p>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" ng-show="createButtonVisible" class="btn btn-primary" ng-click="createApikey()"><i class="fa fa-check"></i> Create</button>
-                    <button type="button" ng-hide="createButtonVisible" class="btn btn-primary btn-tiny" ng-click="copyToClipboard()"><i class="fa fa-clipboard"></i> Copy</button>
+                    <button type="button" ng-show="createButtonVisible" class="btn btn-primary" ng-click="createApikey()"><i class="fa fa-key"></i> Create</button>
+                    <button type="button" ng-hide="createButtonVisible" class="btn btn-default" ng-click="copyToClipboard()"><i class="fa fa-clipboard"></i> Copy</button>
                 </div>
             </div>
         </div>
