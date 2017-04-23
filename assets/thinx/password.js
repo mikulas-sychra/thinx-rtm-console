@@ -46,9 +46,7 @@ var PasswordReset = function() {
             },
 
             submitHandler: function(form) {
-                
-                alert('what');
-
+            
                 var url = 'http://thinx.cloud:7442/api/user/password/set';
                 $.ajax({
                     url: url,
