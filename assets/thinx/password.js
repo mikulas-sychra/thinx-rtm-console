@@ -50,22 +50,21 @@ var PasswordReset = function() {
                 var url = 'http://thinx.cloud:7442/api/user/password/set';
                 $.ajax({
                     url: url,
-                    data: { password: $('.forget-form input[name=pwd1]').val(), rpassword: $('.forget-form input[name=pwd2]').val(),  }, //parameters go here in object literal form
+                    data: { 
+                        password: $('.forget-form input[name=pwd1]').val(), 
+                        rpassword: $('.forget-form input[name=pwd2]').val(),
+                        owner: owner, 
+                        activation: activation },
                     type: 'POST',
                     datatype: 'json',
                     success: function(data) {
                         console.log('--password set request success--');
-                        // console.log(data);
-
-                        
+                        console.log(data);
 
                         var response = JSON.parse(data);
-
-                        // console.log('response');
                         console.log(response);
 
                         if (typeof(response) !== 'undefined') {
-                            
                             console.log('--show info what now--');
 
                             $('.msg-success', $('.forget-form')).show();
@@ -113,7 +112,35 @@ jQuery(document).ready(function() {
     PasswordReset.init();
 
     console.log('PASSWORD DATA');
-    var $_POST = <?php echo json_encode($_POST); ?>;
-    console.log($_POST);
+
+    $.urlParam = function(name){
+        var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+        return results[1] || 0;
+    }
+
+    try {
+        var acrivationKey = decodeURIComponent($.urlParam('activation'));
+        var owner = decodeURIComponent($.urlParam('owner'));
+    }
+    catch(err) {
+        var acrivationKey = null;
+        var owner = null;
+    }
+
+    try {
+        var resetKey = decodeURIComponent($.urlParam('reset_key'));
+    }
+    catch(err) {
+        var resetKey = null;
+    }
+
+    console.log('acrivationKey - ' + acrivationKey);
+    console.log('owner - ' + owner);
+    console.log('reset_key - ' + resetKey);
+
+    
+    
+    // var resetKey =decodeURIComponent($.urlParam('reset_key'));
+
                         
 });
