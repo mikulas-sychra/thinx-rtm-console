@@ -54,7 +54,8 @@ var PasswordReset = function() {
                         password: $('.forget-form input[name=pwd1]').val(), 
                         rpassword: $('.forget-form input[name=pwd2]').val(),
                         owner: owner, 
-                        activation: activation },
+                        activation: activationKey
+                    },
                     type: 'POST',
                     datatype: 'json',
                     success: function(data) {
@@ -102,6 +103,39 @@ var PasswordReset = function() {
             handleForgetPassword();
             jQuery('.forget-form').show();
              $('.show-on-success', $('.forget-form')).hide();
+
+
+            console.log('PASSWORD DATA');
+
+            $.urlParam = function(name){
+                var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+                return results[1] || 0;
+            }
+
+            try {
+                var activation = decodeURIComponent($.urlParam('activation'));
+                var owner = decodeURIComponent($.urlParam('owner'));
+            }
+            catch(err) {
+                var activation = null;
+                var owner = null;
+            }
+
+            // try {
+                // var reset_key = decodeURIComponent($.urlParam('reset_key'));
+            // }
+            // catch(err) {
+                // var reset_key = null;
+            // } 
+
+            console.log('activation - ' + activation);
+            $('#activation').val(activation);
+            console.log('owner - ' + owner);
+            $('#owner').val(owner);
+            // console.log('reset_key - ' + reset_key);
+            // $('#resetKey').val(resetKey);
+
+
         }
 
     };
@@ -109,38 +143,5 @@ var PasswordReset = function() {
 }();
 
 jQuery(document).ready(function() {
-    PasswordReset.init();
-
-    console.log('PASSWORD DATA');
-
-    $.urlParam = function(name){
-        var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-        return results[1] || 0;
-    }
-
-    try {
-        var acrivationKey = decodeURIComponent($.urlParam('activation'));
-        var owner = decodeURIComponent($.urlParam('owner'));
-    }
-    catch(err) {
-        var acrivationKey = null;
-        var owner = null;
-    }
-
-    try {
-        var resetKey = decodeURIComponent($.urlParam('reset_key'));
-    }
-    catch(err) {
-        var resetKey = null;
-    }
-
-    console.log('acrivationKey - ' + acrivationKey);
-    console.log('owner - ' + owner);
-    console.log('reset_key - ' + resetKey);
-
-    
-    
-    // var resetKey =decodeURIComponent($.urlParam('reset_key'));
-
-                        
+    PasswordReset.init();                    
 });
