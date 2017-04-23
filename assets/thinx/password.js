@@ -57,20 +57,28 @@ var PasswordReset = function() {
                         console.log('--password set request success--');
                         // console.log(data);
 
+                        
+
                         var response = JSON.parse(data);
 
                         // console.log('response');
                         console.log(response);
 
                         if (typeof(response) !== 'undefined') {
+                            
                             console.log('--show info what now--');
+
                             $('.msg-success', $('.forget-form')).show();
                             $('.hide-on-success', $('.forget-form')).hide();
                         }
 
                     },
-                    error: function() {
+                    error: function(response) {
                         console.log('--password reset request failure--');
+                         console.log(response);
+
+                         $('.msg-success', $('.forget-form')).show();
+                            $('.hide-on-success', $('.forget-form')).hide();
                     }
                 });
 
@@ -94,6 +102,7 @@ var PasswordReset = function() {
         init: function() {
             handleForgetPassword();
             jQuery('.forget-form').show();
+             $('.show-on-success', $('.forget-form')).hide();
         }
 
     };
@@ -102,4 +111,9 @@ var PasswordReset = function() {
 
 jQuery(document).ready(function() {
     PasswordReset.init();
+
+    console.log('PASSWORD DATA');
+    var $_POST = <?php echo json_encode($_POST); ?>;
+    console.log($_POST);
+                        
 });
