@@ -1,7 +1,6 @@
 var Login = function() {
 
     var handleLogin = function() {
-
         $('.login-form').validate({
             errorElement: 'span', //default input error message container
             errorClass: 'help-block', // default input error message class
@@ -45,12 +44,15 @@ var Login = function() {
                 error.insertAfter(element.closest('.input-icon'));
             },
 
-            submitHandler: function(form) {
-                
+            submitHandler: function(form, event) {
+                event.preventDefault();
                 var url = 'http://thinx.cloud:7442/api/login';
                 $.ajax({
                     url: url,
-                    data: { username: $('input[name=username]').val(), password: $('input[name=password]').val() }, //parameters go here in object literal form
+                    data: { 
+                        username: $('input[name=username]').val(), 
+                        password: $('input[name=password]').val()
+                    }, 
                     type: 'POST',
                     datatype: 'json',
                     success: function(data) {
@@ -68,9 +70,11 @@ var Login = function() {
                         }
                         
                     },
-                    error: function() {
+                    error: function(data) {
                         console.log('--login failure--');
                         $('.alert-warning', $('.login-form')).show();
+                        console.log(data);
+
                     }
                 });
 
@@ -99,7 +103,6 @@ var Login = function() {
                     email: true
                 }
             },
-
             messages: {
                 email: {
                     required: "Email is required."
@@ -124,7 +127,8 @@ var Login = function() {
                 error.insertAfter(element.closest('.input-icon'));
             },
 
-            submitHandler: function(form) {
+            submitHandler: function(form, event) {
+                event.preventDefault();
                 var url = 'http://thinx.cloud:7442/api/user/password/reset';
                 $.ajax({
                     url: url,
@@ -140,14 +144,13 @@ var Login = function() {
                         // console.log('response');
                         console.log(response);
 
-                        if (typeof(response) !== 'undefined') {
-                            console.log('--show info what now--');
-                            $('.msg-success', $('.forget-form')).show();
+                        if (typeof(response) !== 'undefined') {                            
+                            $('.show-on-success', $('.forget-form')).show();
                             $('.hide-on-success', $('.forget-form')).hide();
                         }
 
                     },
-                    error: function() {
+                    error: function(data) {
                         console.log('--password reset request failure--');
                     }
                 });
@@ -229,7 +232,6 @@ var Login = function() {
                 rpassword: {
                     equalTo: "#register_password"
                 },
-
                 tnc: {
                     required: true
                 }
@@ -266,6 +268,7 @@ var Login = function() {
             },
 
             submitHandler: function(form) {
+                event.preventDefault();
                 var url = 'http://thinx.cloud:7442/api/user/create';
                 $.ajax({
                     url: url,
@@ -273,30 +276,37 @@ var Login = function() {
                         first_name: $('.register-form input[name=first_name]').val(),
                         last_name: $('.register-form input[name=last_name]').val(),
                         email: $('.register-form input[name=email]').val(),
-                        owner: $('.register-form input[name=owner]').val(),
-                        password: $('.register-form input[name=password]').val()
+                        owner: $('.register-form input[name=owner]').val()
+                        // password: $('.register-form input[name=password]').val()
                     }, //parameters go here in object literal form
 
                     type: 'POST',
                     datatype: 'json',
                     success: function(data) {
                         console.log('--user create request success--');
-                        // console.log(data);
 
-                        var response = JSON.parse(data);
-
-                        // console.log('response');
-                        console.log(response);
+                        try {
+                           var response = JSON.parse(data);    
+                        }
+                        catch(e) {
+                           console.log(e);
+                        }
 
                         if (typeof(response) !== 'undefined') {
-                            console.log('--show info what now--');
-                            // $('.msg-success', $('.forget-form')).show();
-                            // $('.hide-on-success', $('.forget-form')).hide();
+                            if (!response.success) {
+                                $('.msg-error', $('.register-form')).text(response.status);
+                                $('.msg-error', $('.register-form')).show();
+                            } else {
+                                $('.hide-on-success', $('.register-form')).hide();
+                                $('.show-on-success', $('.register-form')).show();
+                            }
                         }
 
                     },
-                    error: function() {
+                    error: function(response) {
                         console.log('--user create request failure--');
+                        $('.msg-error', $('.register-form')).text(response);
+                        $('.msg-error', $('.register-form')).show();
                     }
                 });
             }

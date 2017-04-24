@@ -7,23 +7,21 @@ var PasswordReset = function() {
             focusInvalid: false, // do not focus the last invalid input
             ignore: "",
             rules: {
-                pwd1: {
-                    required: true
+                password: {
+                    required: true,
+                    equalTo: "#rpassword"
                 },
-                pwd2: {
+                rpassword: {
                     required: true
-                },
-                pwd1: {
-                    equalTo: "#pwd2"
                 }
             },
-
             messages: {
-                pwd1: {
-                    required: "Password is required."
+                password: {
+                    required: "Password is required.",
+                    equalTo: "Passwords must match."
                 },
-                pwd2: {
-                    required: "Re-tyep your password."
+                rpassword: {
+                    required: "Passwords must match."
                 }
             },
 
@@ -45,40 +43,66 @@ var PasswordReset = function() {
                 error.insertAfter(element.closest('.input-icon'));
             },
 
-            submitHandler: function(form) {
-            
+            submitHandler: function(form, event) {
+
+                event.preventDefault();
+
+                var activation = $.getQuery('activation');
+                var owner = $.getQuery('owner');
+                var reset_key = $.getQuery('reset_key');
+
+                console.log('activation - ' + activation);
+                console.log('owner - ' + owner);
+                console.log('reset_key - ' + reset_key);
+
                 var url = 'http://thinx.cloud:7442/api/user/password/set';
+
+                var data = { 
+                        password: $('.forget-form input[name=password]').val(), 
+                        rpassword: $('.forget-form input[name=rpassword]').val(),
+                        owner: owner
+                };
+                
+                if (activation !== false) {
+                    data.activation = activation;
+                }
+
+                if (reset_key !== false) {
+                    data.reset_key = reset_key;
+                }
+
                 $.ajax({
                     url: url,
-                    data: { 
-                        password: $('.forget-form input[name=pwd1]').val(), 
-                        rpassword: $('.forget-form input[name=pwd2]').val(),
-                        owner: owner, 
-                        activation: activationKey
-                    },
+                    data: data,
                     type: 'POST',
                     datatype: 'json',
                     success: function(data) {
                         console.log('--password set request success--');
                         console.log(data);
 
-                        var response = JSON.parse(data);
-                        console.log(response);
+                        try {
+                           var response = JSON.parse(data);    
+                        }
+                        catch(e) {
+                           console.log(e);
+                        }
 
                         if (typeof(response) !== 'undefined') {
-                            console.log('--show info what now--');
-
-                            $('.msg-success', $('.forget-form')).show();
-                            $('.hide-on-success', $('.forget-form')).hide();
+                            if (!response.success) {
+                                $('.msg-error', $('.forget-form')).text(response.status);
+                                $('.msg-error', $('.forget-form')).show();
+                            } else {
+                                $('.hide-on-success', $('.forget-form')).hide();
+                                $('.show-on-success', $('.forget-form')).show();
+                            }
                         }
 
                     },
-                    error: function(response) {
+                    error: function(data) {
                         console.log('--password reset request failure--');
-                         console.log(response);
-
-                         $('.msg-success', $('.forget-form')).show();
-                            $('.hide-on-success', $('.forget-form')).hide();
+                        $('.msg-error', $('.forget-form')).text('Server error, try again later.');
+                        $('.msg-error', $('.forget-form')).show();
+                        console.log(data);
                     }
                 });
 
@@ -94,48 +118,15 @@ var PasswordReset = function() {
             }
         });
 
-
     }   
 
     return {
         //main function to initiate the module
         init: function() {
+            // retrieve GET parameters            
+            $('.forget-form').show();
+            $('.show-on-success', $('.forget-form')).hide();
             handleForgetPassword();
-            jQuery('.forget-form').show();
-             $('.show-on-success', $('.forget-form')).hide();
-
-
-            console.log('PASSWORD DATA');
-
-            $.urlParam = function(name){
-                var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-                return results[1] || 0;
-            }
-
-            try {
-                var activation = decodeURIComponent($.urlParam('activation'));
-                var owner = decodeURIComponent($.urlParam('owner'));
-            }
-            catch(err) {
-                var activation = null;
-                var owner = null;
-            }
-
-            // try {
-                // var reset_key = decodeURIComponent($.urlParam('reset_key'));
-            // }
-            // catch(err) {
-                // var reset_key = null;
-            // } 
-
-            console.log('activation - ' + activation);
-            $('#activation').val(activation);
-            console.log('owner - ' + owner);
-            $('#owner').val(owner);
-            // console.log('reset_key - ' + reset_key);
-            // $('#resetKey').val(resetKey);
-
-
         }
 
     };
@@ -143,5 +134,19 @@ var PasswordReset = function() {
 }();
 
 jQuery(document).ready(function() {
-    PasswordReset.init();                    
+    PasswordReset.init();
+    (function($){
+        $.getQuery = function( query ) {
+            query = query.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+            var expr = "[\\?&]"+query+"=([^&#]*)";
+            var regex = new RegExp( expr );
+            var results = regex.exec( window.location.href );
+            if( results !== null ) {
+                return results[1];
+                return decodeURIComponent(results[1].replace(/\+/g, " "));
+            } else {
+                return false;
+            }
+        };
+    })(jQuery);
 });
