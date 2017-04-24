@@ -2,10 +2,24 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
     $scope.$on('$viewContentLoaded', function() {   
         // initialize core components
         App.initAjax();
+
+        deviceList()
+	        .then(data => updateDevices(data))
+	        .catch(error => console.log('Error:', error));
+
     });
 
     // set sidebar closed and body solid layout mode
     $rootScope.settings.layout.pageContentWhite = true;
     $rootScope.settings.layout.pageBodySolid = false;
     $rootScope.settings.layout.pageSidebarClosed = false;
+
+	function updateDevices(data) {
+        var devices = JSON.parse(data);
+        $rootScope.devices = devices.devices;
+        $scope.$apply()
+
+        console.log('devices:');
+        console.log($rootScope.devices);
+    }
 });

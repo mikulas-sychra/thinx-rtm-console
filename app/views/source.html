@@ -1,0 +1,77 @@
+<!-- BEGIN PAGE BREADCRUMB -->
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a ui-sref="dashboard">Home</a>
+        <i class="fa fa-circle"></i>
+    </li>
+    <li class="active"> Source Management </li>
+</ul>
+<!-- END PAGE BREADCRUMB -->
+<!-- BEGIN MAIN CONTENT -->
+<div class="row" ng-controller="SourceController">
+    <div class="col-md-12">
+        <!-- BEGIN: ACCORDION DEMO -->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-green-sharp">
+                    <i class="icon-cloud-upload font-green-sharp"></i>
+                    <span class="caption-subject bold uppercase">Sources</span>
+                    <span class="caption-helper hide"></span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default" href="#">
+                        <i class="icon-cloud-upload"></i>
+                    </a>
+                    <a class="btn btn-circle btn-icon-only btn-default" href="#">
+                        <i class="icon-wrench"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body"> 
+            <!-- BEGIN PORTLET-->
+
+                 <a href="#" class="btn green-haze" data-target="#pageModal" data-toggle="modal">Add Source</a>
+                
+                <div class="table-scrollable table-scrollable-borderless">
+                    <table class="table table-hover table-light">
+                        <thead>
+                            <tr class="uppercase">
+                                <th class="fit">
+                                    URL
+                                </th>
+                                <th>
+                                    Devices
+                                </th>
+                                <th>
+                                    Reserved
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tr ng-repeat="source in $root.sources">
+                            <td class="fit">
+                                {{source.url}}
+                            </td>
+                            <td>
+                                <span ng-repeat="device in source.devices">
+                                    {{device}}<br>
+                                </span>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger btn-tiny" ng-click="removeSource($index)"><i class="fa fa-cross"></i> Remove</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                
+            <!-- END PORTLET-->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MAIN CONTENT -->
+<!-- BEGIN MAIN JS-->
+<script>
+    // call any jquery or angularjs code ehre
+</script>
+<!-- BEGIN MAIN JS -->

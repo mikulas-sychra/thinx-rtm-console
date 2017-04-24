@@ -53,6 +53,41 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', function($scope
     $scope.$on('$viewContentLoaded', function() {
         //App.initComponents(); // init core components
         //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive 
+
+        function updateProfile(data) {
+            var profile = JSON.parse(data);
+            $rootScope.profile = profile.rows[0].doc;
+            $rootScope.sources = $rootScope.profile.repos;
+            $scope.$apply()
+
+            console.log('profile:');
+            console.log($rootScope.profile);
+            
+            console.log('sources:');
+            console.log($rootScope.sources);
+        }
+
+        getProfile()
+            .then(data => updateProfile(data))
+            .catch(error => console.log('Error:', error));
+
+        // autoUpdater();
+        
+        var counter = 30;
+        function autoUpdater() {
+            counter--;
+            if (counter == 0) {
+                counter = 30;
+                console.log("Refreshing data in " + counter + " seconds...");
+
+                getProfile()
+                    .then(data => updateProfile(data))
+                    .catch(error => console.log('Error:', error));
+            }
+            setTimeout(autoUpdater, 2000);
+        }
+
+
     });
 }]);
 
@@ -132,6 +167,44 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
 
                             '../assets/pages/scripts/dashboard.min.js',
                             'js/controllers/DashboardController.js',
+                        ] 
+                    });
+                }]
+            }
+        })
+
+        // Apikey Page
+        .state('apikey', {
+            url: "/apikey",
+            templateUrl: "views/apikey.html",            
+            data: {pageTitle: 'Apikey Management'},
+            controller: "ApikeyController",
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'MetronicApp',
+                        insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+                        files: [
+                            'js/controllers/ApikeyController.js'
+                        ] 
+                    });
+                }]
+            }
+        })
+
+        // Apikey Page
+        .state('source', {
+            url: "/source",
+            templateUrl: "views/source.html",            
+            data: {pageTitle: 'Source Management'},
+            controller: "SourceController",
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'MetronicApp',
+                        insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+                        files: [
+                            'js/controllers/SourceController.js'
                         ] 
                     });
                 }]

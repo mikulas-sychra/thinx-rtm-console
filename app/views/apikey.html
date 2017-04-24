@@ -1,0 +1,73 @@
+<!-- BEGIN PAGE BREADCRUMB -->
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a ui-sref="dashboard">Home</a>
+        <i class="fa fa-circle"></i>
+    </li>
+    <li class="active"> Apikey Management </li>
+</ul>
+<!-- END PAGE BREADCRUMB -->
+<!-- BEGIN MAIN CONTENT -->
+<div class="row" ng-controller="ApikeyController">
+    <div class="col-md-12">
+        <!-- BEGIN: ACCORDION DEMO -->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-green-sharp">
+                    <i class="icon-key font-green-sharp"></i>
+                    <span class="caption-subject bold uppercase">API Keys</span>
+                    <span class="caption-helper hide"></span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default" href="#">
+                        <i class="icon-cloud-upload"></i>
+                    </a>
+                    <a class="btn btn-circle btn-icon-only btn-default" href="#">
+                        <i class="icon-wrench"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body"> 
+
+                <a href="#" class="btn green-haze" ng-click="resetModal()" data-target="#pageModal" data-toggle="modal">Create Key</a>
+
+                <div class="table-scrollable table-scrollable-borderless">
+                        <table class="table table-hover table-light">
+                            <thead>
+                                <tr class="uppercase">
+                                    <th>
+                                        Key ID
+                                    </th>
+                                    <th>
+                                        Reserved
+                                    </th>
+                                    <th>
+                                        Actions
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tr ng-repeat="apikey in $root.apiKeys">
+                                <td class="fit">
+                                    {{apikey}}
+                                </td>
+                                <td>
+                                    
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-danger btn-tiny" ng-click="revokeApikey(apikey, $index)"><i class="fa fa-cross"></i> Revoke</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MAIN CONTENT -->
+<!-- BEGIN MAIN JS-->
+<script>
+    // call any jquery or angularjs code ehre
+</script>
+<!-- BEGIN MAIN JS -->
