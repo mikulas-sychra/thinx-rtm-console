@@ -29,3 +29,7 @@
 .login .btn-primary:hover {
 	color: #d4e3ec;
 }
+
+.col-no-padding-right {
+  padding-right: 0 !important;
+}

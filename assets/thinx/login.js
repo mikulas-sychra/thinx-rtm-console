@@ -226,12 +226,6 @@ var Login = function() {
                 owner: {
                     required: true
                 },
-                password: {
-                    required: true
-                },
-                rpassword: {
-                    equalTo: "#register_password"
-                },
                 tnc: {
                     required: true
                 }
@@ -277,7 +271,6 @@ var Login = function() {
                         last_name: $('.register-form input[name=last_name]').val(),
                         email: $('.register-form input[name=email]').val(),
                         owner: $('.register-form input[name=owner]').val()
-                        // password: $('.register-form input[name=password]').val()
                     }, //parameters go here in object literal form
 
                     type: 'POST',
@@ -335,11 +328,9 @@ var Login = function() {
     return {
         //main function to initiate the module
         init: function() {
-
             handleLogin();
             handleForgetPassword();
             handleRegister();
-
         }
 
     };
