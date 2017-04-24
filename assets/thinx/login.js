@@ -73,6 +73,10 @@ var Login = function() {
                     error: function(data) {
                         console.log('--login failure--');
                         $('.alert-warning', $('.login-form')).show();
+
+                        $('.msg-error').text('Server error, try again later.');
+                        $('.msg-error').show();
+
                         console.log(data);
 
                     }
@@ -152,6 +156,12 @@ var Login = function() {
                     },
                     error: function(data) {
                         console.log('--password reset request failure--');
+
+                        console.log(data);                        
+
+                        $('.msg-error').text('Server error, try again later.');
+                        $('.msg-error').show();
+
                     }
                 });
             }
@@ -298,6 +308,7 @@ var Login = function() {
                     },
                     error: function(response) {
                         console.log('--user create request failure--');
+                        console.log(response);
                         $('.msg-error', $('.register-form')).text(response);
                         $('.msg-error', $('.register-form')).show();
                     }

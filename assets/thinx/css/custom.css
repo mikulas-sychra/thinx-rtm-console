@@ -16,10 +16,12 @@
 	}
 }
 
+/*
 .alert-danger {
 	background-color: rgb(255, 34, 124) !important;
 	border-color: #ff0844 !important;;
 }
+*/
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active {
 	background-color: #00b8d0 !important;
