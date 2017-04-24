@@ -100,8 +100,10 @@ var PasswordReset = function() {
                     },
                     error: function(data) {
                         console.log('--password reset request failure--');
+
                         $('.msg-error', $('.forget-form')).text('Server error, try again later.');
                         $('.msg-error', $('.forget-form')).show();
+                        
                         console.log(data);
                     }
                 });
