@@ -141,16 +141,30 @@ var Login = function() {
                     datatype: 'json',
                     success: function(data) {
                         console.log('--password reset request success--');
-                        // console.log(data);
 
-                        var response = JSON.parse(data);
+                        try {
+                           var response = JSON.parse(data);    
+                        }
+                        catch(e) {
+                           console.log(e);
+                        }
 
-                        // console.log('response');
-                        console.log(response);
-
-                        if (typeof(response) !== 'undefined') {                            
-                            $('.show-on-success', $('.forget-form')).show();
-                            $('.hide-on-success', $('.forget-form')).hide();
+                        if (typeof(response) !== 'undefined') {
+                            if (response.success) {
+                                console.log(response.status)
+                                if (response.status == 'email_sent') {
+                                    $('.msg-error', $('.forget-form')).hide();
+                                    $('.forget-form').hide();
+                                    $('.msg-success .form-subtitle').text('Check your email for reset link.');
+                                    $('.msg-success').show();
+                                }
+                            } else {
+                                console.log(response.status)
+                                if (response.status == 'email_not_found') {
+                                    $('.msg-error', $('.forget-form')).text('Email not found.');
+                                    $('.msg-error', $('.forget-form')).show();
+                                } 
+                            }
                         }
 
                     },
@@ -296,12 +310,25 @@ var Login = function() {
                         }
 
                         if (typeof(response) !== 'undefined') {
-                            if (!response.success) {
-                                $('.msg-error', $('.register-form')).text(response.status);
-                                $('.msg-error', $('.register-form')).show();
+                            if (response.success) {
+                                console.log(response.status)
+                                if (response.status == 'email_sent') {
+                                    $('.msg-error', $('.register-form')).hide();
+                                    $('.register-form').hide();
+
+                                    $('.msg-success .form-subtitle').text('Check your email for activation link.');
+                                    $('.msg-success').show();
+                                }
                             } else {
-                                $('.hide-on-success', $('.register-form')).hide();
-                                $('.show-on-success', $('.register-form')).show();
+                                console.log(response.status)
+                                if (response.status == 'activation_failed') {
+                                    $('.msg-error', $('.register-form')).text('Registration failed.');
+                                    $('.msg-error', $('.register-form')).show();
+                                }
+                                if (response.status == 'email_already_exists') {
+                                    $('.msg-error', $('.register-form')).text('Email already exists.');
+                                    $('.msg-error', $('.register-form')).show();
+                                }
                             }
                         }
 

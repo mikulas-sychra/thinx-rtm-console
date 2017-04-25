@@ -81,19 +81,27 @@ var PasswordReset = function() {
                         console.log(data);
 
                         try {
-                           var response = JSON.parse(data);    
+                           var response = JSON.parse(data);  
+                           console.log(data);  
                         }
                         catch(e) {
                            console.log(e);
                         }
 
                         if (typeof(response) !== 'undefined') {
-                            if (!response.success) {
-                                $('.msg-error', $('.forget-form')).text(response.status);
-                                $('.msg-error', $('.forget-form')).show();
+                            if (response.success) {
+                                if (response.status == 'email_sent') {
+                                    $('.msg-error', $('.forget-form')).hide();
+                                    $('.forget-form').hide();
+                                    
+                                    $('.msg-success').show();
+                                }
                             } else {
-                                $('.hide-on-success', $('.forget-form')).hide();
-                                $('.show-on-success', $('.forget-form')).show();
+                                console.log(response.status)
+                                if (response.status == 'user_not_found') {
+                                    $('.msg-error', $('.forget-form')).text('User not found.');
+                                    $('.msg-error', $('.forget-form')).show();
+                                } 
                             }
                         }
 
@@ -103,7 +111,7 @@ var PasswordReset = function() {
 
                         $('.msg-error', $('.forget-form')).text('Server error, try again later.');
                         $('.msg-error', $('.forget-form')).show();
-                        
+
                         console.log(data);
                     }
                 });
