@@ -31,9 +31,14 @@ angular.module('MetronicApp').controller('ApikeyController', ['$rootScope', '$sc
 	        	console.log('apikey:');
 				console.log(data.api_key);
 				$scope.newApikey = data.api_key;
+				$('.msg-warning').show();
 				$scope.$apply()
 	        })
-	        .catch(error => console.log('Error:', error));
+	        .catch(error => function(error) {
+	        	$('.msg-warning').text(error);
+	        	$('.msg-warning').show();
+	        	console.log('Error:', error);
+	        });
 	};
 
 	$scope.revokeApikey = function(keyToRevoke, index) {
@@ -44,7 +49,10 @@ angular.module('MetronicApp').controller('ApikeyController', ['$rootScope', '$sc
 	        	console.log('Success:', data);
 	        	$rootScope.apiKeys.splice(index, 1);
 	        })
-	        .catch(error => console.log('Error:', error));
+	        .catch(error => function () {
+	        	// TODO throw error message
+	        	console.log('Error:', error)
+	        });
 	};
 
 	$scope.copyToClipboard = function() {
