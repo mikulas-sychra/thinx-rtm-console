@@ -78,7 +78,6 @@ var PasswordReset = function() {
                     datatype: 'json',
                     success: function(data) {
                         console.log('--password set request success--');
-                        console.log(data);
 
                         try {
                            var response = JSON.parse(data);  
@@ -90,11 +89,14 @@ var PasswordReset = function() {
 
                         if (typeof(response) !== 'undefined') {
                             if (response.success) {
-                                if (response.status == 'email_sent') {
+                                if (typeof response.redirect !== 'undefined') {
                                     $('.msg-error', $('.forget-form')).hide();
                                     $('.forget-form').hide();
-                                    
                                     $('.msg-success').show();
+
+                                    console.log('--Redirecting to "' + response.redirect + '"--' );
+                                    $('.login-button').attr('href', response.redirect);
+                                   // window.location = response.redirect;
                                 }
                             } else {
                                 console.log(response.status)
