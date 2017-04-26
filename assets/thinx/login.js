@@ -16,7 +16,6 @@ var Login = function() {
                     required: false
                 }
             },
-
             messages: {
                 username: {
                     required: "Username is required."
@@ -57,28 +56,18 @@ var Login = function() {
                     datatype: 'json',
                     success: function(data) {
                         console.log('--login success--');
-                        // console.log(data);
-                        
                         var response = JSON.parse(data);
-                        
-                        // console.log('response');
                         console.log(response);
-
                         if (typeof(response) !== 'undefined') {
                             console.log('--Redirecting to "' + response.redirectURL + '"--' );
                             window.location = response.redirectURL;
                         }
-                        
                     },
                     error: function(data) {
                         console.log('--login failure--');
-                        $('.alert-warning', $('.login-form')).show();
-
-                        $('.msg-error').text('Server error, try again later.');
-                        $('.msg-error').show();
-
+                        $('.msg-error', $('.login-form')).text('Server error, try again later.');
+                        $('.msg-error', $('.login-form')).show();
                         console.log(data);
-
                     }
                 });
 
