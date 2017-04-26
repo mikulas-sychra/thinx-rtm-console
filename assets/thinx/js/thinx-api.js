@@ -1,10 +1,7 @@
 // Thninx API Ajax Class
 
-// $http.defaults.headers.post = { 'Content-Type': 'application/json' };
-
-var counter = 30;
-
 var urlBase = 'http://thinx.cloud:7442/api';
+var counter = 30;
 
 var thinx = {
     urlBase: 'http://thinx.cloud:7442/api',
@@ -18,14 +15,14 @@ var thinx = {
     revokeKey: function () {
         return revokeKey();
     },
+    sourceList: function () {
+        return sourceList();
+    },
     addSource: function () {
         return addSource();
     },
     removeSource: function () {
         return removeSource();
-    },
-    sourceList: function () {
-        return sourceList();
     },
     deviceList: function () {
         return deviceList();
@@ -44,7 +41,6 @@ function updateTimer() {
 	if (counter == 0) {
 		counter = 30;
 		console.log("Refreshing data in " + counter + " seconds...");
-
 		// update some data
 	}
 
@@ -57,7 +53,6 @@ function updateTimer() {
 // createKey /
 // revokeKey [keyToRevoke] /
 // keyList /list
-
 
 function keyList() {
 	return Promise.resolve($.ajax({
@@ -83,91 +78,41 @@ function revokeKey(keyToRevoke) {
 	}));
 }
 
+
 // Sources /user/source
 //
-// addSource [sourceUrl] /
-// removeSource [index] /
-// * list of sources is obtained by userProfile *
+// sourceList GET / * list of sources is obtained by userProfile *
+// addSource [sourceUrl] POST /
+// removeSource [index] POST /
+
+function sourceList(sourceUrl) {
+	return Promise.resolve($.ajax({
+		url: urlBase + '/user/source/list',
+		type: 'GET'
+	}));
+}
 
 function addSource(sourceUrl) {
-	console.log(sourceUrl);
-	var addSource = {
-		method: 'POST',
-		url: urlBase + '/user/source/add',
-		data: { source_url: sourceUrl }
-	}
-
-	$http(addSource).then(
-		function (addSourceResponse) {
-			console.log('--add source success--');
-			console.log('add source response:');
-			console.log(addSourceResponse);
-
-		},
-		function (addSourceResponse) {
-			console.log('--add source failure--');
-			console.log('add source request:');
-			console.log(addSource);
-			console.log('add source response:');
-			console.log(addSourceResponse);
-		}
-	);
+	return Promise.resolve($.ajax({
+		url: urlBase + '/user/source',
+		type: 'POST',
+		data: { source_url: sourceUrl}
+	}));
 }
 
 function removeSource(index) {
-	console.log(sourceUrl);
-	var removeSource = {
-		method: 'POST',
+	return Promise.resolve($.ajax({
 		url: urlBase + '/user/source/remove',
+		type: 'POST',
 		data: { source_id: index }
-	}
-
-	$http(removeSource).then(
-		function (removeSourceResponse) {
-			console.log('--remove source success--');
-			console.log('remove source response:');
-			console.log(addSourceResponse);
-
-		},
-		function (removeSourceResponse) {
-			console.log('--remove source failure--');
-			console.log('remove source request:');
-			console.log(removeSource);
-			console.log('remove source response:');
-			console.log(removeSourceResponse);
-		}
-	);
-}
-
-function sourceList(sourceUrl) {
-	console.log(sourceUrl);
-	var addSource = {
-		method: 'POST',
-		url: urlBase + '/user/source/add',
-		data: { source_url: sourceUrl }
-	}
-
-	$http(addSource).then(
-		function (addSourceResponse) {
-			console.log('--add source success--');
-			console.log('add source response:');
-			console.log(addSourceResponse);
-
-		},
-		function (addSourceResponse) {
-			console.log('--add source failure--');
-			console.log('add source request:');
-			console.log(addSource);
-			console.log('add source response:');
-			console.log(addSourceResponse);
-		}
-	);
+	}));
 }
 	
 
 // Profile /user/profile
 //
-// fetchProfile /
+// getProfile GET /
+// setProfile POST /set
 
 function getProfile() {
   return Promise.resolve($.ajax({
@@ -200,9 +145,9 @@ function changeProfile() {
 }
 
 
-// Profile /user/devices
+// Devices /user/devices
 //
-// fetchDevices /
+// deviceList GET /
 
 function deviceList() {
 	return Promise.resolve($.ajax({
