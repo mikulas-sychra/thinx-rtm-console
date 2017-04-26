@@ -53,42 +53,41 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', function($scope
     $scope.$on('$viewContentLoaded', function() {
         //App.initComponents(); // init core components
         //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive 
-
-        function updateProfile(data) {
-            var profile = JSON.parse(data);
-            $rootScope.profile = profile.rows[0].doc;
-            $rootScope.sources = $rootScope.profile.repos;
-            $scope.$apply()
-
-            console.log('profile:');
-            console.log($rootScope.profile);
-            
-            console.log('sources:');
-            console.log($rootScope.sources);
-        }
-
-        getProfile()
-            .then(data => updateProfile(data))
-            .catch(error => console.log('Error:', error));
-
-        // autoUpdater();
-        
-        var counter = 30;
-        function autoUpdater() {
-            counter--;
-            if (counter == 0) {
-                counter = 30;
-                console.log("Refreshing data in " + counter + " seconds...");
-
-                getProfile()
-                    .then(data => updateProfile(data))
-                    .catch(error => console.log('Error:', error));
-            }
-            setTimeout(autoUpdater, 2000);
-        }
-
-
     });
+
+    function updateProfile(data) {
+        var profile = JSON.parse(data);
+        $rootScope.profile = profile.rows[0].doc;
+        $rootScope.sources = $rootScope.profile.repos;
+        $scope.$apply()
+
+        console.log('profile:');
+        console.log($rootScope.profile);
+        
+        console.log('sources:');
+        console.log($rootScope.sources);
+    }
+
+    getProfile()
+        .then(data => updateProfile(data))
+        .catch(error => console.log('Error:', error));
+
+    // autoUpdater();
+    
+    var counter = 30;
+    function autoUpdater() {
+        counter--;
+        if (counter == 0) {
+            counter = 30;
+            console.log("Refreshing data in " + counter + " seconds...");
+
+            getProfile()
+                .then(data => updateProfile(data))
+                .catch(error => console.log('Error:', error));
+        }
+        setTimeout(autoUpdater, 2000);
+    }
+
 }]);
 
 /***
