@@ -4,7 +4,7 @@
         <a ui-sref="dashboard">Home</a>
         <i class="fa fa-circle"></i>
     </li>
-    <li class="active"> Apikey Management </li>
+    <li class="active"> API Key Management </li>
 </ul>
 <!-- END PAGE BREADCRUMB -->
 <!-- BEGIN MAIN CONTENT -->
@@ -28,71 +28,67 @@
                 </div>
             </div>
             <div class="portlet-body"> 
-
                 <a href="#" class="btn green-haze" ng-click="resetModal()" data-target="#pageModal" data-toggle="modal">Create Key</a>
-
                 <div class="table-scrollable table-scrollable-borderless">
-                        <table class="table table-hover table-light">
-                            <thead>
-                                <tr class="uppercase">
-                                    <th>
-                                        Key ID
-                                    </th>
-                                    <th>
-                                        Reserved
-                                    </th>
-                                    <th>
-                                        Actions
-                                    </th>
-                                </tr>
-                            </thead>
-
-                            <tr ng-repeat="apikey in $root.apiKeys">
-                                <td class="fit">
-                                    {{apikey}}
-                                </td>
-                                <td>
-                                    
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-danger btn-tiny" ng-click="revokeApikey(apikey, $index)"><i class="fa fa-cross"></i> Revoke</button>
-                                </td>
+                    <table class="table table-hover table-light">
+                        <thead>
+                            <tr class="uppercase">
+                                <th>
+                                    Key ID
+                                </th>
+                                <th>
+                                    Reserved
+                                </th>
+                                <th>
+                                    Actions
+                                </th>
                             </tr>
-                        </table>
-                    </div>
+                        </thead>
 
-                        <!-- BEGIN FORM-->
-    <form action="#" class="form-horizontal form-bordered" name="apikeyModal">
-        <div id="pageModal" class="modal fade" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title">New API Key</h4>
+                        <tr ng-repeat="apikey in $root.apiKeys">
+                            <td class="fit">
+                                {{apikey}}
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger btn-tiny" ng-click="revokeApikey(apikey, $index)"><i class="fa fa-cross"></i> Revoke</button>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-                <div class="modal-body">
-                    <form action="#" class="form-horizontal">
-                        <div class="form-group last">
-                            <label class="control-label col-md-3">API Key</label>
-                            <div class="col-md-9">
-                                <div style="max-width: 400px">
-                                <h3 ng-bind="" id="keyString"></h3>
+                <!-- BEGIN FORM-->
+                <form action="#" class="form-horizontal form-bordered" name="apikeyModal">
+                    <div id="pageModal" class="modal fade" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                    <h4 class="modal-title">New API Key</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="#" class="form-horizontal">
+                                        <div class="form-group last">
+                                            <label class="control-label col-md-3">API Key</label>
+                                            <div class="col-md-9">
+                                                <div style="max-width: 400px">
+                                                <h3 ng-bind="" id="keyString"></h3>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <p class="msg-warning display-hide">WARNING: Now is the last time you can save your key!</p>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" ng-show="createButtonVisible" class="btn btn-primary" ng-click="createApikey()"><i class="fa fa-check"></i> Create</button>
+                                    <button type="button" ng-hide="createButtonVisible" class="btn btn-default" ng-click="copyToClipboard()"><i class="fa fa-clipboard"></i> Copy</button>
+                                </div>
                             </div>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <p class="msg-warning display-hide">WARNING: Now is the last time you can save your key!</p>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" ng-show="createButtonVisible" class="btn btn-primary" ng-click="createApikey()"><i class="fa fa-key"></i> Create</button>
-                    <button type="button" ng-hide="createButtonVisible" class="btn btn-default" ng-click="copyToClipboard()"><i class="fa fa-clipboard"></i> Copy</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    </form>
-    <!-- END FORM-->
-
+                    </div>
+                </form>
+                <!-- END FORM-->
             </div>
         </div>
     </div>

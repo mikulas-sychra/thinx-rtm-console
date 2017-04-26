@@ -176,7 +176,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
         .state('apikey', {
             url: "/apikey",
             templateUrl: "views/apikey.html",            
-            data: {pageTitle: 'Apikey Management'},
+            data: {pageTitle: 'API Key Management'},
             controller: "ApikeyController",
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
@@ -185,6 +185,25 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                         insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
                         files: [
                             'js/controllers/ApikeyController.js'
+                        ] 
+                    });
+                }]
+            }
+        })
+
+        // Sshkey Page
+        .state('sshkey', {
+            url: "/sshkey",
+            templateUrl: "views/sshkey.html",            
+            data: {pageTitle: 'SSH Key Management'},
+            controller: "SshkeyController",
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'MetronicApp',
+                        insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+                        files: [
+                            'js/controllers/SshkeyController.js'
                         ] 
                     });
                 }]
