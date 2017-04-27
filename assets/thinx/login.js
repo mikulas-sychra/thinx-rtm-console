@@ -54,13 +54,16 @@ var Login = function() {
                     }, 
                     type: 'POST',
                     datatype: 'json',
-                    success: function(data) {
+                    success: function(data, status, xhr) {
                         console.log('--login success--');
                         var response = JSON.parse(data);
                         console.log(response);
                         if (typeof(response) !== 'undefined') {
                             console.log('--Redirecting to "' + response.redirectURL + '"--' );
-                            console.log(window.sessionStorage);
+                            console.log('xhr');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(xhr.getAllResponseHeaders());
                             // window.location = response.redirectURL;
                         }
                     },
