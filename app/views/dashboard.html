@@ -10,43 +10,57 @@
 <!-- BEGIN MAIN CONTENT -->
 <div ng-controller="DashboardController">
     <div class="note note-info">
-        <h3>Quick Start Guide
+        <h3>1. API Key 
             <span class="close" data-close="note"></span>
         </h3>
-        <p> To connect your first device to Thinx RTM Console you need to flash Vanilla Firmware with new API Key. </p>
-        <br>
-        
-        <span class="label label-info">FIRST STEP</span> &nbsp;<a ui-sref="apikey">Create your first API Key</a>
+        <a ui-sref="apikey">Create your first API Key</a>
         <p>
             Enter API Keys Management
         </p>
         </span>
-        <br>
-        
-        <span class="label label-info">SECOND STEP</span> &nbsp;<a>Enroll your device</a></span>
+    </div>
+    <div class="note note-info">
+        <h3>2. Device Enrollment
+            <span class="close" data-close="note"></span>
+        </h3>
+        <a>Enroll your device</a>
         <p>
+            To start managing your first device via Thinx RTM Console you need to flash Vanilla Firmware with new API Key first.
+            <br><br>
             Si má uživatel nainstalovat platformio, příslušnej USB driver, a uploadnout si na svoje ESP8266 vanilla binárku
         </p>
-        <br>
-        
-        <span class="label label-info">FINAL STEP</span> &nbsp;<a>Connect device to internet</a></span>
+        </span>
+    </div>
+    <div class="note note-info">
+        <h3>3. Connectivity
+            <span class="close" data-close="note"></span>
+        </h3>
+        <a>Connect your device to internet</a>
         <p>
             Na device se pak uživatel připojí jako na AP, zadá login do WiFi a API Key… a je to.
             A mohla by mu přijít desktop notifikace, že se zaregistroval nový device.
         </p>
-        <br>
-        
-        <span class="label label-danger">SECURITY</span> &nbsp;<a>Add RSA Key</a></span>
+        </span>
+    </div>
+    <div class="note note-danger">
+        <h3>Security
+            <span class="close" data-close="note"></span>
+        </h3>
+        <a ui-sref="rsakey">Add RSA Key</a>
         <p>
-            Na device se pak uživatel připojí jako na AP, zadá login do WiFi a API Key… a je to.
+            Add your public key to enable access to your private repositories.
         </p>
-        <br>
-        
-        <span class="label label-danger">SECURITY</span> &nbsp;<a>Update your device</a></span>
+        </span>
+    </div>
+    <div class="note note-success">
+        <h3>Well Done!
+            <span class="close" data-close="note"></span>
+        </h3>
+        <a>Update your device</a>
         <p>
             Ale na to musíme dořešit HTTPS.
         </p>
-        
+        </span>
     </div>
     <!-- BEGIN DASHBOARD STATS -->
     <div class="row">
