@@ -60,7 +60,8 @@ var Login = function() {
                         console.log(response);
                         if (typeof(response) !== 'undefined') {
                             console.log('--Redirecting to "' + response.redirectURL + '"--' );
-                            window.location = response.redirectURL;
+                            console.log(window.sessionStorage);
+                            // window.location = response.redirectURL;
                         }
                     },
                     error: function(data) {

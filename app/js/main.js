@@ -49,7 +49,7 @@ MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
 }]);
 
 /* Setup App Main Controller */
-MetronicApp.controller('AppController', ['$scope', '$rootScope', function($scope, $rootScope) {
+MetronicApp.controller('AppController', ['$scope', '$rootScope', '$window', '$cookies', function($scope, $rootScope, $window, $cookies) {
     $scope.$on('$viewContentLoaded', function() {
         //App.initComponents(); // init core components
         //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive 
@@ -67,6 +67,18 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', function($scope
         console.log('sources:');
         console.log($rootScope.sources);
     }
+
+    // config.headers['x-thx-session'] = $window.sessionStorage.owner;
+
+    console.log('session owner');
+    console.log($window.sessionStorage.owner);
+    console.log('session');
+    console.log($window.sessionStorage);
+
+    console.log('$cookies.getAll');
+    console.log($cookies.getAll());
+    console.log('x-thx-session');
+    console.log($cookies.get('x-thx-session'));
 
     getProfile()
         .then(data => updateProfile(data))
