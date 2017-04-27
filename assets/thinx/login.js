@@ -46,6 +46,13 @@ var Login = function() {
             submitHandler: function(form, event) {
                 event.preventDefault();
                 var url = 'http://thinx.cloud:7442/api/login';
+
+$.ajaxSetup({
+    xhrFields: {
+        withCredentials: true
+    }
+});
+
                 $.ajax({
                     url: url,
                     data: { 
@@ -53,6 +60,7 @@ var Login = function() {
                         password: $('input[name=password]').val()
                     }, 
                     type: 'POST',
+                    withCredentials: true,
                     datatype: 'json',
                     success: function(data, status, xhr) {
                         console.log('--login success--');
