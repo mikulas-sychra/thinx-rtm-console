@@ -292,7 +292,7 @@ var Login = function() {
                 }
             },
 
-            submitHandler: function(form) {
+            submitHandler: function(form, event) {
                 event.preventDefault();
                 var url = 'http://thinx.cloud:7442/api/user/create';
                 $.ajax({
