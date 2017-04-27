@@ -60,10 +60,16 @@ var Login = function() {
                         console.log(response);
                         if (typeof(response) !== 'undefined') {
                             console.log('--Redirecting to "' + response.redirectURL + '"--' );
-                            console.log('xhr');
+                            console.log('// xhr');
                             console.log(xhr);
+                            console.log('// status');
                             console.log(status);
+                            console.log('// window.sessionStorage');
+                            console.log(window.sessionStorage);
+                            console.log('// xhr.getAllResponseHeaders()');
                             console.log(xhr.getAllResponseHeaders());
+                            console.log('// document.cookie');
+                            console.log(document.cookie);
                             // window.location = response.redirectURL;
                         }
                     },
