@@ -7,6 +7,11 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 	        .then(data => updateDevices(data))
 	        .catch(error => console.log('Error:', error));
 
+            toastr.options = {
+                positionClass: "toast-bottom-right"
+            }
+            toastr.success('We do have the Toastr plugin available and working.', 'THiNX RTM Console', {timeOut: 5000})
+
     });
 
     // set sidebar closed and body solid layout mode

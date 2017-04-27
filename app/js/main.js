@@ -7,8 +7,7 @@ var MetronicApp = angular.module("MetronicApp", [
     "ui.router", 
     "ui.bootstrap", 
     "oc.lazyLoad",  
-    "ngSanitize",
-    "ngCookies"
+    "ngSanitize"
 ]); 
 
 /* Configure ocLazyLoader(refer: https://github.com/ocombe/ocLazyLoad) */
@@ -50,7 +49,7 @@ MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
 }]);
 
 /* Setup App Main Controller */
-MetronicApp.controller('AppController', ['$scope', '$rootScope', '$window', '$cookies', function($scope, $rootScope, $window, $cookies) {
+MetronicApp.controller('AppController', ['$scope', '$rootScope', '$window', function($scope, $rootScope) {
     $scope.$on('$viewContentLoaded', function() {
         //App.initComponents(); // init core components
         //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive 
