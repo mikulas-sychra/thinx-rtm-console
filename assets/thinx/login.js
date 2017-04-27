@@ -47,20 +47,14 @@ var Login = function() {
                 event.preventDefault();
                 var url = 'http://thinx.cloud:7442/api/login';
 
-$.ajaxSetup({
-    xhrFields: {
-        withCredentials: true
-    }
-});
-
                 $.ajax({
                     url: url,
+                    withCredentials: true,
                     data: { 
                         username: $('input[name=username]').val(), 
                         password: $('input[name=password]').val()
                     }, 
                     type: 'POST',
-                    withCredentials: true,
                     datatype: 'json',
                     success: function(data, status, xhr) {
                         console.log('--login success--');
@@ -76,8 +70,14 @@ $.ajaxSetup({
                             console.log(window.sessionStorage);
                             console.log('// xhr.getAllResponseHeaders()');
                             console.log(xhr.getAllResponseHeaders());
+                            console.log('// xhr.getResponseHeader("set-cookie")');
+                            console.log(xhr.getResponseHeader('set-cookie'));
+                            console.log('// xhr.getResponseHeader("x-thx-session")');
+                            console.log(xhr.getResponseHeader('x-thx-session'));
                             console.log('// document.cookie');
                             console.log(document.cookie);
+                            console.log('// xhr.getResponseHeader("Content-Type")');
+                            console.log(xhr.getResponseHeader('Content-Type'));
                             // window.location = response.redirectURL;
                         }
                     },

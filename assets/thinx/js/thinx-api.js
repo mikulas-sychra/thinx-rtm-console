@@ -1,7 +1,12 @@
 // Thninx API Ajax Class
-
 var urlBase = 'http://thinx.cloud:7442/api';
 var counter = 30;
+$.ajaxSetup({
+    xhrFields: {
+        withCredentials: true
+    },
+    contentType: "application/json; charset=utf-8"
+});
 
 var thinx = {
     urlBase: 'http://thinx.cloud:7442/api',

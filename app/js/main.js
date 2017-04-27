@@ -69,18 +69,6 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', '$window', '$co
         console.log($rootScope.sources);
     }
 
-    // config.headers['x-thx-session'] = $window.sessionStorage.owner;
-
-    console.log('session owner');
-    console.log($window.sessionStorage.owner);
-    console.log('session');
-    console.log($window.sessionStorage);
-
-    console.log('$cookies.getAll');
-    console.log($cookies.getAll());
-    console.log('x-thx-session');
-    console.log($cookies.get('x-thx-session'));
-
     getProfile()
         .then(data => updateProfile(data))
         .catch(error => console.log('Error:', error));
