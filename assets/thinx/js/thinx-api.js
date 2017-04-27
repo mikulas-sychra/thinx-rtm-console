@@ -2,10 +2,10 @@
 var urlBase = 'http://thinx.cloud:7442/api';
 var counter = 30;
 $.ajaxSetup({
+    contentType: "application/json; charset=utf-8",
     xhrFields: {
         withCredentials: true
-    },
-    contentType: "application/json; charset=utf-8"
+    }
 });
 
 var thinx = {

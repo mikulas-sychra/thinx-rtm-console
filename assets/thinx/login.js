@@ -60,25 +60,9 @@ var Login = function() {
                         console.log('--login success--');
                         var response = JSON.parse(data);
                         console.log(response);
-                        if (typeof(response) !== 'undefined') {
+                        if (typeof(response) !== 'undefined' && response.status == 'success') {
                             console.log('--Redirecting to "' + response.redirectURL + '"--' );
-                            console.log('// xhr');
-                            console.log(xhr);
-                            console.log('// status');
-                            console.log(status);
-                            console.log('// window.sessionStorage');
-                            console.log(window.sessionStorage);
-                            console.log('// xhr.getAllResponseHeaders()');
-                            console.log(xhr.getAllResponseHeaders());
-                            console.log('// xhr.getResponseHeader("set-cookie")');
-                            console.log(xhr.getResponseHeader('set-cookie'));
-                            console.log('// xhr.getResponseHeader("x-thx-session")');
-                            console.log(xhr.getResponseHeader('x-thx-session'));
-                            console.log('// document.cookie');
-                            console.log(document.cookie);
-                            console.log('// xhr.getResponseHeader("Content-Type")');
-                            console.log(xhr.getResponseHeader('Content-Type'));
-                            // window.location = response.redirectURL;
+                            window.location = response.redirectURL;
                         }
                     },
                     error: function(data) {
