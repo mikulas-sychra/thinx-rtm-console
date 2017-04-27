@@ -7,8 +7,9 @@ var MetronicApp = angular.module("MetronicApp", [
     "ui.router", 
     "ui.bootstrap", 
     "oc.lazyLoad",  
-    "ngSanitize"
-]); 
+    "ngSanitize",
+    "angular-web-notification"
+]);
 
 /* Configure ocLazyLoader(refer: https://github.com/ocombe/ocLazyLoad) */
 MetronicApp.config(['$ocLazyLoadProvider', function($ocLazyLoadProvider) {
@@ -224,6 +225,84 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                         files: [
                             'js/controllers/SourceController.js'
                         ] 
+                    });
+                }]
+            }
+        })
+
+        // User Profile
+        .state("profile", {
+            url: "/profile",
+            templateUrl: "views/profile/main.html",
+            data: {pageTitle: 'User Profile'},
+            controller: "UserProfileController",
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'MetronicApp',  
+                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
+                        files: [
+                            '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css',
+                            '../assets/pages/css/profile.css',
+                            
+                            '../assets/global/plugins/jquery.sparkline.min.js',
+                            '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
+
+                            '../assets/pages/scripts/profile.min.js',
+
+                            'js/controllers/UserProfileController.js'
+                        ]                    
+                    });
+                }]
+            }
+        })
+
+        // User Profile Dashboard
+        .state("profile.dashboard", {
+            url: "/dashboard",
+            templateUrl: "views/profile/dashboard.html",
+            data: {pageTitle: 'User Profile'}
+        })
+
+        // User Profile Account
+        .state("profile.account", {
+            url: "/account",
+            templateUrl: "views/profile/account.html",
+            data: {pageTitle: 'User Account'}
+        })
+
+        // User Profile Help
+        .state("profile.help", {
+            url: "/help",
+            templateUrl: "views/profile/help.html",
+            data: {pageTitle: 'User Help'}      
+        })
+
+        // Todo
+        .state('todo', {
+            url: "/todo",
+            templateUrl: "views/todo.html",
+            data: {pageTitle: 'Todo'},
+            controller: "TodoController",
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({ 
+                        name: 'MetronicApp',  
+                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
+                        files: [
+                            '../assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
+                            '../assets/apps/css/todo-2.css',
+                            '../assets/global/plugins/select2/css/select2.min.css',
+                            '../assets/global/plugins/select2/css/select2-bootstrap.min.css',
+
+                            '../assets/global/plugins/select2/js/select2.full.min.js',
+                            
+                            '../assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
+
+                            '../assets/apps/scripts/todo-2.min.js',
+
+                            'js/controllers/TodoController.js'  
+                        ]                    
                     });
                 }]
             }
@@ -484,84 +563,6 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             'js/scripts/table-ajax.js',
                             'js/controllers/GeneralPageController.js'
                         ]
-                    });
-                }]
-            }
-        })
-
-        // User Profile
-        .state("profile", {
-            url: "/profile",
-            templateUrl: "views/profile/main.html",
-            data: {pageTitle: 'User Profile'},
-            controller: "UserProfileController",
-            resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                    return $ocLazyLoad.load({
-                        name: 'MetronicApp',  
-                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
-                        files: [
-                            '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css',
-                            '../assets/pages/css/profile.css',
-                            
-                            '../assets/global/plugins/jquery.sparkline.min.js',
-                            '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
-
-                            '../assets/pages/scripts/profile.min.js',
-
-                            'js/controllers/UserProfileController.js'
-                        ]                    
-                    });
-                }]
-            }
-        })
-
-        // User Profile Dashboard
-        .state("profile.dashboard", {
-            url: "/dashboard",
-            templateUrl: "views/profile/dashboard.html",
-            data: {pageTitle: 'User Profile'}
-        })
-
-        // User Profile Account
-        .state("profile.account", {
-            url: "/account",
-            templateUrl: "views/profile/account.html",
-            data: {pageTitle: 'User Account'}
-        })
-
-        // User Profile Help
-        .state("profile.help", {
-            url: "/help",
-            templateUrl: "views/profile/help.html",
-            data: {pageTitle: 'User Help'}      
-        })
-
-        // Todo
-        .state('todo', {
-            url: "/todo",
-            templateUrl: "views/todo.html",
-            data: {pageTitle: 'Todo'},
-            controller: "TodoController",
-            resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                    return $ocLazyLoad.load({ 
-                        name: 'MetronicApp',  
-                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
-                        files: [
-                            '../assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
-                            '../assets/apps/css/todo-2.css',
-                            '../assets/global/plugins/select2/css/select2.min.css',
-                            '../assets/global/plugins/select2/css/select2-bootstrap.min.css',
-
-                            '../assets/global/plugins/select2/js/select2.full.min.js',
-                            
-                            '../assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
-
-                            '../assets/apps/scripts/todo-2.min.js',
-
-                            'js/controllers/TodoController.js'  
-                        ]                    
                     });
                 }]
             }
