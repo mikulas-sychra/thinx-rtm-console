@@ -196,7 +196,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
         .state('rsakey', {
             url: "/rsakey",
             templateUrl: "views/rsakey.html",            
-            data: {pageTitle: 'SSH Key Management'},
+            data: {pageTitle: 'RSA Key Management'},
             controller: "RsakeyController",
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
