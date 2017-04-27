@@ -4,18 +4,18 @@
         <a ui-sref="dashboard">Home</a>
         <i class="fa fa-circle"></i>
     </li>
-    <li class="active"> SSH Key Management </li>
+    <li class="active"> RSA Key Management </li>
 </ul>
 <!-- END PAGE BREADCRUMB -->
 <!-- BEGIN MAIN CONTENT -->
-<div class="row" ng-controller="SshkeyController">
+<div class="row" ng-controller="RsakeyController">
      <div class="col-md-12">
         <!-- BEGIN: ACCORDION DEMO -->
         <div class="portlet light bordered">
             <div class="portlet-title">
                 <div class="caption font-green-sharp">
                     <i class="icon-lock font-green-sharp"></i>
-                    <span class="caption-subject bold uppercase">SSH Keys</span>
+                    <span class="caption-subject bold uppercase">RSA Keys</span>
                     <span class="caption-helper hide"></span>
                 </div>
                 <div class="actions">
@@ -48,9 +48,9 @@
                             </tr>
                         </thead>
 
-                        <tr ng-repeat="sshkey in $root.sshKeys">
+                        <tr ng-repeat="rsakey in $root.rsaKeys">
                             <td class="fit">
-                                {{sshkey}}
+                                {{rsakey}}
                             </td>
                             <td>
                                 
@@ -59,19 +59,19 @@
                                 
                             </td>
                             <td>
-                                <button type="button" class="btn btn-danger btn-tiny" ng-click="revokeSshkey(sshkey, $index)"><i class="fa fa-cross"></i> Revoke</button>
+                                <button type="button" class="btn btn-danger btn-tiny" ng-click="revokeRsakey(rsakey, $index)"><i class="fa fa-cross"></i> Revoke</button>
                             </td>
                         </tr>
                     </table>
                 </div>
                 <!-- BEGIN FORM-->
-                <form action="#" class="form-horizontal form-bordered" name="sshkeyModal">
+                <form action="#" class="form-horizontal form-bordered" name="rsakeyModal">
                     <div id="pageModal" class="modal fade" role="dialog" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                    <h4 class="modal-title">New SSH Key</h4>
+                                    <h4 class="modal-title">New RSA Key</h4>
                                 </div>
                                 <div class="modal-body">
                                     <form action="#" class="form-horizontal">
@@ -91,7 +91,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary" ng-click="addSshkey()"><i class="fa fa-check"></i> Submit</button>
+                                    <button type="button" class="btn btn-primary" ng-click="addRsakey()"><i class="fa fa-check"></i> Submit</button>
                                 </div>
                             </div>
                         </div>

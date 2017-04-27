@@ -193,18 +193,18 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
         })
 
         // Sshkey Page
-        .state('sshkey', {
-            url: "/sshkey",
-            templateUrl: "views/sshkey.html",            
+        .state('rsakey', {
+            url: "/rsakey",
+            templateUrl: "views/rsakey.html",            
             data: {pageTitle: 'SSH Key Management'},
-            controller: "SshkeyController",
+            controller: "RsakeyController",
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         name: 'MetronicApp',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
                         files: [
-                            'js/controllers/SshkeyController.js'
+                            'js/controllers/RsakeyController.js'
                         ] 
                     });
                 }]
