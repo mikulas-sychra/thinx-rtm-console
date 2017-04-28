@@ -60,9 +60,11 @@ var Login = function() {
                         console.log('--login success--');
                         var response = JSON.parse(data);
                         console.log(response);
-                        if (typeof(response) !== 'undefined') {
+                        if (typeof(response) !== 'undefined' && typeof(response.redirectURL) !== 'undefined' ) {
                             console.log('--Redirecting to "' + response.redirectURL + '"--' );
                             window.location = response.redirectURL;
+                        } else {
+                            // TODO login error
                         }
                     },
                     error: function(data) {

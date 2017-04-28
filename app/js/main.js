@@ -89,8 +89,8 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
         setTimeout(autoUpdater, 2000);
     }
 
-    $webNotification.showNotification('Example Notification', {
-        body: 'Notification Text...',
+    $webNotification.showNotification('Wohoo!', {
+        body: 'Browser Notification Test Success.',
         icon: '/assets/thinx/img/favicon-32x32.png',
         onClick: function onNotificationClicked() {
             console.log('Notification clicked.');
@@ -108,8 +108,6 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
             }, 5000);
         }
     });
-
-    console.log($webNotification);
 
 }]);
 

@@ -11,27 +11,41 @@ $.ajaxSetup({
 var thinx = {
     urlBase: 'http://thinx.cloud:7442/api',
     header: { 'Content-Type': 'application/json' },
-    keyList: function () {
-        return keyList();
+    // SSH
+    apikeyList: function () {
+        return apikeyList();
     },
-    createKey: function () {
-        return createKey();
+    createApikey: function () {
+        return createApikey();
     },
-    revokeKey: function () {
-        return revokeKey();
+    revokeApikey: function () {
+        return revokeApikey();
     },
+    // RSA
+    rsakeyList: function () {
+        return rsakeyList();
+    },
+    addRsakey: function (rsakeyName, rsakeyValue) {
+        return addRsakey(rsakeyName, rsakeyValue);
+    },
+    deleteRsakey: function () {
+        return deleteRsakey();
+    },
+    // SOURCE
     sourceList: function () {
         return sourceList();
     },
-    addSource: function () {
-        return addSource();
+    addSource: function (sourceUrl, sourceName) {
+        return addSource(sourceUrl, sourceName);
     },
-    removeSource: function () {
-        return removeSource();
+    removeSource: function (index) {
+        return removeSource(index);
     },
+    // DEVICE
     deviceList: function () {
         return deviceList();
     },
+    // PROFILE
     getProfile: function () {
         return getProfile();
     },
@@ -52,35 +66,74 @@ function updateTimer() {
 	setTimeout(autoUpdater, 2000);
 }
 
+// Devices /user/devices
+//
+// deviceList GET /
+
+function deviceList() {
+    return Promise.resolve($.ajax({
+        url: urlBase + '/user/devices',
+        type: 'GET'
+    }));
+}
+
 
 // Apikeys /user/apikey
 //
-// createKey /
-// revokeKey [keyToRevoke] /
-// keyList /list
+// apikeyList /list
+// createApikey /
+// revokeApikey [keyToRevoke] /
 
-function keyList() {
+function apikeyList() {
 	return Promise.resolve($.ajax({
 		url: urlBase + '/user/apikey/list',
 		type: 'GET'
 	}));
 }
 
-
-function createKey() {
+function createApikey() {
 	return Promise.resolve($.ajax({
 		url: urlBase + '/user/apikey',
 		type: 'GET'
 	}));
 }
 
-
-function revokeKey(keyToRevoke) {
+function revokeApikey(keyToRevoke) {
 	return Promise.resolve($.ajax({
 		url: urlBase + '/user/apikey/revoke',
-		type: 'POST',
-		data: { api_key: keyToRevoke}
+		type: 'DELETE',
+		data: { api_key: keyToRevoke }
 	}));
+}
+
+
+// Rsakeys /user/rsakey
+//
+// createKey /
+// revokeKey [keyToRevoke] /
+// keyList /list
+
+function rsakeyList() {
+    return Promise.resolve($.ajax({
+        url: urlBase + '/user/rsakey/list',
+        type: 'GET'
+    }));
+}
+
+function addRsakey(rsakeyName, rsakeyValue) {
+    return Promise.resolve($.ajax({
+        url: urlBase + '/user/rsakey',
+        type: 'POST',
+        data: { name: rsakeyName, rsa_key: rsakeyValue }
+    }));
+}
+
+function deleteRsakey(keyToDelete) {
+    return Promise.resolve($.ajax({
+        url: urlBase + '/user/rsakey',
+        type: 'DELETE',
+        data: { rsa_key: keyToDelete }
+    }));
 }
 
 
@@ -90,25 +143,25 @@ function revokeKey(keyToRevoke) {
 // addSource [sourceUrl] POST /
 // removeSource [index] POST /
 
-function sourceList(sourceUrl) {
+function sourceList() {
 	return Promise.resolve($.ajax({
-		url: urlBase + '/user/source/list',
+		url: urlBase + '/user/sources/list',
 		type: 'GET'
 	}));
 }
 
-function addSource(sourceUrl) {
+function addSource(sourceUrl, sourceName) {
 	return Promise.resolve($.ajax({
-		url: urlBase + '/user/source',
+		url: urlBase + '/user/sources',
 		type: 'POST',
-		data: { source_url: sourceUrl}
+		data: { source_url: sourceUrl, source_name: sourceName}
 	}));
 }
 
 function removeSource(index) {
 	return Promise.resolve($.ajax({
-		url: urlBase + '/user/source/remove',
-		type: 'POST',
+		url: urlBase + '/user/sources/remove',
+		type: 'DELETE',
 		data: { source_id: index }
 	}));
 }
@@ -150,13 +203,3 @@ function changeProfile() {
 }
 
 
-// Devices /user/devices
-//
-// deviceList GET /
-
-function deviceList() {
-	return Promise.resolve($.ajax({
-		url: urlBase + '/user/devices',
-		type: 'GET'
-	}));
-}

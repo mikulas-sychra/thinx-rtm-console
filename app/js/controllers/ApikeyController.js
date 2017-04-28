@@ -9,7 +9,7 @@ angular.module('MetronicApp').controller('ApikeyController', ['$rootScope', '$sc
         $rootScope.settings.layout.pageBodySolid = false;
         $rootScope.settings.layout.pageSidebarClosed = false;
 
-        keyList()
+        apikeyList()
 	        .then(data => updateKeys(data))
 	        .catch(error => console.log('Error:', error));
     });
@@ -26,7 +26,7 @@ angular.module('MetronicApp').controller('ApikeyController', ['$rootScope', '$sc
 	$scope.createApikey = function() {
 		$scope.createButtonVisible = false;
 
-		createKey()
+		createApikey()
 	        .then(data => function(data) {
 	        	console.log('apikey:');
 				console.log(data.api_key);

@@ -59,7 +59,7 @@
                                 
                             </td>
                             <td>
-                                <button type="button" class="btn btn-danger btn-tiny" ng-click="revokeRsakey(rsakey, $index)"><i class="fa fa-cross"></i> Revoke</button>
+                                <button type="button" class="btn btn-danger btn-tiny" ng-click="deleteRsakey(rsakey, $index)"><i class="fa fa-cross"></i> Revoke</button>
                             </td>
                         </tr>
                     </table>
@@ -78,13 +78,13 @@
                                         <div class="form-group">
                                             <label class="control-label col-md-3">Key Name</label>
                                             <div class="col-md-9">
-                                                <input type="text" name="keyName" />
+                                                <input type="text" name="rsakeyName" />
                                             </div>
                                         </div>
                                         <div class="form-group last">
                                             <label class="control-label col-md-3">Key Value</label>
                                             <div class="col-md-9">
-                                                <textarea name="keyValue"></textarea>
+                                                <textarea name="rsakeyValue"></textarea>
                                             </div>
                                         </div>
                                     </form>
