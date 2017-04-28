@@ -49,7 +49,9 @@ var Login = function() {
 
                 $.ajax({
                     url: url,
-                    withCredentials: true,
+                    xhrFields: {
+                        withCredentials: true
+                    },
                     data: { 
                         username: $('input[name=username]').val(), 
                         password: $('input[name=password]').val()
