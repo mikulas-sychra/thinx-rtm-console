@@ -63,7 +63,7 @@ var Login = function() {
                         if (typeof(response) !== 'undefined' && typeof(response.redirectURL) !== 'undefined' ) {
                             console.log('--Redirecting to "' + response.redirectURL + '"--' );
                             // window.location = response.redirectURL;
-                            alert('Redirect bypassed, go to /app');
+                            alert('Redirect bypassed, go to /appcrede');
                         } else {
                             // TODO login error
                         }
