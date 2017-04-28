@@ -56,7 +56,7 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
         //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive 
     });
 
-    function updateProfile(data) {
+    function parseProfile(data) {
         var profile = JSON.parse(data);
         $rootScope.profile = profile.rows[0].doc;
         $rootScope.sources = $rootScope.profile.repos;
@@ -64,13 +64,17 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
 
         console.log('profile:');
         console.log($rootScope.profile);
+
+        if (typeof($rootScope.profile.avatar) == 'undefined' || $rootScope.profile.avatar.length == 0) {
+            $rootScope.profile.avatar = '/assets/thinx/img/default_avatar_sm.png';
+        }
         
         console.log('sources:');
         console.log($rootScope.sources);
     }
 
     getProfile()
-        .then(data => updateProfile(data))
+        .then(data => parseProfile(data))
         .catch(error => console.log('Error:', error));
 
     // autoUpdater();
@@ -83,31 +87,33 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
             console.log("Refreshing data in " + counter + " seconds...");
 
             getProfile()
-                .then(data => updateProfile(data))
+                .then(data => parseProfile(data))
                 .catch(error => console.log('Error:', error));
         }
         setTimeout(autoUpdater, 2000);
     }
 
-    $webNotification.showNotification('Wohoo!', {
-        body: 'Browser Notification Test Success.',
-        icon: '/assets/thinx/img/favicon-32x32.png',
-        onClick: function onNotificationClicked() {
-            console.log('Notification clicked.');
-        },
-        autoClose: 4000 //auto close the notification after 4 seconds (you can manually close it via hide function)
-    }, function onShow(error, hide) {
-        if (error) {
-            window.alert('Unable to show notification: ' + error.message);
-        } else {
-            console.log('Notification Shown.');
+    function registerNotification() {
+        $webNotification.showNotification('Wohoo!', {
+            body: 'Browser Notification Test Success.',
+            icon: '/assets/thinx/img/favicon-32x32.png',
+            onClick: function onNotificationClicked() {
+                console.log('Notification clicked.');
+            },
+            autoClose: 4000 //auto close the notification after 4 seconds (you can manually close it via hide function)
+        }, function onShow(error, hide) {
+            if (error) {
+                window.alert('Unable to show notification: ' + error.message);
+            } else {
+                console.log('Notification Shown.');
 
-            setTimeout(function hideNotification() {
-                console.log('Hiding notification....');
-                hide(); //manually close the notification (you can skip this if you use the autoClose option)
-            }, 5000);
-        }
-    });
+                setTimeout(function hideNotification() {
+                    console.log('Hiding notification....');
+                    hide(); //manually close the notification (you can skip this if you use the autoClose option)
+                }, 5000);
+            }
+        });
+    }
 
 }]);
 

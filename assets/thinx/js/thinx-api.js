@@ -9,8 +9,6 @@ $.ajaxSetup({
 });
 
 var thinx = {
-    urlBase: 'http://thinx.cloud:7442/api',
-    header: { 'Content-Type': 'application/json' },
     // SSH
     apikeyList: function () {
         return apikeyList();
