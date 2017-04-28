@@ -62,8 +62,7 @@ var Login = function() {
                         console.log(response);
                         if (typeof(response) !== 'undefined' && typeof(response.redirectURL) !== 'undefined' ) {
                             console.log('--Redirecting to "' + response.redirectURL + '"--' );
-                            // window.location = response.redirectURL;
-                            alert('Redirect bypassed, go to /appcrede');
+                            window.location = response.redirectURL;
                         } else {
                             // TODO login error
                         }
