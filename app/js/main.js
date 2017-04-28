@@ -50,7 +50,7 @@ MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
 }]);
 
 /* Setup App Main Controller */
-MetronicApp.controller('AppController', ['$scope', '$rootScope', '$window', function($scope, $rootScope) {
+MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotification', function($scope, $rootScope, $webNotification) {
     $scope.$on('$viewContentLoaded', function() {
         //App.initComponents(); // init core components
         //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive 
@@ -88,6 +88,28 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', '$window', func
         }
         setTimeout(autoUpdater, 2000);
     }
+
+    $webNotification.showNotification('Example Notification', {
+        body: 'Notification Text...',
+        icon: '/assets/thinx/img/favicon-32x32.png',
+        onClick: function onNotificationClicked() {
+            console.log('Notification clicked.');
+        },
+        autoClose: 4000 //auto close the notification after 4 seconds (you can manually close it via hide function)
+    }, function onShow(error, hide) {
+        if (error) {
+            window.alert('Unable to show notification: ' + error.message);
+        } else {
+            console.log('Notification Shown.');
+
+            setTimeout(function hideNotification() {
+                console.log('Hiding notification....');
+                hide(); //manually close the notification (you can skip this if you use the autoClose option)
+            }, 5000);
+        }
+    });
+
+    console.log($webNotification);
 
 }]);
 
