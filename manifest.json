@@ -4,7 +4,7 @@
   "start_url": "/",
   "icons": [
     {
-      "src": "assets/thinx/notification_icon_192x192.png",
+      "src": "assets/thinx/img/notification_icon_192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     }

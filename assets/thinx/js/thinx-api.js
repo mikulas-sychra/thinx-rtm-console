@@ -119,10 +119,18 @@ function rsakeyList() {
 }
 
 function addRsakey(rsakeyName, rsakeyValue) {
+
+    console.log(rsakeyName);
+    console.log(rsakeyValue);
+
     return Promise.resolve($.ajax({
         url: urlBase + '/user/rsakey',
         type: 'POST',
-        data: { name: rsakeyName, rsa_key: rsakeyValue }
+        data: { 
+            alias: rsakeyName,
+            key: rsakeyValue
+        }, 
+        datatype: 'json'
     }));
 }
 
@@ -150,15 +158,19 @@ function sourceList() {
 
 function addSource(sourceUrl, sourceName) {
 	return Promise.resolve($.ajax({
-		url: urlBase + '/user/sources',
+		url: urlBase + '/user/source',
 		type: 'POST',
-		data: { source_url: sourceUrl, source_name: sourceName}
+        data: { 
+            alias: sourceName,
+            url: sourceUrl
+        }, 
+		dataType: 'json'
 	}));
 }
 
 function removeSource(index) {
 	return Promise.resolve($.ajax({
-		url: urlBase + '/user/sources/remove',
+		url: urlBase + '/user/source',
 		type: 'DELETE',
 		data: { source_id: index }
 	}));

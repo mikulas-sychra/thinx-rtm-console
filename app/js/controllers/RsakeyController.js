@@ -11,9 +11,10 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
     });
 
 	$scope.addRsakey = function() {
-		console.log('--adding rsa key ' + $('.rsakeyModal input[name=rsakeyName]').val() +'--')
 
-		addRsakey($('.rsakeyModal input[name=rsakeyName]').val(), $('.rsakeyModal input[name=rsakeyValue]').val())
+		console.log('--adding rsa key ' + $('#pageModal input[name=rsakeyName]').val() +'--')
+
+		addRsakey($('#pageModal input[name=rsakeyName]').val(), $('#pageModal textarea[name=rsakeyValue]').val())
 	        .then(data => function() {
 	        	console.log('Success:', data);
 	        })
