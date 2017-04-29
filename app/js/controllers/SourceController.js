@@ -29,7 +29,6 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
                 }
             })
             .fail(function(error) {
-                throw(error);
                 $('.msg-warning').text(error);
                 $('.msg-warning').show();
                 console.log('Error:', error);
@@ -38,11 +37,11 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
 	};
 
 	$scope.removeSource = function(index) {
-		console.log('-- adding new source --'); 
 
-        var jqxhr = Thinx.removeSource($('#pageModal .sourceUrl').val())
+		console.log('-- removing source ' + index + '--'); 
+
+        var jqxhr = Thinx.removeSource(index)
             .done(function(response) {
-                
                 if (typeof(response) !== 'undefined') {
                     if (response.success) {
                         console.log(response);
@@ -55,7 +54,6 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
                 }
             })
             .fail(function(error) {
-                throw(error);
                 $('.msg-warning').text(error);
                 $('.msg-warning').show();
                 console.log('Error:', error);

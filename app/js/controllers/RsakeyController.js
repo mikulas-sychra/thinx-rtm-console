@@ -33,7 +33,6 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
 	            }
 	        })
 	        .fail(function(error) {
-	        	throw(error);
 	        	$('.msg-warning').text(error);
 	        	$('.msg-warning').show();
 	        	console.log('Error:', error);
