@@ -14,20 +14,37 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
 
 		console.log('--adding rsa key ' + $('#pageModal input[name=rsakeyName]').val() +'--')
 
-		addRsakey($('#pageModal input[name=rsakeyName]').val(), $('#pageModal textarea[name=rsakeyValue]').val())
-	        .then(data => function() {
-	        	console.log('Success:', data);
+		var jqxhr = Thinx.addRsakey($('#pageModal input[name=rsakeyName]').val(), $('#pageModal textarea[name=rsakeyValue]').val())
+	        .done(function(response) {
+	        	
+	            if (typeof(response) !== 'undefined') {
+	                if (response.success) {
+	                    console.log(response);
+	                    // $scope.createButtonVisible = false;
+	                    // $scope.newApikey = response.api_key;
+	                    // $('#pageModal .msg-warning').show();
+	                    // $scope.$apply();
+	                } else {
+	                    console.log(response);
+	                }
+	            } else {
+	            	console.log('error');
+	            	console.log(response);
+	            }
 	        })
-	        .catch(error => function () {
-	        	// TODO throw error message
-	        	console.log('Error:', error)
+	        .fail(function(error) {
+	        	throw(error);
+	        	$('.msg-warning').text(error);
+	        	$('.msg-warning').show();
+	        	console.log('Error:', error);
 	        });
+
 	};
 
     $scope.deleteRsakey = function(index) {
 		console.log('--deleting rsa key ' + index +'--')
 
-		revokeRsakey(index)
+		Thinx.revokeRsakey(index)
 	        .then(data => function() {
 	        	console.log('Success:', data);
 	        	$rootScope.rsaKeys.splice(index, 1);

@@ -10,12 +10,56 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
         $rootScope.settings.layout.pageSidebarClosed = false;
     });
 
-    $scope.addSource = function(sourceUrl) {
-		addSource(sourceUrl);
+    $scope.addSource = function() {
+	
+        console.log('-- adding new source --'); 
+
+        var jqxhr = Thinx.addSource($('#pageModal input[name=sourceUrl]').val(), $('#pageModal index[name=sourceName]').val())
+            .done(function(response) {
+                
+                if (typeof(response) !== 'undefined') {
+                    if (response.success) {
+                        console.log(response);
+                    } else {
+                        console.log(response);
+                    }
+                } else {
+                    console.log('error');
+                    console.log(response);
+                }
+            })
+            .fail(function(error) {
+                throw(error);
+                $('.msg-warning').text(error);
+                $('.msg-warning').show();
+                console.log('Error:', error);
+            });
+
 	};
 
 	$scope.removeSource = function(index) {
-		removeSource(index);
+		console.log('-- adding new source --'); 
+
+        var jqxhr = Thinx.removeSource($('#pageModal .sourceUrl').val())
+            .done(function(response) {
+                
+                if (typeof(response) !== 'undefined') {
+                    if (response.success) {
+                        console.log(response);
+                    } else {
+                        console.log(response);
+                    }
+                } else {
+                    console.log('error');
+                    console.log(response);
+                }
+            })
+            .fail(function(error) {
+                throw(error);
+                $('.msg-warning').text(error);
+                $('.msg-warning').show();
+                console.log('Error:', error);
+            });
 	};
 
 }]);

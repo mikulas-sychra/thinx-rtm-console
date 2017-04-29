@@ -8,7 +8,7 @@ $.ajaxSetup({
     }
 });
 
-var thinx = {
+var Thinx = {
     // SSH
     apikeyList: function () {
         return apikeyList();
@@ -16,8 +16,8 @@ var thinx = {
     createApikey: function () {
         return createApikey();
     },
-    revokeApikey: function () {
-        return revokeApikey();
+    revokeApikey: function (fingerprint) {
+        return revokeApikey(fingerprint);
     },
     // RSA
     rsakeyList: function () {
@@ -75,6 +75,29 @@ function deviceList() {
     }));
 }
 
+function attachDevice() {
+    return Promise.resolve($.ajax({
+        url: urlBase + '/user/device/attach',
+        type: 'POST',
+        data: {
+            alias: alias,
+            mac: mac
+        }, 
+        dataType: 'json'
+    }));
+}
+
+function detachDevice() {
+    return Promise.resolve($.ajax({
+        url: urlBase + '/user/device/detach',
+        type: 'POST',
+        data: {
+            alias: alias,
+            mac: mac
+        }, 
+        dataType: 'json'
+    }));
+}
 
 // Apikeys /user/apikey
 //
@@ -90,17 +113,19 @@ function apikeyList() {
 }
 
 function createApikey() {
-	return Promise.resolve($.ajax({
-		url: urlBase + '/user/apikey',
-		type: 'GET'
-	}));
+    return $.ajax({
+        url: urlBase + '/user/apikey',
+        type: 'POST',
+        dataType: 'json'
+    });
 }
 
-function revokeApikey(keyToRevoke) {
+function revokeApikey(fingerprint) {
 	return Promise.resolve($.ajax({
 		url: urlBase + '/user/apikey/revoke',
 		type: 'DELETE',
-		data: { api_key: keyToRevoke }
+        data: { api_key: fingerprint }, 
+        dataType: 'json'
 	}));
 }
 
@@ -119,26 +144,23 @@ function rsakeyList() {
 }
 
 function addRsakey(rsakeyName, rsakeyValue) {
-
-    console.log(rsakeyName);
-    console.log(rsakeyValue);
-
-    return Promise.resolve($.ajax({
+    return $.ajax({
         url: urlBase + '/user/rsakey',
         type: 'POST',
         data: { 
             alias: rsakeyName,
             key: rsakeyValue
         }, 
-        datatype: 'json'
-    }));
+        dataType: 'json'
+    });
 }
 
-function deleteRsakey(keyToDelete) {
+function deleteRsakey(fingerprint) {
     return Promise.resolve($.ajax({
         url: urlBase + '/user/rsakey',
         type: 'DELETE',
-        data: { rsa_key: keyToDelete }
+        data: { fingerprint: fingerprint }, 
+        dataType: 'json'
     }));
 }
 
@@ -156,23 +178,24 @@ function sourceList() {
 	}));
 }
 
-function addSource(sourceUrl, sourceName) {
-	return Promise.resolve($.ajax({
+function addSource(url, alias) {
+	return $.ajax({
 		url: urlBase + '/user/source',
 		type: 'POST',
         data: { 
-            alias: sourceName,
-            url: sourceUrl
+            alias: alias,
+            url: url
         }, 
 		dataType: 'json'
-	}));
+	});
 }
 
-function removeSource(index) {
+function removeSource(alias) {
 	return Promise.resolve($.ajax({
 		url: urlBase + '/user/source',
 		type: 'DELETE',
-		data: { source_id: index }
+		data: { alias: alias }, 
+        dataType: 'json'
 	}));
 }
 	

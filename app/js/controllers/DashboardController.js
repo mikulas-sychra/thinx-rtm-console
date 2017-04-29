@@ -3,7 +3,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
         // initialize core components
         App.initAjax();
 
-        deviceList()
+        Thinx.deviceList()
 	        .then(data => updateDevices(data))
 	        .catch(error => console.log('Error:', error));
 

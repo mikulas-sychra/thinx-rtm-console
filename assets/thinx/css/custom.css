@@ -54,3 +54,9 @@
 .login .msg-success {
 	text-align: center;
 }
+
+.new-apikey {
+	text-align: center;
+    font-size: 17pt;
+    font-family: monospace;
+}

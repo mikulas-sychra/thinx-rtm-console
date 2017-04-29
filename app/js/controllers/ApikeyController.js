@@ -9,10 +9,12 @@ angular.module('MetronicApp').controller('ApikeyController', ['$rootScope', '$sc
         $rootScope.settings.layout.pageBodySolid = false;
         $rootScope.settings.layout.pageSidebarClosed = false;
 
-        apikeyList()
+        Thinx.apikeyList()
 	        .then(data => updateKeys(data))
 	        .catch(error => console.log('Error:', error));
     });
+
+    $scope.newApikey = '';
 
     function updateKeys(data) {
         var keys = JSON.parse(data);
@@ -24,48 +26,54 @@ angular.module('MetronicApp').controller('ApikeyController', ['$rootScope', '$sc
     }
 
 	$scope.createApikey = function() {
-		$scope.createButtonVisible = false;
+		console.log('-- asking for new apikey --'); 
 
-		createApikey()
-	        .then(data => function(data) {
-	        	console.log('apikey:');
-				console.log(data.api_key);
-				$scope.newApikey = data.api_key;
-				$('.msg-warning').show();
-				$scope.$apply()
+		var jqxhr = Thinx.createApikey()
+	        .done(function(response) {
+	        	
+	            if (typeof(response) !== 'undefined') {
+	                if (response.success) {
+	                    console.log(response.api_key);
+	                    $scope.createButtonVisible = false;
+	                    $scope.newApikey = response.api_key;
+	                    $('#pageModal .msg-warning').show();
+	                    $scope.$apply();
+	                } else {
+	                    console.log(response);
+	                }
+	            } else {
+	            	console.log('error');
+	            	console.log(response);
+	            }
 	        })
-	        .catch(error => function(error) {
+	        .fail(function(error) {
+	        	throw(error);
 	        	$('.msg-warning').text(error);
 	        	$('.msg-warning').show();
 	        	console.log('Error:', error);
 	        });
+
 	};
 
-	$scope.revokeApikey = function(keyToRevoke, index) {
-		console.log('--revoking key ' + keyToRevoke +'--')
+	$scope.revokeApikey = function(fingerprint, index) {
+		console.log('--revoking key ' + fingerprint +'--')
 
-		revokeKey(keyToRevoke)
-	        .then(data => function() {
-	        	console.log('Success:', data);
+		Thinx.revokeApikey(fingerprint)
+	        .done(function(response) {
+
+	        	if (response.success) {
+	        		console.log('Success:', response);
+	        		toastr.success('Revoked.', 'THiNX RTM Console', {timeOut: 5000})
+	        	} else {
+	        		toastr.success('Revocation failed.', 'THiNX RTM Console', {timeOut: 5000})
+	        	}
+
 	        	$rootScope.apiKeys.splice(index, 1);
 	        })
 	        .catch(error => function () {
 	        	// TODO throw error message
 	        	console.log('Error:', error)
 	        });
-	};
-
-	$scope.copyToClipboard = function() {
-		// $scope.keyString.focus();
-		var ele = angular.element(document.getElementById('keyString')).scope();
-		ele.focus();
-        ele.select();
-        ele.hide();
-        setTimeout(function() {
-            document.execCommand('copy');
-            console.log('copied...');
-            console.log(ele.text());
-        }, 20);
 	};
 
 	$scope.resetModal = function() {
