@@ -3,14 +3,11 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
         // initialize core components
         App.initAjax();
 
-        Thinx.deviceList()
-	        .then(data => updateDevices(data))
-	        .catch(error => console.log('Error:', error));
-
-            toastr.options = {
-                positionClass: "toast-bottom-right"
+        var jqxhr = Thinx.deviceList()
+	        .done(function(data) {
+                updateDevices(data);
             }
-            toastr.success('We do have the Toastr plugin available and working.', 'THiNX RTM Console', {timeOut: 5000})
+	        .fail(error => console.log('Error:', error));
 
     });
 
@@ -27,4 +24,5 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
         console.log('devices:');
         console.log($rootScope.devices);
     }
+
 });

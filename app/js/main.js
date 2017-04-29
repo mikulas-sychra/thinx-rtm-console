@@ -49,6 +49,12 @@ MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
     return settings;
 }]);
 
+MetronicApp.filter('lastSeen', function() {
+    return function(date) {
+        return moment(date).fromNow();
+    };
+});
+
 /* Setup App Main Controller */
 MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotification', function($scope, $rootScope, $webNotification) {
     $scope.$on('$viewContentLoaded', function() {
@@ -187,6 +193,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/global/plugins/morris/raphael-min.js',                            
                             '../assets/global/plugins/jquery.sparkline.min.js',
 
+                            '../assets/global/plugins/moment.min.js',
                             '../assets/pages/scripts/dashboard.min.js',
                             'js/controllers/DashboardController.js',
                         ] 
