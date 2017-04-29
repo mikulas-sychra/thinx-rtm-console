@@ -116,19 +116,22 @@
                             <thead>
                                 <tr class="uppercase">
                                     <th colspan="2">
-                                        Owner
+                                        
                                     </th>
                                     <th>
                                         Alias
                                     </th>
                                     <th>
-                                        FIRMWARE
+                                        Firmware
+                                    </th>
+                                    <th>
+                                        Source
                                     </th>
                                     <th>
                                         MAC
                                     </th>
                                     <th>
-                                        UPDATED
+                                        Last Seen
                                     </th>
                                 </tr>
                             </thead>
@@ -137,13 +140,16 @@
                                     
                                 </td>
                                 <td>
-                                    <a href="javascript:;" class="primary-link">{{device.value.owner}}</a>
+                                    <a href="javascript:;" class="primary-link"></a>
                                 </td>
                                 <td>
                                     {{device.value.alias}}
                                 </td>
                                 <td>
                                     {{device.value.firmware}}
+                                </td>
+                                <td>
+                                    {{device.value.source}}
                                 </td>
                                 <td>
                                     <span class="bold font-green">{{device.id}}</span>
