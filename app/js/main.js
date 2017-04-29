@@ -59,7 +59,6 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
     function parseProfile(data) {
         var profile = JSON.parse(data);
         $rootScope.profile = profile.rows[0].doc;
-        $rootScope.sources = $rootScope.profile.repos;
         $scope.$apply()
 
         console.log('profile:');
@@ -68,9 +67,6 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
         if (typeof($rootScope.profile.avatar) == 'undefined' || $rootScope.profile.avatar.length == 0) {
             $rootScope.profile.avatar = '/assets/thinx/img/default_avatar_sm.png';
         }
-        
-        console.log('sources:');
-        console.log($rootScope.sources);
     }
 
     getProfile()

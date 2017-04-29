@@ -9,16 +9,20 @@ angular.module('MetronicApp').controller('ApikeyController', ['$rootScope', '$sc
         $rootScope.settings.layout.pageBodySolid = false;
         $rootScope.settings.layout.pageSidebarClosed = false;
 
-        Thinx.apikeyList()
-	        .then(data => updateKeys(data))
-	        .catch(error => console.log('Error:', error));
+        var jqxhr = Thinx.apikeyList()
+	        .done( function(data) {
+	        	updateKeys(data)
+	        })
+	        .fail(error => console.log('Error:', error));
+
+		$scope.newApikey = '';
+
     });
 
-    $scope.newApikey = '';
 
     function updateKeys(data) {
-        var keys = JSON.parse(data);
-		$rootScope.apiKeys = keys.api_keys;
+        var data = JSON.parse(data);
+		$rootScope.apiKeys = data.api_keys;
 		$scope.$apply()
 
         console.log('keys:');
@@ -30,13 +34,19 @@ angular.module('MetronicApp').controller('ApikeyController', ['$rootScope', '$sc
 
 		var jqxhr = Thinx.createApikey()
 	        .done(function(response) {
-	        	
 	            if (typeof(response) !== 'undefined') {
 	                if (response.success) {
 	                    console.log(response.api_key);
 	                    $scope.createButtonVisible = false;
 	                    $scope.newApikey = response.api_key;
 	                    $('#pageModal .msg-warning').show();
+
+						var jqxhrUpdate = Thinx.apikeyList()
+							        .done( function(data) {
+							        	updateKeys(data)
+							        })
+							        .fail(error => console.log('Error:', error));
+
 	                    $scope.$apply();
 	                } else {
 	                    console.log(response);
@@ -47,7 +57,6 @@ angular.module('MetronicApp').controller('ApikeyController', ['$rootScope', '$sc
 	            }
 	        })
 	        .fail(function(error) {
-	        	throw(error);
 	        	$('.msg-warning').text(error);
 	        	$('.msg-warning').show();
 	        	console.log('Error:', error);
@@ -58,19 +67,18 @@ angular.module('MetronicApp').controller('ApikeyController', ['$rootScope', '$sc
 	$scope.revokeApikey = function(fingerprint, index) {
 		console.log('--revoking key ' + fingerprint +'--')
 
-		Thinx.revokeApikey(fingerprint)
+		var jqxhr = Thinx.revokeApikey(fingerprint)
 	        .done(function(response) {
-
 	        	if (response.success) {
-	        		console.log('Success:', response);
+	        		console.log('Success:', response.revoked);
+	        		$rootScope.apiKeys.splice(index, 1);
 	        		toastr.success('Revoked.', 'THiNX RTM Console', {timeOut: 5000})
+					$scope.$apply()
 	        	} else {
-	        		toastr.success('Revocation failed.', 'THiNX RTM Console', {timeOut: 5000})
+	        		toastr.error('Revocation failed.', 'THiNX RTM Console', {timeOut: 5000})
 	        	}
-
-	        	$rootScope.apiKeys.splice(index, 1);
 	        })
-	        .catch(error => function () {
+	        .fail(function (error) {
 	        	// TODO throw error message
 	        	console.log('Error:', error)
 	        });

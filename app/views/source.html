@@ -50,6 +50,7 @@
 
                         <tr ng-repeat="source in $root.sources">
                             <td class="fit">
+                                {{source.alias}}<br>
                                 {{source.url}}
                             </td>
                             <td>
@@ -58,7 +59,7 @@
                                 </span>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-danger btn-tiny" ng-click="removeSource($index)"><i class="fa fa-cross"></i> Remove</button>
+                                <button type="button" class="btn btn-danger btn-tiny" ng-click="revokeSource(source.alias, $index)"><i class="fa fa-cross"></i> Remove</button>
                             </td>
                         </tr>
                     </table>
@@ -84,7 +85,7 @@
                                         <div class="form-group">
                                             <label class="control-label col-md-3">Source Name</label>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control" name="sourceName" />
+                                                <input type="text" class="form-control" name="sourceAlias" />
                                             </div>
                                         </div>
                                     </form>

@@ -34,9 +34,6 @@
                         <thead>
                             <tr class="uppercase">
                                 <th>
-                                    Key ID
-                                </th>
-                                <th>
                                     Name
                                 </th>
                                 <th>
@@ -50,16 +47,13 @@
 
                         <tr ng-repeat="rsakey in $root.rsaKeys">
                             <td class="fit">
-                                {{rsakey}}
+                                {{rsakey.name}}
                             </td>
                             <td>
-                                
+                                {{rsakey.fingerprint}}
                             </td>
                             <td>
-                                
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger btn-tiny" ng-click="deleteRsakey(rsakey, $index)"><i class="fa fa-cross"></i> Revoke</button>
+                                <button type="button" class="btn btn-danger btn-tiny" ng-click="revokeRsakey(rsakey.fingerprint, $index)"><i class="fa fa-cross"></i> Delete</button>
                             </td>
                         </tr>
                     </table>
