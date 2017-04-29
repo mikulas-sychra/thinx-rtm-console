@@ -48,6 +48,8 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
                             })
                             .fail(error => console.log('Error:', error));
 
+                        $('#pageModal').modal('hide');
+
                     } else {
                         console.log(response);
                     }
@@ -89,5 +91,11 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
                 console.log('Error:', error);
             });
 	};
+
+    $scope.resetModal = function() {
+        $('#pageModal input[name=sourceAlias]').val(null);
+        $('#pageModal input[name=sourceUrl]').val(null);
+        $scope.sourceModal.$setPristine();
+    }
 
 }]);
