@@ -37,20 +37,25 @@
                         <thead>
                             <tr class="uppercase">
                                 <th class="fit">
-                                    URL
+                                    Alias
+                                </th>
+                                <th>
+                                    Url
                                 </th>
                                 <th>
                                     Devices
                                 </th>
                                 <th>
-                                    Reserved
+                                    Actions
                                 </th>
                             </tr>
                         </thead>
 
                         <tr ng-repeat="source in $root.sources">
                             <td class="fit">
-                                {{source.alias}}<br>
+                                {{source.alias}}
+                            </td>
+                            <td>
                                 {{source.url}}
                             </td>
                             <td>
@@ -77,15 +82,15 @@
                                 <div class="modal-body">
                                     <form action="#" class="form-horizontal">
                                         <div class="form-group">
-                                            <label class="control-label col-md-3">Source URL</label>
+                                            <label class="control-label col-md-3">Source Alias</label>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control" name="sourceUrl" />
+                                                <input type="text" class="form-control" name="sourceAlias" />
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label col-md-3">Source Name</label>
+                                            <label class="control-label col-md-3">Source URL</label>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control" name="sourceAlias" />
+                                                <input type="text" class="form-control" name="sourceUrl" />
                                             </div>
                                         </div>
                                     </form>

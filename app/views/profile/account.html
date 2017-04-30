@@ -11,13 +11,13 @@
                         <a href="#" data-target="#tab_1_1" data-toggle="tab">Personal Info</a>
                     </li>
                     <li>
-                        <a href="#" data-target="#tab_1_2" data-toggle="tab">Change Avatar</a>
+                        <a href="#" data-target="#tab_1_2" data-toggle="tab">Avatar</a>
                     </li>
                     <li>
-                        <a href="#" data-target="#tab_1_3" data-toggle="tab">Change Password</a>
+                        <a href="#" data-target="#tab_1_3" data-toggle="tab">Password</a>
                     </li>
                     <li>
-                        <a href="#" data-target="#tab_1_4" data-toggle="tab">Privacy Settings</a>
+                        <a href="#" data-target="#tab_1_4" data-toggle="tab">Settings</a>
                     </li>
                 </ul>
             </div>
@@ -40,7 +40,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Email</label>
-                                <input type="text" placeholder="john@doe.com" class="form-control" value="{{$root.profile['email']}}"/>
+                                <input type="text" placeholder="john@doe.com" class="form-control" value="{{$root.profile['email']}}" ng-readonly="true"/>
                             </div>
                             <div class="margiv-top-10">
                                 <a href="#" class="btn green-haze">Save Changes </a>

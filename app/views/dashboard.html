@@ -9,8 +9,8 @@
 <!-- END PAGE BREADCRUMB -->
 <!-- BEGIN MAIN CONTENT -->
 <div ng-controller="DashboardController">
-    <div class="note note-info">
-        <h3>1. API Key 
+    <div class="note note-info" ng-hide="$root.profile.goals.includes('apikey')">
+        <h3>1. API Key
             <span class="close" data-close="note"></span>
         </h3>
         <a ui-sref="apikey">Create your first API Key</a>
@@ -19,7 +19,7 @@
         </p>
         </span>
     </div>
-    <div class="note note-info">
+    <div class="note note-info" ng-hide="$root.profile.goals.includes('enroll')">
         <h3>2. Device Enrollment
             <span class="close" data-close="note"></span>
         </h3>
@@ -31,7 +31,7 @@
         </p>
         </span>
     </div>
-    <div class="note note-info">
+    <div class="note note-info" ng-hide="$root.profile.goals.includes('enroll')">
         <h3>3. Device Setup
             <span class="close" data-close="note"></span>
         </h3>
@@ -42,7 +42,7 @@
         </p>
         </span>
     </div>
-    <div class="note note-danger">
+    <div class="note note-danger" ng-hide="$root.profile.goals.includes('rsakey')">
         <h3>Security
             <span class="close" data-close="note"></span>
         </h3>
@@ -52,7 +52,7 @@
         </p>
         </span>
     </div>
-    <div class="note note-success">
+    <div class="note note-success" ng-hide="$root.profile.goals.includes('update')">
         <h3>Well Done!
             <span class="close" data-close="note"></span>
         </h3>
@@ -115,9 +115,6 @@
                         <table class="table table-hover table-light">
                             <thead>
                                 <tr class="uppercase">
-                                    <th colspan="2">
-                                        
-                                    </th>
                                     <th>
                                         Alias
                                     </th>
@@ -133,29 +130,43 @@
                                     <th>
                                         Last Seen
                                     </th>
+                                    <th>
+                                        Build
+                                    </th>
                                 </tr>
                             </thead>
                              <tr ng-repeat="device in $root.devices track by device.id">
                                 <td class="fit">
-                                    
-                                </td>
-                                <td>
-                                    <a href="javascript:;" class="primary-link"></a>
-                                </td>
-                                <td>
                                     {{device.value.alias}}
                                 </td>
                                 <td>
                                     {{device.value.firmware}}
                                 </td>
                                 <td>
-                                    {{device.value.source}}
+                                    <div class="input-group">
+                                        <ui-select allow-clear ng-model="device.value.source" theme="bootstrap" on-select="attachRepository($select.selected.alias, device.value.alias, device.value.mac)">
+                                            <ui-select-match placeholder="none">{{$select.selected.alias}}</ui-select-match>
+                                            <ui-select-choices repeat="source.alias as source in $root.sources | filter: $select.search">
+                                                <span ng-bind-html="source.alias | highlight: $select.search"></span>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                        <span class="input-group-btn">
+                                            <button type="button" ng-click="detachRepository(device.value.alias, device.value.mac); device.value.source = undefined;" class="btn btn-default">
+                                                <span class="glyphicon glyphicon-trash"></span>
+                                            </button>
+                                        </span>
+                                    </div>                                    
                                 </td>
                                 <td>
-                                    <span class="bold font-green">{{device.id}}</span>
+                                    {{device.id}}
                                 </td>
                                 <td>
                                     {{device.value.lastupdate | lastSeen}}
+                                </td>
+                                <td>
+                                    <a class="btn btn-circle btn-icon-only btn-default" href="#" ng-click="build(device.value.alias, device.value.mac)">
+                                        <i class="icon-chemistry"></i>
+                                    </a>
                                 </td>
                             </tr>
                         </table>
@@ -168,7 +179,7 @@
     </div>
     <div class="row">
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-            <div class="dashboard-stat green">
+            <div class="dashboard-stat green-steel">
                 <div class="visual">
                     <i class="fa fa-shopping-cart"></i>
                 </div>
@@ -182,7 +193,7 @@
             </div>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-            <div class="dashboard-stat red">
+            <div class="dashboard-stat green-seagreen">
                 <div class="visual">
                     <i class="fa fa-bar-chart-o"></i>
                 </div>
@@ -196,7 +207,7 @@
             </div>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-            <div class="dashboard-stat blue">
+            <div class="dashboard-stat green-meadow">
                 <div class="visual">
                     <i class="fa fa-comments"></i>
                 </div>
@@ -210,7 +221,7 @@
             </div>
         </div> 
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-            <div class="dashboard-stat purple">
+            <div class="dashboard-stat green-jungle">
                 <div class="visual">
                     <i class="fa fa-globe"></i>
                 </div>

@@ -48,6 +48,8 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
                             })
                             .fail(error => console.log('Error:', error));
 
+                            toastr.success('Source Added.', 'THiNX RTM Console', {timeOut: 5000})
+
                         $('#pageModal').modal('hide');
 
                     } else {
@@ -56,12 +58,14 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
                 } else {
                     console.log('error');
                     console.log(response);
+                    toastr.error('Source Failed.', 'THiNX RTM Console', {timeOut: 5000})
                 }
             })
             .fail(function(error) {
                 $('.msg-warning').text(error);
                 $('.msg-warning').show();
                 console.log('Error:', error);
+                toastr.success('Source Failed.', 'THiNX RTM Console', {timeOut: 5000})
             });
 
 	};
@@ -77,18 +81,22 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
                         console.log(response);
                         $rootScope.sources.splice(index, 1);
                         $scope.$apply()
+                        toastr.success('Source Removed.', 'THiNX RTM Console', {timeOut: 5000})
                     } else {
                         console.log(response);
+                        toastr.success('Source Failed.', 'THiNX RTM Console', {timeOut: 5000})
                     }
                 } else {
                     console.log('error');
                     console.log(response);
+                    toastr.success('Source Failed.', 'THiNX RTM Console', {timeOut: 5000})
                 }
             })
             .fail(function(error) {
                 $('.msg-warning').text(error);
                 $('.msg-warning').show();
                 console.log('Error:', error);
+                toastr.success('Source Failed.', 'THiNX RTM Console', {timeOut: 5000})
             });
 	};
 

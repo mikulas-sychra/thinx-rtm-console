@@ -43,6 +43,12 @@ var Thinx = {
     deviceList: function () {
         return deviceList();
     },
+    attachRepository: function (sourceAlias, deviceAlias, deviceMac) {
+        return attachRepository(sourceAlias, deviceAlias, deviceMac);
+    },
+    detachRepository: function (deviceAlias, deviceMac) {
+        return detachRepository(deviceAlias, deviceMac);
+    },
     // PROFILE
     getProfile: function () {
         return getProfile();
@@ -69,26 +75,27 @@ function updateTimer() {
 // deviceList GET /
 
 function deviceList() {
-    return Promise.resolve($.ajax({
+    return $.ajax({
         url: urlBase + '/user/devices',
         type: 'GET'
-    }));
+    });
 }
 
-function attachRepository() {
-    return Promise.resolve($.ajax({
+function attachRepository(source, alias, mac) {
+    return $.ajax({
         url: urlBase + '/user/device/attach',
         type: 'POST',
-        data: {
+        data: JSON.stringify({
+            source: source,
             alias: alias,
             mac: mac
-        }, 
+        }), 
         dataType: 'json'
-    }));
+    });
 }
 
-function detachRepository() {
-    return Promise.resolve($.ajax({
+function detachRepository(alias, mac) {
+    return $.ajax({
         url: urlBase + '/user/device/detach',
         type: 'POST',
         data: JSON.stringify({
@@ -96,7 +103,7 @@ function detachRepository() {
             mac: mac
         }), 
         dataType: 'json'
-    }));
+    });
 }
 
 // Apikeys /user/apikey
@@ -210,10 +217,10 @@ function revokeSource(alias) {
 // setProfile POST /set
 
 function getProfile() {
-  return Promise.resolve($.ajax({
+  return $.ajax({
 		url: urlBase + '/user/profile',
 		type: 'GET'
-	}));
+	});
 }
 
 function changeProfile() {

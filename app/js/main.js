@@ -50,7 +50,7 @@ MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
 }]);
 
 MetronicApp.filter('lastSeen', function() {
-    return function(date) {
+    return function(date) { 
         return moment(date).fromNow();
     };
 });
@@ -62,24 +62,46 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
         //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive 
     });
 
-    function parseProfile(data) {
-        var profile = JSON.parse(data);
-        $rootScope.profile = profile.rows[0].doc;
-        $scope.$apply()
-
+    function updateProfile(data) {
+        var response = JSON.parse(data);
+        $rootScope.profile = response.rows[0].doc;
+        
         console.log('profile:');
         console.log($rootScope.profile);
 
-        if (typeof($rootScope.profile.avatar) == 'undefined' || $rootScope.profile.avatar.length == 0) {
-            $rootScope.profile.avatar = '/assets/thinx/img/default_avatar_sm.png';
+        if (typeof($rootScope.profile.username) !== 'undefined') {
+            
+            $rootScope.profile.goals = ['apikey','enroll','rsakey','source','update','build','profile_privacy','profile_avatar'];
+            if (typeof($rootScope.profile.avatar) == 'undefined' 
+                        || $rootScope.profile.avatar.length == 0) {
+                $rootScope.profile.avatar = '/assets/thinx/img/default_avatar_sm.png';
+            }
+            $scope.$apply()
         }
     }
 
-    getProfile()
-        .then(data => parseProfile(data))
-        .catch(error => console.log('Error:', error));
+    function updateSources(data) {
+        var response = JSON.parse(data);
 
-    // autoUpdater();
+        $rootScope.sources = response.sources;
+        $scope.$apply()
+
+        console.log('sources:');
+        console.log($rootScope.sources);
+    }
+    
+    var jqxhrProfile = Thinx.getProfile()
+            .done(function(data) {
+                updateProfile(data);
+            })
+            .fail(error => console.log('Error:', error));
+
+    var jqxhrSources = Thinx.sourceList()
+            .done(function(data) {
+                updateSources(data);
+            })
+            .fail(error => console.log('Error:', error));
+
     
     var counter = 30;
     function autoUpdater() {
@@ -88,12 +110,15 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
             counter = 30;
             console.log("Refreshing data in " + counter + " seconds...");
 
-            getProfile()
-                .then(data => parseProfile(data))
-                .catch(error => console.log('Error:', error));
+            var jqxhrAutoUpdate = getProfile()
+                .done(function(data) {
+                    updateProfile(data);
+                })
+                .fail(error => console.log('Error:', error));
         }
         setTimeout(autoUpdater, 2000);
     }
+    // autoUpdater();
 
     function registerNotification() {
         $webNotification.showNotification('Wohoo!', {
@@ -194,6 +219,9 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/global/plugins/jquery.sparkline.min.js',
 
                             '../assets/global/plugins/moment.min.js',
+                            '../assets/global/plugins/angularjs/plugins/ui-select/select.min.css',
+                            '../assets/global/plugins/angularjs/plugins/ui-select/select.min.js',
+
                             '../assets/pages/scripts/dashboard.min.js',
                             'js/controllers/DashboardController.js',
                         ] 
