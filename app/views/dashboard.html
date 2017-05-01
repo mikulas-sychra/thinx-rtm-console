@@ -143,7 +143,7 @@
                                     {{device.value.firmware}}
                                 </td>
                                 <td>
-                                    <div class="input-group">
+                                    <div class="input-group dashboard-selector">
                                         <ui-select allow-clear ng-model="device.value.source" theme="bootstrap" on-select="attachRepository($select.selected.alias, device.value.alias, device.value.mac)">
                                             <ui-select-match placeholder="none">{{$select.selected.alias}}</ui-select-match>
                                             <ui-select-choices repeat="source.alias as source in $root.sources | filter: $select.search">
@@ -152,7 +152,7 @@
                                         </ui-select>
                                         <span class="input-group-btn">
                                             <button type="button" ng-click="detachRepository(device.value.alias, device.value.mac); device.value.source = undefined;" class="btn btn-default">
-                                                <span class="glyphicon glyphicon-trash"></span>
+                                                <span class="fa fa-chain-broken"></span>
                                             </button>
                                         </span>
                                     </div>                                    

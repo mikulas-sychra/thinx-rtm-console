@@ -1,5 +1,5 @@
 .page-header.navbar .page-logo .logo-default {
-	margin: 2px 0px 0px 0px;
+	margin: 2px 0px 0px -20px;
 }
 
 .has-error .help-block, .has-error .help-inline, .has-error .control-label, .has-error .radio, .has-error .checkbox, .has-error .radio-inline, .has-error .checkbox-inline {
