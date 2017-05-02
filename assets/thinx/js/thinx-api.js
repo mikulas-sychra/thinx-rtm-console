@@ -49,6 +49,9 @@ var Thinx = {
     detachRepository: function (deviceAlias, deviceMac) {
         return detachRepository(deviceAlias, deviceMac);
     },
+    build: function (deviceHash, sourceAlias) {
+        return build(deviceHash, sourceAlias);
+    },
     // PROFILE
     getProfile: function () {
         return getProfile();
@@ -83,7 +86,7 @@ function deviceList() {
 
 function attachRepository(source, alias, mac) {
     return $.ajax({
-        url: urlBase + '/user/device/attach',
+        url: urlBase + '/device/attach',
         type: 'POST',
         data: JSON.stringify({
             source: source,
@@ -96,12 +99,24 @@ function attachRepository(source, alias, mac) {
 
 function detachRepository(alias, mac) {
     return $.ajax({
-        url: urlBase + '/user/device/detach',
+        url: urlBase + '/device/detach',
         type: 'POST',
         data: JSON.stringify({
             alias: alias,
             mac: mac
         }), 
+        dataType: 'json'
+    });
+}
+
+function build(deviceHash, sourceAlias) {
+    return $.ajax({
+        url: urlBase + '/build',
+        type: 'POST',
+        data: JSON.stringify({build: {
+            hash: deviceHash,
+            source: sourceAlias
+        }}), 
         dataType: 'json'
     });
 }

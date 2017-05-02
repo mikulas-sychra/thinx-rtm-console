@@ -102,9 +102,40 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
     };
 
-    $scope.build = function(deviceAlias, deviceMac) {
-        console.log('-- building firmware for ' + deviceAlias + '/' + deviceMac + ' --'); 
-        toastr.info('Build Started for ' + deviceAlias + '.', 'THiNX RTM Console', {timeOut: 5000})
+    $scope.build = function(deviceHash, sourceAlias) {
+        console.log('-- building firmware for ' + deviceHash + '/' + sourceAlias + ' --'); 
+        toastr.info('Build Started for ' + deviceHash + '.', 'THiNX RTM Console', {timeOut: 5000});
+
+        var jqxhrBuild = Thinx.build(deviceHash, sourceAlias)
+            .done(function(response) {
+                
+                if (typeof(response) !== 'undefined') {
+                    if (response.success) {
+                        console.log(response);
+
+                        // var jqxhr = Thinx.sourceList()
+                            // .done( function(data) {
+                                // updateSources(data)
+                            // })
+                            // .fail(error => console.log('Error:', error));
+
+                        // $('#pageModal').modal('hide');
+                        toastr.success('Starting Build.', 'THiNX RTM Console', {timeOut: 5000})
+
+                    } else {
+                        console.log(response);
+                        toastr.error('Build Failed.', 'THiNX RTM Console', {timeOut: 5000})
+                    }
+                } else {
+                    console.log('error');
+                    console.log(response);
+                }
+            })
+            .fail(function(error) {
+                console.error('Error:', error);
+                toastr.error('Build Failed Badly.', 'THiNX RTM Console', {timeOut: 5000})
+            });
+
     };
 
 });
