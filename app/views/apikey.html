@@ -37,6 +37,9 @@
                                     Alias
                                 </th>
                                 <th>
+                                    Key
+                                </th>
+                                <th>
                                     Fingerprint
                                 </th>
                                 <th>
@@ -47,9 +50,12 @@
 
                         <tr ng-repeat="apikey in $root.apiKeys">
                             <td class="fit">
-                                {{apikey.name | limitTo : 10 : apikey.name.length - 10 }}
+                                {{apikey.alias}}
                             </td>
                             <td>
+                                {{apikey.name | limitTo : 10 : apikey.name.length - 10 }}
+                            </td>
+                            <td class="fingerprint-small">
                                 {{apikey.hash}}
                             </td>
                             <td>
@@ -71,9 +77,16 @@
                         <h4 class="modal-title">New API Key</h4>
                     </div>
                     <div class="modal-body">
-                        <form action="#" class="form-horizontal">
+                         <form action="#" class="form-horizontal">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Key Alias</label>
+                                <div class="col-md-9">
+                                    <input type="text" ng-model="newApikayAlias" name="newApikayAlias" class="form-control" />
+                                </div>
+                            </div>
                             <div class="form-group last">
-                                <div class="col-sm-12">
+                                <label class="control-label col-md-3">Key Value</label>
+                                <div class="col-md-9">
                                     <input type="text" id="newApikey" name="newApikey" class="form-control new-apikey" ng-value="newApikey" ng-readonly="true" />
                                 </div>
                             </div>
@@ -82,7 +95,7 @@
                     <div class="modal-footer">
                         <p class="msg-warning display-hide">WARNING: Now is the last time you can save your key!</p>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" ng-show="createButtonVisible" class="btn btn-primary" ng-click="createApikey()"><i class="fa fa-check"></i> Create</button>
+                        <button type="button" ng-show="createButtonVisible" class="btn btn-primary" ng-click="createApikey(newApikayAlias)"><i class="fa fa-check"></i> Create</button>
                         <button type="button" ng-hide="createButtonVisible" class="btn btn-default copy-btn" data-clipboard-target="#newApikey"><i class="fa fa-clipboard"></i> Copy</button>
                     </div>
                 </div>

@@ -15,10 +15,9 @@ angular.module('MetronicApp').controller('ApikeyController', ['$rootScope', '$sc
 	        })
 	        .fail(error => console.log('Error:', error));
 
-		$scope.newApikey = '';
+		$scope.resetModal()
 
     });
-
 
     function updateKeys(data) {
         var data = JSON.parse(data);
@@ -29,10 +28,10 @@ angular.module('MetronicApp').controller('ApikeyController', ['$rootScope', '$sc
         console.log($rootScope.apiKeys);
     }
 
-	$scope.createApikey = function() {
-		console.log('-- asking for new apikey --'); 
+	$scope.createApikey = function(newApikayAlias) {
+		console.log('-- asking for new apikey with alias: ' + newApikayAlias + ' --'); 
 
-		var jqxhr = Thinx.createApikey()
+		var jqxhr = Thinx.createApikey(newApikayAlias)
 	        .done(function(response) {
 	            if (typeof(response) !== 'undefined') {
 	                if (response.success) {
@@ -86,8 +85,10 @@ angular.module('MetronicApp').controller('ApikeyController', ['$rootScope', '$sc
 
 	$scope.resetModal = function() {
 		$scope.newApikey = null;
+		$scope.newApikayAlias = null;
 		$scope.createButtonVisible = true;
-		$scope.apikeyModal.$setPristine();
+		console.log($scope.newapikeyAlias);
+		console.log('Modal form reset.');
 	}
     
 }]);

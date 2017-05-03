@@ -60,3 +60,32 @@
     font-size: 17pt;
     font-family: monospace;
 }
+
+.dropdown-user .username {
+	margin-right: 15px;
+}
+
+.footer-external {
+	text-align: center;
+}
+
+.footer-external-logo {
+	max-width: 20px;
+	margin: 10px;
+	opacity: .4;
+}
+
+.footer-external-logo:hover {
+	max-width: 40px;
+	margin: 10px;
+	margin-top: 15px;
+	opacity: .8;
+}
+
+.ui-select-bootstrap .ui-select-choices-row {
+	z-index:1000;	
+}
+
+.fingerprint-small {
+	font-size: .7em !important;
+}
