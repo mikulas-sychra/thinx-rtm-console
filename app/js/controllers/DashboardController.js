@@ -27,17 +27,19 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
     }
 
     
-    $scope.attachRepository = function(sourceAlias, deviceAlias, deviceMac) {
+    $scope.attachRepository = function(sourceAlias, deviceMac) {
     
-        console.log('-- attaching ' + sourceAlias + ' to ' + deviceAlias + '/' + deviceMac + '--'); 
+        console.log('-- attaching ' + sourceAlias + ' to  ' + deviceMac + '--'); 
 
         
-        var jqxhr = Thinx.attachRepository(sourceAlias, deviceAlias, deviceMac)
+        var jqxhr = Thinx.attachRepository(sourceAlias, deviceMac)
             .done(function(response) {
                 
                 if (typeof(response) !== 'undefined') {
-                    if (response.success) {
-                        console.log(response);
+
+                    if (typeof(response.build) !== 'undefined') {
+
+                        console.log(response.build);
 
                         // var jqxhr = Thinx.sourceList()
                             // .done( function(data) {
@@ -49,7 +51,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                         toastr.success('Repository Attached.', 'THiNX RTM Console', {timeOut: 5000})
 
                     } else {
-                        console.log(response);
+                        console.log(responseObj);
                         toastr.error('Attach Failed.', 'THiNX RTM Console', {timeOut: 5000})
                     }
                 } else {

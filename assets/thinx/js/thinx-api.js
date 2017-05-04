@@ -43,8 +43,8 @@ var Thinx = {
     deviceList: function () {
         return deviceList();
     },
-    attachRepository: function (sourceAlias, deviceAlias, deviceMac) {
-        return attachRepository(sourceAlias, deviceAlias, deviceMac);
+    attachRepository: function (sourceAlias, deviceMac) {
+        return attachRepository(sourceAlias, deviceMac);
     },
     detachRepository: function (deviceAlias, deviceMac) {
         return detachRepository(deviceAlias, deviceMac);
@@ -84,12 +84,11 @@ function deviceList() {
     });
 }
 
-function attachRepository(source, alias, mac) {
+function attachRepository(alias, mac) {
     return $.ajax({
         url: urlBase + '/device/attach',
         type: 'POST',
         data: JSON.stringify({
-            source: source,
             alias: alias,
             mac: mac
         }), 
