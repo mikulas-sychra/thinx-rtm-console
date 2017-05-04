@@ -14,6 +14,9 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
                 updateSources(data)
             })
             .fail(error => console.log('Error:', error));
+
+        $scope.resetModal();
+
     });
 
     function updateSources(data) {
@@ -32,10 +35,10 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
 	
         console.log('-- adding new source --'); 
 
-        console.log($('#pageModal input[name=sourceUrl]').val());
-        console.log($('#pageModal input[name=sourceAlias]').val());
+        console.log($scope.sourceUrl);
+        console.log($scope.sourceAlias);
 
-        var jqxhr = Thinx.addSource($('#pageModal input[name=sourceUrl]').val(), $('#pageModal input[name=sourceAlias]').val())
+        var jqxhr = Thinx.addSource($scope.sourceUrl, $scope.sourceAlias)
             .done(function(response) {
                 
                 if (typeof(response) !== 'undefined') {
@@ -70,6 +73,22 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
 
 	};
 
+    $scope.getAliasFromUrl = function() {
+        console.log('procesing: ' + $scope.sourceUrl);
+        try {
+            var urlParts = $scope.sourceUrl.replace(/\/\s*$/,'').split('/');
+            console.log(urlParts[1]);
+            if (typeof(urlParts[0]) !== 'undefined' && /git/.test(urlParts[0])) {
+                var projectName = urlParts[1].split('.', 1);
+            }
+        } catch(e) {
+            console.log(e);
+        }
+        if (typeof(projectName) !== 'undefined' && ($scope.sourceAlias == null || $scope.sourceAlias == '')) {
+            $scope.sourceAlias = projectName;
+        }
+    }
+
 	$scope.revokeSource = function(alias, index) {
 
 		console.log('-- removing source ' + alias + '--'); 
@@ -101,9 +120,8 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
 	};
 
     $scope.resetModal = function() {
-        $('#pageModal input[name=sourceAlias]').val(null);
-        $('#pageModal input[name=sourceUrl]').val(null);
-        $scope.sourceModal.$setPristine();
+        $scope.sourceAlias = null;
+        $scope.sourceUrl = null;
     }
 
 }]);
