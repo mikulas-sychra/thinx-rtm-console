@@ -144,7 +144,7 @@
                                 </td>
                                 <td>
                                     <div class="input-group dashboard-selector">
-                                        <ui-select allow-clear ng-model="$root.devices[$index].value.source" theme="bootstrap" on-select="attachRepository($select.selected.alias, device.value.mac)">
+                                        <ui-select append-to-body="true" allow-clear ng-model="$root.devices[$index].value.source" theme="bootstrap" on-select="attachRepository($select.selected.alias, device.value.mac)">
                                             <ui-select-match placeholder="none">{{$select.selected.alias}}</ui-select-match>
                                             <ui-select-choices repeat="source.alias as source in $root.sources | filter: $select.search">
                                                 <span ng-bind-html="source.alias | highlight: $select.search"></span>
