@@ -31,16 +31,11 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
     
         console.log('-- attaching ' + sourceAlias + ' to  ' + deviceMac + '--'); 
 
-        
         var jqxhr = Thinx.attachRepository(sourceAlias, deviceMac)
             .done(function(response) {
-                
                 if (typeof(response) !== 'undefined') {
-
-                    if (typeof(response.build) !== 'undefined') {
-
-                        console.log(response.build);
-
+                    if (response.success) {
+                        console.log(response);
                         // var jqxhr = Thinx.sourceList()
                             // .done( function(data) {
                                 // updateSources(data)
@@ -49,9 +44,8 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
                         // $('#pageModal').modal('hide');
                         toastr.success('Repository Attached.', 'THiNX RTM Console', {timeOut: 5000})
-
                     } else {
-                        console.log(responseObj);
+                        console.log(response);
                         toastr.error('Attach Failed.', 'THiNX RTM Console', {timeOut: 5000})
                     }
                 } else {
@@ -70,7 +64,6 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
     
         console.log('-- detaching source from ' + deviceAlias + '/' + deviceMac + '--'); 
 
-        
         var jqxhr = Thinx.detachRepository(deviceAlias, deviceMac)
             .done(function(response) {
                 
@@ -85,9 +78,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                             // .fail(error => console.log('Error:', error));
 
                         // $('#pageModal').modal('hide');
-
                         toastr.success('Repository Detached.', 'THiNX RTM Console', {timeOut: 5000})
-
                     } else {
                         console.log(response);
                         toastr.error('Detach Failed.', 'THiNX RTM Console', {timeOut: 5000})
@@ -106,32 +97,24 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
     $scope.build = function(deviceHash, sourceAlias) {
         console.log('-- building firmware for ' + deviceHash + '/' + sourceAlias + ' --'); 
-        toastr.info('Build Started for ' + deviceHash + '.', 'THiNX RTM Console', {timeOut: 5000});
+        
 
         var jqxhrBuild = Thinx.build(deviceHash, sourceAlias)
             .done(function(response) {
-                
+
                 if (typeof(response) !== 'undefined') {
-                    if (response.success) {
-                        console.log(response);
-
-                        // var jqxhr = Thinx.sourceList()
-                            // .done( function(data) {
-                                // updateSources(data)
-                            // })
-                            // .fail(error => console.log('Error:', error));
-
-                        // $('#pageModal').modal('hide');
-                        toastr.success('Starting Build.', 'THiNX RTM Console', {timeOut: 5000})
-
+                    if (typeof(response.build) !== 'undefined' && response.build.success) {
+                        console.log(response.build);
+                        toastr.info('Build Started for ' + deviceHash + '.', 'THiNX RTM Console', {timeOut: 5000});
                     } else {
-                        console.log(response);
+                        console.log(responseObj);
                         toastr.error('Build Failed.', 'THiNX RTM Console', {timeOut: 5000})
                     }
                 } else {
                     console.log('error');
                     console.log(response);
                 }
+                
             })
             .fail(function(error) {
                 console.error('Error:', error);
