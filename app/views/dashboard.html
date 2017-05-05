@@ -160,7 +160,7 @@
                                     {{device.value.lastupdate | lastSeen}}
                                 </td>
                                 <td>
-                                    <a class="btn btn-circle btn-icon-only btn-default" href="#" ng-click="build(device.value.hash, $root.devices[$index].value.source)">
+                                    <a class="btn btn-circle btn-icon-only btn-default" href="#" ng-if="hasSource($index)" ng-click="build(device.value.hash, $root.devices[$index].value.source)">
                                         <i class="icon-chemistry"></i>
                                     </a>
                                 </td>

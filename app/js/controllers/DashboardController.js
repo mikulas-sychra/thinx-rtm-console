@@ -96,8 +96,8 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
     };
 
     $scope.build = function(deviceHash, sourceAlias) {
+
         console.log('-- building firmware for ' + deviceHash + '/' + sourceAlias + ' --'); 
-        
 
         var jqxhrBuild = Thinx.build(deviceHash, sourceAlias)
             .done(function(response) {
@@ -105,7 +105,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                 if (typeof(response) !== 'undefined') {
                     if (typeof(response.build) !== 'undefined' && response.build.success) {
                         console.log(response.build);
-                        toastr.info('Build Started for ' + deviceHash + '.', 'THiNX RTM Console', {timeOut: 5000});
+                        toastr.success('Starting Build.', 'THiNX RTM Console', {timeOut: 5000})
                     } else {
                         console.log(responseObj);
                         toastr.error('Build Failed.', 'THiNX RTM Console', {timeOut: 5000})
@@ -122,5 +122,12 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             });
 
     };
+
+    $scope.hasSource = function(index) {
+        if (typeof($rootScope.devices[index].value.source) !== 'undefined' && $rootScope.devices[index].value.source.length > 0) {
+            return true;
+        }
+        return false;
+    }
 
 });
