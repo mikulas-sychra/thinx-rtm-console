@@ -89,6 +89,16 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
         console.log('sources:');
         console.log($rootScope.sources);
     }
+
+    function updateAuditLog(data) {
+        var response = JSON.parse(data);
+
+        $rootScope.auditlog = response.logs;
+        $scope.$apply()
+
+        console.log('auditlog:');
+        console.log($rootScope.auditlog);
+    }
     
     var jqxhrProfile = Thinx.getProfile()
             .done(function(data) {
@@ -101,6 +111,12 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
                 updateSources(data);
             })
             .fail(error => console.log('Error:', error));
+
+    var jqxhrAuditlog = Thinx.getAuditLog()
+            .done(function(data) {
+                updateAuditLog(data);
+            })
+            .fail(error => console.log('Error:', error));         
 
     
     var counter = 30;
