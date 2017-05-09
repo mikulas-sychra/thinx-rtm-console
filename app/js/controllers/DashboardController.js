@@ -96,7 +96,6 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
     };
 
     $scope.build = function(deviceHash, sourceAlias) {
-
         console.log('-- building firmware for ' + deviceHash + '/' + sourceAlias + ' --'); 
 
         var jqxhrBuild = Thinx.build(deviceHash, sourceAlias)
@@ -120,14 +119,53 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                 console.error('Error:', error);
                 toastr.error('Build Failed Badly.', 'THiNX RTM Console', {timeOut: 5000})
             });
-
     };
+
 
     $scope.hasSource = function(index) {
         if (typeof($rootScope.devices[index].value.source) !== 'undefined' && $rootScope.devices[index].value.source.length > 0) {
             return true;
         }
         return false;
+    }
+
+
+    $scope.changeDeviceAlias = function() {
+
+        var deviceHash = $root.devices[index].value.hash;
+        var deviceAlias = $root.devices[index].value.alias;
+
+        console.log('-- changing device alias to ' + deviceAlias + '  for ' + deviceHash + ' --'); 
+
+        var jqxhrAlias = Thinx.changeDevice(deviceHash, deviceAlias)
+            .done(function(response) {
+
+                if (typeof(response) !== 'undefined') {
+                    if (typeof(response.success) !== 'undefined' && response.success) {
+                        console.log(response);
+                        toastr.success('Alias updated.', 'THiNX RTM Console', {timeOut: 5000})
+                    } else {
+                        console.log(responseObj);
+                        toastr.error('Alias Update Failed.', 'THiNX RTM Console', {timeOut: 5000})
+                    }
+                } else {
+                    console.log('error');
+                    console.log(response);
+                }
+                
+            })
+            .fail(function(error) {
+                console.error('Error:', error);
+                toastr.error('Alias Update Failed Badly.', 'THiNX RTM Console', {timeOut: 5000})
+            });
+    };
+
+    $scope.resetModal = function(index) {
+        $scope.deviceHash = $root.devices[index].value.hash;
+        $scope.deviceAlias = $root.devices[index].value.alias;
+        console.log($scope.deviceHash);
+        console.log($scope.deviceAlias);
+        console.log('Modal form reset.');
     }
 
 });

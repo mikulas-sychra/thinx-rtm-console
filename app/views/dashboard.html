@@ -134,7 +134,7 @@
                             </thead>
                              <tr ng-repeat="device in $root.devices track by device.id">
                                 <td class="fit" style="vertical-align: top;">
-                                    {{device.value.alias}}
+                                    <a href="#" class="btn green-haze" ng-click="resetModal($index)" data-target="#pageModal" data-toggle="modal">{{device.value.alias}}</a>
                                 </td>
                                 <td>
                                     {{device.value.firmware}}<br><br>
@@ -314,6 +314,36 @@
             </div>
             <!-- END PORTLET-->
         </div>
+
+    
+    <!-- BEGIN FORM-->
+    <form action="#" class="form-horizontal form-bordered" name="deviceModal">
+        <div id="pageModal" class="modal fade" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        <h4 class="modal-title">Device</h4>
+                    </div>
+                    <div class="modal-body">
+                         <form action="#" class="form-horizontal">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Alias</label>
+                                <div class="col-md-9">
+                                    <input type="text" ng-model="deviceAlias" name="deviceAlias" class="form-control" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" ng-click="changeDeviceAlias()"><i class="fa fa-check"></i> Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- END FORM-->
     <!-- END DASHBOARD STATS -->
 
 </div>
