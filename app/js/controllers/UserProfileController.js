@@ -60,8 +60,4 @@ angular.module('MetronicApp').controller('UserProfileController', function($root
             });
     }
 
-    $scope.changeProfileSecurity = function() {
-        console.log('-- changing user security settings --'); 
-    }
-    
 }); 
