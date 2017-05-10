@@ -302,16 +302,6 @@ function changeProfileAvatar(avatar) {
     });
 }
 
-function changeProfileSecurity(security) {
-    return $.ajax({
-        url: urlBase + '/user/profile',
-        type: 'POST',
-        data: JSON.stringify({ 
-            security: security
-        }), 
-        dataType: 'json'
-    });
-}
 
 // Audit log
 

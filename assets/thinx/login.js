@@ -331,7 +331,7 @@ var Login = function() {
                     error: function(response) {
                         console.log('--user create request failure--');
                         console.log(response);
-                        $('.msg-error', $('.register-form')).text(response);
+                        $('.msg-error', $('.register-form')).text('Registration failed. Please try again later.');
                         $('.msg-error', $('.register-form')).show();
                     }
                 });
