@@ -125,10 +125,10 @@
                 </div>
                 <ul class="nav nav-tabs">
                     <li class="active">
-                        <a href="#" data-target="#tab_1_1" data-toggle="tab"> System </a>
+                        <a href="#" data-target="#tab_1_1" data-toggle="tab"> Audit </a>
                     </li>
                     <li>
-                        <a href="#" data-target="#tab_1_2" data-toggle="tab"> User </a>
+                        <a href="#" data-target="#tab_1_2" data-toggle="tab"> Build </a>
                     </li>
                 </ul>
             </div>
@@ -138,7 +138,7 @@
                     <div class="tab-pane active" id="tab_1_1">
                         <div class="scroller" style="height: 320px;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
                             <ul class="feeds">
-                                <li ng-repeat="event in $root.auditlog.rows">
+                                <li ng-repeat="row in $root.auditlog.rows">
                                     <div class="col1">
                                         <div class="cont">
                                             <div class="cont-col1">
@@ -147,16 +147,18 @@
                                                 </div>
                                             </div>
                                             <div class="cont-col2">
-                                                <div class="desc"> {{event}}
+                                                <div class="desc"> {{row.key.message}}
+                                                <!--    
                                                     <span class="label label-sm label-info"> Take action
                                                         <i class="fa fa-share"></i>
                                                     </span>
+                                                -->
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col2">
-                                        <div class="date"> Just now </div>
+                                        <div class="date"> {{row.key.date}} </div>
                                     </div>
                                 </li>
                                 
@@ -166,7 +168,7 @@
                     <div class="tab-pane" id="tab_1_2">
                         <div class="scroller" style="height: 337px;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
                             <ul class="feeds">
-                                <li ng-repeat="event in $root.auditlog.rows">
+                                <li ng-repeat="row in $root.buildlog.rows">
                                     <div class="col1">
                                         <div class="cont">
                                             <div class="cont-col1">
@@ -175,7 +177,7 @@
                                                 </div>
                                             </div>
                                             <div class="cont-col2">
-                                                <div class="desc"> {{event}}
+                                                <div class="desc"> {{row.key.message}}
                                                     <span class="label label-sm label-danger "> Take action
                                                         <i class="fa fa-share"></i>
                                                     </span>
@@ -184,7 +186,7 @@
                                         </div>
                                     </div>
                                     <div class="col2">
-                                        <div class="date"> 24 mins </div>
+                                        <div class="date"> {{row.key.date}} </div>
                                     </div>
                                 </li>
                             </ul>

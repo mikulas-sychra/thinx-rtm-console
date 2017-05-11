@@ -270,26 +270,13 @@ function getProfile() {
 	});
 }
 
-function changeProfile(info) {
-    
-    var info = {
-        first_name: "john",
-        last_name: "doe",
-        email: "john@doe.com",
-        phone: "john@doe.com",
-        password: "tset",
-        privacy: {
-            globalPush: true,
-            importantNotifications: true,
-            forceUniqueKeys: true
-        }
-    };
+function changeProfile(profile) {
 
     return $.ajax({
         url: urlBase + '/user/profile',
         type: 'POST',
         data: JSON.stringify({ 
-            info: info
+            info: profile
         }), 
         dataType: 'json'
     });
