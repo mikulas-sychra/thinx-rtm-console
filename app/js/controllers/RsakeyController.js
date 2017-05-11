@@ -48,7 +48,7 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
 
 	                } else {
 	                    console.log(response);
-	                    toastr.success('Error.', 'THiNX RTM Console', {timeOut: 5000});
+	                    toastr.error('Error.', 'THiNX RTM Console', {timeOut: 5000});
 	                }
 	            } else {
 	            	console.log('error');
@@ -59,6 +59,7 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
 	        	$('.msg-warning').text(error);
 	        	$('.msg-warning').show();
 	        	console.log('Error:', error);
+	        	toastr.error('Error.', 'THiNX RTM Console', {timeOut: 5000});
 	        });
 
 	};
