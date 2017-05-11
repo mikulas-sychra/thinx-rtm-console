@@ -87,7 +87,7 @@ angular.module('MetronicApp').controller('ApikeyController', ['$rootScope', '$sc
 		$scope.newApikey = null;
 		$scope.newApikayAlias = null;
 		$scope.createButtonVisible = true;
-		console.log($scope.newapikeyAlias);
+		console.log($scope.newApikayAlias);
 		console.log('Modal form reset.');
 	}
     
