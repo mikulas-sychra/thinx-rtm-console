@@ -47,7 +47,7 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
 	                    $('#pageModal').modal('hide');
 
 	                } else {
-	                    console.log(response);
+	                    console.log(response.status);
 	                    toastr.error('Error.', 'THiNX RTM Console', {timeOut: 5000});
 	                }
 	            } else {
