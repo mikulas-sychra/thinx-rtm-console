@@ -104,6 +104,34 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
         console.log('auditlog:');
         console.log($rootScope.auditlog);
     }
+
+    function updateBuildLogList(data) {
+        var response = JSON.parse(data);
+
+        console.log('buildlog list response:') ;
+        console.log(response)
+
+        if (typeof($rootScope.buildlog) == 'undefined') {
+            $rootScope.buildlog = {
+                rows: response.builds.rows
+            };
+        }
+        $rootScope.buildlog.rows = response.builds.rows;
+        $scope.$apply()
+
+        console.log('buildlog list:') ;
+        console.log($rootScope.buildlog.rows);
+    }
+
+    function updateBuildLog(data) {
+        var response = JSON.parse(data);
+
+        $rootScope.buildlog = response.logs;
+        $scope.$apply()
+
+        console.log('buildlog:');
+        console.log($rootScope.buildlog);
+    }
     
     var jqxhrProfile = Thinx.getProfile()
             .done(function(data) {
@@ -121,7 +149,13 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
             .done(function(data) {
                 updateAuditLog(data);
             })
-            .fail(error => console.log('Error:', error));         
+            .fail(error => console.log('Error:', error));
+
+    var jqxhrBuildlogList = Thinx.buildLogList()
+            .done(function(data) {
+                updateBuildLogList(data);
+            })
+            .fail(error => console.log('Error:', error));        
 
     
     var counter = 30;

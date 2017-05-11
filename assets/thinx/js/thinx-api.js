@@ -70,6 +70,12 @@ var Thinx = {
     },
     getAuditLog: function () {
         return getAuditLog();
+    },
+    getBuildLog: function (build_id) {
+        return getBuildLog(build_id);
+    },
+    buildLogList: function () {
+        return buildLogList();
     }
 }
 
@@ -309,5 +315,25 @@ function getAuditLog() {
   return $.ajax({
         url: urlBase + '/user/logs/audit',
         type: 'GET'
+    });
+}
+
+// Build log
+
+function buildLogList() {
+  return $.ajax({
+        url: urlBase + '/user/logs/build/list',
+        type: 'GET'
+    });
+}
+
+function getBuildLog(build_id) {
+    return $.ajax({
+        url: urlBase + '/user/logs/build',
+        type: 'POST',
+        data: JSON.stringify({ 
+            build_id: build_id
+        }), 
+        dataType: 'json'
     });
 }

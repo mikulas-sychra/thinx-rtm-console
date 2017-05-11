@@ -10,6 +10,14 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 	        .fail(function(error) {
                 console.log('Error:', error);
             });
+
+        var jqxhr = Thinx.buildLogList()
+            .done(function(data) {
+                updateBuildLogList(data);
+            })
+            .fail(function(error) {
+                console.log('Error:', error);
+            });    
     });
 
     // set sidebar closed and body solid layout mode
@@ -24,6 +32,34 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
         console.log('devices:');
         console.log($rootScope.devices);
+    }
+
+    function updateBuildLogList(data) {
+        var response = JSON.parse(data);
+
+        console.log('buildlog list response:') ;
+        console.log(response)
+
+        if (typeof($rootScope.buildlog) == 'undefined') {
+            $rootScope.buildlog = {
+                rows: response.builds.rows
+            };
+        }
+        $rootScope.buildlog.rows = response.builds.rows;
+        $scope.$apply()
+
+        console.log('buildlog list:') ;
+        console.log($rootScope.buildlog.rows);
+    }
+
+    function updateBuildLog(data) {
+        var response = JSON.parse(data);
+
+        $rootScope.buildlog = response.logs;
+        $scope.$apply()
+
+        console.log('buildlog:');
+        console.log($rootScope.buildlog);
     }
 
     
