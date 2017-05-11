@@ -64,19 +64,24 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
 
     function updateProfile(data) {
         var response = JSON.parse(data);
-        $rootScope.profile = response.rows[0].doc;
-        
-        console.log('profile:');
-        console.log($rootScope.profile);
 
-        if (typeof($rootScope.profile.username) !== 'undefined') {
-            
-            $rootScope.profile.goals = ['apikey','enroll','rsakey','source','update','build','profile_privacy','profile_avatar'];
-            if (typeof($rootScope.profile.avatar) == 'undefined' 
-                        || $rootScope.profile.avatar.length == 0) {
-                $rootScope.profile.avatar = '/assets/thinx/img/default_avatar_sm.png';
-            }
-            $scope.$apply()
+        if (typeof(response) !== 'undefined' && typeof(response.success) !== 'undefined' && response.success) {
+
+                    $rootScope.profile = response.profile;
+        
+                    console.log('profile:');
+                    console.log($rootScope.profile);
+
+                    if (typeof($rootScope.profile.username) !== 'undefined') {
+                        
+                        $rootScope.profile.goals = ['apikey','enroll','rsakey','source','update','build','profile_privacy','profile_avatar'];
+                        if (typeof($rootScope.profile.avatar) == 'undefined' 
+                                    || $rootScope.profile.avatar.length == 0) {
+                            $rootScope.profile.avatar = '/assets/thinx/img/default_avatar_sm.png';
+                        }
+                        $scope.$apply()
+                    }
+
         }
     }
 
