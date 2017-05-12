@@ -103,13 +103,15 @@ function deviceList() {
 }
 
 function changeDevice(hash, alias) {
+
+    var data = JSON.stringify({ changes: { device_id: hash, alias: alias } });
+
+    console.log(data);
+
     return $.ajax({
-        url: urlBase + '/user/device',
+        url: urlBase + '/device/edit',
         type: 'POST',
-        data: JSON.stringify({ 
-            hash: hash,
-            alias: alias
-        }), 
+        data: data, 
         dataType: 'json'
     });
 }

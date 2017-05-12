@@ -17,7 +17,10 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             })
             .fail(function(error) {
                 console.log('Error:', error);
-            });    
+            });
+
+        $scope.deviceHash = null;
+        $scope.deviceAlias = null;
     });
 
     // set sidebar closed and body solid layout mode
@@ -168,8 +171,8 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
     $scope.changeDeviceAlias = function() {
 
-        var deviceHash = $root.devices[index].value.hash;
-        var deviceAlias = $root.devices[index].value.alias;
+        var deviceHash = $scope.deviceHash;
+        var deviceAlias = $scope.deviceAlias;
 
         console.log('-- changing device alias to ' + deviceAlias + '  for ' + deviceHash + ' --'); 
 
@@ -181,7 +184,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                         console.log(response);
                         toastr.success('Alias updated.', 'THiNX RTM Console', {timeOut: 5000})
                     } else {
-                        console.log(responseObj);
+                        console.log(response);
                         toastr.error('Alias Update Failed.', 'THiNX RTM Console', {timeOut: 5000})
                     }
                 } else {
@@ -197,8 +200,14 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
     };
 
     $scope.resetModal = function(index) {
-        $scope.deviceHash = $root.devices[index].value.hash;
-        $scope.deviceAlias = $root.devices[index].value.alias;
+        if (typeof(index) == 'undefined') {
+            $scope.deviceHash == null;
+            $scope.deviceAlias == null;
+        } else {
+            $scope.deviceHash = $rootScope.devices[index].value.device_id;
+            $scope.deviceAlias = $rootScope.devices[index].value.alias;
+        };
+        
         console.log($scope.deviceHash);
         console.log($scope.deviceAlias);
         console.log('Modal form reset.');
