@@ -1,0 +1,12 @@
+machine:
+  node:
+    version:
+      5.9.0
+
+test:
+  post:
+    - curl -sSL https://download.sourceclear.com/ci.sh | sh
+
+## Custom notifications
+notify:
+  - curl -X POST --data-urlencode 'payload={"text":"THiNX-RTM-Console integration completed."}' https://hooks.slack.com/services/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
