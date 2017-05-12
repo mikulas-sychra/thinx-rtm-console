@@ -183,6 +183,17 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                     if (typeof(response.success) !== 'undefined' && response.success) {
                         console.log(response);
                         toastr.success('Alias updated.', 'THiNX RTM Console', {timeOut: 5000})
+
+                        var jqxhr = Thinx.deviceList()
+                            .done(function(data) {
+                                updateDevices(data);
+                                $('#pageModal').modal('hide');
+                            })
+                            .fail(function(error) {
+                                console.log('Error:', error);
+                            });
+
+                        
                     } else {
                         console.log(response);
                         toastr.error('Alias Update Failed.', 'THiNX RTM Console', {timeOut: 5000})
