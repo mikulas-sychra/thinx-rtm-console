@@ -67,20 +67,20 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
 
         if (typeof(response) !== 'undefined' && typeof(response.success) !== 'undefined' && response.success) {
 
-                    $rootScope.profile = response.profile;
-        
-                    console.log('profile:');
-                    console.log($rootScope.profile);
+            $rootScope.profile = response.profile;
 
-                    if (typeof($rootScope.profile.username) !== 'undefined') {
-                        
-                        $rootScope.profile.goals = ['apikey','enroll','rsakey','source','update','build','profile_privacy','profile_avatar'];
-                        if (typeof($rootScope.profile.avatar) == 'undefined' 
-                                    || $rootScope.profile.avatar.length == 0) {
-                            $rootScope.profile.avatar = '/assets/thinx/img/default_avatar_sm.png';
-                        }
-                        $scope.$apply()
-                    }
+            console.log('profile:');
+            console.log($rootScope.profile);
+
+            if (typeof($rootScope.profile.username) !== 'undefined') {
+                
+                $rootScope.profile.goals = ['apikey','enroll','rsakey','source','update','build','profile_privacy','profile_avatar'];
+                if (typeof($rootScope.profile.avatar) == 'undefined' 
+                            || $rootScope.profile.avatar.length == 0) {
+                    $rootScope.profile.avatar = '/assets/thinx/img/default_avatar_sm.png';
+                }
+                $scope.$apply()
+            }
 
         }
     }
@@ -106,21 +106,23 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
     }
 
     function updateBuildLogList(data) {
-        var response = JSON.parse(data);
-
-        console.log('buildlog list response:') ;
-        console.log(response)
-
         if (typeof($rootScope.buildlog) == 'undefined') {
-            $rootScope.buildlog = {
-                rows: response.builds.rows
-            };
+            // build log is not defined yet (can be defined by getBuildLog)
+            $rootScope.buildlog = {rows: null};
         }
-        $rootScope.buildlog.rows = response.builds.rows;
-        $scope.$apply()
 
-        console.log('buildlog list:') ;
-        console.log($rootScope.buildlog.rows);
+        console.log('buildlog list response:');
+
+        var response = JSON.parse(data);
+        if (typeof(response.success !== 'undefined') && response.success) {
+            $rootScope.buildlog.rows = response.builds.rows;
+            $scope.$apply()
+            console.log('buildlog list:');
+            console.log($rootScope.buildlog.rows);
+        } else {
+            console.log('Buildlog list fetch error.') ;
+        }
+        console.log(response)
     }
 
     function updateBuildLog(data) {

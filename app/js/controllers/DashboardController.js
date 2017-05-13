@@ -38,21 +38,23 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
     }
 
     function updateBuildLogList(data) {
-        var response = JSON.parse(data);
-
-        console.log('buildlog list response:') ;
-        console.log(response)
-
         if (typeof($rootScope.buildlog) == 'undefined') {
-            $rootScope.buildlog = {
-                rows: response.builds.rows
-            };
+            // build log is not defined yet (can be defined by getBuildLog)
+            $rootScope.buildlog = {rows: null};
         }
-        $rootScope.buildlog.rows = response.builds.rows;
-        $scope.$apply()
 
-        console.log('buildlog list:') ;
-        console.log($rootScope.buildlog.rows);
+        console.log('buildlog list response:');
+
+        var response = JSON.parse(data);
+        if (typeof(response.success !== 'undefined') && response.success) {
+            $rootScope.buildlog.rows = response.builds.rows;
+            $scope.$apply()
+            console.log('buildlog list:');
+            console.log($rootScope.buildlog.rows);
+        } else {
+            console.log('Buildlog list fetch error.') ;
+        }
+        console.log(response)
     }
 
     function updateBuildLog(data) {
