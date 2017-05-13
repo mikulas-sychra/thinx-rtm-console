@@ -144,6 +144,18 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                     if (typeof(response.build) !== 'undefined' && response.build.success) {
                         console.log(response.build);
                         toastr.success('Starting Build.', 'THiNX RTM Console', {timeOut: 5000})
+
+
+            console.log('--- trying to catch build log for ' + response.build.id);
+
+            var jqxhrTest = Thinx.getBuildLog(response.build.id)
+            .done(function(data) {
+                console.log(' --- build log data received ---');
+                console.log(data);
+            })
+            .fail(error => console.log('Error:', error));
+
+            
                     } else {
                         console.log(responseObj);
                         toastr.error('Build Failed.', 'THiNX RTM Console', {timeOut: 5000})
