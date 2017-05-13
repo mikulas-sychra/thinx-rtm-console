@@ -212,6 +212,34 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             });
     };
 
+    $scope.revokeDevice = function() {
+        console.log('--revoking device ' + $scope.deviceHash +'--')
+
+        var jqxhr = Thinx.revokeDevice($scope.deviceHash)
+            .done(function(response) {
+                if (response.success) {
+                    console.log('Success:', response.revoked);
+                    toastr.success('Device Revoked.', 'THiNX RTM Console', {timeOut: 5000})
+
+                    var jqxhr = Thinx.deviceList()
+                        .done(function(data) {
+                            updateDevices(data);
+                            $('#pageModal').modal('hide');
+                        })
+                        .fail(function(error) {
+                            console.log('Error:', error);
+                        });
+
+                } else {
+                    toastr.error('Revocation failed.', 'THiNX RTM Console', {timeOut: 5000})
+                }
+            })
+            .fail(function (error) {
+                // TODO throw error message
+                console.log('Error:', error)
+            });
+    };
+
     $scope.resetModal = function(index) {
         if (typeof(index) == 'undefined') {
             $scope.deviceHash == null;

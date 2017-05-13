@@ -46,6 +46,9 @@ var Thinx = {
     changeDevice: function (deviceHash, deviceAlias) {
         return changeDevice(deviceHash, deviceAlias);
     },
+    revokeDevice: function (udid) {
+        return revokeDevice(udid);
+    },
     attachRepository: function (sourceAlias, deviceMac) {
         return attachRepository(sourceAlias, deviceMac);
     },
@@ -112,6 +115,15 @@ function changeDevice(hash, alias) {
         url: urlBase + '/device/edit',
         type: 'POST',
         data: data, 
+        dataType: 'json'
+    });
+}
+
+function revokeDevice(udid) {
+    return $.ajax({
+        url: urlBase + '/device/revoke',
+        type: 'POST',
+        data: JSON.stringify({ udid: udid }), 
         dataType: 'json'
     });
 }
