@@ -133,7 +133,7 @@
                                 </tr>
                             </thead>
                              <tr ng-repeat="device in $root.devices track by device.id">
-                                <td class="fit" style="vertical-align: top;">
+                                <td style="vertical-align: top;">
                                     <a href="#" class="btn green-haze" ng-click="resetModal($index)" data-target="#pageModal" data-toggle="modal">{{device.value.alias}}</a>
                                 </td>
                                 <td>
@@ -338,6 +338,8 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary" ng-click="changeDeviceAlias()"><i class="fa fa-check"></i> Submit</button>
+
+                        <button type="button" class="btn btn-danger pull-left" ng-click="revokeDevice()"><i class="fa fa-times"></i> Revoke</button>
                     </div>
                 </div>
             </div>

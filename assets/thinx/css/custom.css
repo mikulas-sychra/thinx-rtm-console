@@ -89,3 +89,7 @@
 .fingerprint-small {
 	font-size: .7em !important;
 }
+
+.monospace-red {
+	font-family: monospace; color: #ed6b75;
+}
