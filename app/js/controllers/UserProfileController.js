@@ -2,7 +2,11 @@ angular.module('MetronicApp').controller('UserProfileController', function($root
     $scope.$on('$viewContentLoaded', function() {   
         App.initAjax(); // initialize core components
         Layout.setAngularJsSidebarMenuActiveLink('set', $('#sidebar_menu_link_profile'), $state); // set profile link active in sidebar menu 
+
+        $scope.newAvatar = null;
+
     });
+
 
     // set sidebar closed and body solid layout mode
     $rootScope.settings.layout.pageBodySolid = true;
@@ -10,8 +14,10 @@ angular.module('MetronicApp').controller('UserProfileController', function($root
 
     $scope.changeProfile = function() {
     console.log('-- changing user profile --'); 
+
+    console.log($rootScope.profile);
     
-    var jqxhrProfile = Thinx.changeProfile()
+    var jqxhrProfile = Thinx.changeProfile($rootScope.profile)
             .done(function(response) {
 
                 if (typeof(response) !== 'undefined') {
@@ -34,10 +40,32 @@ angular.module('MetronicApp').controller('UserProfileController', function($root
             });
     }
 
-    $scope.changeProfileAvatar = function(avatar) {
+
+    $scope.processAvatar = function() {
+
+        console.log('-- processing user avatar --'); 
+
+        console.log  ( $('#newAvatarInput').prop('files') );
+        console.log  ( $('#newAvatarInput').prop('files')[0] );
+
+        var reader = new FileReader();
+        reader.onloadend = function(e) {
+            console.log('-- file read --'); 
+            console.dir(e.target.result);
+            $scope.newAvatar = e.target.result;
+        }
+        reader.readAsDataURL($('#newAvatarInput').prop('files')[0]);
+
+    };
+
+
+    $scope.changeProfileAvatar = function() {
         console.log('-- changing user avatar --'); 
 
-        var jqxhrProfileAvatar = Thinx.changeProfileAvatar(avatar)
+        console.log('-- 2 --'); 
+        console.log($scope.newAvatar);
+
+        var jqxhrProfileAvatar = Thinx.changeProfileAvatar($scope.newAvatar)
             .done(function(response) {
 
                 if (typeof(response) !== 'undefined') {
@@ -45,19 +73,19 @@ angular.module('MetronicApp').controller('UserProfileController', function($root
                         console.log(response);
                         toastr.success('Avatar updated.', 'THiNX RTM Console', {timeOut: 5000})
                     } else {
-                        console.log(responseObj);
+                        console.log(response);
                         toastr.error('Avatar Update Failed.', 'THiNX RTM Console', {timeOut: 5000})
                     }
                 } else {
                     console.log('error');
                     console.log(response);
                 }
-                
             })
             .fail(function(error) {
                 console.error('Error:', error);
                 toastr.error('Avatar Update Failed Badly.', 'THiNX RTM Console', {timeOut: 5000})
             });
+
     }
 
 }); 

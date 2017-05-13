@@ -285,7 +285,7 @@ function changeProfile(profile) {
 }
 
 function changeProfileAvatar(avatar) {
-    var avatar = btoa(avatar);
+    // var avatar = btoa(avatar);
 
     return $.ajax({
         url: urlBase + '/user/profile',
