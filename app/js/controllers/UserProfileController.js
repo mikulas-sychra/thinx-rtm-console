@@ -13,7 +13,6 @@ angular.module('MetronicApp').controller('UserProfileController', function($root
     // $rootScope.settings.layout.pageSidebarClosed = true;
 
 
-
     function updateProfile(data) {
         var response = JSON.parse(data);
 

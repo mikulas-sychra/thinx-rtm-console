@@ -92,7 +92,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary" ng-click="addSource()"><i class="fa fa-check"></i> Submit</button>
+                                    <button type="button" class="btn btn-primary" ng-click="addSource()" ng-disabled="(sourceUrl == null || sourceUrl.length < 1) || (sourceAlias == null || sourceAlias.length < 1)"><i class="fa fa-check"></i> Submit</button>
                                 </div>
                             </div>
                         </div>

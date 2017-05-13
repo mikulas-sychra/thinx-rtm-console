@@ -15,6 +15,8 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
 	        })
 	        .fail(error => console.log('Error:', error));
 
+	     $scope.resetModal();
+
     });
 
     function updateKeys(data) {
@@ -86,6 +88,8 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
 	};
 
 	$scope.resetModal = function() {
+		$scope.rsakeyName = null;
+		$scope.rsakeyAlias = null;
 		$('#pageModal input[name=rsakeyName]').val(null);
 		$('#pageModal textarea[name=rsakeyValue]').val(null);
 		$scope.rsakeyModal.$setPristine();

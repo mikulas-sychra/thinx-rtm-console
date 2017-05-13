@@ -70,20 +70,20 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3">Key Alias</label>
                                 <div class="col-md-9">
-                                    <input type="text" name="rsakeyName" class="form-control" />
+                                    <input type="text" name="rsakeyName" ng-model="rsakeyName" class="form-control" />
                                 </div>
                             </div>
                             <div class="form-group last">
                                 <label class="control-label col-md-3">Key Value</label>
                                 <div class="col-md-9">
-                                    <textarea name="rsakeyValue" class="form-control"></textarea>
+                                    <textarea name="rsakeyValue" ng-model="rsakeyValue" class="form-control"></textarea>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" ng-click="addRsakey()"><i class="fa fa-check"></i> Submit</button>
+                        <button type="button" class="btn btn-primary" ng-click="addRsakey()" ng-disabled="(rsakeyName == null || rsakeyName.length < 1) || (rsakeyValue == null || rsakeyValue.length < 1)"><i class="fa fa-check"></i> Submit</button>
                     </div>
                 </div>
             </div>

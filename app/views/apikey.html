@@ -54,7 +54,7 @@
                                 {{apikey.hash}}
                             </td>
                             <td>
-                                <button type="button" class="btn btn-danger btn-tiny" ng-click="revokeApikey(apikey.hash, $index)"><i class="fa fa-cross"></i> Revoke</button>
+                                <button type="button" class="btn btn-danger btn-tiny" ng-click="revokeApikey(apikey.hash, $index)"><i class="fa fa-times"></i> Revoke</button>
                             </td>
                         </tr>
                     </table>
@@ -90,7 +90,7 @@
                     <div class="modal-footer">
                         <p class="msg-warning display-hide">WARNING: Now is the last time you can save your key!</p>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" ng-show="createButtonVisible" class="btn btn-primary" ng-click="createApikey(newApikayAlias)"><i class="fa fa-check"></i> Create</button>
+                        <button type="button" ng-show="createButtonVisible" class="btn btn-primary" ng-click="createApikey(newApikayAlias)" ng-disabled="(newApikayAlias == null || newApikayAlias.length < 1)"><i class="fa fa-check"></i> Create</button>
                         <button type="button" ng-hide="createButtonVisible" class="btn btn-default copy-btn" data-clipboard-target="#newApikey"><i class="fa fa-clipboard"></i> Copy</button>
                     </div>
                 </div>
