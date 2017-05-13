@@ -162,7 +162,9 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
 
     $scope.hasSource = function(index) {
-        if (typeof($rootScope.devices[index].value.source) !== 'undefined' && $rootScope.devices[index].value.source.length > 0) {
+        if (typeof($rootScope.devices[index].value.source) !== 'undefined' 
+            && 
+            $rootScope.devices[index].value.source !== null) {
             return true;
         }
         return false;
