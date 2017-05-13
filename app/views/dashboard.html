@@ -147,7 +147,7 @@
                                             </ui-select-choices>
                                         </ui-select>
                                         <span class="input-group-btn">
-                                            <button type="button" ng-click="detachRepository($root.devices[$index].value.alias, device.value.mac); $root.devices[$index].value.source = undefined;" class="btn btn-default">
+                                            <button type="button" ng-click="detachRepository(device.value.alias, device.value.mac); device.value.source = null;" class="btn btn-default">
                                                 <span class="fa fa-chain-broken"></span>
                                             </button>
                                         </span>
