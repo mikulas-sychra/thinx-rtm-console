@@ -273,7 +273,6 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/global/plugins/morris/raphael-min.js',                            
                             '../assets/global/plugins/jquery.sparkline.min.js',
 
-                            '../assets/global/plugins/moment.min.js',
                             '../assets/global/plugins/angularjs/plugins/ui-select/select.min.css',
                             '../assets/global/plugins/angularjs/plugins/ui-select/select.min.js',
 
