@@ -274,11 +274,21 @@ function getProfile() {
 
 function changeProfile(profile) {
 
+    var info = {
+        first_name: profile.first_name,
+        last_name: profile.last_name,
+        phone: profile.phone,
+        security: profile.security
+    }
+
+    console.log('change profile');
+    console.log(info);
+
     return $.ajax({
         url: urlBase + '/user/profile',
         type: 'POST',
         data: JSON.stringify({ 
-            info: profile
+            info: info
         }), 
         dataType: 'json'
     });

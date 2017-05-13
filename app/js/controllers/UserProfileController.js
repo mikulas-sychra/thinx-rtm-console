@@ -49,6 +49,12 @@ angular.module('MetronicApp').controller('UserProfileController', function($root
                 if (typeof(response) !== 'undefined') {
                     if (typeof(response.success) !== 'undefined' && response.success) {
                         console.log(response);
+
+                        var jqxhrProfile = Thinx.getProfile().done(function(data) {
+                                                updateProfile(data);
+                                            })
+                                            .fail(error => console.log('Error:', error));
+
                         toastr.success('Profile updated.', 'THiNX RTM Console', {timeOut: 5000})
                     } else {
                         console.log(response);
