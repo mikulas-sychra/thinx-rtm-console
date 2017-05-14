@@ -13,6 +13,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
         $scope.deviceUdid = null;
         $scope.deviceAlias = null;
+        $scope.modalLogBody = 'No data. Please select build log.';
     });
 
     // set sidebar closed and body solid layout mode
@@ -82,7 +83,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
     };
 
-    $scope.build = function(deviceUdid, sourceAlias) {
+    $scope.build = function(deviceUdid, sourceAlias, index) {
         console.log('-- building firmware for ' + deviceUdid + '/' + sourceAlias + ' --'); 
 
         var dryrun = true;
@@ -90,24 +91,25 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
         var jqxhrBuild = Thinx.build(deviceUdid, sourceAlias, dryrun)
             .done(function(response) {
 
+                console.log(' --- response ---');
+                console.log(response);
+
                 if (typeof(response) !== 'undefined') {
                     if (typeof(response.build) !== 'undefined' && response.build.success) {
                         console.log(response.build);
-                        toastr.success('Starting Build.', 'THiNX RTM Console', {timeOut: 5000})
 
+                        console.log(' --- save last build id ---');
+                        $rootScope.devices[index].lastBuildId = response.build.id;
 
-                        console.log('--- trying to catch build log for ' + response.build.id);
-                        var jqxhrTest = Thinx.getBuildLog(response.build.id)
-                        .done(function(data) {
-                            console.log(' --- build log data received ---');
-                            console.log(data);
-                        })
-                        .fail(error => console.log('Error:', error));
+                        console.log(' --- DEVICES ---');
+                        console.log($rootScope.devices);
+                        $scope.$apply();
 
+                        toastr.info(response.build.status, 'THiNX RTM Console', {timeOut: 5000});
             
                     } else {
                         console.log(response);
-                        toastr.error('Build Failed.', 'THiNX RTM Console', {timeOut: 5000})
+                        toastr.error(response.build.status, 'THiNX RTM Console', {timeOut: 5000})
                     }
                 } else {
                     console.log('error');
@@ -121,10 +123,49 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             });
     };
 
+    $scope.openBuildId = function(buildId) {
+
+        console.log('--- trying to load build log for ' + buildId);
+
+        var jqxhrTest = Thinx.getBuildLog(buildId)
+
+        .done(function(data) {
+            console.log(' --- build log data received ---');
+            console.log(data);
+
+             if (typeof(data) !== 'undefined') {
+                if (data.success) {
+                    console.log(data);
+                    toastr.info(data.log[0].message, 'THiNX RTM Console', {timeOut: 5000});
+
+                    $scope.modalLogBody = JSON.stringify(data, null, 4);
+                    $scope.$apply();
+
+                } else {
+                    console.log(data);
+                    toastr.error('Show Build Log Failed', 'THiNX RTM Console', {timeOut: 5000})
+                }
+            } else {
+                console.log('error');
+                console.log(data);
+            }
+        })
+        .fail(error => console.log('Error:', error));
+
+    }
+
+    $scope.hasBuildId = function(index) {
+        if (typeof($rootScope.devices[index].lastBuildId) !== 'undefined' && 
+            $rootScope.devices[index].lastBuildId !== null) {
+            return true;
+        }
+        return false;
+    }
+
 
     $scope.hasSource = function(index) {
-        if (typeof($rootScope.devices[index].value.source) !== 'undefined' && 
-            $rootScope.devices[index].value.source !== null) {
+        if (typeof($rootScope.devices[index].source) !== 'undefined' && 
+            $rootScope.devices[index].source !== null) {
             return true;
         }
         return false;

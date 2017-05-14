@@ -349,8 +349,29 @@
         </div>
     </form>
     <!-- END FORM-->
-    <!-- END DASHBOARD STATS -->
 
+    <!-- BEGIN FORM-->
+    <form action="#" class="form-horizontal form-bordered" name="buildLog">
+        <div id="pageModalLog" class="modal fade" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        <h4 class="modal-title">Build Log</h4>
+                    </div>
+                    <div class="modal-body">
+                         <pre ng-bind="modalLogBody">
+                         </pre>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- END FORM-->
+    <!-- END DASHBOARD STATS -->
 </div>
 <!-- END MAIN CONTENT -->
 <!-- BEGIN MAIN JS & CSS -->
