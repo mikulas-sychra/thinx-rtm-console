@@ -43,8 +43,8 @@ var Thinx = {
     deviceList: function () {
         return deviceList();
     },
-    changeDevice: function (deviceHash, deviceAlias) {
-        return changeDevice(deviceHash, deviceAlias);
+    changeDevice: function (deviceUdid, deviceAlias) {
+        return changeDevice(deviceUdid, deviceAlias);
     },
     revokeDevice: function (udid) {
         return revokeDevice(udid);
@@ -55,8 +55,8 @@ var Thinx = {
     detachRepository: function (deviceAlias, deviceMac) {
         return detachRepository(deviceAlias, deviceMac);
     },
-    build: function (deviceHash, sourceAlias, dryrun) {
-        return build(deviceHash, sourceAlias, dryrun);
+    build: function (deviceUdid, sourceAlias, dryrun) {
+        return build(deviceUdid, sourceAlias, dryrun);
     },
     // PROFILE
     getProfile: function () {
