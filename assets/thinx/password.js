@@ -103,6 +103,10 @@ var PasswordReset = function() {
                                 if (response.status == 'user_not_found') {
                                     $('.msg-error', $('.forget-form')).text('User not found.');
                                     $('.msg-error', $('.forget-form')).show();
+                                }
+                                if (response.status == 'activated_user_not_found') {
+                                    $('.msg-error', $('.forget-form')).text('Activated User not found.');
+                                    $('.msg-error', $('.forget-form')).show();
                                 } 
                             }
                         }
