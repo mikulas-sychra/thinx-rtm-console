@@ -98,11 +98,8 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                     if (typeof(response.build) !== 'undefined' && response.build.success) {
                         console.log(response.build);
 
-                        console.log(' --- save last build id ---');
+                        console.log(' --- save last build id: ' + response.build.id + ' ---');
                         $rootScope.devices[index].lastBuildId = response.build.id;
-
-                        console.log(' --- DEVICES ---');
-                        console.log($rootScope.devices);
                         $scope.$apply();
 
                         toastr.info(response.build.status, 'THiNX RTM Console', {timeOut: 5000});
@@ -136,9 +133,11 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
              if (typeof(data) !== 'undefined') {
                 if (data.success) {
                     console.log(data);
-                    toastr.info(data.log[0].message, 'THiNX RTM Console', {timeOut: 5000});
+                    toastr.info(data.log[data.log.length - 1].message, 'THiNX RTM Console', {timeOut: 5000});
 
+                    // TODO - implement contignous XHR request with regular DOM updates
                     $scope.modalLogBody = JSON.stringify(data, null, 4);
+                    $scope.modalLogId = buildId;
                     $scope.$apply();
 
                 } else {
@@ -160,6 +159,10 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             return true;
         }
         return false;
+    }
+
+    $scope.refreshLog = function() {
+        $scope.openBuildId($scope.modalLogId);
     }
 
 
