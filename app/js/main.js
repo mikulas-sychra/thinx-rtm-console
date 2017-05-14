@@ -111,9 +111,10 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
             $rootScope.buildlog = {rows: null};
         }
 
-        console.log('buildlog list response:');
-
         var response = JSON.parse(data);
+        console.log('buildlog list response:');
+        console.log(response)
+
         if (typeof(response.success !== 'undefined') && response.success) {
             $rootScope.buildlog.rows = response.builds.rows;
             $scope.$apply()
@@ -122,7 +123,7 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
         } else {
             console.log('Buildlog list fetch error.') ;
         }
-        console.log(response)
+        
     }
 
     function updateBuildLog(data) {

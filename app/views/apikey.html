@@ -54,7 +54,8 @@
                                 {{apikey.hash}}
                             </td>
                             <td>
-                                <button type="button" class="btn btn-danger btn-tiny" ng-click="revokeApikey(apikey.hash, $index)"><i class="fa fa-times"></i> Revoke</button>
+                                <a class="btn btn-circle btn-icon-only btn-danger" href="#" ng-click="revokeApikey(apikey.hash, $index)"><i class="fa fa-times"></i>
+                                </a>
                             </td>
                         </tr>
                     </table>

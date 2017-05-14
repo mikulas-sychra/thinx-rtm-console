@@ -34,7 +34,7 @@
                         <thead>
                             <tr class="uppercase">
                                 <th>
-                                    Alias / Key
+                                    Alias / Fingerprint
                                 </th>
                                 <th>
                                     Actions
@@ -48,7 +48,9 @@
                                 <div class="monospace-red">{{rsakey.fingerprint}}</div>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-danger btn-tiny" ng-click="revokeRsakey(rsakey.fingerprint, $index)"><i class="fa fa-cross"></i> Delete</button>
+                                <a class="btn btn-circle btn-icon-only btn-danger" href="#" ng-click="revokeRsakey(rsakey.fingerprint, $index)">
+                                        <i class="fa fa-times"></i>
+                                    </a>
                             </td>
                         </tr>
                     </table>

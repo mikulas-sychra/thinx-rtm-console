@@ -30,9 +30,9 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
 
 	$scope.addRsakey = function() {
 
-		console.log('--adding rsa key ' + $('#pageModal input[name=rsakeyName]').val() +'--')
+		console.log('--adding rsa key ' + $scope.rsakeyName +'--')
 
-		var jqxhr = Thinx.addRsakey($('#pageModal input[name=rsakeyName]').val(), $('#pageModal textarea[name=rsakeyValue]').val())
+		var jqxhr = Thinx.addRsakey($scope.rsakeyName, $scope.rsakeyValue)
 	        .done(function(response) {
 	        	
 	            if (typeof(response) !== 'undefined') {
@@ -90,9 +90,6 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
 	$scope.resetModal = function() {
 		$scope.rsakeyName = null;
 		$scope.rsakeyAlias = null;
-		$('#pageModal input[name=rsakeyName]').val(null);
-		$('#pageModal textarea[name=rsakeyValue]').val(null);
-		$scope.rsakeyModal.$setPristine();
 	}
 
 }]);
