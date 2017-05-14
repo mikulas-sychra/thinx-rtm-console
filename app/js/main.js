@@ -62,6 +62,9 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
         //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive 
     });
 
+    console.log(' === ROOT === ');
+    console.log($rootScope);
+
     function updateProfile(data) {
         var response = JSON.parse(data);
 

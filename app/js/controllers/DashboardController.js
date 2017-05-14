@@ -23,7 +23,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 	function updateDevices(data) {
         var devices = JSON.parse(data);
         $rootScope.devices = devices.devices;
-        $scope.$apply()
+        $scope.$apply();
 
         console.log('devices:');
         console.log($rootScope.devices);
@@ -38,13 +38,6 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                 if (typeof(response) !== 'undefined') {
                     if (response.success) {
                         console.log(response);
-                        // var jqxhr = Thinx.sourceList()
-                            // .done( function(data) {
-                                // updateSources(data)
-                            // })
-                            // .fail(error => console.log('Error:', error));
-
-                        // $('#pageModal').modal('hide');
                         toastr.success('Repository Attached.', 'THiNX RTM Console', {timeOut: 5000})
                     } else {
                         console.log(response);
@@ -72,14 +65,6 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                 if (typeof(response) !== 'undefined') {
                     if (response.success) {
                         console.log(response);
-
-                        // var jqxhr = Thinx.sourceList()
-                            // .done( function(data) {
-                                // updateSources(data)
-                            // })
-                            // .fail(error => console.log('Error:', error));
-
-                        // $('#pageModal').modal('hide');
                         toastr.success('Repository Detached.', 'THiNX RTM Console', {timeOut: 5000})
                     } else {
                         console.log(response);
@@ -219,8 +204,8 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             $scope.deviceUdid == null;
             $scope.deviceAlias == null;
         } else {
-            $scope.deviceUdid = $rootScope.devices[index].value.udid;
-            $scope.deviceAlias = $rootScope.devices[index].value.alias;
+            $scope.deviceUdid = $rootScope.devices[index].udid;
+            $scope.deviceAlias = $rootScope.devices[index].alias;
         };
         
         console.log($scope.deviceUdid);

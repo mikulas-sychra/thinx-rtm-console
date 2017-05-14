@@ -49,8 +49,9 @@
                             </td>
                             <td>
                                 <a class="btn btn-circle btn-icon-only btn-danger" href="#" ng-click="revokeRsakey(rsakey.fingerprint, $index)">
-                                        <i class="fa fa-times"></i>
-                                    </a>
+                                    <i class="fa fa-times"></i>
+                                </a>
+                                <button class="btn btn-circle btn-icon-only btn-danger" uib-popover-template="dynamicPopover.templateUrl" popover-title="Revoke {{rsakey.name}}" popover-confirm="revokeRsakey(rsakey.fingerprint, $index)" popover-placement="bottom" type="button" class="btn btn-default"><i class="fa fa-times"></i></button>
                             </td>
                         </tr>
                     </table>

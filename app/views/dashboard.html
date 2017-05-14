@@ -128,40 +128,43 @@
                                         Last Seen
                                     </th>
                                     <th>
-                                        Build
+                                        Actions
                                     </th>
                                 </tr>
                             </thead>
-                             <tr ng-repeat="device in $root.devices track by device.id">
+                             <tr ng-repeat="device in $root.devices track by device.udid">
                                 <td style="vertical-align: top;">
-                                    <a href="#" class="btn green-haze" ng-click="resetModal($index)" data-target="#pageModal" data-toggle="modal">{{device.value.alias}}</a>
+                                    <a href="#" class="btn green-haze btn-outline" ng-click="resetModal($index)" data-target="#pageModal" data-toggle="modal">{{device.alias}}</a>
                                 </td>
                                 <td>
-                                    {{device.value.firmware}}<br><br>
+                                    {{device.firmware}}<br><br>
 
                                     <div class="input-group dashboard-selector">
-                                        <ui-select append-to-body="true" allow-clear ng-model="$root.devices[$index].value.source" theme="bootstrap" on-select="attachRepository($select.selected.alias, device.value.mac)">
+                                        <ui-select append-to-body="true" allow-clear ng-model="$root.devices[$index].source" theme="bootstrap" on-select="attachRepository($select.selected.alias, device.mac)">
                                             <ui-select-match placeholder="none">{{$select.selected.alias}}</ui-select-match>
                                             <ui-select-choices repeat="source.alias as source in $root.sources | filter: $select.search">
                                                 <span ng-bind-html="source.alias | highlight: $select.search"></span>
                                             </ui-select-choices>
                                         </ui-select>
                                         <span class="input-group-btn">
-                                            <button type="button" ng-click="detachRepository(device.value.alias, device.value.mac); device.value.source = null;" class="btn btn-default">
+                                            <button type="button" ng-click="detachRepository(device.alias, device.mac); device.source = null;" class="btn btn-default">
                                                 <span class="fa fa-chain-broken"></span>
                                             </button>
                                         </span>
                                     </div> 
                                 </td>
                                 <td style="vertical-align: top;">
-                                    {{device.id}}
+                                    {{device.mac}}
                                 </td>
                                 <td style="vertical-align: top;">
-                                    {{device.value.lastupdate | lastSeen}}
+                                    {{device.lastupdate | lastSeen}}
                                 </td>
                                 <td>
-                                    <a class="btn btn-circle btn-icon-only btn-default" href="#" ng-if="hasSource($index)" ng-click="build(device.value.udid, device.value.source)">
-                                        <i class="icon-chemistry"></i>
+                                    <a class="btn btn-circle btn-icon-only btn-default" href="#" ng-if="hasSource($index)" ng-click="build(device.udid, device.source, $index)">
+                                        <i class="fa fa-cog"></i>
+                                    </a>
+                                    <a class="btn btn-circle btn-icon-only btn-primary" ng-if="hasBuildId($index)" data-target="#pageModalLog" data-toggle="modal" ng-click="openBuildId(device.lastBuildId)">
+                                        <i class="fa fa-list-alt"></i>
                                     </a>
                                 </td>
                             </tr>
