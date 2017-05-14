@@ -11,15 +11,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                 console.log('Error:', error);
             });
 
-        var jqxhr = Thinx.buildLogList()
-            .done(function(data) {
-                updateBuildLogList(data);
-            })
-            .fail(function(error) {
-                console.log('Error:', error);
-            });
-
-        $scope.deviceHash = null;
+        $scope.deviceUdid = null;
         $scope.deviceAlias = null;
     });
 
@@ -36,37 +28,6 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
         console.log('devices:');
         console.log($rootScope.devices);
     }
-
-    function updateBuildLogList(data) {
-        if (typeof($rootScope.buildlog) == 'undefined') {
-            // build log is not defined yet (can be defined by getBuildLog)
-            $rootScope.buildlog = {rows: null};
-        }
-
-        console.log('buildlog list response:');
-
-        var response = JSON.parse(data);
-        if (typeof(response.success !== 'undefined') && response.success) {
-            $rootScope.buildlog.rows = response.builds.rows;
-            $scope.$apply()
-            console.log('buildlog list:');
-            console.log($rootScope.buildlog.rows);
-        } else {
-            console.log('Buildlog list fetch error.') ;
-        }
-        console.log(response)
-    }
-
-    function updateBuildLog(data) {
-        var response = JSON.parse(data);
-
-        $rootScope.buildlog = response.logs;
-        $scope.$apply()
-
-        console.log('buildlog:');
-        console.log($rootScope.buildlog);
-    }
-
     
     $scope.attachRepository = function(sourceAlias, deviceMac) {
     
@@ -136,10 +97,12 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
     };
 
-    $scope.build = function(deviceHash, sourceAlias) {
-        console.log('-- building firmware for ' + deviceHash + '/' + sourceAlias + ' --'); 
+    $scope.build = function(deviceUdid, sourceAlias) {
+        console.log('-- building firmware for ' + deviceUdid + '/' + sourceAlias + ' --'); 
 
-        var jqxhrBuild = Thinx.build(deviceHash, sourceAlias)
+        var dryrun = true;
+
+        var jqxhrBuild = Thinx.build(deviceUdid, sourceAlias, dryrun)
             .done(function(response) {
 
                 if (typeof(response) !== 'undefined') {
@@ -148,18 +111,17 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                         toastr.success('Starting Build.', 'THiNX RTM Console', {timeOut: 5000})
 
 
-            console.log('--- trying to catch build log for ' + response.build.id);
-
-            var jqxhrTest = Thinx.getBuildLog(response.build.id)
-            .done(function(data) {
-                console.log(' --- build log data received ---');
-                console.log(data);
-            })
-            .fail(error => console.log('Error:', error));
+                        console.log('--- trying to catch build log for ' + response.build.id);
+                        var jqxhrTest = Thinx.getBuildLog(response.build.id)
+                        .done(function(data) {
+                            console.log(' --- build log data received ---');
+                            console.log(data);
+                        })
+                        .fail(error => console.log('Error:', error));
 
             
                     } else {
-                        console.log(responseObj);
+                        console.log(response);
                         toastr.error('Build Failed.', 'THiNX RTM Console', {timeOut: 5000})
                     }
                 } else {
@@ -176,23 +138,21 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
 
     $scope.hasSource = function(index) {
-        if (typeof($rootScope.devices[index].value.source) !== 'undefined' 
-            && 
+        if (typeof($rootScope.devices[index].value.source) !== 'undefined' && 
             $rootScope.devices[index].value.source !== null) {
             return true;
         }
         return false;
     }
 
-
     $scope.changeDeviceAlias = function() {
 
-        var deviceHash = $scope.deviceHash;
+        var deviceUdid = $scope.deviceUdid;
         var deviceAlias = $scope.deviceAlias;
 
-        console.log('-- changing device alias to ' + deviceAlias + '  for ' + deviceHash + ' --'); 
+        console.log('-- changing device alias to ' + deviceAlias + '  for ' + deviceUdid + ' --'); 
 
-        var jqxhrAlias = Thinx.changeDevice(deviceHash, deviceAlias)
+        var jqxhrAlias = Thinx.changeDevice(deviceUdid, deviceAlias)
             .done(function(response) {
 
                 if (typeof(response) !== 'undefined') {
@@ -227,9 +187,9 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
     };
 
     $scope.revokeDevice = function() {
-        console.log('--revoking device ' + $scope.deviceHash +'--')
+        console.log('--revoking device ' + $scope.deviceUdid +'--')
 
-        var jqxhr = Thinx.revokeDevice($scope.deviceHash)
+        var jqxhr = Thinx.revokeDevice($scope.deviceUdid)
             .done(function(response) {
                 if (response.success) {
                     console.log('Success:', response.revoked);
@@ -256,14 +216,14 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
     $scope.resetModal = function(index) {
         if (typeof(index) == 'undefined') {
-            $scope.deviceHash == null;
+            $scope.deviceUdid == null;
             $scope.deviceAlias == null;
         } else {
-            $scope.deviceHash = $rootScope.devices[index].value.device_id;
+            $scope.deviceUdid = $rootScope.devices[index].value.udid;
             $scope.deviceAlias = $rootScope.devices[index].value.alias;
         };
         
-        console.log($scope.deviceHash);
+        console.log($scope.deviceUdid);
         console.log($scope.deviceAlias);
         console.log('Modal form reset.');
     }

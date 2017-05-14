@@ -55,8 +55,8 @@ var Thinx = {
     detachRepository: function (deviceAlias, deviceMac) {
         return detachRepository(deviceAlias, deviceMac);
     },
-    build: function (deviceHash, sourceAlias) {
-        return build(deviceHash, sourceAlias);
+    build: function (deviceHash, sourceAlias, dryrun) {
+        return build(deviceHash, sourceAlias, dryrun);
     },
     // PROFILE
     getProfile: function () {
@@ -152,13 +152,14 @@ function detachRepository(alias, mac) {
     });
 }
 
-function build(deviceHash, sourceAlias) {
+function build(deviceUdid, sourceAlias, dryrun) {
     return $.ajax({
         url: urlBase + '/build',
         type: 'POST',
         data: JSON.stringify({build: {
-            hash: deviceHash,
-            source: sourceAlias
+            udid: deviceUdid,
+            source: sourceAlias,
+            dryrun: dryrun,
         }}), 
         dataType: 'json'
     });
