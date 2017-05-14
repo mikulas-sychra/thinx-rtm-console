@@ -28,15 +28,15 @@
                         <form role="form" action="#">
                             <div class="form-group">
                                 <label class="control-label">First Name</label>
-                                <input type="text" placeholder="John" class="form-control" value="{{$root.profile['first_name']}}"/>
+                                <input type="text" placeholder="John" class="form-control" ng-model="$root.profile['first_name']"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Last Name</label>
-                                <input type="text" placeholder="Doe" class="form-control" value="{{$root.profile['last_name']}}"/>
+                                <input type="text" placeholder="Doe" class="form-control" ng-model="$root.profile['last_name']"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Mobile Number</label>
-                                <input type="text" placeholder="+420 123 456 789" class="form-control" ng-value="{{$root.profile['phone']}}"/>
+                                <input type="text" class="form-control" ng-model="$root.profile['mobile_phone']" placeholder="+420 123 456 789"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Email</label>

@@ -18,6 +18,10 @@ angular.module('MetronicApp').controller('UserProfileController', function($root
 
         if (typeof(response) !== 'undefined' && typeof(response.success) !== 'undefined' && response.success) {
 
+
+                    console.log('-- updating profile with data ---');
+                    console.log(response);
+
                     $rootScope.profile = response.profile;
         
                     console.log('profile:');
@@ -30,8 +34,9 @@ angular.module('MetronicApp').controller('UserProfileController', function($root
                                     || $rootScope.profile.avatar.length == 0) {
                             $rootScope.profile.avatar = '/assets/thinx/img/default_avatar_sm.png';
                         }
-                        $scope.$apply()
+                        $scope.$apply();
                     }
+                     $scope.$apply();
 
         }
     }
@@ -40,19 +45,24 @@ angular.module('MetronicApp').controller('UserProfileController', function($root
     $scope.changeProfile = function() {
     console.log('-- changing user profile --'); 
 
+    console.log('current profile'); 
     console.log($rootScope.profile);
     
+    console.log('-- sending data --'); 
     var jqxhrProfile = Thinx.changeProfile($rootScope.profile)
             .done(function(response) {
 
                 if (typeof(response) !== 'undefined') {
                     if (typeof(response.success) !== 'undefined' && response.success) {
+
+                        console.log(' == Profile update success ==');
                         console.log(response);
 
-                        var jqxhrProfile = Thinx.getProfile().done(function(data) {
-                                                updateProfile(data);
-                                            })
-                                            .fail(error => console.log('Error:', error));
+
+                        // var jqxhrProfile = Thinx.getProfile().done(function(data) {
+                                                // updateProfile(data);
+                                            // })
+                                            // .fail(error => console.log('Error:', error));
 
                         toastr.success('Profile updated.', 'THiNX RTM Console', {timeOut: 5000})
                     } else {

@@ -74,8 +74,8 @@ var Thinx = {
     getAuditLog: function () {
         return getAuditLog();
     },
-    getBuildLog: function (build_id) {
-        return getBuildLog(build_id);
+    getBuildLog: function (buildId) {
+        return getBuildLog(buildId);
     },
     buildLogList: function () {
         return buildLogList();
@@ -290,8 +290,19 @@ function changeProfile(profile) {
     var info = {
         first_name: profile.first_name,
         last_name: profile.last_name,
-        phone: profile.phone,
-        security: profile.security
+        mobile_phone: profile.mobile_phone, // TODO
+
+        notifications: {
+                "all" : false, 
+                "important" : false, 
+                "info" : false 
+        },
+
+        security: { "unique_api_keys" : true },
+
+        goals: profile.goals,
+        username: profile.username,
+        owner: profile.owner
     }
 
     console.log('change profile');
@@ -339,7 +350,7 @@ function buildLogList() {
     });
 }
 
-function getBuildLog(build_id) {
+function getBuildLog(buildId) {
     return $.ajax({
         url: urlBase + '/user/logs/build',
         type: 'POST',
