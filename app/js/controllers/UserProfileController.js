@@ -18,28 +18,23 @@ angular.module('MetronicApp').controller('UserProfileController', function($root
 
         if (typeof(response) !== 'undefined' && typeof(response.success) !== 'undefined' && response.success) {
 
+            console.log('-- updating profile with data ---');
+            console.log(response);
 
-                    console.log('-- updating profile with data ---');
-                    console.log(response);
+            $rootScope.profile = response.profile;
 
-                    $rootScope.profile = {
-                        info: response.profile
-                    };
+            console.log('updated profile:');
+            console.log($rootScope.profile);
 
-                    console.log('profile:');
-                    console.log($rootScope.profile);
+            if (typeof($rootScope.profile.info) !== 'undefined') {
+                $rootScope.profile.info.goals = ['apikey','enroll','rsakey','source','update','build','profile_privacy','profile_avatar'];
+            }
 
-                    if (typeof($rootScope.profile.info) !== 'undefined') {
-                        
-                        $rootScope.profile.info.goals = ['apikey','enroll','rsakey','source','update','build','profile_privacy','profile_avatar'];
-                        if (typeof($rootScope.profile.avatar) == 'undefined' 
-                                    || $rootScope.profile.avatar.length == 0) {
-                            $rootScope.profile.avatar = '/assets/thinx/img/default_avatar_sm.png';
-                        }
-                        $scope.$apply();
-                    }
-                    $scope.$apply();
+            if (typeof($rootScope.profile.avatar) == 'undefined' || $rootScope.profile.avatar.length == 0) {
+                $rootScope.profile.avatar = '/assets/thinx/img/default_avatar_sm.png';
+            }
 
+            $scope.$apply();
         }
     }
 
@@ -61,10 +56,10 @@ angular.module('MetronicApp').controller('UserProfileController', function($root
                         console.log(response);
 
 
-                        // var jqxhrProfile = Thinx.getProfile().done(function(data) {
-                                                // updateProfile(data);
-                                            // })
-                                            // .fail(error => console.log('Error:', error));
+                        var jqxhrProfile = Thinx.getProfile().done(function(data) {
+                                                updateProfile(data);
+                                            })
+                                            .fail(error => console.log('Error:', error));
 
                         toastr.success('Profile updated.', 'THiNX RTM Console', {timeOut: 5000})
                     } else {
@@ -86,8 +81,8 @@ angular.module('MetronicApp').controller('UserProfileController', function($root
 
     $scope.processAvatar = function() {
 
+        var avatarMaxSize = 500000;
         console.log('-- processing user avatar --'); 
-
         console.log  ( $('#newAvatarInput').prop('files') );
 
         if ($('#newAvatarInput').prop('files').length > 0) {
@@ -95,8 +90,14 @@ angular.module('MetronicApp').controller('UserProfileController', function($root
             var reader = new FileReader();
             reader.onloadend = function(e) {
                 console.log('-- file read --'); 
-                // console.dir(e.target.result);
-                $scope.newAvatar = e.target.result;
+                console.log(e.total);
+
+                if (e.total < avatarMaxSize) {
+                    $scope.newAvatar = e.target.result;
+                } else {
+                    toastr.error('Avatar size over limit 500kB (' + e.total/1000 + ' kB).', 'THiNX RTM Console', {timeOut: 5000});
+                }
+                $scope.$apply();
             }
             reader.readAsDataURL($('#newAvatarInput').prop('files')[0]);
 
@@ -105,13 +106,13 @@ angular.module('MetronicApp').controller('UserProfileController', function($root
             $scope.newAvatar = null;
         }
 
+        $scope.$apply();
+
     };
 
 
     $scope.changeProfileAvatar = function() {
         console.log('-- changing user avatar --'); 
-
-        console.log('-- 2 --'); 
         console.log($scope.newAvatar);
 
         if ($scope.newAvatar == null) {
@@ -125,6 +126,8 @@ angular.module('MetronicApp').controller('UserProfileController', function($root
                 if (typeof(response) !== 'undefined') {
                     if (typeof(response.success) !== 'undefined' && response.success) {
                         console.log(response);
+
+                        console.log('-- avatar success, refreshing profile --'); 
 
                         var jqxhrProfile = Thinx.getProfile().done(function(data) {
                                                 updateProfile(data);
