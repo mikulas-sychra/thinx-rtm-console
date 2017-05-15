@@ -11,7 +11,7 @@
 <div ng-controller="DashboardController">
     <div class="note note-info" ng-hide="$root.profile.info.goals.includes('apikey')">
         <h3>1. API Key
-            <span class="close" data-close="note"></span>
+            <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('apikey')"></span>
         </h3>
         <a ui-sref="apikey">Create your first API Key</a>
         <p>
@@ -21,7 +21,7 @@
     </div>
     <div class="note note-info" ng-hide="$root.profile.info.goals.includes('enroll')">
         <h3>2. Device Enrollment
-            <span class="close" data-close="note"></span>
+            <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('enroll')"></span>
         </h3>
         <a>Enroll your device</a>
         <p>
@@ -33,7 +33,7 @@
     </div>
     <div class="note note-info" ng-hide="$root.profile.info.goals.includes('enroll')">
         <h3>3. Device Setup
-            <span class="close" data-close="note"></span>
+            <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('enroll-setup')"></span>
         </h3>
         <a>Connect your device to internet</a>
         <p>
@@ -44,7 +44,7 @@
     </div>
     <div class="note note-danger" ng-hide="$root.profile.info.goals.includes('rsakey')">
         <h3>Security
-            <span class="close" data-close="note"></span>
+            <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('rsakey')"></span>
         </h3>
         <a ui-sref="rsakey">Add RSA Key</a>
         <p>
@@ -54,7 +54,7 @@
     </div>
     <div class="note note-success" ng-hide="$root.profile.info.goals.includes('update')">
         <h3>Well Done!
-            <span class="close" data-close="note"></span>
+            <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('update')"></span>
         </h3>
         <a>Update your device</a>
         <p>

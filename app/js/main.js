@@ -78,8 +78,10 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
             console.log('updated profile:');
             console.log($rootScope.profile);
 
-            if (typeof($rootScope.profile.info) !== 'undefined') {
-                $rootScope.profile.info.goals = ['apikey','enroll','rsakey','source','update','build','profile_privacy','profile_avatar'];
+            if (typeof($rootScope.profile.info.goals) == 'undefined') {
+                console.log('- goals not defined yet -');
+                $rootScope.profile.info.goals = [];
+                // $rootScope.profile.info.goals = ['apikey','enroll','rsakey','source','update','build','profile_privacy','profile_avatar'];
             }
 
             if (typeof($rootScope.profile.avatar) == 'undefined' || $rootScope.profile.avatar.length == 0) {

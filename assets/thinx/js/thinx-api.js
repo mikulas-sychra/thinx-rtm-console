@@ -288,21 +288,21 @@ function getProfile() {
 function changeProfile(profile) {
 
     var info = {
-        first_name: profile.first_name,
-        last_name: profile.last_name,
-        mobile_phone: profile.mobile_phone, // TODO
+        first_name: profile.info.first_name,
+        last_name: profile.info.last_name,
+        mobile_phone: profile.info.mobile_phone,
 
         notifications: {
-                "all" : false, 
-                "important" : false, 
-                "info" : false 
+                "all" : profile.info.notifications.all, 
+                "important" : profile.info.notifications.important, 
+                "info" : profile.info.notifications.info 
         },
 
         security: { "unique_api_keys" : true },
 
-        goals: profile.goals,
-        username: profile.username,
-        owner: profile.owner
+        goals: profile.info.goals,
+        username: profile.info.username,
+        owner: profile.info.owner
     }
 
     console.log('sending profile change request...');

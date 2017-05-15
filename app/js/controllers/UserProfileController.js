@@ -26,8 +26,10 @@ angular.module('MetronicApp').controller('UserProfileController', function($root
             console.log('updated profile:');
             console.log($rootScope.profile);
 
-            if (typeof($rootScope.profile.info) !== 'undefined') {
-                $rootScope.profile.info.goals = ['apikey','enroll','rsakey','source','update','build','profile_privacy','profile_avatar'];
+            if (typeof($rootScope.profile.info.goals) == 'undefined') {
+                console.log('- goals not defined yet -');
+                $rootScope.profile.info.goals = [];
+                // $rootScope.profile.info.goals = ['apikey','enroll','rsakey','source','update','build','profile_privacy','profile_avatar'];
             }
 
             if (typeof($rootScope.profile.avatar) == 'undefined' || $rootScope.profile.avatar.length == 0) {
@@ -150,5 +152,17 @@ angular.module('MetronicApp').controller('UserProfileController', function($root
             });
 
     }
+
+    $scope.removeGoal = function(goalId) {
+
+        console.log('-- current goals: ' + $rootScope.profile.info.goals);
+        console.log('-- removing goal: ' + goalId);
+
+        var index = $rootScope.profile.info.goals.indexOf(goalId);
+        if (index > -1) {
+            $rootScope.profile.info.goals.splice(index, 1);
+        };
+
+    };
 
 }); 

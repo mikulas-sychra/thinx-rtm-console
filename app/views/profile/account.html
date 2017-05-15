@@ -42,6 +42,17 @@
                                 <label class="control-label">Email</label>
                                 <input type="text" placeholder="john@doe.com" class="form-control" value="{{$root.profile.email}}" ng-readonly="true"/>
                             </div>
+                            <div class="form-group">
+                                <label class="control-label">Goals</label>
+                                <div>
+                                    <span ng-repeat="goal in $root.profile.info.goals">
+                                        <span class="tag label label-info">
+                                          <span>{{goal}}</span>
+                                          <a ng-click="removeGoal(goal)"><i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
                             <div class="margiv-top-10">
                                 <a href="#" ng-click="changeProfile()" class="btn green-haze">Save Changes </a>
                                 <a href="#" class="btn default">Cancel </a>
