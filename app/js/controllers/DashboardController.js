@@ -11,6 +11,13 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                 console.log('Error:', error);
             });
 
+        console.log('-- fetching stats ---')
+        var jqxhrStats = Thinx.getStats()
+            .done(function(data) {
+                updateStats(data);
+            })
+            .fail(error => console.log('Error:', error));
+
         $scope.deviceUdid = null;
         $scope.deviceAlias = null;
         $scope.modalLogBody = 'No data. Please select build log.';
@@ -28,6 +35,16 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
         console.log('devices:');
         console.log($rootScope.devices);
+    }
+
+    function updateStats(data) {
+        var response = JSON.parse(data);
+
+        $rootScope.stats = response;
+        $scope.$apply()
+
+        console.log('stats:');
+        console.log($rootScope.stats);
     }
     
     $scope.attachRepository = function(sourceAlias, deviceMac) {

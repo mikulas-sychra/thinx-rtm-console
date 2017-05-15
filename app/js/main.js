@@ -165,7 +165,9 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
             .done(function(data) {
                 updateBuildLogList(data);
             })
-            .fail(error => console.log('Error:', error));        
+            .fail(error => console.log('Error:', error));
+
+    
 
     
     var counter = 30;

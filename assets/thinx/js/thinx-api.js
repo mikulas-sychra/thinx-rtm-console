@@ -79,7 +79,10 @@ var Thinx = {
     },
     buildLogList: function () {
         return buildLogList();
-    }
+    },
+    getStats: function () {
+        return getStats();
+    },
 }
 
 function updateTimer() {
@@ -360,5 +363,12 @@ function getBuildLog(buildId) {
             build_id: buildId
         }), 
         dataType: 'json'
+    });
+}
+
+function getStats() {
+    return $.ajax({
+        url: urlBase + '/user/stats',
+        type: 'GET'
     });
 }
