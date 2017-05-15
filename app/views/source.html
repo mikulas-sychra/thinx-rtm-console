@@ -36,11 +36,8 @@
                     <table class="table table-hover table-light">
                         <thead>
                             <tr class="uppercase">
-                                <th class="fit">
-                                    Alias
-                                </th>
                                 <th>
-                                    Url
+                                    Alias / Url
                                 </th>
                                 <th>
                                     Devices
@@ -52,11 +49,9 @@
                         </thead>
 
                         <tr ng-repeat="source in $root.sources">
-                            <td class="fit">
-                                {{source.alias}}
-                            </td>
                             <td>
-                                {{source.url}}
+                                <div>{{source.alias}}</div>
+                                <div class="monospace-red">{{source.url}}</div>
                             </td>
                             <td>
                                 <span ng-repeat="device in source.devices">
@@ -64,7 +59,8 @@
                                 </span>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-danger btn-tiny" ng-click="revokeSource(source.alias, $index)"><i class="fa fa-cross"></i> Remove</button>
+                                <a class="btn btn-circle btn-icon-only btn-danger" href="#" ng-click="revokeSource(source.alias, $index)"><i class="fa fa-times"></i>
+                                </a>
                             </td>
                         </tr>
                     </table>
@@ -97,7 +93,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary" ng-click="addSource()"><i class="fa fa-check"></i> Submit</button>
+                                    <button type="button" class="btn btn-primary" ng-click="addSource()" ng-disabled="(sourceUrl == null || sourceUrl.length < 1) || (sourceAlias == null || sourceAlias.length < 1)"><i class="fa fa-check"></i> Submit</button>
                                 </div>
                             </div>
                         </div>

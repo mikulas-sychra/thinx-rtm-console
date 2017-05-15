@@ -15,7 +15,7 @@ angular.module('MetronicApp').controller('ApikeyController', ['$rootScope', '$sc
 	        })
 	        .fail(error => console.log('Error:', error));
 
-		$scope.resetModal()
+		$scope.resetModal();
 
     });
 

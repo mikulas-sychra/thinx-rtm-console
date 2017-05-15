@@ -43,8 +43,11 @@ var Thinx = {
     deviceList: function () {
         return deviceList();
     },
-    changeDevice: function (deviceHash, deviceAlias) {
-        return changeDevice(deviceHash, deviceAlias);
+    changeDevice: function (deviceUdid, deviceAlias) {
+        return changeDevice(deviceUdid, deviceAlias);
+    },
+    revokeDevice: function (udid) {
+        return revokeDevice(udid);
     },
     attachRepository: function (sourceAlias, deviceMac) {
         return attachRepository(sourceAlias, deviceMac);
@@ -52,8 +55,8 @@ var Thinx = {
     detachRepository: function (deviceAlias, deviceMac) {
         return detachRepository(deviceAlias, deviceMac);
     },
-    build: function (deviceHash, sourceAlias) {
-        return build(deviceHash, sourceAlias);
+    build: function (deviceUdid, sourceAlias, dryrun) {
+        return build(deviceUdid, sourceAlias, dryrun);
     },
     // PROFILE
     getProfile: function () {
@@ -71,8 +74,8 @@ var Thinx = {
     getAuditLog: function () {
         return getAuditLog();
     },
-    getBuildLog: function (build_id) {
-        return getBuildLog(build_id);
+    getBuildLog: function (buildId) {
+        return getBuildLog(buildId);
     },
     buildLogList: function () {
         return buildLogList();
@@ -103,13 +106,24 @@ function deviceList() {
 }
 
 function changeDevice(hash, alias) {
+
+    var data = JSON.stringify({ changes: { device_id: hash, alias: alias } });
+
+    console.log(data);
+
     return $.ajax({
-        url: urlBase + '/user/device',
+        url: urlBase + '/device/edit',
         type: 'POST',
-        data: JSON.stringify({ 
-            hash: hash,
-            alias: alias
-        }), 
+        data: data, 
+        dataType: 'json'
+    });
+}
+
+function revokeDevice(udid) {
+    return $.ajax({
+        url: urlBase + '/device/revoke',
+        type: 'POST',
+        data: JSON.stringify({ udid: udid }), 
         dataType: 'json'
     });
 }
@@ -138,13 +152,14 @@ function detachRepository(alias, mac) {
     });
 }
 
-function build(deviceHash, sourceAlias) {
+function build(deviceUdid, sourceAlias, dryrun) {
     return $.ajax({
         url: urlBase + '/build',
         type: 'POST',
         data: JSON.stringify({build: {
-            hash: deviceHash,
-            source: sourceAlias
+            udid: deviceUdid,
+            source: sourceAlias,
+            dryrun: dryrun,
         }}), 
         dataType: 'json'
     });
@@ -272,18 +287,41 @@ function getProfile() {
 
 function changeProfile(profile) {
 
+    var info = {
+        first_name: profile.first_name,
+        last_name: profile.last_name,
+        mobile_phone: profile.mobile_phone, // TODO
+
+        notifications: {
+                "all" : false, 
+                "important" : false, 
+                "info" : false 
+        },
+
+        security: { "unique_api_keys" : true },
+
+        goals: profile.goals,
+        username: profile.username,
+        owner: profile.owner
+    }
+
+    console.log('sending profile change request...');
+    console.log({ 
+            info: info
+        });
+
     return $.ajax({
         url: urlBase + '/user/profile',
         type: 'POST',
         data: JSON.stringify({ 
-            info: profile
+            info: info
         }), 
         dataType: 'json'
     });
 }
 
 function changeProfileAvatar(avatar) {
-    var avatar = btoa(avatar);
+    // var avatar = btoa(avatar);
 
     return $.ajax({
         url: urlBase + '/user/profile',
@@ -314,12 +352,12 @@ function buildLogList() {
     });
 }
 
-function getBuildLog(build_id) {
+function getBuildLog(buildId) {
     return $.ajax({
         url: urlBase + '/user/logs/build',
         type: 'POST',
         data: JSON.stringify({ 
-            build_id: build_id
+            build_id: buildId
         }), 
         dataType: 'json'
     });

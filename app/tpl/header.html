@@ -74,7 +74,7 @@
                 <li class="dropdown dropdown-extended dropdown-notification dropdown-dark" id="header_notification_bar">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                         <i class="icon-bell"></i>
-                        <span class="badge badge-success"> {{$root.auditlog.total_rows}} </span>
+                        <span class="badge badge-success" ng-if="$root.auditlog.total_rows > 0"> {{$root.auditlog.total_rows}} </span>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="external">
@@ -84,9 +84,9 @@
                         </li>
                         <li>
                             <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
-                                <li ng-repeat="row in $root.auditlog.rows">
+                                <li ng-repeat="row in $root.auditlog.rows | limitTo:10">
                                     <a href="javascript:;">
-                                        <span class="time">{{row.key.date}}</span>
+                                        <span class="time">{{row.key.date | lastSeen}}</span>
                                         <span class="details">
                                             <span class="label label-sm label-icon label-success">
                                                 <i class="fa fa-plus"></i>
@@ -98,13 +98,13 @@
                     </ul>
                 </li>
                 <!-- END NOTIFICATION DROPDOWN -->
-                <li class="separator"></li>
+                <li class="separator" style="background: none"></li>
                 <!-- BEGIN INBOX DROPDOWN -->
                 <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
                 <li class="dropdown dropdown-extended dropdown-inbox dropdown-dark" id="header_inbox_bar">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                         <i class="icon-envelope-open"></i>
-                        <span class="badge badge-danger"> {{$root.buildlog.total_rows}} </span>
+                        <span class="badge badge-danger" ng-if="$root.buildlog.total_rows > 0"> {{$root.buildlog.total_rows}} </span>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="external">
@@ -120,7 +120,7 @@
                                             <img class="img-circle" alt="{{row.key.owner}}"> </span>
                                         <span class="subject">
                                             <span class="from">{{row.key.owner}} </span>
-                                            <span class="time">{{row.key.date}} </span>
+                                            <span class="time">{{row.key.date | lastSeen}} </span>
                                         </span>
                                         <span class="message"> {{row.key.message}} </span>
                                     </a>
@@ -130,10 +130,10 @@
                     </ul>
                 </li>
                 <!-- END INBOX DROPDOWN -->
-                <li class="separator"></li>
+                <li class="separator hide"></li>
                 <!-- BEGIN TODO DROPDOWN -->
                 <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-                <li class="dropdown dropdown-extended dropdown-tasks dropdown-dark" id="header_task_bar">
+                <li class="dropdown dropdown-extended dropdown-tasks dropdown-dark hide" id="header_task_bar">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                         <i class="icon-calendar"></i>
                         <span class="badge badge-primary"> 3 </span>
@@ -246,9 +246,9 @@
                 <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
                 <li class="dropdown dropdown-user dropdown-dark">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                        <span class="username username-hide-on-mobile"> {{$root.profile['first_name']}} {{$root.profile['last_name']}} </span>
+                        <span class="username username-hide-on-mobile"> {{$root.profile.info.first_name}} {{$root.profile.info.last_name}} </span>
                         <!-- DOC: Do not remove below empty space(&nbsp;) as its purposely used -->
-                        <img alt="" class="img-circle" src="{{$root.profile['avatar']}}" /> </a>
+                        <img alt="" class="img-circle" src="{{$root.profile.avatar}}" /> </a>
                     <ul class="dropdown-menu dropdown-menu-default">
                         <li>
                             <a href="#/profile/dashboard">
@@ -257,7 +257,7 @@
                         <li>
                             <a href="#/todo">
                                 <i class="icon-rocket"></i> My Tasks
-                                <span class="badge badge-success"> 7 </span>
+                                <span class="badge badge-success"> {{$root.auditlog.total_rows}} </span>
                             </a>
                         </li>
                         <li class="divider"> </li>

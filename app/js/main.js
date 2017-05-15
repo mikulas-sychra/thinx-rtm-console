@@ -62,26 +62,31 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
         //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive 
     });
 
+    console.log(' === ROOT === ');
+    console.log($rootScope);
+
     function updateProfile(data) {
         var response = JSON.parse(data);
 
         if (typeof(response) !== 'undefined' && typeof(response.success) !== 'undefined' && response.success) {
 
-                    $rootScope.profile = response.profile;
-        
-                    console.log('profile:');
-                    console.log($rootScope.profile);
+            console.log('-- updating profile with data ---');
+            console.log(response);
 
-                    if (typeof($rootScope.profile.username) !== 'undefined') {
-                        
-                        $rootScope.profile.goals = ['apikey','enroll','rsakey','source','update','build','profile_privacy','profile_avatar'];
-                        if (typeof($rootScope.profile.avatar) == 'undefined' 
-                                    || $rootScope.profile.avatar.length == 0) {
-                            $rootScope.profile.avatar = '/assets/thinx/img/default_avatar_sm.png';
-                        }
-                        $scope.$apply()
-                    }
+            $rootScope.profile = response.profile;
 
+            console.log('updated profile:');
+            console.log($rootScope.profile);
+
+            if (typeof($rootScope.profile.info) !== 'undefined') {
+                $rootScope.profile.info.goals = ['apikey','enroll','rsakey','source','update','build','profile_privacy','profile_avatar'];
+            }
+
+            if (typeof($rootScope.profile.avatar) == 'undefined' || $rootScope.profile.avatar.length == 0) {
+                $rootScope.profile.avatar = '/assets/thinx/img/default_avatar_sm.png';
+            }
+
+            $scope.$apply();
         }
     }
 
@@ -106,21 +111,24 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
     }
 
     function updateBuildLogList(data) {
-        var response = JSON.parse(data);
+        if (typeof($rootScope.buildlog) == 'undefined') {
+            // build log is not defined yet (can be defined by getBuildLog)
+            $rootScope.buildlog = {rows: null};
+        }
 
-        console.log('buildlog list response:') ;
+        var response = JSON.parse(data);
+        console.log('buildlog list response:');
         console.log(response)
 
-        if (typeof($rootScope.buildlog) == 'undefined') {
-            $rootScope.buildlog = {
-                rows: response.builds.rows
-            };
+        if (typeof(response.success !== 'undefined') && response.success) {
+            $rootScope.buildlog.rows = response.builds.rows;
+            $scope.$apply()
+            console.log('buildlog list:');
+            console.log($rootScope.buildlog.rows);
+        } else {
+            console.log('Buildlog list fetch error.') ;
         }
-        $rootScope.buildlog.rows = response.builds.rows;
-        $scope.$apply()
-
-        console.log('buildlog list:') ;
-        console.log($rootScope.buildlog.rows);
+        
     }
 
     function updateBuildLog(data) {
@@ -273,7 +281,6 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/global/plugins/morris/raphael-min.js',                            
                             '../assets/global/plugins/jquery.sparkline.min.js',
 
-                            '../assets/global/plugins/moment.min.js',
                             '../assets/global/plugins/angularjs/plugins/ui-select/select.min.css',
                             '../assets/global/plugins/angularjs/plugins/ui-select/select.min.js',
 
