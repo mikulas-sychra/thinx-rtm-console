@@ -4,10 +4,10 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
         App.initAjax();
 
         var jqxhr = Thinx.deviceList()
-	        .done(function(data) {
+            .done(function(data) {
                 updateDevices(data);
             })
-	        .fail(function(error) {
+            .fail(function(error) {
                 console.log('Error:', error);
             });
 
@@ -21,7 +21,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
     $rootScope.settings.layout.pageBodySolid = false;
     $rootScope.settings.layout.pageSidebarClosed = false;
 
-	function updateDevices(data) {
+    function updateDevices(data) {
         var devices = JSON.parse(data);
         $rootScope.devices = devices.devices;
         $scope.$apply();
@@ -208,15 +208,16 @@ connection.onmessage = function (e) {
                         console.log(response);
                         toastr.success('Alias updated.', 'THiNX RTM Console', {timeOut: 5000})
 
+                        console.log('-- refreshing devices --');
                         var jqxhr = Thinx.deviceList()
                             .done(function(data) {
+                                console.log($('#deviceModal'));
+                                $('#deviceModal').modal('hide');
                                 updateDevices(data);
-                                $('#pageModal').modal('hide');
                             })
                             .fail(function(error) {
                                 console.log('Error:', error);
                             });
-
                         
                     } else {
                         console.log(response);
@@ -246,7 +247,7 @@ connection.onmessage = function (e) {
                     var jqxhr = Thinx.deviceList()
                         .done(function(data) {
                             updateDevices(data);
-                            $('#pageModal').modal('hide');
+                            $('#deviceModal').modal('hide');
                         })
                         .fail(function(error) {
                             console.log('Error:', error);
@@ -263,6 +264,8 @@ connection.onmessage = function (e) {
     };
 
     $scope.resetModal = function(index) {
+        console.log('Resetting modal form values...');
+
         if (typeof(index) == 'undefined') {
             $scope.deviceUdid == null;
             $scope.deviceAlias == null;
@@ -270,10 +273,11 @@ connection.onmessage = function (e) {
             $scope.deviceUdid = $rootScope.devices[index].udid;
             $scope.deviceAlias = $rootScope.devices[index].alias;
         };
+        $scope.modalLogBody == null;
         
         console.log($scope.deviceUdid);
+        console.log($scope.modalLogBody);
         console.log($scope.deviceAlias);
-        console.log('Modal form reset.');
     }
 
 });

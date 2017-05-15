@@ -28,19 +28,19 @@
                         <form role="form" action="#">
                             <div class="form-group">
                                 <label class="control-label">First Name</label>
-                                <input type="text" placeholder="John" class="form-control" ng-model="$root.profile['first_name']"/>
+                                <input type="text" placeholder="John" class="form-control" ng-model="$root.profile.info.first_name"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Last Name</label>
-                                <input type="text" placeholder="Doe" class="form-control" ng-model="$root.profile['last_name']"/>
+                                <input type="text" placeholder="Doe" class="form-control" ng-model="$root.profile.info.last_name"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Mobile Number</label>
-                                <input type="text" class="form-control" ng-model="$root.profile['mobile_phone']" placeholder="+420 123 456 789"/>
+                                <input type="text" class="form-control" ng-model="$root.profile.info.mobile_phone" placeholder="+420 123 456 789"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Email</label>
-                                <input type="text" placeholder="john@doe.com" class="form-control" value="{{$root.profile['email']}}" ng-readonly="true"/>
+                                <input type="text" placeholder="john@doe.com" class="form-control" value="{{$root.profile.email}}" ng-readonly="true"/>
                             </div>
                             <div class="margiv-top-10">
                                 <a href="#" ng-click="changeProfile()" class="btn green-haze">Save Changes </a>
@@ -106,10 +106,10 @@
                                     </td>
                                     <td>
                                         <label class="uniform-inline">
-                                        <input type="radio" name="globalPush" value="true"/>
+                                        <input type="radio" name="globalPush" ng-model="$root.profile.security.someVal0" value="true"/>
                                         Yes </label>
                                         <label class="uniform-inline">
-                                        <input type="radio" name="globalPush" value="false" checked/>
+                                        <input type="radio" name="globalPush" ng-model="$root.profile.security.someVal0" value="false"/>
                                         No </label>
                                     </td>
                                 </tr>
@@ -120,10 +120,12 @@
                                     </td>
                                     <td>
                                         <label class="uniform-inline">
-                                        <input type="radio" name="importantNotifications" value="true"/>
+                                        <input type="radio" name="importantNotifications" 
+                                        ng-model="$root.profile.security.someVal2" value="true"/>
                                         Yes </label>
                                         <label class="uniform-inline">
-                                        <input type="radio" name="importantNotifications" value="false" checked/>
+                                        <input type="radio" name="importantNotifications" 
+                                        ng-model="$root.profile.security.someVal2" value="false" checked/>
                                         No </label>
                                     </td>
                                 </tr>
@@ -137,7 +139,7 @@
                                         <input type="radio" name="forceUniqueKeys" value="true"/>
                                         Yes </label>
                                         <label class="uniform-inline">
-                                        <input type="radio" name="forceUniqueKeys" value="false" checked/>
+                                        <input type="radio" name="forceUniqueKeys" value="false"/>
                                         No </label>
                                     </td>
                                 </tr>

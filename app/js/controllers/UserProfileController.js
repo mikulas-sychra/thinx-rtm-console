@@ -22,21 +22,23 @@ angular.module('MetronicApp').controller('UserProfileController', function($root
                     console.log('-- updating profile with data ---');
                     console.log(response);
 
-                    $rootScope.profile = response.profile;
-        
+                    $rootScope.profile = {
+                        info: response.profile
+                    };
+
                     console.log('profile:');
                     console.log($rootScope.profile);
 
-                    if (typeof($rootScope.profile.username) !== 'undefined') {
+                    if (typeof($rootScope.profile.info) !== 'undefined') {
                         
-                        $rootScope.profile.goals = ['apikey','enroll','rsakey','source','update','build','profile_privacy','profile_avatar'];
+                        $rootScope.profile.info.goals = ['apikey','enroll','rsakey','source','update','build','profile_privacy','profile_avatar'];
                         if (typeof($rootScope.profile.avatar) == 'undefined' 
                                     || $rootScope.profile.avatar.length == 0) {
                             $rootScope.profile.avatar = '/assets/thinx/img/default_avatar_sm.png';
                         }
                         $scope.$apply();
                     }
-                     $scope.$apply();
+                    $scope.$apply();
 
         }
     }
@@ -93,7 +95,7 @@ angular.module('MetronicApp').controller('UserProfileController', function($root
             var reader = new FileReader();
             reader.onloadend = function(e) {
                 console.log('-- file read --'); 
-                console.dir(e.target.result);
+                // console.dir(e.target.result);
                 $scope.newAvatar = e.target.result;
             }
             reader.readAsDataURL($('#newAvatarInput').prop('files')[0]);

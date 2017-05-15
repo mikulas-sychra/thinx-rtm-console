@@ -1,4 +1,4 @@
-<!-- BEGIN PAGE BREADCRUMB -->
+BEGIN PAGE BREADCRUMB -->
 <ul class="page-breadcrumb breadcrumb">
     <li>
         <a ui-sref="dashboard">Home</a>
@@ -9,7 +9,7 @@
 <!-- END PAGE BREADCRUMB -->
 <!-- BEGIN MAIN CONTENT -->
 <div ng-controller="DashboardController">
-    <div class="note note-info" ng-hide="$root.profile.goals.includes('apikey')">
+    <div class="note note-info" ng-hide="$root.profile.info.goals.includes('apikey')">
         <h3>1. API Key
             <span class="close" data-close="note"></span>
         </h3>
@@ -19,7 +19,7 @@
         </p>
         </span>
     </div>
-    <div class="note note-info" ng-hide="$root.profile.goals.includes('enroll')">
+    <div class="note note-info" ng-hide="$root.profile.info.goals.includes('enroll')">
         <h3>2. Device Enrollment
             <span class="close" data-close="note"></span>
         </h3>
@@ -31,7 +31,7 @@
         </p>
         </span>
     </div>
-    <div class="note note-info" ng-hide="$root.profile.goals.includes('enroll')">
+    <div class="note note-info" ng-hide="$root.profile.info.goals.includes('enroll')">
         <h3>3. Device Setup
             <span class="close" data-close="note"></span>
         </h3>
@@ -42,7 +42,7 @@
         </p>
         </span>
     </div>
-    <div class="note note-danger" ng-hide="$root.profile.goals.includes('rsakey')">
+    <div class="note note-danger" ng-hide="$root.profile.info.goals.includes('rsakey')">
         <h3>Security
             <span class="close" data-close="note"></span>
         </h3>
@@ -52,7 +52,7 @@
         </p>
         </span>
     </div>
-    <div class="note note-success" ng-hide="$root.profile.goals.includes('update')">
+    <div class="note note-success" ng-hide="$root.profile.info.goals.includes('update')">
         <h3>Well Done!
             <span class="close" data-close="note"></span>
         </h3>
@@ -134,7 +134,7 @@
                             </thead>
                              <tr ng-repeat="device in $root.devices track by device.udid">
                                 <td style="vertical-align: top;">
-                                    <a href="#" class="btn green-haze btn-outline" ng-click="resetModal($index)" data-target="#pageModal" data-toggle="modal">{{device.alias}}</a>
+                                    <a href="#" class="btn green-haze btn-outline" ng-click="resetModal($index)" data-target="#deviceModal" data-toggle="modal">{{device.alias}}</a>
                                 </td>
                                 <td>
                                     {{device.firmware}}<br><br>
@@ -163,19 +163,75 @@
                                     <a class="btn btn-circle btn-icon-only btn-default" href="#" ng-if="hasSource($index)" ng-click="build(device.udid, device.source, $index)">
                                         <i class="fa fa-cog"></i>
                                     </a>
-                                    <a class="btn btn-circle btn-icon-only btn-primary" ng-if="hasBuildId($index)" data-target="#pageModalLog" data-toggle="modal" ng-click="openBuildId(device.lastBuildId)">
-                                        <i class="fa fa-list-alt"></i>
+                                
+                                    <a class="btn btn-circle btn-icon-only btn-primary" ng-if="hasBuildId($index)" data-target="#logModal" data-toggle="modal" ng-click="openBuildId(device.lastBuildId)">
+                                        <i class="fa fa-eye"></i>
                                     </a>
+                                
                                 </td>
                             </tr>
                         </table>
                     </div>
                 </div>
             </div>
-
             <!-- END PORTLET-->
         </div>
     </div>
+
+
+    <!-- BEGIN FORM-->
+    <form action="#" class="form-horizontal form-bordered" name="deviceModalForm">
+        <div id="deviceModal" class="modal fade" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        <h4 class="modal-title">Device</h4>
+                    </div>
+                    <div class="modal-body">
+                         <form action="#" class="form-horizontal">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Alias</label>
+                                <div class="col-md-9">
+                                    <input type="text" ng-model="deviceAlias" name="deviceAlias" class="form-control" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" ng-click="changeDeviceAlias()"><i class="fa fa-check"></i> Submit</button>
+
+                        <button type="button" class="btn btn-danger pull-left" ng-click="revokeDevice()"><i class="fa fa-times"></i> Revoke</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- END FORM-->
+
+    <!-- BEGIN MODAL LOG VIEW -->
+    <div id="logModal" class="modal fade" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Build Log</h4>
+                </div>
+                <div class="modal-body">
+                     <pre ng-bind="modalLogBody">
+                     </pre>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" ng-click="refreshLog()"><i class="fa fa-refresh"></i> Refresh</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END MODAL LOG VIEW -->
+
+
     <div class="row hide">
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
             <div class="dashboard-stat green-steel">
@@ -317,61 +373,6 @@
             </div>
             <!-- END PORTLET-->
         </div>
-
-    
-    <!-- BEGIN FORM-->
-    <form action="#" class="form-horizontal form-bordered" name="deviceModal">
-        <div id="pageModal" class="modal fade" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                        <h4 class="modal-title">Device</h4>
-                    </div>
-                    <div class="modal-body">
-                         <form action="#" class="form-horizontal">
-                            <div class="form-group">
-                                <label class="control-label col-md-3">Alias</label>
-                                <div class="col-md-9">
-                                    <input type="text" ng-model="deviceAlias" name="deviceAlias" class="form-control" />
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" ng-click="changeDeviceAlias()"><i class="fa fa-check"></i> Submit</button>
-
-                        <button type="button" class="btn btn-danger pull-left" ng-click="revokeDevice()"><i class="fa fa-times"></i> Revoke</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-    <!-- END FORM-->
-
-    <!-- BEGIN FORM-->
-    <form action="#" class="form-horizontal form-bordered" name="buildLog">
-        <div id="pageModalLog" class="modal fade" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                        <h4 class="modal-title">Build Log</h4>
-                    </div>
-                    <div class="modal-body">
-                         <pre ng-bind="modalLogBody">
-                         </pre>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" ng-click="refreshLog()"><i class="fa fa-refresh"></i> Refresh</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-    <!-- END FORM-->
     <!-- END DASHBOARD STATS -->
 </div>
 <!-- END MAIN CONTENT -->
@@ -379,4 +380,4 @@
 <script>
     Dashboard.init();
 </script>
-<!-- BEGIN MAIN JS & CSS -->
+<!-- BEGIN MAIN JS & CSS

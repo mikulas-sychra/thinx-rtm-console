@@ -305,8 +305,10 @@ function changeProfile(profile) {
         owner: profile.owner
     }
 
-    console.log('change profile');
-    console.log(info);
+    console.log('sending profile change request...');
+    console.log({ 
+            info: info
+        });
 
     return $.ajax({
         url: urlBase + '/user/profile',
@@ -355,7 +357,7 @@ function getBuildLog(buildId) {
         url: urlBase + '/user/logs/build',
         type: 'POST',
         data: JSON.stringify({ 
-            build_id: build_id
+            build_id: buildId
         }), 
         dataType: 'json'
     });
