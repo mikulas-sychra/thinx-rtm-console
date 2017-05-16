@@ -248,12 +248,15 @@ connection.onmessage = function (e) {
 
     $scope.changeDeviceAlias = function() {
 
-        var deviceUdid = $scope.deviceUdid;
-        var deviceAlias = $scope.deviceAlias;
+        if ($scope.deviceAlias == $rootScope.devices[$scope.deviceIndex].alias) {
+            console.log('-- no changes, closing dialog --');
+            $('#deviceModal').modal('hide');
+            return;
+        }
 
-        console.log('-- changing device alias to ' + deviceAlias + '  for ' + deviceUdid + ' --'); 
+        console.log('-- changing device alias to ' + $scope.deviceAlias + '  for ' + $scope.deviceUdid + ' --'); 
 
-        var jqxhrAlias = Thinx.changeDevice(deviceUdid, deviceAlias)
+        var jqxhrAlias = Thinx.changeDevice($scope.deviceUdid, $scope.deviceAlias)
             .done(function(response) {
 
                 if (typeof(response) !== 'undefined') {
@@ -320,14 +323,19 @@ connection.onmessage = function (e) {
         console.log('Resetting modal form values...');
 
         if (typeof(index) == 'undefined') {
-            $scope.deviceUdid == null;
-            $scope.deviceAlias == null;
+            $scope.deviceIndex = null;
+            $scope.deviceUdid = null;
+            $scope.deviceAlias = null;
         } else {
+            $scope.deviceIndex = index;
             $scope.deviceUdid = $rootScope.devices[index].udid;
             $scope.deviceAlias = $rootScope.devices[index].alias;
         };
+
+        // reset log modal
         $scope.modalLogBody == null;
         
+        console.log($scope.deviceIndex);
         console.log($scope.deviceUdid);
         console.log($scope.modalLogBody);
         console.log($scope.deviceAlias);

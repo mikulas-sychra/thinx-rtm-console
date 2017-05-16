@@ -82,10 +82,6 @@
 	opacity: .8;
 }
 
-.ui-select-bootstrap .ui-select-choices-row {
-	z-index:1000;	
-}
-
 .fingerprint-small {
 	font-size: .7em !important;
 }
@@ -94,6 +90,10 @@
 	font-family: monospace; color: #ed6b75;
 }
 
+.monospace-dropdown {
+	font-family: monospace;
+	font-size: 0.8em;
+}
 
 /* Labels for user goals */
 .tag {
