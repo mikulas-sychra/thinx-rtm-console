@@ -18,6 +18,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             })
             .fail(error => console.log('Error:', error));
 
+        $scope.deviceIndex = null;
         $scope.deviceUdid = null;
         $scope.deviceAlias = null;
         $scope.modalLogBody = 'No data. Please select build log.';
@@ -47,8 +48,8 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             APIKEY_INVALID: [],
             PASSWORD_INVALID: [],
             APIKEY_MISUSE: [],
-            DEVICE_NEW: [0,1],
-            DEVICE_CHECKIN: [1,0],
+            DEVICE_NEW: [0,1,2],
+            DEVICE_CHECKIN: [2,1,0],
             DEVICE_UPDATE_OK: [],
             DEVICE_UPDATE_FAIL: [],
             BUILD_STARTED: [],
@@ -56,7 +57,26 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             BUILD_FAIL: []
         };
 
-        $rootScope.stats = response.stats;
+        $rootScope.stats.total = {};
+
+        console.log('-- iterating over stats --');
+        for (var prop in $rootScope.stats) {
+            var propTotal = 0;
+            for (var i = 0; i < $rootScope.stats[prop].length; i++) {
+                console.log("Looping: prop ", prop, "item", $rootScope.stats[prop][i]);
+                propTotal = propTotal + parseInt($rootScope.stats[prop][i]);
+                console.log('adding', $rootScope.stats[prop][i], 'to', prop)
+            }
+            $rootScope.stats.total[prop] = propTotal;
+        }
+
+        console.log('test stats:');
+        console.log($rootScope.stats);
+
+        // TODO check if proper stats were returned
+        if (response.stats !== 'no_data') {
+            $rootScope.stats = response.stats;
+        }
 
         $("#sparkline_bar").sparkline($rootScope.stats.DEVICE_NEW, {
             type: 'bar',
@@ -76,7 +96,6 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             negBarColor: '#e02222'
         });
 
-        $rootScope.stats = response;
         $scope.$apply()
 
         console.log('stats:');

@@ -94,7 +94,7 @@
                                 </div>
                                 <div class="stat-number">
                                     <div class="title"> Total </div>
-                                    <div class="number"> 2460 </div>
+                                    <div class="number"> {{$root.stats.total.DEVICE_CHECKIN}} </div>
                                 </div>
                             </div>
                         </div>
@@ -106,7 +106,7 @@
                                 </div>
                                 <div class="stat-number">
                                     <div class="title"> New </div>
-                                    <div class="number"> 719 </div>
+                                    <div class="number"> {{$root.stats.total.DEVICE_NEW}} </div>
                                 </div>
                             </div>
                         </div>
@@ -119,7 +119,7 @@
                                         Alias
                                     </th>
                                     <th>
-                                        Firmware / Source
+                                        Firmware
                                     </th>
                                     <th>
                                         MAC
@@ -133,30 +133,16 @@
                                 </tr>
                             </thead>
                              <tr ng-repeat="device in $root.devices track by device.udid">
-                                <td style="vertical-align: top;">
+                                <td>
                                     <a href="#" class="btn green-haze btn-outline" ng-click="resetModal($index)" data-target="#deviceModal" data-toggle="modal">{{device.alias}}</a>
                                 </td>
                                 <td>
-                                    {{device.firmware}}<br><br>
-
-                                    <div class="input-group dashboard-selector">
-                                        <ui-select append-to-body="true" allow-clear ng-model="$root.devices[$index].source" theme="bootstrap" on-select="attachRepository($select.selected.alias, device.mac)">
-                                            <ui-select-match placeholder="none">{{$select.selected.alias}}</ui-select-match>
-                                            <ui-select-choices repeat="source.alias as source in $root.sources | filter: $select.search">
-                                                <span ng-bind-html="source.alias | highlight: $select.search"></span>
-                                            </ui-select-choices>
-                                        </ui-select>
-                                        <span class="input-group-btn">
-                                            <button type="button" ng-click="detachRepository(device.alias, device.mac); device.source = null;" class="btn btn-default">
-                                                <span class="fa fa-chain-broken"></span>
-                                            </button>
-                                        </span>
-                                    </div> 
+                                    {{device.firmware}} 
                                 </td>
-                                <td style="vertical-align: top;">
+                                <td>
                                     {{device.mac}}
                                 </td>
-                                <td style="vertical-align: top;">
+                                <td>
                                     {{device.lastupdate | lastSeen}}
                                 </td>
                                 <td>
