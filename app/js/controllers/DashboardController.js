@@ -57,7 +57,11 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             BUILD_FAIL: []
         };
 
-        $rootScope.stats.total = {};
+        $rootScope.stats.total = {
+            CHANNELS: 0,
+            DEVICES: $rootScope.devices.length,
+            UPDATES: 0
+        };
 
         console.log('-- iterating over stats --');
         for (var prop in $rootScope.stats) {
@@ -78,22 +82,22 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             $rootScope.stats = response.stats;
         }
 
-        $("#sparkline_bar").sparkline($rootScope.stats.DEVICE_NEW, {
+        $("#sparkline_bar").sparkline($rootScope.stats.DEVICE_CHECKIN, {
             type: 'bar',
             width: '100',
             barWidth: 5,
             height: '55',
-            barColor: '#f36a5b',
-            negBarColor: '#e02222'
+            barColor: '#29b4b6',
+            negBarColor: '#29b4b6'
         });
 
-        $("#sparkline_bar2").sparkline($rootScope.stats.DEVICE_CHECKIN, {
+        $("#sparkline_bar2").sparkline($rootScope.stats.DEVICE_NEW, {
             type: 'bar',
             width: '100',
             barWidth: 5,
             height: '55',
-            barColor: '#e20074',
-            negBarColor: '#e02222'
+            barColor: '#1ba39c',
+            negBarColor: '#1ba39c'
         });
 
         $scope.$apply()

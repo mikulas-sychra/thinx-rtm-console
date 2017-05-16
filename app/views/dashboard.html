@@ -237,14 +237,14 @@
     <!-- END MODAL LOG VIEW -->
 
 
-    <div class="row hide">
+    <div class="row">
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
             <div class="dashboard-stat green-steel">
                 <div class="visual">
                     <i class="fa fa-shopping-cart"></i>
                 </div>
                 <div class="details">
-                    <div class="number"> 16 </div>
+                    <div class="number"> {{$root.stats.total.DEVICE_CHECKIN}} </div>
                     <div class="desc"> Device Check-ins </div>
                 </div>
                 <a class="more" href="#"> View more
@@ -258,7 +258,7 @@
                     <i class="fa fa-bar-chart-o"></i>
                 </div>
                 <div class="details">
-                    <div class="number"> 64 </div>
+                    <div class="number"> {{$root.stats.total.UPDATES}} </div>
                     <div class="desc"> Available Updates </div>
                 </div>
                 <a class="more" href="#"> View more
@@ -272,7 +272,7 @@
                     <i class="fa fa-comments"></i>
                 </div>
                 <div class="details">
-                    <div class="number"> 8 </div>
+                    <div class="number"> {{$root.stats.total.CHANNELS}} </div>
                     <div class="desc"> Channels </div>
                 </div>
                 <a class="more" href="#"> View more
@@ -286,7 +286,7 @@
                     <i class="fa fa-globe"></i>
                 </div>
                 <div class="details">
-                    <div class="number"> 128 </div>
+                    <div class="number"> {{$root.stats.total.DEVICES}} </div>
                     <div class="desc"> Active Devices </div>
                 </div>
                 <a class="more" href="#"> View more
