@@ -80,12 +80,14 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
             console.log(urlParts[1]);
             if (typeof(urlParts[0]) !== 'undefined' && /git/.test(urlParts[0])) {
                 var projectName = urlParts[1].split('.', 1);
+                console.log('detected projectname:');
+                console.log(projectName[0]);
             }
         } catch(e) {
             console.log(e);
         }
-        if (typeof(projectName) !== 'undefined' && ($scope.sourceAlias == null || $scope.sourceAlias == '')) {
-            $scope.sourceAlias = projectName;
+        if ((typeof(projectName) !== 'undefined') && (projectName.length > 0) && ($scope.sourceAlias == null || $scope.sourceAlias == '')) {
+            $scope.sourceAlias = projectName[0];
         }
     }
 
