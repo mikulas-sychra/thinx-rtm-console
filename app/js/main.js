@@ -288,7 +288,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/global/plugins/angularjs/plugins/ui-select/select.min.css',
                             '../assets/global/plugins/angularjs/plugins/ui-select/select.min.js',
 
-                            '../assets/pages/scripts/dashboard.min.js',
+                            '../assets/pages/scripts/dashboard.js',
                             'js/controllers/DashboardController.js',
                         ] 
                     });

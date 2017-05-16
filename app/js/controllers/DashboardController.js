@@ -40,6 +40,42 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
     function updateStats(data) {
         var response = JSON.parse(data);
 
+        console.log(response);
+
+        $rootScope.stats = {
+            ID: [],
+            APIKEY_INVALID: [],
+            PASSWORD_INVALID: [],
+            APIKEY_MISUSE: [],
+            DEVICE_NEW: [0,1],
+            DEVICE_CHECKIN: [1,0],
+            DEVICE_UPDATE_OK: [],
+            DEVICE_UPDATE_FAIL: [],
+            BUILD_STARTED: [],
+            BUILD_SUCCESS: [],
+            BUILD_FAIL: []
+        };
+
+        $rootScope.stats = response.stats;
+
+        $("#sparkline_bar").sparkline($rootScope.stats.DEVICE_NEW, {
+            type: 'bar',
+            width: '100',
+            barWidth: 5,
+            height: '55',
+            barColor: '#f36a5b',
+            negBarColor: '#e02222'
+        });
+
+        $("#sparkline_bar2").sparkline($rootScope.stats.DEVICE_CHECKIN, {
+            type: 'bar',
+            width: '100',
+            barWidth: 5,
+            height: '55',
+            barColor: '#e20074',
+            negBarColor: '#e02222'
+        });
+
         $rootScope.stats = response;
         $scope.$apply()
 
