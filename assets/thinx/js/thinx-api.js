@@ -36,8 +36,8 @@ var Thinx = {
     addSource: function (sourceUrl, sourceAlias) {
         return addSource(sourceUrl, sourceAlias);
     },
-    revokeSource: function (alias) {
-        return revokeSource(alias);
+    revokeSource: function (sourceId) {
+        return revokeSource(sourceId);
     },
     // DEVICE
     deviceList: function () {
@@ -266,11 +266,11 @@ function addSource(url, alias) {
 	});
 }
 
-function revokeSource(alias) {
+function revokeSource(sourceId) {
 	return $.ajax({
 		url: urlBase + '/user/source/revoke',
 		type: 'POST',
-		data: JSON.stringify({ alias: alias }), 
+		data: JSON.stringify({ source_id: sourceId }), 
         dataType: 'json'
 	});
 }

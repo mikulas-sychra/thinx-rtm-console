@@ -24,7 +24,11 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
 
         var data = JSON.parse(data);
 
-        $rootScope.sources = data.sources;
+
+        var sourceIdList = data.sources.keys();
+        $.each(a, function(key, value) {
+              $rootScope.sources[key] = value;
+        });
         $scope.$apply()
 
         console.log('sources:');
