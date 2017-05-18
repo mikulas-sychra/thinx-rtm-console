@@ -106,11 +106,11 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
         console.log($rootScope.stats);
     }
     
-    $scope.attachRepository = function(sourceAlias, deviceMac) {
+    $scope.attachRepository = function(sourceId, deviceUdid) {
     
-        console.log('-- attaching ' + sourceAlias + ' to  ' + deviceMac + '--'); 
+        console.log('-- attaching ' + sourceId + ' to  ' + deviceUdid + '--'); 
 
-        var jqxhr = Thinx.attachRepository(sourceAlias, deviceMac)
+        var jqxhr = Thinx.attachRepository(sourceId, deviceUdid)
             .done(function(response) {
                 if (typeof(response) !== 'undefined') {
                     if (response.success) {
@@ -132,11 +132,11 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
     };
 
-    $scope.detachRepository = function(deviceAlias, deviceMac) {
+    $scope.detachRepository = function(deviceUdid) {
     
-        console.log('-- detaching source from ' + deviceAlias + '/' + deviceMac + '--'); 
+        console.log('-- detaching source from ' + deviceUdid + '--'); 
 
-        var jqxhr = Thinx.detachRepository(deviceAlias, deviceMac)
+        var jqxhr = Thinx.detachRepository(deviceUdid)
             .done(function(response) {
                 
                 if (typeof(response) !== 'undefined') {

@@ -186,11 +186,13 @@
                                 <label class="control-label col-md-3">Source</label>
                                 <div class="col-md-9">
                                     <div class="input-group">
-                                        <ui-select allow-clear ng-model="$root.devices[deviceIndex].source" theme="bootstrap" on-select="attachRepository($select.selected.alias, $root.devices[deviceIndex].mac)">
-                                            <ui-select-match placeholder="none">{{$select.selected.alias}}</ui-select-match>
-                                            <ui-select-choices repeat="source.alias as source in $root.sources | filter: $select.search">
-                                                <div ng-bind-html="source.alias | highlight: $select.search"></div>
-                                                <div ng-bind-html="source.url | highlight: $select.search" class="monospace-dropdown"></div>
+                                        <ui-select allow-clear 
+                                        ng-model="$root.devices[deviceIndex].source" theme="bootstrap" 
+                                        on-select="attachRepository($select.selected.key, $root.devices[deviceIndex].udid)">
+                                            <ui-select-match placeholder="none">{{$select.selected.value.key}}</ui-select-match>
+                                            <ui-select-choices repeat="(key, value) in $root.sources | filter: $select.search">
+                                                <div ng-bind-html="value.value.alias | highlight: $select.search"></div>
+                                                <div ng-bind-html="value.value.url | highlight: $select.search" class="monospace-dropdown"></div>
                                             </ui-select-choices>
                                         </ui-select>
                                         <span class="input-group-btn">
