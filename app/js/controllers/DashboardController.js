@@ -65,6 +65,10 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             UPDATES: 0
         };
 
+        if(typeof($rootScope.devices) !== 'undefined') {
+            $rootScope.stats.total.DEVICES = $rootScope.devices.length;
+        }
+
        
         console.log('-- iterating over stats --');
         if (typeof(data.stats) == 'Object') {
