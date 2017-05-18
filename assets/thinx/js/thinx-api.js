@@ -46,14 +46,14 @@ var Thinx = {
     changeDevice: function (deviceUdid, deviceAlias) {
         return changeDevice(deviceUdid, deviceAlias);
     },
-    revokeDevice: function (udid) {
-        return revokeDevice(udid);
+    revokeDevice: function (deviceUdid) {
+        return revokeDevice(deviceUdid);
     },
-    attachRepository: function (sourceAlias, deviceMac) {
-        return attachRepository(sourceAlias, deviceMac);
+    attachRepository: function (sourceId, deviceUdid) {
+        return attachRepository(sourceId, deviceUdid);
     },
-    detachRepository: function (deviceAlias, deviceMac) {
-        return detachRepository(deviceAlias, deviceMac);
+    detachRepository: function (deviceUdid) {
+        return detachRepository(deviceUdid);
     },
     build: function (deviceUdid, sourceAlias, dryrun) {
         return build(deviceUdid, sourceAlias, dryrun);
@@ -122,34 +122,33 @@ function changeDevice(hash, alias) {
     });
 }
 
-function revokeDevice(udid) {
+function revokeDevice(deviceUdid) {
     return $.ajax({
         url: urlBase + '/device/revoke',
         type: 'POST',
-        data: JSON.stringify({ udid: udid }), 
+        data: JSON.stringify({ udid: deviceUdid }), 
         dataType: 'json'
     });
 }
 
-function attachRepository(alias, mac) {
+function attachRepository(sourceId, deviceUdid) {
     return $.ajax({
         url: urlBase + '/device/attach',
         type: 'POST',
         data: JSON.stringify({
-            alias: alias,
-            mac: mac
+            source_id: sourceId,
+            udid: deviceUdid
         }), 
         dataType: 'json'
     });
 }
 
-function detachRepository(alias, mac) {
+function detachRepository(deviceUdid) {
     return $.ajax({
         url: urlBase + '/device/detach',
         type: 'POST',
         data: JSON.stringify({
-            alias: alias,
-            mac: mac
+            udid: deviceUdid
         }), 
         dataType: 'json'
     });
