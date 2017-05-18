@@ -39,40 +39,48 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
     }
 
     function updateStats(data) {
+
         var response = JSON.parse(data);
 
+        console.log("stats data");
         console.log(response);
 
         $rootScope.stats = {
-            ID: [],
-            APIKEY_INVALID: [],
-            PASSWORD_INVALID: [],
-            APIKEY_MISUSE: [],
+            // ID: [],
+            // APIKEY_INVALID: [],
+            // PASSWORD_INVALID: [],
+            // APIKEY_MISUSE: [],
             DEVICE_NEW: [5,4,3,2,1,1,2,3,4,5],
             DEVICE_CHECKIN: [1,2,3,4,5,5,4,3,2,1],
-            DEVICE_UPDATE_OK: [],
-            DEVICE_UPDATE_FAIL: [],
-            BUILD_STARTED: [],
-            BUILD_SUCCESS: [],
-            BUILD_FAIL: []
+            // DEVICE_UPDATE_OK: [],
+            // DEVICE_UPDATE_FAIL: [],
+            // BUILD_STARTED: [],
+            // BUILD_SUCCESS: [],
+            // BUILD_FAIL: []
         };
 
         $rootScope.stats.total = {
             CHANNELS: 0,
-            DEVICES: $rootScope.devices.length,
+            DEVICES: 0,
             UPDATES: 0
         };
 
+       
         console.log('-- iterating over stats --');
-        for (var prop in $rootScope.stats) {
-            var propTotal = 0;
-            for (var i = 0; i < $rootScope.stats[prop].length; i++) {
-                console.log("Looping: prop ", prop, "item", $rootScope.stats[prop][i]);
-                propTotal = propTotal + parseInt($rootScope.stats[prop][i]);
-                console.log('adding', $rootScope.stats[prop][i], 'to', prop)
+        if (typeof(data.stats) == 'Object') {
+            for (var prop in data.stats) {
+                var propTotal = 0;
+                for (var i = 0; i < $rootScope.stats[prop].length; i++) {
+                    console.log("Looping: prop ", prop, "item", $rootScope.stats[prop][i]);
+                    propTotal = propTotal + parseInt($rootScope.stats[prop][i]);
+                    console.log('adding', $rootScope.stats[prop][i], 'to', prop)
+                }
+                $rootScope.stats.total[prop] = propTotal;
             }
-            $rootScope.stats.total[prop] = propTotal;
+        } else {
+            console.log('Stats fetch error.');
         }
+       
 
         console.log('test stats:');
         console.log($rootScope.stats);

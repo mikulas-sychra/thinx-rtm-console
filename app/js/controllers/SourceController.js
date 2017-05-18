@@ -29,7 +29,7 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
         $.each(a, function(key, value) {
               $rootScope.sources[key] = value;
         });
-        $scope.$apply()
+        $scope.$apply();
 
         console.log('sources:');
         console.log($rootScope.sources);

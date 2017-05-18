@@ -93,10 +93,16 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
     }
 
     function updateSources(data) {
-        var response = JSON.parse(data);
+        console.log(data);
 
-        $rootScope.sources = response.sources;
-        $scope.$apply()
+        var data = JSON.parse(data);
+
+
+        var sourceIdList = data.sources.keys();
+        $.each(a, function(key, value) {
+              $rootScope.sources[key] = value;
+        });
+        $scope.$apply();
 
         console.log('sources:');
         console.log($rootScope.sources);
