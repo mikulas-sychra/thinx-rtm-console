@@ -95,7 +95,7 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
         var response = JSON.parse(data);
         console.log(response);
 
-        $rootScope.sources = [];
+        $rootScope.sources = {};
         $.each(response.sources, function(key, value) {
               $rootScope.sources[key] = value;
         });

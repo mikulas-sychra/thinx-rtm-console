@@ -31,7 +31,7 @@
             <!-- BEGIN PORTLET-->
 
                  <a href="#" class="btn green-haze btn-outline" ng-click="resetModal()" data-target="#pageModal" data-toggle="modal">Add Source</a>
-                
+
                 <div class="table-scrollable table-scrollable-borderless">
                     <table class="table table-hover table-light">
                         <thead>
@@ -48,18 +48,18 @@
                             </tr>
                         </thead>
 
-                        <tr ng-repeat="source in $root.sources">
+                        <tr ng-repeat="(key, source) in $root.sources">
                             <td>
                                 <div>{{source.alias}}</div>
-                                <div class="monospace-red">{{source.url}}</div>
+                                <div class="monospace-red"><span class="branch-name">{{source.branch}}</span> {{source.alias}}</div>
                             </td>
                             <td>
-                                <span ng-repeat="device in source.devices">
+                              <!--  <span ng-repeat="device in value.value.devices">
                                     {{device}}<br>
-                                </span>
+                                </span> -->
                             </td>
                             <td>
-                                <a class="btn btn-circle btn-icon-only btn-danger" href="#" ng-click="revokeSource($index)"><i class="fa fa-times"></i>
+                                <a class="btn btn-circle btn-icon-only btn-danger" href="#" ng-click="revokeSource(key)"><i class="fa fa-times"></i>
                                 </a>
                             </td>
                         </tr>
@@ -111,4 +111,4 @@
 <script>
     // call any jquery or angularjs code ehre
 </script>
-<!-- BEGIN MAIN JS -->
+<!-- BEGIN MAIN JS

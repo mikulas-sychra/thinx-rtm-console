@@ -21,12 +21,11 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
 
     function updateSources(data) {
 
-        console.log('--  processing sources --');
-
+        console.log('-- processing sources --');        
         var response = JSON.parse(data);
         console.log(response);
 
-        $rootScope.sources = [];
+        $rootScope.sources = {};
         $.each(response.sources, function(key, value) {
               $rootScope.sources[key] = value;
         });
@@ -80,19 +79,21 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
 
     $scope.getAliasFromUrl = function() {
         console.log('procesing: ' + $scope.sourceUrl);
-        try {
-            var urlParts = $scope.sourceUrl.replace(/\/\s*$/,'').split('/');
-            console.log(urlParts[1]);
-            if (typeof(urlParts[0]) !== 'undefined' && /git/.test(urlParts[0])) {
-                var projectName = urlParts[1].split('.', 1);
-                console.log('detected projectname:');
-                console.log(projectName[0]);
+        if ($scope.sourceUrl.length > 10) {
+            try {
+                var urlParts = $scope.sourceUrl.replace(/\/\s*$/,'').split('/');
+                console.log(urlParts[1]);
+                if (typeof(urlParts[0]) !== 'undefined' && /git/.test(urlParts[0])) {
+                    var projectName = urlParts[1].split('.', 1);
+                    console.log('detected projectname:');
+                    console.log(projectName[0]);
+                }
+            } catch(e) {
+                console.log(e);
             }
-        } catch(e) {
-            console.log(e);
-        }
-        if ((typeof(projectName) !== 'undefined') && (projectName.length > 0) && ($scope.sourceAlias == null || $scope.sourceAlias == '')) {
-            $scope.sourceAlias = projectName[0];
+            if ((typeof(projectName) !== 'undefined') && (projectName.length > 0) && ($scope.sourceAlias == null || $scope.sourceAlias == '')) {
+                $scope.sourceAlias = projectName[0];
+            }
         }
     }
 
@@ -105,24 +106,26 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
                 if (typeof(response) !== 'undefined') {
                     if (response.success) {
                         console.log(response);
-                        $rootScope.sources.splice(index, 1);
+                        
+                        delete $rootScope.sources[sourceId];
+                        
                         $scope.$apply()
                         toastr.success('Source Removed.', 'THiNX RTM Console', {timeOut: 5000})
                     } else {
                         console.log(response);
-                        toastr.success('Source Failed.', 'THiNX RTM Console', {timeOut: 5000})
+                        toastr.success('Source Removal Failed.', 'THiNX RTM Console', {timeOut: 5000})
                     }
                 } else {
                     console.log('error');
                     console.log(response);
-                    toastr.success('Source Failed.', 'THiNX RTM Console', {timeOut: 5000})
+                    toastr.success('Source Removal Failed.', 'THiNX RTM Console', {timeOut: 5000})
                 }
             })
             .fail(function(error) {
                 $('.msg-warning').text(error);
                 $('.msg-warning').show();
                 console.log('Error:', error);
-                toastr.success('Source Failed.', 'THiNX RTM Console', {timeOut: 5000})
+                toastr.success('Source Removal Failed.', 'THiNX RTM Console', {timeOut: 5000})
             });
 	};
 

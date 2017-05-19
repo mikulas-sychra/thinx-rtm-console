@@ -90,6 +90,10 @@
 	font-family: monospace; color: #ed6b75;
 }
 
+.branch-name {
+	color: black !important;
+}
+
 .monospace-dropdown {
 	font-family: monospace;
 	font-size: 0.8em;
