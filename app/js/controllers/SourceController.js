@@ -42,6 +42,21 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
         console.log($scope.sourceUrl);
         console.log($scope.sourceAlias);
 
+        console.log('-- testing for duplicates --');
+        for (var sourceId in $rootScope.sources) {
+            console.log("Looping sources: alias ", $rootScope.sources[sourceId].alias, "url", $rootScope.sources[sourceId].url);
+
+            if ($rootScope.sources[sourceId].alias == $scope.sourceAlias) {
+                toastr.error('Alias must be unique.', 'THiNX RTM Console', {timeOut: 5000})
+                return;
+            }
+
+            if ($rootScope.sources[sourceId].url == $scope.sourceUrl) {
+                toastr.error('URL must be unique.', 'THiNX RTM Console', {timeOut: 5000})
+                return;
+            }
+        }
+        
         Thinx.addSource($scope.sourceUrl, $scope.sourceAlias)
             .done(function(response) {
                 

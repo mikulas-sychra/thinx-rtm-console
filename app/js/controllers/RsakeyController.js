@@ -30,9 +30,21 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
 
 	$scope.addRsakey = function() {
 
-		console.log('--adding rsa key ' + $scope.rsakeyName +'--')
+		console.log('-- testing for duplicates --');
+        for (var rsaKeyId in $rootScope.rsaKeys) {
+            console.log("Looping sources: alias ", $rootScope.rsaKeys[rsaKeyId].name, "fingerprint", $rootScope.rsaKeys[rsaKeyId].fingerprint);
 
-		Thinx.addRsakey($scope.rsakeyName, $scope.rsakeyValue)
+            if ($rootScope.rsaKeys[rsaKeyId].name == $scope.rsakeyAlias) {
+                toastr.error('Alias must be unique.', 'THiNX RTM Console', {timeOut: 5000})
+                return;
+            }
+        }
+
+        // return;
+
+		console.log('--adding rsa key ' + $scope.rsakeyAlias +'--')
+
+		Thinx.addRsakey($scope.rsakeyAlias, $scope.rsakeyValue)
 	        .done(function(response) {
 	        	
 	            if (typeof(response) !== 'undefined') {
@@ -92,8 +104,8 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
 	};
 
 	$scope.resetModal = function() {
-		$scope.rsakeyName = null;
 		$scope.rsakeyAlias = null;
+		$scope.rsakeyValue = null;
 	}
 
 }]);

@@ -217,12 +217,12 @@ function rsakeyList() {
     });
 }
 
-function addRsakey(rsakeyName, rsakeyValue) {
+function addRsakey(rsakeyAlias, rsakeyValue) {
     return $.ajax({
         url: urlBase + '/user/rsakey',
         type: 'POST',
         data: JSON.stringify({ 
-            alias: rsakeyName,
+            alias: rsakeyAlias,
             key: rsakeyValue
         }), 
         dataType: 'json'
