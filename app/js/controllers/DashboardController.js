@@ -170,12 +170,12 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
     };
 
-    $scope.build = function(deviceUdid, sourceAlias, index) {
-        console.log('-- building firmware for ' + deviceUdid + '/' + sourceAlias + ' --'); 
+    $scope.build = function(deviceUdid, sourceId, index) {
+        console.log('-- building firmware for ' + deviceUdid + '/' + $rootScope.sources[sourceId].alias + ' --'); 
 
         var dryrun = true;
 
-        Thinx.build(deviceUdid, sourceAlias, dryrun)
+        Thinx.build(deviceUdid, sourceId, dryrun)
             .done(function(response) {
 
                 console.log(' --- response ---');
@@ -211,8 +211,11 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
         console.log('--- trying to load build log for ' + buildId);
 
-        Thinx.getBuildLog(buildId)
 
+        connectWSLog(build_id);
+
+
+        Thinx.tailBuildLog(buildId)
         .done(function(data) {
             console.log(' --- build log data received ---');
             console.log(data);
@@ -225,23 +228,9 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                     // TODO - implement contignous XHR request with regular DOM updates
                     $scope.modalLogBody = JSON.stringify(data, null, 4);
 
-/*
-var connection = new WebSocket('ws://rtm.thinx.cloud/api/user/build/log/stream', ['soap', 'xmpp']);
-                    // When the connection is open, send some data to the server
-connection.onopen = function () {
-  connection.send('Ping'); // Send the message 'Ping' to the server
-};
 
-// Log errors
-connection.onerror = function (error) {
-  console.log('WebSocket Error ' + error);
-};
 
-// Log messages from the server
-connection.onmessage = function (e) {
-  console.log('Server: ' + e.data);
-};
-*/
+
 
                     $scope.modalLogId = buildId;
                     $scope.$apply();
@@ -268,6 +257,7 @@ connection.onmessage = function (e) {
     }
 
     $scope.refreshLog = function() {
+        console.log('-- refresh log: ', $scope.modalLogId)
         $scope.openBuildId($scope.modalLogId);
     }
 

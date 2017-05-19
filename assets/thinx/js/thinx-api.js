@@ -55,8 +55,8 @@ var Thinx = {
     detachRepository: function (deviceUdid) {
         return detachRepository(deviceUdid);
     },
-    build: function (deviceUdid, sourceAlias, dryrun) {
-        return build(deviceUdid, sourceAlias, dryrun);
+    build: function (deviceUdid, sourceId, dryrun) {
+        return build(deviceUdid, sourceId, dryrun);
     },
     // PROFILE
     getProfile: function () {
@@ -76,6 +76,9 @@ var Thinx = {
     },
     getBuildLog: function (buildId) {
         return getBuildLog(buildId);
+    },
+    tailBuildLog: function (buildId) {
+        return tailBuildLog(buildId);
     },
     buildLogList: function () {
         return buildLogList();
@@ -154,13 +157,13 @@ function detachRepository(deviceUdid) {
     });
 }
 
-function build(deviceUdid, sourceAlias, dryrun) {
+function build(deviceUdid, sourceId, dryrun) {
     return $.ajax({
         url: urlBase + '/build',
         type: 'POST',
         data: JSON.stringify({build: {
             udid: deviceUdid,
-            source: sourceAlias,
+            source_id: sourceId,
             dryrun: dryrun,
         }}), 
         dataType: 'json'
@@ -357,6 +360,17 @@ function buildLogList() {
 function getBuildLog(buildId) {
     return $.ajax({
         url: urlBase + '/user/logs/build',
+        type: 'POST',
+        data: JSON.stringify({ 
+            build_id: buildId
+        }), 
+        dataType: 'json'
+    });
+}
+
+function tailBuildLog(buildId) {
+    return $.ajax({
+        url: urlBase + '/user/logs/tail',
         type: 'POST',
         data: JSON.stringify({ 
             build_id: buildId
