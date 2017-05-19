@@ -32,7 +32,7 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
 
 		console.log('-- testing for duplicates --');
         for (var rsaKeyId in $rootScope.rsaKeys) {
-            console.log("Looping sources: alias ", $rootScope.rsaKeys[rsaKeyId].name, "fingerprint", $rootScope.rsaKeys[rsaKeyId].fingerprint);
+            console.log("Looping rsaKeys: alias/name", $rootScope.rsaKeys[rsaKeyId].name, "fingerprint", $rootScope.rsaKeys[rsaKeyId].fingerprint);
 
             if ($rootScope.rsaKeys[rsaKeyId].name == $scope.rsakeyAlias) {
                 toastr.error('Alias must be unique.', 'THiNX RTM Console', {timeOut: 5000})

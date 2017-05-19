@@ -29,6 +29,17 @@ angular.module('MetronicApp').controller('ApikeyController', ['$rootScope', '$sc
     }
 
 	$scope.createApikey = function(newApikayAlias) {
+
+		console.log('-- testing for duplicates --');
+        for (var apiKeyId in $rootScope.apiKeys) {
+            console.log("Looping apiKeys: alias ", $rootScope.apiKeys[apiKeyId].alias);
+
+            if ($rootScope.apiKeys[apiKeyId].alias == newApikayAlias) {
+                toastr.error('Alias must be unique.', 'THiNX RTM Console', {timeOut: 5000})
+                return;
+            }
+        }
+
 		console.log('-- asking for new apikey with alias: ' + newApikayAlias + ' --'); 
 
 		Thinx.createApikey(newApikayAlias)
