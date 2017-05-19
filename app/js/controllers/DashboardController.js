@@ -236,11 +236,8 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                     // TODO - implement contignous XHR request with regular DOM updates
                     $scope.modalLogBody = JSON.stringify(data, null, 4);
 
-
-
-
-
                     $scope.modalLogId = buildId;
+                    
                     $scope.$apply();
 
                 } else {

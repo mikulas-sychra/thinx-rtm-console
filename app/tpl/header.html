@@ -101,10 +101,10 @@
                 <li class="separator" style="background: none"></li>
                 <!-- BEGIN INBOX DROPDOWN -->
                 <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-                <li class="dropdown dropdown-extended dropdown-inbox dropdown-dark" id="header_inbox_bar">
+                <li class="dropdown dropdown-extended dropdown-notification dropdown-dark" id="header_inbox_bar">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                         <i class="icon-envelope-open"></i>
-                        <span class="badge badge-danger"> {{$root.buildlog.length}} </span>
+                        <span class="badge badge-danger" ng-if="$root.buildlog.length > 0"> {{$root.buildlog.length}} </span>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="external">
@@ -114,17 +114,17 @@
                         </li>
                         <li>
                             <ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
-                                <li ng-repeat="(key, build) in $root.buildlog">
-                                    <a href="#">
-                                        {{build}}
-                                        {{key}}
-                                        <span class="photo">
-                                            <img class="img-circle" alt="{{build.owner}}"> </span>
-                                        <span class="subject">
-                                            <span class="from">{{build.owner}} </span>
-                                            <span class="time">{{build.date | lastSeen}} </span>
+                                <li ng-repeat="(key, build) in $root.buildlog | limitTo:10">
+                                    <a href="javascript:;">
+                                        <span class="time">{{build.date | lastSeen}}</span>
+                                        <span class="details">
+                                            <span class="label label-sm label-icon label-success">
+                                                <i class="fa fa-plus"></i>
+                                            </span> 
+                                            <span class="">
+                                                {{build.udid | limitTo:6}} {{build.message}}
+                                            </span>
                                         </span>
-                                        <span class="message"> {{build.message}} </span>
                                     </a>
                                 </li>
                             </ul>

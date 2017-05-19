@@ -168,7 +168,7 @@
                     <div class="tab-pane" id="tab_1_2">
                         <div class="scroller" style="height: 337px;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
                             <ul class="feeds">
-                                <li ng-repeat="row in $root.buildlog.rows">
+                                <li ng-repeat="(key, build) in $root.buildlog | limitTo:100">
                                     <div class="col1">
                                         <div class="cont">
                                             <div class="cont-col1">
@@ -177,8 +177,8 @@
                                                 </div>
                                             </div>
                                             <div class="cont-col2">
-                                                <div class="desc"> {{row.key.message}}
-                                                    <span class="label label-sm label-danger "> Take action
+                                                <div class="desc"> {{build.udid | limitTo:6}} {{build.message}}
+                                                    <span class="label label-sm label-danger "> Show 
                                                         <i class="fa fa-share"></i>
                                                     </span>
                                                 </div>
@@ -186,7 +186,7 @@
                                         </div>
                                     </div>
                                     <div class="col2">
-                                        <div class="date"> {{row.key.date | lastSeen}} </div>
+                                        <div class="date"> {{build.date | lastSeen}} </div>
                                     </div>
                                 </li>
                             </ul>
