@@ -125,8 +125,13 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             .done(function(response) {
                 if (typeof(response) !== 'undefined') {
                     if (response.success) {
+                        console.log("-- attach success --");
                         console.log(response);
+
+                        $rootScope.devices[$scope.deviceIndex].source = response.attached;
+                        $scope.$apply()
                         toastr.success('Repository Attached.', 'THiNX RTM Console', {timeOut: 5000})
+                        
                     } else {
                         console.log(response);
                         toastr.error('Attach Failed.', 'THiNX RTM Console', {timeOut: 5000})
@@ -154,6 +159,9 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                     if (response.success) {
                         console.log(response);
                         toastr.success('Repository Detached.', 'THiNX RTM Console', {timeOut: 5000})
+                        $root.devices[$scope.deviceIndex].source = null;
+                        $scope.$apply()
+                        
                     } else {
                         console.log(response);
                         toastr.error('Detach Failed.', 'THiNX RTM Console', {timeOut: 5000})

@@ -111,9 +111,9 @@ function deviceList() {
     });
 }
 
-function changeDevice(hash, alias) {
+function changeDevice(deviceId, deviceAlias) {
 
-    var data = JSON.stringify({ changes: { device_id: hash, alias: alias } });
+    var data = JSON.stringify({ changes: { udid: deviceId, alias: deviceAlias } });
 
     console.log(data);
 

@@ -189,20 +189,22 @@
                                         <ui-select allow-clear 
                                         ng-model="$root.devices[deviceIndex].source" theme="bootstrap" 
                                         on-select="attachRepository($select.selected.key, $root.devices[deviceIndex].udid)">
-                                            <ui-select-match placeholder="none">{{$select.selected.value.key}}</ui-select-match>
+                                            <ui-select-match placeholder="none">{{$select.selected.value.alias}}</ui-select-match>
                                             <ui-select-choices repeat="(key, value) in $root.sources | filter: $select.search">
                                                 <div ng-bind-html="value.value.alias | highlight: $select.search"></div>
                                                 <div ng-bind-html="value.value.url | highlight: $select.search" class="monospace-dropdown"></div>
                                             </ui-select-choices>
                                         </ui-select>
                                         <span class="input-group-btn">
-                                            <button type="button" ng-click="detachRepository($root.devices[deviceIndex].alias, $root.devices[deviceIndex].mac); $root.devices[deviceIndex].source = null;" class="btn btn-default">
+                                            <button type="button" ng-click="detachRepository($root.devices[deviceIndex].udid)" class="btn btn-default">
                                                 <span class="fa fa-chain-broken"></span>
                                             </button>
                                         </span>
                                     </div>
                                 </div>
                             </div>
+                            <div>{{$root.devices[deviceIndex] | json}}</div>
+                            
                         </form>
                     </div>
                     <div class="modal-footer">
