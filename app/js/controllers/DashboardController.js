@@ -220,7 +220,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
         console.log('--- trying to load build log for ' + buildId);
 
 
-        connectWSLog(build_id);
+        // connectWSLog(build_id);
 
 
         Thinx.tailBuildLog(buildId)
