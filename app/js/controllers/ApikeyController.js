@@ -9,7 +9,7 @@ angular.module('MetronicApp').controller('ApikeyController', ['$rootScope', '$sc
         $rootScope.settings.layout.pageBodySolid = false;
         $rootScope.settings.layout.pageSidebarClosed = false;
 
-        var jqxhr = Thinx.apikeyList()
+        Thinx.apikeyList()
 	        .done( function(data) {
 	        	updateKeys(data)
 	        })
@@ -31,7 +31,7 @@ angular.module('MetronicApp').controller('ApikeyController', ['$rootScope', '$sc
 	$scope.createApikey = function(newApikayAlias) {
 		console.log('-- asking for new apikey with alias: ' + newApikayAlias + ' --'); 
 
-		var jqxhr = Thinx.createApikey(newApikayAlias)
+		Thinx.createApikey(newApikayAlias)
 	        .done(function(response) {
 	            if (typeof(response) !== 'undefined') {
 	                if (response.success) {
@@ -40,7 +40,7 @@ angular.module('MetronicApp').controller('ApikeyController', ['$rootScope', '$sc
 	                    $scope.newApikey = response.api_key;
 	                    $('#pageModal .msg-warning').show();
 
-						var jqxhrUpdate = Thinx.apikeyList()
+						Thinx.apikeyList()
 							        .done( function(data) {
 							        	updateKeys(data)
 							        })
@@ -66,7 +66,7 @@ angular.module('MetronicApp').controller('ApikeyController', ['$rootScope', '$sc
 	$scope.revokeApikey = function(fingerprint, index) {
 		console.log('--revoking key ' + fingerprint +'--')
 
-		var jqxhr = Thinx.revokeApikey(fingerprint)
+		Thinx.revokeApikey(fingerprint)
 	        .done(function(response) {
 	        	if (response.success) {
 	        		console.log('Success:', response.revoked);

@@ -3,7 +3,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
         // initialize core components
         App.initAjax();
 
-        var jqxhr = Thinx.deviceList()
+        Thinx.deviceList()
             .done(function(data) {
                 updateDevices(data);
             })
@@ -11,8 +11,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                 console.log('Error:', error);
             });
 
-        console.log('-- fetching stats ---')
-        var jqxhrStats = Thinx.getStats()
+        Thinx.getStats()
             .done(function(data) {
                 updateStats(data);
             })
@@ -122,7 +121,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
     
         console.log('-- attaching ' + sourceId + ' to  ' + deviceUdid + '--'); 
 
-        var jqxhr = Thinx.attachRepository(sourceId, deviceUdid)
+        Thinx.attachRepository(sourceId, deviceUdid)
             .done(function(response) {
                 if (typeof(response) !== 'undefined') {
                     if (response.success) {
@@ -148,7 +147,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
     
         console.log('-- detaching source from ' + deviceUdid + '--'); 
 
-        var jqxhr = Thinx.detachRepository(deviceUdid)
+        Thinx.detachRepository(deviceUdid)
             .done(function(response) {
                 
                 if (typeof(response) !== 'undefined') {
@@ -176,7 +175,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
         var dryrun = true;
 
-        var jqxhrBuild = Thinx.build(deviceUdid, sourceAlias, dryrun)
+        Thinx.build(deviceUdid, sourceAlias, dryrun)
             .done(function(response) {
 
                 console.log(' --- response ---');
@@ -212,7 +211,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
         console.log('--- trying to load build log for ' + buildId);
 
-        var jqxhrTest = Thinx.getBuildLog(buildId)
+        Thinx.getBuildLog(buildId)
 
         .done(function(data) {
             console.log(' --- build log data received ---');
@@ -291,7 +290,7 @@ connection.onmessage = function (e) {
 
         console.log('-- changing device alias to ' + $scope.deviceAlias + '  for ' + $scope.deviceUdid + ' --'); 
 
-        var jqxhrAlias = Thinx.changeDevice($scope.deviceUdid, $scope.deviceAlias)
+        Thinx.changeDevice($scope.deviceUdid, $scope.deviceAlias)
             .done(function(response) {
 
                 if (typeof(response) !== 'undefined') {
@@ -300,7 +299,7 @@ connection.onmessage = function (e) {
                         toastr.success('Alias updated.', 'THiNX RTM Console', {timeOut: 5000})
 
                         console.log('-- refreshing devices --');
-                        var jqxhr = Thinx.deviceList()
+                        Thinx.deviceList()
                             .done(function(data) {
                                 console.log($('#deviceModal'));
                                 $('#deviceModal').modal('hide');
@@ -329,13 +328,13 @@ connection.onmessage = function (e) {
     $scope.revokeDevice = function() {
         console.log('--revoking device ' + $scope.deviceUdid +'--')
 
-        var jqxhr = Thinx.revokeDevice($scope.deviceUdid)
+        Thinx.revokeDevice($scope.deviceUdid)
             .done(function(response) {
                 if (response.success) {
                     console.log('Success:', response.revoked);
                     toastr.success('Device Revoked.', 'THiNX RTM Console', {timeOut: 5000})
 
-                    var jqxhr = Thinx.deviceList()
+                    Thinx.deviceList()
                         .done(function(data) {
                             updateDevices(data);
                             $('#deviceModal').modal('hide');

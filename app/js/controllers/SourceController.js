@@ -9,7 +9,7 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
         $rootScope.settings.layout.pageBodySolid = false;
         $rootScope.settings.layout.pageSidebarClosed = false;
 
-        var jqxhr = Thinx.sourceList()
+        Thinx.sourceList()
             .done( function(data) {
                 updateSources(data)
             })
@@ -20,7 +20,9 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
     });
 
     function updateSources(data) {
-        
+
+        console.log('--  processing sources --');
+
         var response = JSON.parse(data);
         console.log(response);
 
@@ -41,14 +43,14 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
         console.log($scope.sourceUrl);
         console.log($scope.sourceAlias);
 
-        var jqxhr = Thinx.addSource($scope.sourceUrl, $scope.sourceAlias)
+        Thinx.addSource($scope.sourceUrl, $scope.sourceAlias)
             .done(function(response) {
                 
                 if (typeof(response) !== 'undefined') {
                     if (response.success) {
                         console.log(response);
 
-                        var jqxhr = Thinx.sourceList()
+                        Thinx.sourceList()
                             .done( function(data) {
                                 updateSources(data)
                             })
@@ -94,11 +96,11 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
         }
     }
 
-	$scope.revokeSource = function(alias, index) {
+	$scope.revokeSource = function(sourceId, index) {
 
-		console.log('-- removing source ' + alias + '--'); 
+		console.log('-- removing source ' + sourceId + '--'); 
 
-        var jqxhr = Thinx.revokeSource(alias)
+        Thinx.revokeSource(sourceId)
             .done(function(response) {
                 if (typeof(response) !== 'undefined') {
                     if (response.success) {

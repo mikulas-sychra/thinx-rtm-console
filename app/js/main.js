@@ -70,13 +70,10 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
 
         if (typeof(response) !== 'undefined' && typeof(response.success) !== 'undefined' && response.success) {
 
-            console.log('-- updating profile with data ---');
+            console.log('-- processing profile ---');
             console.log(response);
 
             $rootScope.profile = response.profile;
-
-            console.log('updated profile:');
-            console.log($rootScope.profile);
 
             if (typeof($rootScope.profile.info.goals) == 'undefined') {
                 console.log('- goals not defined yet -');
@@ -93,7 +90,8 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
     }
 
     function updateSources(data) {
-        
+
+        console.log('-- processing sources --');        
         var response = JSON.parse(data);
         console.log(response);
 
@@ -148,25 +146,25 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
         console.log($rootScope.buildlog);
     }
     
-    var jqxhrProfile = Thinx.getProfile()
+    Thinx.getProfile()
             .done(function(data) {
                 updateProfile(data);
             })
             .fail(error => console.log('Error:', error));
 
-    var jqxhrSources = Thinx.sourceList()
+    Thinx.sourceList()
             .done(function(data) {
                 updateSources(data);
             })
             .fail(error => console.log('Error:', error));
 
-    var jqxhrAuditlog = Thinx.getAuditLog()
+    Thinx.getAuditLog()
             .done(function(data) {
                 updateAuditLog(data);
             })
             .fail(error => console.log('Error:', error));
 
-    var jqxhrBuildlogList = Thinx.buildLogList()
+    Thinx.buildLogList()
             .done(function(data) {
                 updateBuildLogList(data);
             })
@@ -182,7 +180,7 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
             counter = 30;
             console.log("Refreshing data in " + counter + " seconds...");
 
-            var jqxhrAutoUpdate = getProfile()
+            getProfile()
                 .done(function(data) {
                     updateProfile(data);
                 })
