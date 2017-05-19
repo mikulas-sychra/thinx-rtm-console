@@ -32,7 +32,7 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
 
 		console.log('--adding rsa key ' + $scope.rsakeyName +'--')
 
-		var jqxhr = Thinx.addRsakey($scope.rsakeyName, $scope.rsakeyValue)
+		Thinx.addRsakey($scope.rsakeyName, $scope.rsakeyValue)
 	        .done(function(response) {
 	        	
 	            if (typeof(response) !== 'undefined') {
@@ -40,11 +40,11 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
 	                    console.log(response);
 	                    toastr.success('Key saved.', 'THiNX RTM Console', {timeOut: 5000});
 	                    
-	                    var jqxhrUpdate = Thinx.rsakeyList()
-									        .done( function(data) {
-									        	updateKeys(data)
-									        })
-									        .fail(error => console.log('Error:', error));
+	                    Thinx.rsakeyList()
+					        .done( function(data) {
+					        	updateKeys(data)
+					        })
+					        .fail(error => console.log('Error:', error));
 
 	                    $('#pageModal').modal('hide');
 
@@ -69,13 +69,17 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
     $scope.revokeRsakey = function(fingerprint, index) {
 		console.log('--deleting rsa key ' + fingerprint +'--')
 
-		var jqxhr = Thinx.revokeRsakey(fingerprint)
+		Thinx.revokeRsakey(fingerprint)
 	        .done(function(data) {
 	        	if (data.success) {
 					toastr.success('Deleted.', 'THiNX RTM Console', {timeOut: 5000})
 	        		console.log('Success:', data);
+	        		console.log($rootScope.rsaKeys);
 	        		$rootScope.rsaKeys.splice(index, 1);	
+	        		console.log($rootScope.rsaKeys);
 					$scope.$apply()
+
+
 	        	} else {
 	        		toastr.error('Revocation failed.', 'THiNX RTM Console', {timeOut: 5000})
 	        	}
