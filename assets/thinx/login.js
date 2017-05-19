@@ -191,7 +191,7 @@ var Login = function() {
         });
 
         jQuery('#forget-password').click(function() {
-            history.pushState({}, null, "#");
+            history.pushState({}, null, "/#");
             jQuery('.login-form').hide();
             jQuery('.forget-form').show();
         });
@@ -354,7 +354,7 @@ var Login = function() {
         });
 
         jQuery('#register-btn').click(function() {
-            history.pushState({}, null, "#");
+            history.pushState({}, null, "/#");
             jQuery('.login-form').hide();
             jQuery('.register-form').show();
         });
