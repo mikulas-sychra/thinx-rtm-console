@@ -203,6 +203,14 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">MQTT Channel</label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        /thinx/device/{{$root.devices[deviceIndex].udid}}
+                                    </div>
+                                </div>
+                            </div>
                             <div>{{$root.devices[deviceIndex] | json}}</div>
                             
                         </form>
@@ -276,8 +284,8 @@
                     <i class="fa fa-comments"></i>
                 </div>
                 <div class="details">
-                    <div class="number"> {{$root.stats.total.CHANNELS}} </div>
-                    <div class="desc"> Channels </div>
+                    <div class="number"> {{$root.stats.APIKEY_INVALID[0]}} </div>
+                    <div class="desc"> Errors </div>
                 </div>
                 <a class="more" href="#"> View more
                     <i class="m-icon-swapright m-icon-white"></i>
