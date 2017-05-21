@@ -369,6 +369,8 @@ function getBuildLog(buildId) {
 }
 
 function tailBuildLog(buildId) {
+
+
     return $.ajax({
         url: urlBase + '/user/logs/tail',
         type: 'POST',

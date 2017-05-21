@@ -20,7 +20,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
         $scope.deviceIndex = null;
         $scope.deviceUdid = null;
         $scope.deviceAlias = null;
-        $scope.modalLogBody = 'No data. Please select build log.';
+        $scope.modalLogBody = [];
     });
 
     // set sidebar closed and body solid layout mode
@@ -219,10 +219,14 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
         console.log('--- trying to load build log for ' + buildId);
 
+        $scope.modalLogId = buildId;
+
+        WebSocketTest(buildId);
+        
+        // $scope.$apply();
 
         // connectWSLog(build_id);
-
-
+/**
         Thinx.tailBuildLog(buildId)
         .done(function(data) {
             console.log(' --- build log data received ---');
@@ -234,10 +238,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                     toastr.info(data.log[data.log.length - 1].message, 'THiNX RTM Console', {timeOut: 5000});
 
                     // TODO - implement contignous XHR request with regular DOM updates
-                    $scope.modalLogBody = JSON.stringify(data, null, 4);
-
-                    $scope.modalLogId = buildId;
-                    
+                    $scope.modalLogBody = JSON.stringify(data, null, 4);                
                     $scope.$apply();
 
                 } else {
@@ -251,6 +252,53 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
         })
         .fail(error => console.log('Error:', error));
 
+        **/
+
+    }
+
+    function WebSocketTest(buildId) {
+        if ("WebSocket" in window) {
+          // Fill this from your client
+          var build_id = buildId;
+          var owner_id = $rootScope.profile.owner;
+
+          console.log('-- opening websocket with credentials --');
+          console.log(build_id);
+          console.log(owner_id);
+
+          var ws = new WebSocket("ws://thinx.cloud:7447/"+owner_id +"/"+build_id );
+          ws.onopen = function() {
+              var message = {
+                logtail: {
+                  owner_id: owner_id,
+                  build_id: build_id
+                }
+              }
+              ws.send(JSON.stringify(message));
+              console.log("Test message sent...");
+           };
+           ws.onmessage = function (evt)
+           {
+              var received_msg = evt.data;
+            var msg = JSON.parse(received_msg);
+
+                console.log(msg);
+
+                toastr.info(msg.notification.title, msg.notification.body, {timeOut: 5000})
+
+                $scope.modalLogBody.push(msg.notification);
+                $scope.$apply();
+
+                console.log($scope.modalLogBody);
+           };
+           ws.onclose = function()
+           {
+              alert("Connection is closed...");
+           };
+        } else {
+           // The browser doesn't support WebSocket
+           alert("WebSocket NOT supported by your Browser!");
+        }
     }
 
     $scope.hasBuildId = function(index) {
@@ -362,11 +410,14 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
         };
 
         // reset log modal
-        $scope.modalLogBody == null;
+        $scope.modalLogBody = [];
+        $scope.modalLogId = null;
         
+        console.log("scope vars");
         console.log($scope.deviceIndex);
         console.log($scope.deviceUdid);
         console.log($scope.modalLogBody);
+        console.log($scope.modalLogId);
         console.log($scope.deviceAlias);
     }
 

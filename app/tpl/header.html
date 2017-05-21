@@ -115,7 +115,7 @@
                         <li>
                             <ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
                                 <li ng-repeat="(key, build) in $root.buildlog | limitTo:10">
-                                    <a href="javascript:;">
+                                    <a href="openBuildId(build.build_id)">
                                         <span class="time">{{build.date | lastSeen}}</span>
                                         <span class="details">
                                             <span class="label label-sm label-icon label-success">

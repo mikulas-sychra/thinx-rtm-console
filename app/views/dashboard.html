@@ -236,13 +236,16 @@
                     <h4 class="modal-title">Build Log</h4>
                 </div>
                 <div class="modal-body">
-                     <pre ng-bind="modalLogBody">
-                     </pre>
+                     <div ng-repeat="row in modalLogBody">
+                        {{row.title}}<br>
+                        {{row.body}}
+                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" ng-click="refreshLog()"><i class="fa fa-refresh"></i> Refresh</button>
                 </div>
+                {{modalLogId}}
             </div>
         </div>
     </div>
