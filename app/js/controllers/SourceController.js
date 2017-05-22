@@ -41,6 +41,7 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
 
         console.log($scope.sourceUrl);
         console.log($scope.sourceAlias);
+        console.log($scope.sourceBranch);
 
         console.log('-- testing for duplicates --');
         for (var sourceId in $rootScope.sources) {
@@ -51,13 +52,9 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
                 return;
             }
 
-            if ($rootScope.sources[sourceId].url == $scope.sourceUrl) {
-                toastr.error('URL must be unique.', 'THiNX RTM Console', {timeOut: 5000})
-                return;
-            }
         }
         
-        Thinx.addSource($scope.sourceUrl, $scope.sourceAlias)
+        Thinx.addSource($scope.sourceUrl, $scope.sourceAlias, $scope.sourceBranch)
             .done(function(response) {
                 
                 if (typeof(response) !== 'undefined') {
@@ -147,6 +144,7 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
     $scope.resetModal = function() {
         $scope.sourceAlias = null;
         $scope.sourceUrl = null;
+        $scope.sourceBranch = null;
     }
 
 }]);
