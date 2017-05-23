@@ -80,6 +80,11 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
 	$scope.revokeRsakeys = function() {
 		console.log('-- processing selected items --');
 		console.log($scope.selectedItems);
+
+		for (var rsaKeyId in $scope.selectedItems) {
+            console.log("Looping selectedItems: ", $scope.selectedItems[rsaKeyId].fingerprint);
+            $scope.revokeRsakey($scope.selectedItems[rsaKeyId].fingerprint, 0);
+        }
 	};
 
     $scope.revokeRsakey = function(fingerprint, index) {
