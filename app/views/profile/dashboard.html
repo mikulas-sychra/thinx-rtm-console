@@ -147,7 +147,7 @@
                                                 </div>
                                             </div>
                                             <div class="cont-col2">
-                                                <div class="desc"> {{row.key.message}}
+                                                <div class="desc"> {{row.doc.message}}
                                                 <!--    
                                                     <span class="label label-sm label-info"> Take action
                                                         <i class="fa fa-share"></i>
@@ -158,7 +158,7 @@
                                         </div>
                                     </div>
                                     <div class="col2">
-                                        <div class="date"> {{row.key.date | lastSeen}} </div>
+                                        <div class="date"> {{row.doc.date | lastSeen}} </div>
                                     </div>
                                 </li>
                                 
@@ -178,6 +178,7 @@
                                             </div>
                                             <div class="cont-col2">
                                                 <div class="desc"> {{build.udid | limitTo:6}} {{build.message}}
+                                                    <a href="openBuildId({{build.build_id}})"></a>
                                                     <span class="label label-sm label-danger "> Show 
                                                         <i class="fa fa-share"></i>
                                                     </span>
