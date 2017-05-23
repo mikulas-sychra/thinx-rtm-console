@@ -28,7 +28,18 @@
                 </div>
             </div>
             <div class="portlet-body"> 
-                <a href="#" class="btn green-haze btn-outline" ng-click="resetModal()" data-target="#pageModal" data-toggle="modal">Create RSA Key</a>
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <a href="#" class="btn green-haze btn-outline" ng-click="resetModal()" data-target="#pageModal" data-toggle="modal">Create RSA Key</a>
+
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <button class="btn btn-circle btn-icon-only btn-default" ng-click="revokeRsakeys()" type="button" ><i class="fa fa-trash"></i></button>
+                    </div>
+
+                </div>
+
                 <div class="table-scrollable table-scrollable-borderless">
                     <table class="table table-hover table-light">
                         <thead>
@@ -48,10 +59,15 @@
                                 <div class="monospace-red">{{rsakey.fingerprint}}</div>
                             </td>
                             <td>
-                                <a class="btn btn-circle btn-icon-only btn-danger" href="#" ng-click="revokeRsakey(rsakey.fingerprint, $index)">
+                                <a class="btn btn-circle btn-icon-only btn-danger hide" href="#" ng-click="revokeRsakey(rsakey.fingerprint, $index)">
                                     <i class="fa fa-times"></i>
                                 </a>
-                                <button class="btn btn-circle btn-icon-only btn-danger" uib-popover-template="dynamicPopover.templateUrl" popover-title="Revoke {{rsakey.name}}" popover-confirm="revokeRsakey(rsakey.fingerprint, $index)" popover-placement="bottom" type="button" class="btn btn-default"><i class="fa fa-times"></i></button>
+                                
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" ng-click="checkItem(rsakey)">
+                                    </label>
+                                </div>
                             </td>
                         </tr>
                     </table>

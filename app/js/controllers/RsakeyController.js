@@ -16,7 +16,6 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
 	        .fail(error => console.log('Error:', error));
 
 	     $scope.resetModal();
-
     });
 
     function updateKeys(data) {
@@ -78,6 +77,11 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
 
 	};
 
+	$scope.revokeRsakeys = function() {
+		console.log('-- processing selected items --');
+		console.log($scope.selectedItems);
+	};
+
     $scope.revokeRsakey = function(fingerprint, index) {
 		console.log('--deleting rsa key ' + fingerprint +'--')
 
@@ -91,7 +95,6 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
 	        		console.log($rootScope.rsaKeys);
 					$scope.$apply()
 
-
 	        	} else {
 	        		toastr.error('Revocation failed.', 'THiNX RTM Console', {timeOut: 5000})
 	        	}
@@ -103,9 +106,24 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
 	        });
 	};
 
+	$scope.checkItem = function(rsakey) {
+		
+		console.log('### check');
+		console.log(rsakey);
+
+		if ($scope.selectedItems.includes(rsakey)) {
+			console.log('found, removing');
+
+		} else {
+			console.log('NOT found, adding');
+			$scope.selectedItems.push(rsakey);
+		}
+	}
+
 	$scope.resetModal = function() {
 		$scope.rsakeyAlias = null;
 		$scope.rsakeyValue = null;
+		$scope.selectedItems = [];
 	}
 
 }]);
