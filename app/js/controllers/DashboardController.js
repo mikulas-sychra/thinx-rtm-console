@@ -216,89 +216,87 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
     };
 
     $scope.openBuildId = function(buildId) {
-
         console.log('--- trying to load build log for ' + buildId);
-
         $scope.modalLogId = buildId;
-
-        WebSocketTest(buildId);
-        
-        // $scope.$apply();
-
-        // connectWSLog(build_id);
-/**
-        Thinx.tailBuildLog(buildId)
-        .done(function(data) {
-            console.log(' --- build log data received ---');
-            console.log(data);
-
-             if (typeof(data) !== 'undefined') {
-                if (data.success) {
-                    console.log(data);
-                    toastr.info(data.log[data.log.length - 1].message, 'THiNX RTM Console', {timeOut: 5000});
-
-                    // TODO - implement contignous XHR request with regular DOM updates
-                    $scope.modalLogBody = JSON.stringify(data, null, 4);                
-                    $scope.$apply();
-
-                } else {
-                    console.log(data);
-                    toastr.error('Show Build Log Failed', 'THiNX RTM Console', {timeOut: 5000})
-                }
-            } else {
-                console.log('error');
-                console.log(data);
-            }
-        })
-        .fail(error => console.log('Error:', error));
-
-        **/
-
+        OpenWebSocket(buildId);
     }
 
-    function WebSocketTest(buildId) {
+    function OpenWebSocket(buildId) {
         if ("WebSocket" in window) {
-          // Fill this from your client
-          var build_id = buildId;
-          var owner_id = $rootScope.profile.owner;
+            // Fill this from your client
+            var build_id = buildId;
+            var owner_id = $rootScope.profile.owner;
 
-          console.log('-- opening websocket with credentials --');
-          console.log(build_id);
-          console.log(owner_id);
+            console.log(build_id);
+            console.log(owner_id);
 
-          var ws = new WebSocket("ws://thinx.cloud:7447/"+owner_id +"/"+build_id );
-          ws.onopen = function() {
-              var message = {
-                logtail: {
-                  owner_id: owner_id,
-                  build_id: build_id
-                }
-              }
-              ws.send(JSON.stringify(message));
-              console.log("Test message sent...");
-           };
-           ws.onmessage = function (evt)
-           {
-              var received_msg = evt.data;
-            var msg = JSON.parse(received_msg);
+            if (typeof($scope.ws) == "undefined") {
+                // open websocket
+                console.log('-- opening websocket with credentials --');
+                $scope.ws = new WebSocket("ws://thinx.cloud:7447/"+owner_id +"/"+build_id );
 
-                console.log(msg);
+                $scope.ws.onopen = function() {
+                    console.log("Websocket connection estabilished.");
+                    $scope.refreshLog();
+                };
+                $scope.ws.onmessage = function (message) {
+                    var msg = JSON.parse(message.data);
 
-                toastr.info(msg.notification.title, msg.notification.body, {timeOut: 5000})
+                    console.log('Received log message...');
 
-                $scope.modalLogBody.push(msg.notification);
-                $scope.$apply();
+                    // console.log(msg);
+                    // if (typeof(msg.notification) !== "undefined") {
+                        // toastr.info(msg.notification.title, msg.notification.body, {timeOut: 5000})    
+                        // $scope.modalLogBody.unshift(msg.notification.title + ": " + msg.notification.body);
+                    // }
 
-                console.log($scope.modalLogBody);
-           };
-           ws.onclose = function()
-           {
-              alert("Connection is closed...");
-           };
+                    if (typeof(msg.log) !== "undefined") {
+                        console.log('Received log message');
+                        console.log(msg.log);
+                        $scope.modalLogBody.push(msg.log.message);
+                        $scope.$apply();
+                    }
+
+                    renderLogBody();
+
+                    //$scope.$apply();
+               };
+               $scope.ws.onclose = function()
+               {
+                  alert("Websocket connection is closed...");
+               };
+            } else {
+                // websocket already open
+                console.log("-- websocket status --");
+                console.log($scope.ws.readyState);
+            }
+
         } else {
            // The browser doesn't support WebSocket
            alert("WebSocket NOT supported by your Browser!");
         }
+    }
+
+    $scope.refreshLog = function() {
+        console.log('-- refresh log: ', $scope.modalLogId)
+
+         var message = {
+            logtail: {
+                owner_id: $rootScope.profile.owner,
+                build_id: $scope.modalLogId
+            }
+        }
+
+        // $scope.modalLogBody = [];
+        $scope.ws.send(JSON.stringify(message));
+    }
+
+    function renderLogBody() {
+        console.log("-- rendering modal log body --");
+        consolo.log($scope.modalLogId);
+        console.log($scope.modalLogBody.length);
+        console.log($scope.modalLogBody);
+        $scope.$apply();
     }
 
     $scope.hasBuildId = function(index) {
@@ -307,11 +305,6 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             return true;
         }
         return false;
-    }
-
-    $scope.refreshLog = function() {
-        console.log('-- refresh log: ', $scope.modalLogId)
-        $scope.openBuildId($scope.modalLogId);
     }
 
 
