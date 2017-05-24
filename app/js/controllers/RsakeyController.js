@@ -20,10 +20,15 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
 
     function updateKeys(data) {
         var keys = JSON.parse(data);
+
+        // $rootScope.rsaKeys = [];
+        // for (var itemId in keys.rsa_keys) {
+        	// $rootScope.rsaKeys[itemId] = keys.rsa_keys[itemId];	
+        // }
 		$rootScope.rsaKeys = keys.rsa_keys;
 		$scope.$apply()
 
-        console.log('keys:');
+        console.log('rsakeys:');
         console.log($rootScope.rsaKeys);
     }
 
@@ -81,13 +86,16 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
 		console.log('-- processing selected items --');
 		console.log($scope.selectedItems);
 
-		for (var rsaKeyId in $scope.selectedItems) {
-            console.log("Looping selectedItems: ", $scope.selectedItems[rsaKeyId].fingerprint);
-            $scope.revokeRsakey($scope.selectedItems[rsaKeyId].fingerprint, 0);
+		for (var item in $scope.selectedItems) {
+            console.log("in-loop selectedItems: ", $scope.selectedItems[item].fingerprint);
+            console.log($scope.selectedItems[item]);
+
+            console.log("Removing ", $scope.selectedItems[item].fingerprint);
+            $scope.revokeRsakey($scope.selectedItems[item].fingerprint, 0);
         }
 	};
 
-    $scope.revokeRsakey = function(fingerprint, index) {
+    $scope.revokeRsakey = function(fingerprint) {
 		console.log('--deleting rsa key ' + fingerprint +'--')
 
 		Thinx.revokeRsakey(fingerprint)
@@ -96,7 +104,14 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
 					toastr.success('Deleted.', 'THiNX RTM Console', {timeOut: 5000})
 	        		console.log('Success:', data);
 	        		console.log($rootScope.rsaKeys);
-	        		$rootScope.rsaKeys.splice(index, 1);	
+
+	        		for (var item in $rootScope.rsaKeys) {
+			            if ($rootScope.rsaKeys[item].fingerprint == fingerprint) {
+			            	console.log("Removing from view: ", $rootScope.rsaKeys[item].fingerprint);
+			            	delete $rootScope.rsaKeys[item];
+			            }
+			        }
+	        		
 	        		console.log($rootScope.rsaKeys);
 					$scope.$apply()
 
@@ -117,8 +132,22 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
 		console.log(rsakey);
 
 		if ($scope.selectedItems.includes(rsakey)) {
-			console.log('found, removing');
+			console.log('found, removing from selectedItems');
+			
+			for (var item in $scope.selectedItems) {
+	            console.log("in-loop selectedItems: ");
+	            console.log($scope.selectedItems[item]);
 
+	            var checkFinger = $scope.selectedItems[item].fingerprint;
+	            if (checkFinger == rsakey.fingerprint) {
+	            	console.log("Removing from memory ", checkFinger);
+	            	delete $scope.selectedItems[item];
+	            }
+
+	            
+	        }
+
+	        $scope.selectedItems = $scope.selectedItems.filter(n => n);
 		} else {
 			console.log('NOT found, adding');
 			$scope.selectedItems.push(rsakey);
