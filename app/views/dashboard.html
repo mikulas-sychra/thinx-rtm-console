@@ -132,9 +132,9 @@
                                     </th>
                                 </tr>
                             </thead>
-                             <tr ng-repeat="device in $root.devices track by device.udid">
+                             <tr ng-repeat="device in $root.devices track by device.udid" ng-click="resetModal($index)" class="default-row" data-target="#deviceModal" data-toggle="modal">
                                 <td>
-                                    <a href="#" class="btn green-haze btn-outline" ng-click="resetModal($index)" data-target="#deviceModal" data-toggle="modal">{{device.alias}}</a>
+                                    <span class="green-haze">{{device.alias}}</span>
                                 </td>
                                 <td>
                                     {{device.firmware}} 
@@ -146,11 +146,11 @@
                                     {{device.lastupdate | lastSeen}}
                                 </td>
                                 <td>
-                                    <a class="btn btn-circle btn-icon-only btn-default" href="#" ng-if="hasSource($index)" ng-click="build(device.udid, device.source, $index)">
+                                    <a class="btn btn-circle btn-icon-only btn-default" href="#" ng-if="hasSource($index)" ng-click="build(device.udid, device.source, $index); $event.stopPropagation()">
                                         <i class="fa fa-cog"></i>
                                     </a>
                                 
-                                    <a class="btn btn-circle btn-icon-only btn-primary" ng-if="hasBuildId($index)" data-target="#logModal" data-target="#full-width" data-toggle="modal" ng-click="openBuildId(device.lastBuildId)">
+                                    <a class="btn btn-circle btn-icon-only btn-primary" ng-if="hasBuildId($index)" data-target="#logModal" data-target="#full-width" data-toggle="modal" ng-click="openBuildId(device.lastBuildId); $event.stopPropagation()">
                                         <i class="fa fa-eye"></i>
                                     </a>
                                 
