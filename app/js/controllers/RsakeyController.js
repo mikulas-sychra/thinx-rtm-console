@@ -82,20 +82,23 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
 
 	};
 
-	$scope.revokeRsakeys = function() {
-		console.log('-- processing selected items --');
-		console.log($scope.selectedItems);
+	function clearFromRsaKeys(fingerprint) {
 
-		for (var item in $scope.selectedItems) {
-            console.log("in-loop selectedItems: ", $scope.selectedItems[item].fingerprint);
-            console.log($scope.selectedItems[item]);
+		$scope.checkItem(fingerprint);
 
-            console.log("Removing ", $scope.selectedItems[item].fingerprint);
-            $scope.revokeRsakey($scope.selectedItems[item].fingerprint, 0);
-        }
-	};
+		// loop through rsaKeys and selectedItems, delete on match, then refresh
+		for (var index in $rootScope.rsaKeys) {
+	        if ($rootScope.rsaKeys[index].fingerprint == fingerprint) {
+	        	delete $rootScope.rsaKeys[index];
+	        }
+	    }
+	    // remove deleted keys from array
+	    $rootScope.rsaKeys.filter(n => n);
+	    // reuse selectbox function to clear deleted key from selectedItems
+	    $scope.$apply();
+	}
 
-    $scope.revokeRsakey = function(fingerprint) {
+	function revokeRsakey(fingerprint) {
 		console.log('--deleting rsa key ' + fingerprint +'--')
 
 		Thinx.revokeRsakey(fingerprint)
@@ -103,17 +106,9 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
 	        	if (data.success) {
 					toastr.success('Deleted.', 'THiNX RTM Console', {timeOut: 5000})
 	        		console.log('Success:', data);
-	        		console.log($rootScope.rsaKeys);
 
-	        		for (var item in $rootScope.rsaKeys) {
-			            if ($rootScope.rsaKeys[item].fingerprint == fingerprint) {
-			            	console.log("Removing from view: ", $rootScope.rsaKeys[item].fingerprint);
-			            	delete $rootScope.rsaKeys[item];
-			            }
-			        }
-	        		
-	        		console.log($rootScope.rsaKeys);
-					$scope.$apply()
+	        		// remove key from ui
+	        		clearFromRsaKeys(data.revoked);
 
 	        	} else {
 	        		toastr.error('Revocation failed.', 'THiNX RTM Console', {timeOut: 5000})
@@ -126,31 +121,26 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
 	        });
 	};
 
-	$scope.checkItem = function(rsakey) {
-		
-		console.log('### check');
-		console.log(rsakey);
+	$scope.revokeRsakeys = function() {
+		console.log('-- processing selected items --');
+		console.log($scope.selectedItems);
 
-		if ($scope.selectedItems.includes(rsakey)) {
-			console.log('found, removing from selectedItems');
-			
-			for (var item in $scope.selectedItems) {
-	            console.log("in-loop selectedItems: ");
-	            console.log($scope.selectedItems[item]);
+		var selectedToRemove = eval($scope.selectedItems);
 
-	            var checkFinger = $scope.selectedItems[item].fingerprint;
-	            if (checkFinger == rsakey.fingerprint) {
-	            	console.log("Removing from memory ", checkFinger);
-	            	delete $scope.selectedItems[item];
-	            }
+		for (var index in selectedToRemove) {
+            console.log("Removing ", selectedToRemove[index]);
+            revokeRsakey(selectedToRemove[index]);
+        }
+	};	
 
-	            
-	        }
-
-	        $scope.selectedItems = $scope.selectedItems.filter(n => n);
+	$scope.checkItem = function(fingerprint) {
+		console.log('### toggle item in selectedItems');
+		var index = $scope.selectedItems.indexOf(fingerprint);
+		if (index > -1) {
+			console.log('splicing on ', index, ' value ', $scope.selectedItems[index]);
+    		$scope.selectedItems.splice(index, 1);
 		} else {
-			console.log('NOT found, adding');
-			$scope.selectedItems.push(rsakey);
+			$scope.selectedItems.push(fingerprint);
 		}
 	}
 

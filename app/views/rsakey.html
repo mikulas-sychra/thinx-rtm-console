@@ -18,7 +18,7 @@
                     <span class="caption-subject bold uppercase">RSA Keys</span>
                     <span class="caption-helper hide"></span>
                 </div>
-                <div class="actions">
+                <div class="actions hide">
                     <a class="btn btn-circle btn-icon-only btn-default" href="#">
                         <i class="icon-cloud-upload"></i>
                     </a>
@@ -35,7 +35,7 @@
 
                     </div>
                     <div class="col-md-6 text-right">
-                        <button class="btn btn-circle btn-icon-only btn-default" ng-click="revokeRsakeys()" type="button" ><i class="fa fa-trash"></i></button>
+                        <button class="btn btn-circle btn-icon-only" ng-class="selectedItems.length > 0 ? 'btn-danger' : 'btn-default'" ng-click="revokeRsakeys()" type="button" ><i class="fa fa-trash"></i></button>
                     </div>
 
                 </div>
@@ -52,22 +52,13 @@
                                 </th>
                             </tr>
                         </thead>
-
-                        <tr ng-repeat="rsakey in $root.rsaKeys">
+                        <tr ng-repeat="rsakey in $root.rsaKeys" ng-click="checkItem(rsakey.fingerprint)" ng-class="selectedItems.indexOf(rsakey.fingerprint) > -1 ? 'selected-row' : 'default-row'">
                             <td>
                                 <div>{{rsakey.name}}</div>
                                 <div class="monospace-red">{{rsakey.fingerprint}}</div>
                             </td>
                             <td>
-                                <a class="btn btn-circle btn-icon-only btn-danger hide" href="#" ng-click="revokeRsakey(rsakey.fingerprint, $index)">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                                
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" ng-click="checkItem(rsakey)">
-                                    </label>
-                                </div>
+                                <i class="fa fa-check" ng-if="selectedItems.indexOf(rsakey.fingerprint) > -1"></a>
                             </td>
                         </tr>
                     </table>
