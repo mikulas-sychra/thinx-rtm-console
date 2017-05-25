@@ -47,18 +47,12 @@
                                 <th>
                                     Alias / Fingerprint
                                 </th>
-                                <th>
-                                    Actions
-                                </th>
                             </tr>
                         </thead>
                         <tr ng-repeat="rsakey in $root.rsaKeys" ng-click="checkItem(rsakey.fingerprint)" ng-class="selectedItems.indexOf(rsakey.fingerprint) > -1 ? 'selected-row' : 'default-row'">
                             <td>
                                 <div>{{rsakey.name}}</div>
                                 <div class="monospace-red">{{rsakey.fingerprint}}</div>
-                            </td>
-                            <td>
-                                <i class="fa fa-check" ng-if="selectedItems.indexOf(rsakey.fingerprint) > -1"></a>
                             </td>
                         </tr>
                     </table>

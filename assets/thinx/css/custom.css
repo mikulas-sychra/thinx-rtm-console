@@ -126,9 +126,15 @@
 }
 
 .selected-row {
-	border-right: 5px solid red;
+	border-right: 10px solid red;
 }
 
-.default-row {
+.selected-row:hover {
+	cursor: pointer;
+}
 
+.default-row {}
+
+.default-row:hover {
+	cursor: pointer;
 }
