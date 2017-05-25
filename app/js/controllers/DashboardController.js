@@ -233,7 +233,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             if (typeof($scope.ws) == "undefined") {
                 // open websocket
                 console.log('-- opening websocket with credentials --');
-                $scope.ws = new WebSocket("ws://thinx.cloud:7447/"+owner_id +"/"+build_id );
+                $scope.ws = new WebSocket("ws://thinx.cloud:7444/"+owner_id +"/"+build_id );
 
                 $scope.ws.onopen = function() {
                     console.log("Websocket connection estabilished.");
