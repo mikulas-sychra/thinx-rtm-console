@@ -29,6 +29,9 @@ var Thinx = {
     revokeRsakey: function (fingerprint) {
         return revokeRsakey(fingerprint);
     },
+    revokeRsakeys: function (fingerprints) {
+        return revokeRsakeys(fingerprints);
+    },
     // SOURCE
     sourceList: function () {
         return sourceList();
@@ -242,6 +245,18 @@ function revokeRsakey(fingerprint) {
     });
 }
 
+function revokeRsakeys(fingerprints) {
+    console.log(fingerprints);
+
+    return $.ajax({
+        url: urlBase + '/user/rsakey/revoke',
+        type: 'POST',
+        data: JSON.stringify({ 
+            fingerprints: fingerprints
+        }), 
+        dataType: 'json'
+    });
+}
 
 // Sources /user/source
 //
