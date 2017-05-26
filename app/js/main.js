@@ -8,8 +8,19 @@ var MetronicApp = angular.module("MetronicApp", [
     "ui.bootstrap", 
     "oc.lazyLoad",  
     "ngSanitize",
-    "angular-web-notification"
+    "angular-web-notification",
+    "tandibar/ng-rollbar"
 ]);
+
+MetronicApp.config(['RollbarProvider', function(RollbarProvider) {
+  RollbarProvider.init({
+    accessToken: "79f55666711744909737f6782f97ba80",
+    captureUncaught: true,
+    payload: {
+      environment: 'production'
+    }
+  });
+}]);
 
 /* Configure ocLazyLoader(refer: https://github.com/ocombe/ocLazyLoad) */
 MetronicApp.config(['$ocLazyLoadProvider', function($ocLazyLoadProvider) {
@@ -56,7 +67,7 @@ MetronicApp.filter('lastSeen', function() {
 });
 
 /* Setup App Main Controller */
-MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotification', function($scope, $rootScope, $webNotification) {
+MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotification', 'Rollbar', function($scope, $rootScope, $webNotification, Rollbar) {
     $scope.$on('$viewContentLoaded', function() {
         //App.initComponents(); // init core components
         //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive 
