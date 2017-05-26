@@ -221,10 +221,11 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             });
     };
 
-    $scope.openBuildId = function(buildId) {
-        console.log('--- trying to load build log for ' + buildId);
-        $scope.modalLogId = buildId;
-        OpenWebSocket(buildId);
+    $scope.showDeviceLastBuild = function(deviceUdid) {
+        console.log('--- trying to show last build log for ' + deviceUdid);
+
+        $scope.modalLogId = $rootScope.meta.builds[deviceUdid][0];
+        OpenWebSocket($scope.modalLogId);
     }
 
     function OpenWebSocket(buildId) {
@@ -249,12 +250,9 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                     $('#logModal').modal('show');
                 };
                 $scope.ws.onmessage = function (message) {
-                    
-
                     console.log('Received log message...');
 
                     var msg = JSON.parse(message.data);
-                    
                     console.log(msg);
 
                     // if (typeof(msg.notification) !== "undefined") {
@@ -270,8 +268,6 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                     }
 
                     renderLogBody();
-
-                    //$scope.$apply();
                };
                $scope.ws.onclose = function()
                {

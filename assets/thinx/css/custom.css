@@ -142,3 +142,52 @@
 .row-item-title {
 	font-size: 1.6em;
 }
+
+.icon-button {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    border: 0;
+    background: transparent;
+}
+
+.device-lastseen {
+	background-color: rgba(50,197,210,1);
+	padding: 3px 5px 3px 5px;
+	font-size: .6em;
+	display: inline-block;
+	color: white;
+}
+
+.device-firmware {
+	margin-top: 10px;
+	font-size: .9em;
+}
+
+.device-mac {
+	margin-top: 10px;
+	font-size: .9em;
+}
+
+.device-alias {
+	font-size: 1.5em;
+}
+
+
+.device-card {
+  background: #fff;
+  border-radius: 2px;
+  display: block;
+  /*height: 100px;*/
+  margin: 1rem;
+  position: relative;
+  /*width: 100%;*/
+
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.device-card:hover {
+  box-shadow: 0 5px 10px rgba(0,0,0,0.18), 0 1px 2px rgba(0,0,0,0.22);
+}

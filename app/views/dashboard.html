@@ -116,53 +116,45 @@
                             <thead>
                                 <tr class="uppercase">
                                     <th>
-                                        Alias
-                                    </th>
-                                    <th>
-                                        Firmware
-                                    </th>
-                                    <th>
-                                        MAC
-                                    </th>
-                                    <th>
-                                        Last Seen
-                                    </th>
-                                    <th>
-                                        Build
+                                        <!-- search -->
                                     </th>
                                 </tr>
                             </thead>
-                             <tr ng-repeat="device in $root.devices track by device.udid" ng-click="resetModal($index)" class="default-row" data-target="#deviceModal" data-toggle="modal">
-                                <td>
-                                    <span class="green-haze">{{device.alias}}</span>
-                                </td>
-                                <td>
-                                    {{device.firmware}} 
-
-                                    <div ng-if="hasBuildId($index)"> {{device.lastBuildId | limitTo:8}}</div>
-                                </td>
-                                <td>
-                                    {{device.mac}}
-                                </td>
-                                <td>
-                                    {{device.lastupdate | lastSeen}}
-                                </td>
-                                <td>
-                                    <a class="btn btn-circle btn-icon-only btn-default" href="#" ng-if="hasSource($index)" ng-click="build(device.udid, device.source, $index); $event.stopPropagation()" ng-hide="hasBuildId($index) == null">
-                                        <i class="fa fa-cogs"></i>
-                                    </a>
-
-                                    <span ng-if="hasBuildId(device.udid)">
-
-                                        <i ng-show="hasBuildId(device.udid) == null" class="fa fa-spin fa-circle-o-notch"></i>
+                             <tr ng-repeat="device in $root.devices track by device.udid" ng-click="resetModal($index)" class="default-row" data-target="#deviceModal" data-toggle="modal" style="background: none !important;">
                                 
-                                        <a class="btn btn-circle btn-icon-only btn-primary"  data-target="#logModal" data-target="#full-width" data-toggle="modal" ng-click="openBuildId(device.lastBuildId); $event.stopPropagation()">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
+                                <td class="device-card">
+                                    <div class="table"  style="padding: 10px">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            
+                                            <div><span class="green-haze device-alias">{{device.alias}}</span></div>
+                                            <div class="device-lastseen">{{device.lastupdate | lastSeen}}</div>
+                                            <div class="device-firmware">
+                                                Firmware: {{device.firmware}} 
+                                            </div>
+                                            <div class="device-mac">
+                                                MAC: {{device.mac}} 
+                                            </div>
+                                        </div>
 
-                                    </span>
+                                        <div class="col-md-4 text-right">
 
-                                    
+                                             <a class="btn btn-circle icon-button btn-icon-only btn-default" href="#" ng-if="hasSource($index)" ng-click="build(device.udid, device.source, $index); $event.stopPropagation()" ng-hide="hasBuildId($index) == null">
+                                                <i class="fa fa-cogs"></i>
+                                            </a>
+
+                                            <span ng-if="hasBuildId(device.udid)">
+                                                <i ng-show="hasBuildId(device.udid) == null" class="fa fa-spin fa-circle-o-notch"></i>
+                                        
+                                                <a class="btn btn-circle btn-icon-only btn-default"  data-target="#logModal" data-target="#full-width" data-toggle="modal" ng-click="showDeviceLastBuild(device.udid); $event.stopPropagation()">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                            </span> 
+
+                                        </div>
+                                    </div>
+                                    </div>
+
                                 </td>
                             </tr>
                         </table>
