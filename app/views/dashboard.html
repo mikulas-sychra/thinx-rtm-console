@@ -152,9 +152,9 @@
                                         <i class="fa fa-cogs"></i>
                                     </a>
 
-                                    <i ng-show="hasBuildId($index) == null" class="fa fa-spin fa-circle-o-notch"></i>
+                                    <i ng-show="hasBuildId(device.udid)" class="fa fa-spin fa-circle-o-notch"></i>
                                 
-                                    <a class="btn btn-circle btn-icon-only btn-primary" ng-if="hasBuildId($index)" data-target="#logModal" data-target="#full-width" data-toggle="modal" ng-click="openBuildId(device.lastBuildId); $event.stopPropagation()">
+                                    <a class="btn btn-circle btn-icon-only btn-primary" ng-if="hasBuildId(device.udid)" data-target="#logModal" data-target="#full-width" data-toggle="modal" ng-click="openBuildId(device.lastBuildId); $event.stopPropagation()">
                                         <i class="fa fa-eye"></i>
                                     </a>
                                 </td>

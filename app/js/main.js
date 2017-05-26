@@ -76,6 +76,12 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
     console.log(' === ROOT === ');
     console.log($rootScope);
 
+    // UI temporary data, might be saved to localstorage
+    if (typeof($rootScope.meta) == "undefined") {
+        $rootScope.meta = {};
+        $rootScope.meta.builds = []; // for build id queues
+    };
+
     function updateProfile(data) {
         var response = JSON.parse(data);
 

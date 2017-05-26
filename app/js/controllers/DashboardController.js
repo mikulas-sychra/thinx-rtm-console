@@ -177,7 +177,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             });
 
     };
-    
+
 
     $scope.build = function(deviceUdid, sourceId, index) {
         console.log('-- building firmware for ' + deviceUdid + '/' + $rootScope.sources[sourceId].alias + ' --'); 
@@ -195,7 +195,12 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                         console.log(response.build);
 
                         console.log(' --- save last build id: ' + response.build.id + ' ---');
-                        $rootScope.devices[index].lastBuildId = response.build.id;
+
+                        if (typeof($rootScope.meta.builds[deviceUdid]) == "undefined") {
+                            $rootScope.meta.builds[deviceUdid] = [];
+                        };
+
+                        $rootScope.meta.builds[deviceUdid].push(response.build.id);
                         $scope.$apply();
 
                         toastr.info(response.build.status, 'THiNX RTM Console', {timeOut: 5000});
@@ -307,17 +312,16 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
         $scope.$apply();
     }
 
-    $scope.hasBuildId = function(index) {
-        if (typeof($rootScope.devices[index].lastBuildId) !== 'undefined') {
-            if ($rootScope.devices[index].lastBuildId == null) {
-                return null;   
-            } else {
+    $scope.hasBuildId = function(deviceUdid) {
+        if (typeof($rootScope.meta.builds[deviceUdid]) !== 'undefined') {
+            // if ($rootScope.meta.builds[deviceUdid] == null) {
+                // return null;   
+            // } else {
                 return true;
-            }
+            // }
         }
         return false;
     }
-
 
     $scope.hasSource = function(index) {
         if (typeof($rootScope.devices[index].source) !== 'undefined' && 
