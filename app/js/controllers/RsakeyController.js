@@ -16,23 +16,39 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
 	        .fail(error => console.log('Error:', error));
 
 	     $scope.resetModal();
-
     });
 
     function updateKeys(data) {
         var keys = JSON.parse(data);
+
+        // $rootScope.rsaKeys = [];
+        // for (var itemId in keys.rsa_keys) {
+        	// $rootScope.rsaKeys[itemId] = keys.rsa_keys[itemId];	
+        // }
 		$rootScope.rsaKeys = keys.rsa_keys;
 		$scope.$apply()
 
-        console.log('keys:');
+        console.log('rsakeys:');
         console.log($rootScope.rsaKeys);
     }
 
 	$scope.addRsakey = function() {
 
-		console.log('--adding rsa key ' + $scope.rsakeyName +'--')
+		console.log('-- testing for duplicates --');
+        for (var rsaKeyId in $rootScope.rsaKeys) {
+            console.log("Looping rsaKeys: alias/name", $rootScope.rsaKeys[rsaKeyId].name, "fingerprint", $rootScope.rsaKeys[rsaKeyId].fingerprint);
 
-		var jqxhr = Thinx.addRsakey($scope.rsakeyName, $scope.rsakeyValue)
+            if ($rootScope.rsaKeys[rsaKeyId].name == $scope.rsakeyAlias) {
+                toastr.error('Alias must be unique.', 'THiNX RTM Console', {timeOut: 5000})
+                return;
+            }
+        }
+
+        // return;
+
+		console.log('--adding rsa key ' + $scope.rsakeyAlias +'--')
+
+		Thinx.addRsakey($scope.rsakeyAlias, $scope.rsakeyValue)
 	        .done(function(response) {
 	        	
 	            if (typeof(response) !== 'undefined') {
@@ -40,11 +56,11 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
 	                    console.log(response);
 	                    toastr.success('Key saved.', 'THiNX RTM Console', {timeOut: 5000});
 	                    
-	                    var jqxhrUpdate = Thinx.rsakeyList()
-									        .done( function(data) {
-									        	updateKeys(data)
-									        })
-									        .fail(error => console.log('Error:', error));
+	                    Thinx.rsakeyList()
+					        .done( function(data) {
+					        	updateKeys(data)
+					        })
+					        .fail(error => console.log('Error:', error));
 
 	                    $('#pageModal').modal('hide');
 
@@ -66,16 +82,34 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
 
 	};
 
-    $scope.revokeRsakey = function(fingerprint, index) {
+	function clearFromRsaKeys(fingerprint) {
+
+		$scope.checkItem(fingerprint);
+
+		// loop through rsaKeys and selectedItems, delete on match, then refresh
+		for (var index in $rootScope.rsaKeys) {
+	        if ($rootScope.rsaKeys[index].fingerprint == fingerprint) {
+	        	delete $rootScope.rsaKeys[index];
+	        }
+	    }
+	    // remove deleted keys from array
+	    $rootScope.rsaKeys.filter(n => n);
+	    // reuse selectbox function to clear deleted key from selectedItems
+	    $scope.$apply();
+	}
+
+	function revokeRsakey(fingerprint) {
 		console.log('--deleting rsa key ' + fingerprint +'--')
 
-		var jqxhr = Thinx.revokeRsakey(fingerprint)
+		Thinx.revokeRsakey(fingerprint)
 	        .done(function(data) {
 	        	if (data.success) {
 					toastr.success('Deleted.', 'THiNX RTM Console', {timeOut: 5000})
 	        		console.log('Success:', data);
-	        		$rootScope.rsaKeys.splice(index, 1);	
-					$scope.$apply()
+
+	        		// remove key from ui
+	        		clearFromRsaKeys(data.revoked);
+
 	        	} else {
 	        		toastr.error('Revocation failed.', 'THiNX RTM Console', {timeOut: 5000})
 	        	}
@@ -87,9 +121,57 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
 	        });
 	};
 
+	function revokeRsakeys(fingerprints) {
+		console.log('--deleting rsa keys ' + fingerprints.length +'--')
+
+		Thinx.revokeRsakeys(fingerprints)
+	        .done(function(data) {
+	        	if (data.success) {
+					toastr.success('Deleted.', 'THiNX RTM Console', {timeOut: 5000})
+	        		console.log('Success:', data);
+
+	        		// remove key from ui
+	        		// clearFromRsaKeys(data.revoked);
+
+	        	} else {
+	        		toastr.error('Revocation failed.', 'THiNX RTM Console', {timeOut: 5000})
+	        	}
+
+	        })
+	        .fail(function (error) {
+	        	// TODO throw error message
+	        	console.log('Error:', error)
+	        });
+	};
+
+	$scope.revokeRsakeys = function() {
+		console.log('-- processing selected items --');
+		console.log($scope.selectedItems);
+
+		var selectedToRemove = $scope.selectedItems.slice();
+
+		revokeRsakeys(selectedToRemove);
+
+		// for (var index in selectedToRemove) {
+            // console.log("Removing ", selectedToRemove[index]);
+        // }
+	};	
+
+	$scope.checkItem = function(fingerprint) {
+		console.log('### toggle item in selectedItems');
+		var index = $scope.selectedItems.indexOf(fingerprint);
+		if (index > -1) {
+			console.log('splicing on ', index, ' value ', $scope.selectedItems[index]);
+    		$scope.selectedItems.splice(index, 1);
+		} else {
+			$scope.selectedItems.push(fingerprint);
+		}
+	}
+
 	$scope.resetModal = function() {
-		$scope.rsakeyName = null;
 		$scope.rsakeyAlias = null;
+		$scope.rsakeyValue = null;
+		$scope.selectedItems = [];
 	}
 
 }]);

@@ -9,7 +9,7 @@ angular.module('MetronicApp').controller('ApikeyController', ['$rootScope', '$sc
         $rootScope.settings.layout.pageBodySolid = false;
         $rootScope.settings.layout.pageSidebarClosed = false;
 
-        var jqxhr = Thinx.apikeyList()
+        Thinx.apikeyList()
 	        .done( function(data) {
 	        	updateKeys(data)
 	        })
@@ -29,9 +29,20 @@ angular.module('MetronicApp').controller('ApikeyController', ['$rootScope', '$sc
     }
 
 	$scope.createApikey = function(newApikayAlias) {
+
+		console.log('-- testing for duplicates --');
+        for (var apiKeyId in $rootScope.apiKeys) {
+            console.log("Looping apiKeys: alias ", $rootScope.apiKeys[apiKeyId].alias);
+
+            if ($rootScope.apiKeys[apiKeyId].alias == newApikayAlias) {
+                toastr.error('Alias must be unique.', 'THiNX RTM Console', {timeOut: 5000})
+                return;
+            }
+        }
+
 		console.log('-- asking for new apikey with alias: ' + newApikayAlias + ' --'); 
 
-		var jqxhr = Thinx.createApikey(newApikayAlias)
+		Thinx.createApikey(newApikayAlias)
 	        .done(function(response) {
 	            if (typeof(response) !== 'undefined') {
 	                if (response.success) {
@@ -40,7 +51,7 @@ angular.module('MetronicApp').controller('ApikeyController', ['$rootScope', '$sc
 	                    $scope.newApikey = response.api_key;
 	                    $('#pageModal .msg-warning').show();
 
-						var jqxhrUpdate = Thinx.apikeyList()
+						Thinx.apikeyList()
 							        .done( function(data) {
 							        	updateKeys(data)
 							        })
@@ -66,7 +77,7 @@ angular.module('MetronicApp').controller('ApikeyController', ['$rootScope', '$sc
 	$scope.revokeApikey = function(fingerprint, index) {
 		console.log('--revoking key ' + fingerprint +'--')
 
-		var jqxhr = Thinx.revokeApikey(fingerprint)
+		Thinx.revokeApikey(fingerprint)
 	        .done(function(response) {
 	        	if (response.success) {
 	        		console.log('Success:', response.revoked);

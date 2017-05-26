@@ -8,8 +8,19 @@ var MetronicApp = angular.module("MetronicApp", [
     "ui.bootstrap", 
     "oc.lazyLoad",  
     "ngSanitize",
-    "angular-web-notification"
+    "angular-web-notification",
+    "tandibar/ng-rollbar"
 ]);
+
+MetronicApp.config(['RollbarProvider', function(RollbarProvider) {
+  RollbarProvider.init({
+    accessToken: "79f55666711744909737f6782f97ba80",
+    captureUncaught: true,
+    payload: {
+      environment: 'production'
+    }
+  });
+}]);
 
 /* Configure ocLazyLoader(refer: https://github.com/ocombe/ocLazyLoad) */
 MetronicApp.config(['$ocLazyLoadProvider', function($ocLazyLoadProvider) {
@@ -56,7 +67,7 @@ MetronicApp.filter('lastSeen', function() {
 });
 
 /* Setup App Main Controller */
-MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotification', function($scope, $rootScope, $webNotification) {
+MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotification', 'Rollbar', function($scope, $rootScope, $webNotification, Rollbar) {
     $scope.$on('$viewContentLoaded', function() {
         //App.initComponents(); // init core components
         //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive 
@@ -65,21 +76,26 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
     console.log(' === ROOT === ');
     console.log($rootScope);
 
+    // UI temporary data, might be saved to localstorage
+    if (typeof($rootScope.meta) == "undefined") {
+        $rootScope.meta = {};
+        $rootScope.meta.builds = []; // for build id queues
+    };
+
     function updateProfile(data) {
         var response = JSON.parse(data);
 
         if (typeof(response) !== 'undefined' && typeof(response.success) !== 'undefined' && response.success) {
 
-            console.log('-- updating profile with data ---');
+            console.log('-- processing profile ---');
             console.log(response);
 
             $rootScope.profile = response.profile;
 
-            console.log('updated profile:');
-            console.log($rootScope.profile);
-
-            if (typeof($rootScope.profile.info) !== 'undefined') {
-                $rootScope.profile.info.goals = ['apikey','enroll','rsakey','source','update','build','profile_privacy','profile_avatar'];
+            if (typeof($rootScope.profile.info.goals) == 'undefined') {
+                console.log('- goals not defined yet -');
+                $rootScope.profile.info.goals = [];
+                // $rootScope.profile.info.goals = ['apikey','enroll','rsakey','source','update','build','profile_privacy','profile_avatar'];
             }
 
             if (typeof($rootScope.profile.avatar) == 'undefined' || $rootScope.profile.avatar.length == 0) {
@@ -91,10 +107,16 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
     }
 
     function updateSources(data) {
-        var response = JSON.parse(data);
 
-        $rootScope.sources = response.sources;
-        $scope.$apply()
+        console.log('-- processing sources --');        
+        var response = JSON.parse(data);
+        console.log(response);
+
+        $rootScope.sources = {};
+        $.each(response.sources, function(key, value) {
+              $rootScope.sources[key] = value;
+        });
+        $scope.$apply();
 
         console.log('sources:');
         console.log($rootScope.sources);
@@ -113,7 +135,7 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
     function updateBuildLogList(data) {
         if (typeof($rootScope.buildlog) == 'undefined') {
             // build log is not defined yet (can be defined by getBuildLog)
-            $rootScope.buildlog = {rows: null};
+            $rootScope.buildlog = {};
         }
 
         var response = JSON.parse(data);
@@ -121,10 +143,10 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
         console.log(response)
 
         if (typeof(response.success !== 'undefined') && response.success) {
-            $rootScope.buildlog.rows = response.builds.rows;
+            $rootScope.buildlog = response.builds;
             $scope.$apply()
             console.log('buildlog list:');
-            console.log($rootScope.buildlog.rows);
+            console.log($rootScope.buildlog);
         } else {
             console.log('Buildlog list fetch error.') ;
         }
@@ -141,29 +163,31 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
         console.log($rootScope.buildlog);
     }
     
-    var jqxhrProfile = Thinx.getProfile()
+    Thinx.getProfile()
             .done(function(data) {
                 updateProfile(data);
             })
             .fail(error => console.log('Error:', error));
 
-    var jqxhrSources = Thinx.sourceList()
+    Thinx.sourceList()
             .done(function(data) {
                 updateSources(data);
             })
             .fail(error => console.log('Error:', error));
 
-    var jqxhrAuditlog = Thinx.getAuditLog()
+    Thinx.getAuditLog()
             .done(function(data) {
                 updateAuditLog(data);
             })
             .fail(error => console.log('Error:', error));
 
-    var jqxhrBuildlogList = Thinx.buildLogList()
+    Thinx.buildLogList()
             .done(function(data) {
                 updateBuildLogList(data);
             })
-            .fail(error => console.log('Error:', error));        
+            .fail(error => console.log('Error:', error));
+
+    
 
     
     var counter = 30;
@@ -173,7 +197,7 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
             counter = 30;
             console.log("Refreshing data in " + counter + " seconds...");
 
-            var jqxhrAutoUpdate = getProfile()
+            getProfile()
                 .done(function(data) {
                     updateProfile(data);
                 })
@@ -284,7 +308,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/global/plugins/angularjs/plugins/ui-select/select.min.css',
                             '../assets/global/plugins/angularjs/plugins/ui-select/select.min.js',
 
-                            '../assets/pages/scripts/dashboard.min.js',
+                            '../assets/pages/scripts/dashboard.js',
                             'js/controllers/DashboardController.js',
                         ] 
                     });

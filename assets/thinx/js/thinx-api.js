@@ -29,15 +29,18 @@ var Thinx = {
     revokeRsakey: function (fingerprint) {
         return revokeRsakey(fingerprint);
     },
+    revokeRsakeys: function (fingerprints) {
+        return revokeRsakeys(fingerprints);
+    },
     // SOURCE
     sourceList: function () {
         return sourceList();
     },
-    addSource: function (sourceUrl, sourceAlias) {
-        return addSource(sourceUrl, sourceAlias);
+    addSource: function (sourceUrl, sourceAlias, sourceBranch) {
+        return addSource(sourceUrl, sourceAlias, sourceBranch);
     },
-    revokeSource: function (alias) {
-        return revokeSource(alias);
+    revokeSource: function (sourceId) {
+        return revokeSource(sourceId);
     },
     // DEVICE
     deviceList: function () {
@@ -46,17 +49,17 @@ var Thinx = {
     changeDevice: function (deviceUdid, deviceAlias) {
         return changeDevice(deviceUdid, deviceAlias);
     },
-    revokeDevice: function (udid) {
-        return revokeDevice(udid);
+    revokeDevice: function (deviceUdid) {
+        return revokeDevice(deviceUdid);
     },
-    attachRepository: function (sourceAlias, deviceMac) {
-        return attachRepository(sourceAlias, deviceMac);
+    attachRepository: function (sourceId, deviceUdid) {
+        return attachRepository(sourceId, deviceUdid);
     },
-    detachRepository: function (deviceAlias, deviceMac) {
-        return detachRepository(deviceAlias, deviceMac);
+    detachRepository: function (deviceUdid) {
+        return detachRepository(deviceUdid);
     },
-    build: function (deviceUdid, sourceAlias, dryrun) {
-        return build(deviceUdid, sourceAlias, dryrun);
+    build: function (deviceUdid, sourceId, dryrun) {
+        return build(deviceUdid, sourceId, dryrun);
     },
     // PROFILE
     getProfile: function () {
@@ -77,9 +80,15 @@ var Thinx = {
     getBuildLog: function (buildId) {
         return getBuildLog(buildId);
     },
+    tailBuildLog: function (buildId) {
+        return tailBuildLog(buildId);
+    },
     buildLogList: function () {
         return buildLogList();
-    }
+    },
+    getStats: function () {
+        return getStats();
+    },
 }
 
 function updateTimer() {
@@ -105,9 +114,9 @@ function deviceList() {
     });
 }
 
-function changeDevice(hash, alias) {
+function changeDevice(deviceId, deviceAlias) {
 
-    var data = JSON.stringify({ changes: { device_id: hash, alias: alias } });
+    var data = JSON.stringify({ changes: { udid: deviceId, alias: deviceAlias } });
 
     console.log(data);
 
@@ -119,46 +128,45 @@ function changeDevice(hash, alias) {
     });
 }
 
-function revokeDevice(udid) {
+function revokeDevice(deviceUdid) {
     return $.ajax({
         url: urlBase + '/device/revoke',
         type: 'POST',
-        data: JSON.stringify({ udid: udid }), 
+        data: JSON.stringify({ udid: deviceUdid }), 
         dataType: 'json'
     });
 }
 
-function attachRepository(alias, mac) {
+function attachRepository(sourceId, deviceUdid) {
     return $.ajax({
         url: urlBase + '/device/attach',
         type: 'POST',
         data: JSON.stringify({
-            alias: alias,
-            mac: mac
+            source_id: sourceId,
+            udid: deviceUdid
         }), 
         dataType: 'json'
     });
 }
 
-function detachRepository(alias, mac) {
+function detachRepository(deviceUdid) {
     return $.ajax({
         url: urlBase + '/device/detach',
         type: 'POST',
         data: JSON.stringify({
-            alias: alias,
-            mac: mac
+            udid: deviceUdid
         }), 
         dataType: 'json'
     });
 }
 
-function build(deviceUdid, sourceAlias, dryrun) {
+function build(deviceUdid, sourceId, dryrun) {
     return $.ajax({
         url: urlBase + '/build',
         type: 'POST',
         data: JSON.stringify({build: {
             udid: deviceUdid,
-            source: sourceAlias,
+            source_id: sourceId,
             dryrun: dryrun,
         }}), 
         dataType: 'json'
@@ -212,12 +220,12 @@ function rsakeyList() {
     });
 }
 
-function addRsakey(rsakeyName, rsakeyValue) {
+function addRsakey(rsakeyAlias, rsakeyValue) {
     return $.ajax({
         url: urlBase + '/user/rsakey',
         type: 'POST',
         data: JSON.stringify({ 
-            alias: rsakeyName,
+            alias: rsakeyAlias,
             key: rsakeyValue
         }), 
         dataType: 'json'
@@ -237,6 +245,18 @@ function revokeRsakey(fingerprint) {
     });
 }
 
+function revokeRsakeys(fingerprints) {
+    console.log(fingerprints);
+
+    return $.ajax({
+        url: urlBase + '/user/rsakey/revoke',
+        type: 'POST',
+        data: JSON.stringify({ 
+            fingerprints: fingerprints
+        }), 
+        dataType: 'json'
+    });
+}
 
 // Sources /user/source
 //
@@ -251,23 +271,24 @@ function sourceList() {
 	});
 }
 
-function addSource(url, alias) {
+function addSource(url, alias, branch) {
 	return $.ajax({
 		url: urlBase + '/user/source',
 		type: 'POST',
         data: JSON.stringify({ 
             url: url,
-            alias: alias
+            alias: alias,
+            branch: branch
         }), 
 		dataType: 'json'
 	});
 }
 
-function revokeSource(alias) {
+function revokeSource(sourceId) {
 	return $.ajax({
 		url: urlBase + '/user/source/revoke',
 		type: 'POST',
-		data: JSON.stringify({ alias: alias }), 
+		data: JSON.stringify({ source_id: sourceId }), 
         dataType: 'json'
 	});
 }
@@ -288,21 +309,21 @@ function getProfile() {
 function changeProfile(profile) {
 
     var info = {
-        first_name: profile.first_name,
-        last_name: profile.last_name,
-        mobile_phone: profile.mobile_phone, // TODO
+        first_name: profile.info.first_name,
+        last_name: profile.info.last_name,
+        mobile_phone: profile.info.mobile_phone,
 
         notifications: {
-                "all" : false, 
-                "important" : false, 
-                "info" : false 
+                "all" : profile.info.notifications.all, 
+                "important" : profile.info.notifications.important, 
+                "info" : profile.info.notifications.info 
         },
 
         security: { "unique_api_keys" : true },
 
-        goals: profile.goals,
-        username: profile.username,
-        owner: profile.owner
+        goals: profile.info.goals,
+        username: profile.info.username,
+        owner: profile.info.owner
     }
 
     console.log('sending profile change request...');
@@ -360,5 +381,25 @@ function getBuildLog(buildId) {
             build_id: buildId
         }), 
         dataType: 'json'
+    });
+}
+
+function tailBuildLog(buildId) {
+
+
+    return $.ajax({
+        url: urlBase + '/user/logs/tail',
+        type: 'POST',
+        data: JSON.stringify({ 
+            build_id: buildId
+        }), 
+        dataType: 'json'
+    });
+}
+
+function getStats() {
+    return $.ajax({
+        url: urlBase + '/user/stats',
+        type: 'GET'
     });
 }

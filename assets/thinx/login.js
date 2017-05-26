@@ -59,15 +59,20 @@ var Login = function() {
                     type: 'POST',
                     datatype: 'json',
                     success: function(data, status, xhr) {
-                        console.log('--login success--');
+                        console.log('-- login response --');
                         var response = JSON.parse(data);
                         console.log(response);
-                        if (typeof(response) !== 'undefined' && typeof(response.redirectURL) !== 'undefined' ) {
-                            console.log('--Redirecting to "' + response.redirectURL + '"--' );
-                            window.location = response.redirectURL;
-                        } else {
-                            // TODO login error
+                        if (typeof(response) !== 'undefined') {
+                            if (typeof(response.redirectURL) !== 'undefined') {
+                                console.log('-- Succes! Redirecting to "' + response.redirectURL + '"--' );
+                                window.location = response.redirectURL;
+                            } else {
+                                console.log('-- Error!');
+                                $('.msg-error', $('.login-form')).text(response.status);
+                                $('.msg-error', $('.login-form')).show();
+                            }
                         }
+
                     },
                     error: function(data) {
                         console.log('--login failure--');
@@ -186,6 +191,7 @@ var Login = function() {
         });
 
         jQuery('#forget-password').click(function() {
+            history.pushState({}, null, "/#");
             jQuery('.login-form').hide();
             jQuery('.forget-form').show();
         });
@@ -348,6 +354,7 @@ var Login = function() {
         });
 
         jQuery('#register-btn').click(function() {
+            history.pushState({}, null, "/#");
             jQuery('.login-form').hide();
             jQuery('.register-form').show();
         });

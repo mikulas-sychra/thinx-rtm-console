@@ -9,7 +9,7 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
         $rootScope.settings.layout.pageBodySolid = false;
         $rootScope.settings.layout.pageSidebarClosed = false;
 
-        var jqxhr = Thinx.sourceList()
+        Thinx.sourceList()
             .done( function(data) {
                 updateSources(data)
             })
@@ -20,12 +20,16 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
     });
 
     function updateSources(data) {
-        console.log(data);
 
-        var data = JSON.parse(data);
+        console.log('-- processing sources --');        
+        var response = JSON.parse(data);
+        console.log(response);
 
-        $rootScope.sources = data.sources;
-        $scope.$apply()
+        $rootScope.sources = {};
+        $.each(response.sources, function(key, value) {
+              $rootScope.sources[key] = value;
+        });
+        $scope.$apply();
 
         console.log('sources:');
         console.log($rootScope.sources);
@@ -37,15 +41,27 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
 
         console.log($scope.sourceUrl);
         console.log($scope.sourceAlias);
+        console.log($scope.sourceBranch);
 
-        var jqxhr = Thinx.addSource($scope.sourceUrl, $scope.sourceAlias)
+        console.log('-- testing for duplicates --');
+        for (var sourceId in $rootScope.sources) {
+            console.log("Looping sources: alias ", $rootScope.sources[sourceId].alias, "url", $rootScope.sources[sourceId].url);
+
+            if ($rootScope.sources[sourceId].alias == $scope.sourceAlias) {
+                toastr.error('Alias must be unique.', 'THiNX RTM Console', {timeOut: 5000})
+                return;
+            }
+
+        }
+        
+        Thinx.addSource($scope.sourceUrl, $scope.sourceAlias, $scope.sourceBranch)
             .done(function(response) {
                 
                 if (typeof(response) !== 'undefined') {
                     if (response.success) {
                         console.log(response);
 
-                        var jqxhr = Thinx.sourceList()
+                        Thinx.sourceList()
                             .done( function(data) {
                                 updateSources(data)
                             })
@@ -75,53 +91,60 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
 
     $scope.getAliasFromUrl = function() {
         console.log('procesing: ' + $scope.sourceUrl);
-        try {
-            var urlParts = $scope.sourceUrl.replace(/\/\s*$/,'').split('/');
-            console.log(urlParts[1]);
-            if (typeof(urlParts[0]) !== 'undefined' && /git/.test(urlParts[0])) {
-                var projectName = urlParts[1].split('.', 1);
+        if ($scope.sourceUrl.length > 10) {
+            try {
+                var urlParts = $scope.sourceUrl.replace(/\/\s*$/,'').split('/');
+                console.log(urlParts[1]);
+                if (typeof(urlParts[0]) !== 'undefined' && /git/.test(urlParts[0])) {
+                    var projectName = urlParts[1].split('.', 1);
+                    console.log('detected projectname:');
+                    console.log(projectName[0]);
+                }
+            } catch(e) {
+                console.log(e);
             }
-        } catch(e) {
-            console.log(e);
-        }
-        if (typeof(projectName) !== 'undefined' && ($scope.sourceAlias == null || $scope.sourceAlias == '')) {
-            $scope.sourceAlias = projectName;
+            if ((typeof(projectName) !== 'undefined') && (projectName.length > 0) && ($scope.sourceAlias == null || $scope.sourceAlias == '')) {
+                $scope.sourceAlias = projectName[0];
+            }
         }
     }
 
-	$scope.revokeSource = function(alias, index) {
+	$scope.revokeSource = function(sourceId, index) {
 
-		console.log('-- removing source ' + alias + '--'); 
+		console.log('-- removing source ' + sourceId + '--'); 
 
-        var jqxhr = Thinx.revokeSource(alias)
+        Thinx.revokeSource(sourceId)
             .done(function(response) {
                 if (typeof(response) !== 'undefined') {
                     if (response.success) {
                         console.log(response);
-                        $rootScope.sources.splice(index, 1);
+                        
+                        delete $rootScope.sources[sourceId];
+                        
                         $scope.$apply()
                         toastr.success('Source Removed.', 'THiNX RTM Console', {timeOut: 5000})
                     } else {
                         console.log(response);
-                        toastr.success('Source Failed.', 'THiNX RTM Console', {timeOut: 5000})
+                        toastr.success('Source Removal Failed.', 'THiNX RTM Console', {timeOut: 5000})
                     }
                 } else {
                     console.log('error');
                     console.log(response);
-                    toastr.success('Source Failed.', 'THiNX RTM Console', {timeOut: 5000})
+                    toastr.success('Source Removal Failed.', 'THiNX RTM Console', {timeOut: 5000})
                 }
             })
             .fail(function(error) {
                 $('.msg-warning').text(error);
                 $('.msg-warning').show();
                 console.log('Error:', error);
-                toastr.success('Source Failed.', 'THiNX RTM Console', {timeOut: 5000})
+                toastr.success('Source Removal Failed.', 'THiNX RTM Console', {timeOut: 5000})
             });
 	};
 
     $scope.resetModal = function() {
         $scope.sourceAlias = null;
         $scope.sourceUrl = null;
+        $scope.sourceBranch = null;
     }
 
 }]);

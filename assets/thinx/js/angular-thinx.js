@@ -67,7 +67,7 @@ RTM.module('thinxApi')
 
 
 /**
- * @license Thinx v0.1
+ * @license THiNX v0.1
  */
 (function(window, angular) {'use strict';
 

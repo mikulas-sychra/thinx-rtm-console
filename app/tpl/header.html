@@ -86,11 +86,11 @@
                             <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
                                 <li ng-repeat="row in $root.auditlog.rows | limitTo:10">
                                     <a href="javascript:;">
-                                        <span class="time">{{row.key.date | lastSeen}}</span>
+                                        <span class="time">{{row.doc.date | lastSeen}}</span>
                                         <span class="details">
                                             <span class="label label-sm label-icon label-success">
                                                 <i class="fa fa-plus"></i>
-                                            </span> {{row.key.message}} </span>
+                                            </span> {{row.doc.message}} </span>
                                     </a>
                                 </li>
                             </ul>
@@ -101,28 +101,30 @@
                 <li class="separator" style="background: none"></li>
                 <!-- BEGIN INBOX DROPDOWN -->
                 <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-                <li class="dropdown dropdown-extended dropdown-inbox dropdown-dark" id="header_inbox_bar">
+                <li class="dropdown dropdown-extended dropdown-notification dropdown-dark" id="header_inbox_bar">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                         <i class="icon-envelope-open"></i>
-                        <span class="badge badge-danger" ng-if="$root.buildlog.total_rows > 0"> {{$root.buildlog.total_rows}} </span>
+                        <span class="badge badge-danger" ng-if="$root.buildlog.length > 0"> {{$root.buildlog.length}} </span>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="external">
                             <h3>You have
-                                <span class="bold">{{$root.buildlog.total_rows}} New</span> Builds</h3>
+                                <span class="bold">{{$root.buildlog.length}} New</span> Builds</h3>
                             <a href="#/profile/dashboard">view all</a>
                         </li>
                         <li>
                             <ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
-                                <li ng-repeat="row in $root.buildlog.rows">
-                                    <a href="#">
-                                        <span class="photo">
-                                            <img class="img-circle" alt="{{row.key.owner}}"> </span>
-                                        <span class="subject">
-                                            <span class="from">{{row.key.owner}} </span>
-                                            <span class="time">{{row.key.date | lastSeen}} </span>
+                                <li ng-repeat="(key, build) in $root.buildlog | limitTo:10">
+                                    <a href="javascript:;" ng-click="openBuildId(build.build_id)">
+                                        <span class="time">{{build.date | lastSeen}}</span>
+                                        <span class="details">
+                                            <span class="label label-sm label-icon label-success">
+                                                <i class="fa fa-plus"></i>
+                                            </span> 
+                                            <span class="">
+                                                {{build.udid | limitTo:6}} {{build.message}}
+                                            </span>
                                         </span>
-                                        <span class="message"> {{row.key.message}} </span>
                                     </a>
                                 </li>
                             </ul>
@@ -248,7 +250,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                         <span class="username username-hide-on-mobile"> {{$root.profile.info.first_name}} {{$root.profile.info.last_name}} </span>
                         <!-- DOC: Do not remove below empty space(&nbsp;) as its purposely used -->
-                        <img alt="" class="img-circle" src="{{$root.profile.avatar}}" /> </a>
+                        <img alt="" class="img-circle" src="{{$root.profile.avatar}}" style="background-color: white;" /> </a>
                     <ul class="dropdown-menu dropdown-menu-default">
                         <li>
                             <a href="#/profile/dashboard">
@@ -258,6 +260,11 @@
                             <a href="#/todo">
                                 <i class="icon-rocket"></i> My Tasks
                                 <span class="badge badge-success"> {{$root.auditlog.total_rows}} </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="//status.thinx.cloud" target="_blank">
+                                <i class="icon-graph"></i> Monitoring
                             </a>
                         </li>
                         <li class="divider"> </li>

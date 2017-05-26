@@ -18,16 +18,15 @@ angular.module('MetronicApp').controller('UserProfileController', function($root
 
         if (typeof(response) !== 'undefined' && typeof(response.success) !== 'undefined' && response.success) {
 
-            console.log('-- updating profile with data ---');
+            console.log('-- processing profile ---');
             console.log(response);
 
             $rootScope.profile = response.profile;
 
-            console.log('updated profile:');
-            console.log($rootScope.profile);
-
-            if (typeof($rootScope.profile.info) !== 'undefined') {
-                $rootScope.profile.info.goals = ['apikey','enroll','rsakey','source','update','build','profile_privacy','profile_avatar'];
+            if (typeof($rootScope.profile.info.goals) == 'undefined') {
+                console.log('- goals not defined yet -');
+                $rootScope.profile.info.goals = [];
+                // $rootScope.profile.info.goals = ['apikey','enroll','rsakey','source','update','build','profile_privacy','profile_avatar'];
             }
 
             if (typeof($rootScope.profile.avatar) == 'undefined' || $rootScope.profile.avatar.length == 0) {
@@ -55,11 +54,10 @@ angular.module('MetronicApp').controller('UserProfileController', function($root
                         console.log(' == Profile update success ==');
                         console.log(response);
 
-
-                        var jqxhrProfile = Thinx.getProfile().done(function(data) {
-                                                updateProfile(data);
-                                            })
-                                            .fail(error => console.log('Error:', error));
+                        Thinx.getProfile().done(function(data) {
+                            updateProfile(data);
+                        })
+                        .fail(error => console.log('Error:', error));
 
                         toastr.success('Profile updated.', 'THiNX RTM Console', {timeOut: 5000})
                     } else {
@@ -120,7 +118,7 @@ angular.module('MetronicApp').controller('UserProfileController', function($root
             return;
         }
 
-        var jqxhrProfileAvatar = Thinx.changeProfileAvatar($scope.newAvatar)
+        Thinx.changeProfileAvatar($scope.newAvatar)
             .done(function(response) {
 
                 if (typeof(response) !== 'undefined') {
@@ -129,10 +127,10 @@ angular.module('MetronicApp').controller('UserProfileController', function($root
 
                         console.log('-- avatar success, refreshing profile --'); 
 
-                        var jqxhrProfile = Thinx.getProfile().done(function(data) {
-                                                updateProfile(data);
-                                            })
-                                            .fail(error => console.log('Error:', error));
+                        Thinx.getProfile().done(function(data) {
+                            updateProfile(data);
+                        })
+                        .fail(error => console.log('Error:', error));
 
                         toastr.success('Avatar updated.', 'THiNX RTM Console', {timeOut: 5000})
                     } else {
@@ -150,5 +148,17 @@ angular.module('MetronicApp').controller('UserProfileController', function($root
             });
 
     }
+
+    $scope.removeGoal = function(goalId) {
+
+        console.log('-- current goals: ' + $rootScope.profile.info.goals);
+        console.log('-- removing goal: ' + goalId);
+
+        var index = $rootScope.profile.info.goals.indexOf(goalId);
+        if (index > -1) {
+            $rootScope.profile.info.goals.splice(index, 1);
+        };
+
+    };
 
 }); 

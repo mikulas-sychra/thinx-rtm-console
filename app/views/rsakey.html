@@ -18,7 +18,7 @@
                     <span class="caption-subject bold uppercase">RSA Keys</span>
                     <span class="caption-helper hide"></span>
                 </div>
-                <div class="actions">
+                <div class="actions hide">
                     <a class="btn btn-circle btn-icon-only btn-default" href="#">
                         <i class="icon-cloud-upload"></i>
                     </a>
@@ -28,30 +28,36 @@
                 </div>
             </div>
             <div class="portlet-body"> 
-                <a href="#" class="btn green-haze" ng-click="resetModal()" data-target="#pageModal" data-toggle="modal">Create Key</a>
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <a href="#" class="btn green-haze btn-outline" ng-click="resetModal()" data-target="#pageModal" data-toggle="modal">Create RSA Key</a>
+
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <button class="btn btn-circle btn-icon-only" ng-class="selectedItems.length > 0 ? 'btn-danger' : 'btn-default'" ng-click="revokeRsakeys()" type="button" ><i class="fa fa-trash"></i></button>
+                    </div>
+
+                </div>
+
                 <div class="table-scrollable table-scrollable-borderless">
                     <table class="table table-hover table-light">
                         <thead>
                             <tr class="uppercase">
                                 <th>
-                                    Alias / Fingerprint
+                                    Alias
                                 </th>
                                 <th>
-                                    Actions
+                                    Fingerprint
                                 </th>
                             </tr>
                         </thead>
-
-                        <tr ng-repeat="rsakey in $root.rsaKeys">
+                        <tr ng-repeat="rsakey in $root.rsaKeys" ng-click="checkItem(rsakey.fingerprint)" ng-class="selectedItems.indexOf(rsakey.fingerprint) > -1 ? 'selected-row' : 'default-row'">
                             <td>
-                                <div>{{rsakey.name}}</div>
-                                <div class="monospace-red">{{rsakey.fingerprint}}</div>
+                                <div class="row-item-title">{{rsakey.name}}</div>
                             </td>
                             <td>
-                                <a class="btn btn-circle btn-icon-only btn-danger" href="#" ng-click="revokeRsakey(rsakey.fingerprint, $index)">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                                <button class="btn btn-circle btn-icon-only btn-danger" uib-popover-template="dynamicPopover.templateUrl" popover-title="Revoke {{rsakey.name}}" popover-confirm="revokeRsakey(rsakey.fingerprint, $index)" popover-placement="bottom" type="button" class="btn btn-default"><i class="fa fa-times"></i></button>
+                                <div class="monospace-red">{{rsakey.fingerprint}}</div>
                             </td>
                         </tr>
                     </table>
@@ -73,7 +79,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3">Key Alias</label>
                                 <div class="col-md-9">
-                                    <input type="text" name="rsakeyName" ng-model="rsakeyName" class="form-control" />
+                                    <input type="text" name="rsakeyAlias" ng-model="rsakeyAlias" class="form-control" />
                                 </div>
                             </div>
                             <div class="form-group last">
@@ -86,7 +92,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" ng-click="addRsakey()" ng-disabled="(rsakeyName == null || rsakeyName.length < 1) || (rsakeyValue == null || rsakeyValue.length < 1)"><i class="fa fa-check"></i> Submit</button>
+                        <button type="button" class="btn btn-primary" ng-click="addRsakey()" ng-disabled="(rsakeyAlias == null || rsakeyAlias.length < 1) || (rsakeyValue == null || rsakeyValue.length < 1)"><i class="fa fa-check"></i> Submit</button>
                     </div>
                 </div>
             </div>

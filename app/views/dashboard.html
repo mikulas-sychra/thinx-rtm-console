@@ -11,7 +11,7 @@
 <div ng-controller="DashboardController">
     <div class="note note-info" ng-hide="$root.profile.info.goals.includes('apikey')">
         <h3>1. API Key
-            <span class="close" data-close="note"></span>
+            <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('apikey')"></span>
         </h3>
         <a ui-sref="apikey">Create your first API Key</a>
         <p>
@@ -21,11 +21,11 @@
     </div>
     <div class="note note-info" ng-hide="$root.profile.info.goals.includes('enroll')">
         <h3>2. Device Enrollment
-            <span class="close" data-close="note"></span>
+            <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('enroll')"></span>
         </h3>
         <a>Enroll your device</a>
         <p>
-            To start managing your first device via Thinx RTM Console you need to flash Vanilla Firmware with new API Key first.
+            To start managing your first device via THiNX RTM Console you need to flash Vanilla Firmware with new API Key first.
             <br><br>
             Si má uživatel nainstalovat platformio, příslušnej USB driver, a uploadnout si na svoje ESP8266 vanilla binárku
         </p>
@@ -33,7 +33,7 @@
     </div>
     <div class="note note-info" ng-hide="$root.profile.info.goals.includes('enroll')">
         <h3>3. Device Setup
-            <span class="close" data-close="note"></span>
+            <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('enroll-setup')"></span>
         </h3>
         <a>Connect your device to internet</a>
         <p>
@@ -44,7 +44,7 @@
     </div>
     <div class="note note-danger" ng-hide="$root.profile.info.goals.includes('rsakey')">
         <h3>Security
-            <span class="close" data-close="note"></span>
+            <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('rsakey')"></span>
         </h3>
         <a ui-sref="rsakey">Add RSA Key</a>
         <p>
@@ -54,7 +54,7 @@
     </div>
     <div class="note note-success" ng-hide="$root.profile.info.goals.includes('update')">
         <h3>Well Done!
-            <span class="close" data-close="note"></span>
+            <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('update')"></span>
         </h3>
         <a>Update your device</a>
         <p>
@@ -94,7 +94,7 @@
                                 </div>
                                 <div class="stat-number">
                                     <div class="title"> Total </div>
-                                    <div class="number"> 2460 </div>
+                                    <div class="number"> {{$root.stats.total.DEVICE_CHECKIN}} </div>
                                 </div>
                             </div>
                         </div>
@@ -106,7 +106,7 @@
                                 </div>
                                 <div class="stat-number">
                                     <div class="title"> New </div>
-                                    <div class="number"> 719 </div>
+                                    <div class="number"> {{$root.stats.total.DEVICE_NEW}} </div>
                                 </div>
                             </div>
                         </div>
@@ -116,58 +116,45 @@
                             <thead>
                                 <tr class="uppercase">
                                     <th>
-                                        Alias
-                                    </th>
-                                    <th>
-                                        Firmware / Source
-                                    </th>
-                                    <th>
-                                        MAC
-                                    </th>
-                                    <th>
-                                        Last Seen
-                                    </th>
-                                    <th>
-                                        Actions
+                                        <!-- search -->
                                     </th>
                                 </tr>
                             </thead>
-                             <tr ng-repeat="device in $root.devices track by device.udid">
-                                <td style="vertical-align: top;">
-                                    <a href="#" class="btn green-haze btn-outline" ng-click="resetModal($index)" data-target="#deviceModal" data-toggle="modal">{{device.alias}}</a>
-                                </td>
-                                <td>
-                                    {{device.firmware}}<br><br>
+                             <tr ng-repeat="device in $root.devices track by device.udid" ng-click="resetModal($index)" class="default-row" data-target="#deviceModal" data-toggle="modal" style="background: none !important;">
+                                
+                                <td class="device-card">
+                                    <div class="table"  style="padding: 10px">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            
+                                            <div><span class="green-haze device-alias">{{device.alias}}</span></div>
+                                            <div class="device-lastseen">{{device.lastupdate | lastSeen}}</div>
+                                            <div class="device-firmware">
+                                                Firmware: {{device.firmware}} 
+                                            </div>
+                                            <div class="device-mac">
+                                                MAC: {{device.mac}} 
+                                            </div>
+                                        </div>
 
-                                    <div class="input-group dashboard-selector">
-                                        <ui-select append-to-body="true" allow-clear ng-model="$root.devices[$index].source" theme="bootstrap" on-select="attachRepository($select.selected.alias, device.mac)">
-                                            <ui-select-match placeholder="none">{{$select.selected.alias}}</ui-select-match>
-                                            <ui-select-choices repeat="source.alias as source in $root.sources | filter: $select.search">
-                                                <span ng-bind-html="source.alias | highlight: $select.search"></span>
-                                            </ui-select-choices>
-                                        </ui-select>
-                                        <span class="input-group-btn">
-                                            <button type="button" ng-click="detachRepository(device.alias, device.mac); device.source = null;" class="btn btn-default">
-                                                <span class="fa fa-chain-broken"></span>
-                                            </button>
-                                        </span>
-                                    </div> 
-                                </td>
-                                <td style="vertical-align: top;">
-                                    {{device.mac}}
-                                </td>
-                                <td style="vertical-align: top;">
-                                    {{device.lastupdate | lastSeen}}
-                                </td>
-                                <td>
-                                    <a class="btn btn-circle btn-icon-only btn-default" href="#" ng-if="hasSource($index)" ng-click="build(device.udid, device.source, $index)">
-                                        <i class="fa fa-cog"></i>
-                                    </a>
-                                
-                                    <a class="btn btn-circle btn-icon-only btn-primary" ng-if="hasBuildId($index)" data-target="#logModal" data-toggle="modal" ng-click="openBuildId(device.lastBuildId)">
-                                        <i class="fa fa-eye"></i>
-                                    </a>
-                                
+                                        <div class="col-md-4 text-right">
+
+                                             <a class="btn btn-circle icon-button btn-icon-only btn-default" href="#" ng-if="hasSource($index)" ng-click="build(device.udid, device.source, $index); $event.stopPropagation()" ng-hide="hasBuildId($index) == null">
+                                                <i class="fa fa-cogs"></i>
+                                            </a>
+
+                                            <span ng-if="hasBuildId(device.udid)">
+                                                <i ng-show="hasBuildId(device.udid) == null" class="fa fa-spin fa-circle-o-notch"></i>
+                                        
+                                                <a class="btn btn-circle btn-icon-only btn-default"  data-target="#logModal" data-target="#full-width" data-toggle="modal" ng-click="showDeviceLastBuild(device.udid); $event.stopPropagation()">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                            </span> 
+
+                                        </div>
+                                    </div>
+                                    </div>
+
                                 </td>
                             </tr>
                         </table>
@@ -196,6 +183,37 @@
                                     <input type="text" ng-model="deviceAlias" name="deviceAlias" class="form-control" />
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Source</label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        <ui-select allow-clear 
+                                        ng-model="$root.devices[deviceIndex].source" theme="bootstrap" 
+                                        on-select="attachRepository($select.selected.key, $root.devices[deviceIndex].udid)">
+                                            <ui-select-match placeholder="none">{{$select.selected.value.alias}}</ui-select-match>
+                                            <ui-select-choices repeat="(key, value) in $root.sources | filter: $select.search">
+                                                <div ng-bind-html="value.value.alias | highlight: $select.search"></div>
+                                                <div ng-bind-html="value.value.url | highlight: $select.search" class="monospace-dropdown"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                        <span class="input-group-btn">
+                                            <button type="button" ng-click="detachRepository($root.devices[deviceIndex].udid)" class="btn btn-default">
+                                                <span class="fa fa-chain-broken"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">MQTT Channel</label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        /thinx/device/{{$root.devices[deviceIndex].udid}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div>{{$root.devices[deviceIndex] | json}}</div>
+                            
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -211,7 +229,7 @@
     <!-- END FORM-->
 
     <!-- BEGIN MODAL LOG VIEW -->
-    <div id="logModal" class="modal fade" role="dialog" aria-hidden="true">
+    <div id="logModal" class="modal container fade" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -219,8 +237,9 @@
                     <h4 class="modal-title">Build Log</h4>
                 </div>
                 <div class="modal-body">
-                     <pre ng-bind="modalLogBody">
-                     </pre>
+                     <div ng-repeat="logrow in modalLogBody track by $index">
+                        {{logrow}}
+                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -232,14 +251,14 @@
     <!-- END MODAL LOG VIEW -->
 
 
-    <div class="row hide">
+    <div class="row">
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
             <div class="dashboard-stat green-steel">
                 <div class="visual">
                     <i class="fa fa-shopping-cart"></i>
                 </div>
                 <div class="details">
-                    <div class="number"> 16 </div>
+                    <div class="number"> {{$root.stats.total.DEVICE_CHECKIN}} </div>
                     <div class="desc"> Device Check-ins </div>
                 </div>
                 <a class="more" href="#"> View more
@@ -253,7 +272,7 @@
                     <i class="fa fa-bar-chart-o"></i>
                 </div>
                 <div class="details">
-                    <div class="number"> 64 </div>
+                    <div class="number"> {{$root.stats.total.UPDATES}} </div>
                     <div class="desc"> Available Updates </div>
                 </div>
                 <a class="more" href="#"> View more
@@ -267,8 +286,8 @@
                     <i class="fa fa-comments"></i>
                 </div>
                 <div class="details">
-                    <div class="number"> 8 </div>
-                    <div class="desc"> Channels </div>
+                    <div class="number"> {{$root.stats.APIKEY_INVALID[0]}} </div>
+                    <div class="desc"> Errors </div>
                 </div>
                 <a class="more" href="#"> View more
                     <i class="m-icon-swapright m-icon-white"></i>
@@ -281,7 +300,7 @@
                     <i class="fa fa-globe"></i>
                 </div>
                 <div class="details">
-                    <div class="number"> 128 </div>
+                    <div class="number"> {{$root.stats.total.DEVICES}} </div>
                     <div class="desc"> Active Devices </div>
                 </div>
                 <a class="more" href="#"> View more
