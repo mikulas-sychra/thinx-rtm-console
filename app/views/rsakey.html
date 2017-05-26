@@ -45,13 +45,18 @@
                         <thead>
                             <tr class="uppercase">
                                 <th>
-                                    Alias / Fingerprint
+                                    Alias
+                                </th>
+                                <th>
+                                    Fingerprint
                                 </th>
                             </tr>
                         </thead>
                         <tr ng-repeat="rsakey in $root.rsaKeys" ng-click="checkItem(rsakey.fingerprint)" ng-class="selectedItems.indexOf(rsakey.fingerprint) > -1 ? 'selected-row' : 'default-row'">
                             <td>
-                                <div>{{rsakey.name}}</div>
+                                <div class="row-item-title">{{rsakey.name}}</div>
+                            </td>
+                            <td>
                                 <div class="monospace-red">{{rsakey.fingerprint}}</div>
                             </td>
                         </tr>

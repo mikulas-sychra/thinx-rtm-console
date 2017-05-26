@@ -126,7 +126,7 @@
 }
 
 .selected-row {
-	border-right: 10px solid red;
+	border-left: 10px solid red;
 }
 
 .selected-row:hover {
@@ -137,4 +137,8 @@
 
 .default-row:hover {
 	cursor: pointer;
+}
+
+.row-item-title {
+	font-size: 1.6em;
 }
