@@ -177,6 +177,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             });
 
     };
+    
 
     $scope.build = function(deviceUdid, sourceId, index) {
         console.log('-- building firmware for ' + deviceUdid + '/' + $rootScope.sources[sourceId].alias + ' --'); 
@@ -238,13 +239,19 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                 $scope.ws.onopen = function() {
                     console.log("Websocket connection estabilished.");
                     $scope.refreshLog();
+
+                    // open modal log for connection
+                    $('#logModal').modal('show');
                 };
                 $scope.ws.onmessage = function (message) {
-                    var msg = JSON.parse(message.data);
+                    
 
                     console.log('Received log message...');
 
-                    // console.log(msg);
+                    var msg = JSON.parse(message.data);
+                    
+                    console.log(msg);
+
                     // if (typeof(msg.notification) !== "undefined") {
                         // toastr.info(msg.notification.title, msg.notification.body, {timeOut: 5000})    
                         // $scope.modalLogBody.unshift(msg.notification.title + ": " + msg.notification.body);
@@ -293,16 +300,20 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
     function renderLogBody() {
         console.log("-- rendering modal log body --");
-        consolo.log($scope.modalLogId);
+
+        console.log($scope.modalLogId);
         console.log($scope.modalLogBody.length);
         console.log($scope.modalLogBody);
         $scope.$apply();
     }
 
     $scope.hasBuildId = function(index) {
-        if (typeof($rootScope.devices[index].lastBuildId) !== 'undefined' && 
-            $rootScope.devices[index].lastBuildId !== null) {
-            return true;
+        if (typeof($rootScope.devices[index].lastBuildId) !== 'undefined') {
+            if ($rootScope.devices[index].lastBuildId == null) {
+                return null;   
+            } else {
+                return true;
+            }
         }
         return false;
     }
@@ -401,16 +412,10 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             $scope.deviceUdid = $rootScope.devices[index].udid;
             $scope.deviceAlias = $rootScope.devices[index].alias;
         };
-
-        // reset log modal
-        $scope.modalLogBody = [];
-        $scope.modalLogId = null;
         
         console.log("scope vars");
         console.log($scope.deviceIndex);
         console.log($scope.deviceUdid);
-        console.log($scope.modalLogBody);
-        console.log($scope.modalLogId);
         console.log($scope.deviceAlias);
     }
 

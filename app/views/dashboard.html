@@ -25,7 +25,7 @@
         </h3>
         <a>Enroll your device</a>
         <p>
-            To start managing your first device via Thinx RTM Console you need to flash Vanilla Firmware with new API Key first.
+            To start managing your first device via THiNX RTM Console you need to flash Vanilla Firmware with new API Key first.
             <br><br>
             Si má uživatel nainstalovat platformio, příslušnej USB driver, a uploadnout si na svoje ESP8266 vanilla binárku
         </p>
@@ -128,7 +128,7 @@
                                         Last Seen
                                     </th>
                                     <th>
-                                        Actions
+                                        Build
                                     </th>
                                 </tr>
                             </thead>
@@ -138,6 +138,8 @@
                                 </td>
                                 <td>
                                     {{device.firmware}} 
+
+                                    <div ng-if="hasBuildId($index)"> {{device.lastBuildId | limitTo:8}}</div>
                                 </td>
                                 <td>
                                     {{device.mac}}
@@ -146,14 +148,15 @@
                                     {{device.lastupdate | lastSeen}}
                                 </td>
                                 <td>
-                                    <a class="btn btn-circle btn-icon-only btn-default" href="#" ng-if="hasSource($index)" ng-click="build(device.udid, device.source, $index); $event.stopPropagation()">
-                                        <i class="fa fa-cog"></i>
+                                    <a class="btn btn-circle btn-icon-only btn-default" href="#" ng-if="hasSource($index)" ng-click="build(device.udid, device.source, $index); $event.stopPropagation()" ng-hide="hasBuildId($index) == null">
+                                        <i class="fa fa-cogs"></i>
                                     </a>
+
+                                    <i ng-show="hasBuildId($index) == null" class="fa fa-spin fa-circle-o-notch"></i>
                                 
                                     <a class="btn btn-circle btn-icon-only btn-primary" ng-if="hasBuildId($index)" data-target="#logModal" data-target="#full-width" data-toggle="modal" ng-click="openBuildId(device.lastBuildId); $event.stopPropagation()">
                                         <i class="fa fa-eye"></i>
                                     </a>
-                                
                                 </td>
                             </tr>
                         </table>
@@ -236,8 +239,8 @@
                     <h4 class="modal-title">Build Log</h4>
                 </div>
                 <div class="modal-body">
-                     <div>
-                        {{modalLogBody | json}}
+                     <div ng-repeat="logrow in modalLogBody track by $index">
+                        {{logrow}}
                      </div>
                 </div>
                 <div class="modal-footer">
