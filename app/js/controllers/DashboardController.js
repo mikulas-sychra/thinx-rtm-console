@@ -196,10 +196,10 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
                         console.log(' --- save last build id: ' + response.build.id + ' ---');
 
+                        // prepare user metadata for particular device
                         if (typeof($rootScope.meta.builds[deviceUdid]) == "undefined") {
                             $rootScope.meta.builds[deviceUdid] = [];
                         };
-
                         $rootScope.meta.builds[deviceUdid].push(response.build.id);
                         $scope.$apply();
 
@@ -314,11 +314,11 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
     $scope.hasBuildId = function(deviceUdid) {
         if (typeof($rootScope.meta.builds[deviceUdid]) !== 'undefined') {
-            // if ($rootScope.meta.builds[deviceUdid] == null) {
-                // return null;   
-            // } else {
+            if ($rootScope.meta.builds[deviceUdid].length == 0) {
+                return null;   
+            } else {
                 return true;
-            // }
+            }
         }
         return false;
     }
