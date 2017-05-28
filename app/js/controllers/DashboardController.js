@@ -81,7 +81,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                 $rootScope.stats.total[prop] = propTotal;
             }
         } else {
-            console.log('Stats fetch error.');
+            console.err('Stats fetch error.');
         }
        
 

@@ -83,6 +83,14 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
         $rootScope.meta.builds = []; // for build id queues
     };
 
+    $rootScope.logoutMe = function () {
+        Thinx.getLogout()
+            .done(function(data) {
+                console.log(data);
+            })
+            .fail(error => console.log('Error:', error));
+    }
+
     function updateProfile(data) {
         var response = JSON.parse(data);
 

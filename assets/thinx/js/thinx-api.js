@@ -92,6 +92,9 @@ var Thinx = {
     getStats: function () {
         return getStats();
     },
+    getLogout: function () {
+        return getLogout();
+    }
 }
 
 function updateTimer() {
@@ -160,6 +163,19 @@ function detachRepository(deviceUdid) {
             udid: deviceUdid
         }), 
         dataType: 'json'
+    });
+}
+
+function getLogout() {
+    return $.ajax({
+        url: urlBase + '/logout',
+        type: 'GET',
+        success: function() {
+            console.log('SUCCESS');
+        }, 
+        error: function() {
+            console.log('ERROR');
+        }
     });
 }
 
@@ -409,8 +425,6 @@ function getBuildLog(buildId) {
 }
 
 function tailBuildLog(buildId) {
-
-
     return $.ajax({
         url: urlBase + '/user/logs/tail',
         type: 'POST',
