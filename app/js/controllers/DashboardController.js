@@ -223,7 +223,10 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             });
     };
 
-    $scope.showDeviceLastBuild = function(deviceUdid) {
+    $scope.showDeviceLastBuild = function(deviceUdid, event) {
+
+        event.stopPropagation();
+
         console.log('--- trying to show last build log for ' + deviceUdid);
 
         $scope.modalLogId = $rootScope.meta.builds[deviceUdid][$rootScope.meta.builds[deviceUdid].length - 1];
@@ -277,6 +280,8 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                };
             } else {
                 // websocket already open
+                $('#logModal').modal('show');
+
                 console.log("-- websocket status --");
                 console.log($scope.ws.readyState);
             }
@@ -312,10 +317,6 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
     $scope.hasBuildId = function(deviceUdid) {
         if (typeof($rootScope.meta.builds[deviceUdid]) !== 'undefined') {
-
-            console.log("has build id");
-            console.log($rootScope.meta.builds[deviceUdid]);
-
             if ($rootScope.meta.builds[deviceUdid].length == 0) {
                 return null;
             } else {
