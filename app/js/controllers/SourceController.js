@@ -141,10 +141,56 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
             });
 	};
 
+
+    function revokeSources(selectedItems) {
+        console.log('--deleting sources ' + selectedItems.length +'--')
+
+        Thinx.revokeSources(selectedItems)
+            .done(function(data) {
+                if (data.success) {
+                    toastr.success('Deleted.', 'THiNX RTM Console', {timeOut: 5000})
+                    console.log('Success:', data);
+
+                    // remove source from ui
+                    // clearFromRsaKeys(data.revoked);
+
+                } else {
+                    toastr.error('Revocation failed.', 'THiNX RTM Console', {timeOut: 5000})
+                }
+
+            })
+            .fail(function (error) {
+                // TODO throw error message
+                console.log('Error:', error)
+            });
+    };
+
+    $scope.revokeSources = function() {
+        console.log('-- processing selected items --');
+        console.log($scope.selectedItems);
+
+        var selectedToRemove = $scope.selectedItems.slice();
+
+        revokeSources(selectedToRemove);
+    };
+
+    $scope.checkItem = function(sourceId) {
+        console.log('### toggle item in selectedItems');
+        var index = $scope.selectedItems.indexOf(sourceId);
+        if (index > -1) {
+            console.log('splicing on ', index, ' value ', $scope.selectedItems[index]);
+            $scope.selectedItems.splice(index, 1);
+        } else {
+            $scope.selectedItems.push(sourceId);
+        }
+    }
+
     $scope.resetModal = function() {
         $scope.sourceAlias = null;
         $scope.sourceUrl = null;
         $scope.sourceBranch = null;
+
+        $scope.selectedItems = [];
     }
 
 }]);

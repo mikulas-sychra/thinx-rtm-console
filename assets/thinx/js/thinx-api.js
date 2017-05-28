@@ -42,6 +42,9 @@ var Thinx = {
     revokeSource: function (sourceId) {
         return revokeSource(sourceId);
     },
+    revokeSources: function (sourceIds) {
+        return revokeSources(sourceIds);
+    },
     // DEVICE
     deviceList: function () {
         return deviceList();
@@ -292,7 +295,28 @@ function revokeSource(sourceId) {
         dataType: 'json'
 	});
 }
-	
+
+function revokeSources(sourceIds) {
+    return $.ajax({
+        url: urlBase + '/user/source/revoke',
+        type: 'POST',
+        data: JSON.stringify({ sourceIds: sourceIds }), 
+        dataType: 'json'
+    });
+}
+
+function revokeRsakeys(fingerprints) {
+    console.log(fingerprints);
+
+    return $.ajax({
+        url: urlBase + '/user/rsakey/revoke',
+        type: 'POST',
+        data: JSON.stringify({ 
+            fingerprints: fingerprints
+        }), 
+        dataType: 'json'
+    });
+}	
 
 // Profile /user/profile
 //
