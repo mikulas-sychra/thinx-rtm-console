@@ -415,7 +415,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             $scope.deviceUdid = $rootScope.devices[index].udid;
             $scope.deviceAlias = $rootScope.devices[index].alias;
             if (typeof($rootScope.devices[index].source) !== 'undefinec' && $rootScope.devices[index].source != null) {
-                $scope.selectedSourceId = rootScope.devices[index].source;
+                $scope.selectedSourceId = $rootScope.devices[index].source;
             }
         };
         
