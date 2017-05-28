@@ -272,7 +272,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                };
                $scope.ws.onclose = function()
                {
-                  alert("Websocket connection is closed...");
+                  console.log("Websocket connection is closed...");
                };
             } else {
                 // websocket already open
