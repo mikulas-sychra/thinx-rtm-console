@@ -123,17 +123,25 @@
                              <tr ng-repeat="device in $root.devices track by device.udid" ng-click="resetModal($index)" class="default-row" data-target="#deviceModal" data-toggle="modal" style="background: none !important;">
                                 
                                 <td class="device-card">
-                                    <div class="table"  style="padding: 10px">
+                                    <div class="table"  style="padding: 10px; background: transparent;">
                                     <div class="row">
                                         <div class="col-md-8">
                                             
                                             <div><span class="green-haze device-alias">{{device.alias}}</span></div>
                                             <div class="device-lastseen">{{device.lastupdate | lastSeen}}</div>
-                                            <div class="device-firmware">
-                                                Firmware: {{device.firmware}} 
-                                            </div>
-                                            <div class="device-mac">
-                                                MAC: {{device.mac}} 
+                                            <div class="row">
+                                                <div class="col-sm-2">
+                                                    <div class="device-firmware">Firmware</div>
+                                                    <div class="device-mac">MAC</div>
+                                                </div>
+                                                <div class="col-sm-10">
+                                                    <div class="device-firmware">
+                                                        {{device.firmware}} 
+                                                    </div>
+                                                    <div class="device-mac">
+                                                        {{device.mac}} 
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -188,12 +196,14 @@
                                 <div class="col-md-9">
                                     <div class="input-group">
                                         <ui-select allow-clear 
-                                        ng-model="$root.devices[deviceIndex].source" theme="bootstrap" 
+                                        ng-model="selectedSourceId" theme="bootstrap" 
                                         on-select="attachRepository($select.selected.key, $root.devices[deviceIndex].udid)">
-                                            <ui-select-match placeholder="none">{{$select.selected.value.alias}}</ui-select-match>
-                                            <ui-select-choices repeat="(key, value) in $root.sources | filter: $select.search">
-                                                <div ng-bind-html="value.value.alias | highlight: $select.search"></div>
-                                                <div ng-bind-html="value.value.url | highlight: $select.search" class="monospace-dropdown"></div>
+                                            <ui-select-match placeholder="none">
+                                                {{$select.selected.value.alias}}
+                                            </ui-select-match>
+                                            <ui-select-choices repeat="(key, source) in $root.sources | filter: $select.search">
+                                                <div ng-bind-html="source.value.alias | highlight: $select.search"></div>
+                                                <div ng-bind-html="source.value.url | highlight: $select.search" class="monospace-dropdown"></div>
                                             </ui-select-choices>
                                         </ui-select>
                                         <span class="input-group-btn">
@@ -212,8 +222,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div>{{$root.devices[deviceIndex] | json}}</div>
-                            
                         </form>
                     </div>
                     <div class="modal-footer">

@@ -129,6 +129,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                         console.log(response);
 
                         $rootScope.devices[$scope.deviceIndex].source = response.attached;
+
                         $scope.$apply()
                         toastr.success('Repository Attached.', 'THiNX RTM Console', {timeOut: 5000})
                         
@@ -403,6 +404,8 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
     $scope.resetModal = function(index) {
         console.log('Resetting modal form values...');
 
+        $scope.selectedSourceId = null;
+
         if (typeof(index) == 'undefined') {
             $scope.deviceIndex = null;
             $scope.deviceUdid = null;
@@ -411,6 +414,9 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             $scope.deviceIndex = index;
             $scope.deviceUdid = $rootScope.devices[index].udid;
             $scope.deviceAlias = $rootScope.devices[index].alias;
+            if (typeof($rootScope.devices[index].source) !== 'undefinec' && $rootScope.devices[index].source != null) {
+                $scope.selectedSourceId = rootScope.devices[index].source;
+            }
         };
         
         console.log("scope vars");
