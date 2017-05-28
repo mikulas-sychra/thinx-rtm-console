@@ -115,12 +115,12 @@
                         <table class="table table-hover table-light">
                             <thead>
                                 <tr class="uppercase">
-                                    <th>
+                                    <th class="text-right">
                                         <!-- search -->
                                     </th>
                                 </tr>
                             </thead>
-                             <tr ng-repeat="device in $root.devices track by device.udid" ng-click="resetModal($index)" class="default-row" data-target="#deviceModal" data-toggle="modal" style="background: none !important;">
+                             <tr ng-repeat="device in $root.devices | filter:$root.searchText track by device.udid" ng-click="resetModal($index)" class="default-row" data-target="#deviceModal" data-toggle="modal" style="background: none !important;">
                                 
                                 <td class="device-card">
                                     <div class="table"  style="padding: 10px; background: transparent;">

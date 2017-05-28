@@ -56,6 +56,7 @@ MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
     };
 
     $rootScope.settings = settings;
+    $rootScope.searchText = "";
 
     return settings;
 }]);
