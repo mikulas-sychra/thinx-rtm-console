@@ -9,59 +9,7 @@
 <!-- END PAGE BREADCRUMB -->
 <!-- BEGIN MAIN CONTENT -->
 <div ng-controller="DashboardController">
-    <div class="note note-info" ng-hide="$root.profile.info.goals.includes('apikey')">
-        <h3>1. API Key
-            <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('apikey')"></span>
-        </h3>
-        <a ui-sref="apikey">Create your first API Key</a>
-        <p>
-            Enter API Keys Management
-        </p>
-        </span>
-    </div>
-    <div class="note note-info" ng-hide="$root.profile.info.goals.includes('enroll')">
-        <h3>2. Device Enrollment
-            <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('enroll')"></span>
-        </h3>
-        <a>Enroll your device</a>
-        <p>
-            To start managing your first device via THiNX RTM Console you need to flash Vanilla Firmware with new API Key first.
-            <br><br>
-            Si má uživatel nainstalovat platformio, příslušnej USB driver, a uploadnout si na svoje ESP8266 vanilla binárku
-        </p>
-        </span>
-    </div>
-    <div class="note note-info" ng-hide="$root.profile.info.goals.includes('enroll')">
-        <h3>3. Device Setup
-            <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('enroll-setup')"></span>
-        </h3>
-        <a>Connect your device to internet</a>
-        <p>
-            Na device se pak uživatel připojí jako na AP, zadá login do WiFi a API Key… a je to.
-            A mohla by mu přijít desktop notifikace, že se zaregistroval nový device.
-        </p>
-        </span>
-    </div>
-    <div class="note note-danger" ng-hide="$root.profile.info.goals.includes('rsakey')">
-        <h3>Security
-            <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('rsakey')"></span>
-        </h3>
-        <a ui-sref="rsakey">Add RSA Key</a>
-        <p>
-            Adding your public key will enable access to your private repositories.
-        </p>
-        </span>
-    </div>
-    <div class="note note-success" ng-hide="$root.profile.info.goals.includes('update')">
-        <h3>Well Done!
-            <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('update')"></span>
-        </h3>
-        <a>Update your device</a>
-        <p>
-            Ale na to musíme dořešit HTTPS.
-        </p>
-        </span>
-    </div>
+    
     <!-- BEGIN DASHBOARD STATS -->
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -173,6 +121,60 @@
             </div>
             <!-- END PORTLET-->
         </div>
+    </div>
+
+    <div class="note note-info" ng-hide="$root.profile.info.goals.includes('apikey')">
+        <h3>1. API Key
+            <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('apikey')"></span>
+        </h3>
+        <a ui-sref="apikey">Create your first API Key</a>
+        <p>
+            Enter API Keys Management
+        </p>
+        </span>
+    </div>
+    <div class="note note-info" ng-hide="$root.profile.info.goals.includes('enroll')">
+        <h3>2. Device Enrollment
+            <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('enroll')"></span>
+        </h3>
+        <a>Enroll your device</a>
+        <p>
+            To start managing your first device via THiNX RTM Console you need to flash Vanilla Firmware with new API Key first.
+            <br><br>
+            Si má uživatel nainstalovat platformio, příslušnej USB driver, a uploadnout si na svoje ESP8266 vanilla binárku
+        </p>
+        </span>
+    </div>
+    <div class="note note-info" ng-hide="$root.profile.info.goals.includes('enroll')">
+        <h3>3. Device Setup
+            <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('enroll-setup')"></span>
+        </h3>
+        <a>Connect your device to internet</a>
+        <p>
+            Na device se pak uživatel připojí jako na AP, zadá login do WiFi a API Key… a je to.
+            A mohla by mu přijít desktop notifikace, že se zaregistroval nový device.
+        </p>
+        </span>
+    </div>
+    <div class="note note-danger" ng-hide="$root.profile.info.goals.includes('rsakey')">
+        <h3>Security
+            <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('rsakey')"></span>
+        </h3>
+        <a ui-sref="rsakey">Add RSA Key</a>
+        <p>
+            Adding your public key will enable access to your private repositories.
+        </p>
+        </span>
+    </div>
+    <div class="note note-success" ng-hide="$root.profile.info.goals.includes('update')">
+        <h3>Well Done!
+            <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('update')"></span>
+        </h3>
+        <a>Update your device</a>
+        <p>
+            Ale na to musíme dořešit HTTPS.
+        </p>
+        </span>
     </div>
 
 
