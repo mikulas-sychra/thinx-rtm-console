@@ -147,17 +147,19 @@
 
                                         <div class="col-md-4 text-right">
 
-                                             <a class="btn btn-circle icon-button btn-icon-only btn-default" href="#" ng-if="hasSource($index)" ng-click="build(device.udid, device.source, $index); $event.stopPropagation()" ng-hide="hasBuildId($index) == null">
-                                                <i class="fa fa-cogs"></i>
-                                            </a>
-
                                             <span ng-if="hasBuildId(device.udid)">
-                                                <i ng-show="hasBuildId(device.udid) == null" class="fa fa-spin fa-circle-o-notch"></i>
-                                        
                                                 <a class="btn btn-circle btn-icon-only btn-default"  data-target="#logModal" data-target="#full-width" data-toggle="modal" ng-click="showDeviceLastBuild(device.udid); $event.stopPropagation()">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
                                             </span> 
+
+                                            <span ng-if="hasBuildId(device.udid) == null" ng-disabled="true" class="btn btn-circle">
+                                                <i class="fa fa-spin fa-circle-o-notch"></i>
+                                            </span>
+
+                                             <a class="btn btn-circle icon-button btn-icon-only btn-default" href="#" ng-if="hasSource($index)" ng-click="build(device.udid, device.source, $index); $event.stopPropagation()" ng-hide="hasBuildId($index) == null">
+                                                <i class="fa fa-cogs"></i>
+                                            </a>
 
                                         </div>
                                     </div>

@@ -185,6 +185,10 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
         var dryrun = true;
 
+        if (typeof($rootScope.meta.builds[deviceUdid]) == "undefined") {
+            $rootScope.meta.builds[deviceUdid] = [];
+        };
+
         Thinx.build(deviceUdid, sourceId, dryrun)
             .done(function(response) {
 
@@ -198,9 +202,6 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                         console.log(' --- save last build id: ' + response.build.id + ' ---');
 
                         // prepare user metadata for particular device
-                        if (typeof($rootScope.meta.builds[deviceUdid]) == "undefined") {
-                            $rootScope.meta.builds[deviceUdid] = [];
-                        };
                         $rootScope.meta.builds[deviceUdid].push(response.build.id);
                         $scope.$apply();
 
@@ -311,8 +312,12 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
     $scope.hasBuildId = function(deviceUdid) {
         if (typeof($rootScope.meta.builds[deviceUdid]) !== 'undefined') {
+
+            console.log("has build id");
+            console.log($rootScope.meta.builds[deviceUdid]);
+
             if ($rootScope.meta.builds[deviceUdid].length == 0) {
-                return null;   
+                return null;
             } else {
                 return true;
             }
