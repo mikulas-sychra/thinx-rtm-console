@@ -225,7 +225,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
     $scope.showDeviceLastBuild = function(deviceUdid) {
         console.log('--- trying to show last build log for ' + deviceUdid);
 
-        $scope.modalLogId = $rootScope.meta.builds[deviceUdid][0];
+        $scope.modalLogId = $rootScope.meta.builds[deviceUdid][$rootScope.meta.builds[deviceUdid].length - 1];
         OpenWebSocket($scope.modalLogId);
     }
 
