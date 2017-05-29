@@ -17,7 +17,6 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             })
             .fail(error => console.log('Error:', error));
 
-        $scope.deviceIndex = null;
         $scope.deviceUdid = null;
         $scope.deviceAlias = null;
         $scope.modalLogBody = [];
@@ -124,10 +123,14 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                         console.log("-- attach success --");
                         console.log(response);
 
-                        $scope.selectedSourceId = response.attached;
-                        $rootScope.devices[$scope.deviceIndex].source = response.attached;
+                        for (index in $rootScope.devices) {
+                            if ($rootScope.devices[index].udid == deviceUdid) {
+                                $rootScope.devices[index].source = response.attached;
+                                $scope.selectedSource = $rootScope.sources[response.attached];
+                            }
+                        }
 
-                        $scope.$apply()
+                        $scope.$apply();
                         toastr.success('Repository Attached.', 'THiNX RTM Console', {timeOut: 5000})
                         
                     } else {
@@ -157,12 +160,12 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                     if (response.success) {
                         console.log(response);
 
-                        for (deviceIndex in $rootScope.devices) {
-                            if ($rootScope.devices[deviceIndex].udid == deviceUdid) {
-                                $rootScope.devices[deviceIndex].source = null;
+                        for (index in $rootScope.devices) {
+                            if ($rootScope.devices[index].udid == deviceUdid) {
+                                $rootScope.devices[index].source = null;
                             }
                         }
-                        $scope.selectedSourceId = null;
+                        $scope.selectedSource = null;
                         
                         toastr.success('Repository Detached.', 'THiNX RTM Console', {timeOut: 5000})
                         $scope.$apply()
@@ -332,7 +335,14 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
     $scope.changeDeviceAlias = function() {
 
-        if ($scope.deviceAlias == $rootScope.devices[$scope.deviceIndex].alias) {
+        for (index in $rootScope.devices) {
+            if ($rootScope.devices[index].udid == $scope.deviceUdid) {
+                var device = $rootScope.devices[index];
+            }
+        }
+
+
+        if ($scope.deviceAlias == device.alias) {
             console.log('-- no changes, closing dialog --');
             $('#deviceModal').modal('hide');
             return;
@@ -406,25 +416,23 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
     $scope.resetModal = function(index) {
         console.log('Resetting modal form values...');
 
-        if (typeof(index) == 'undefined') {
-            $scope.deviceIndex = null;
-            $scope.deviceUdid = null;
-            $scope.deviceAlias = null;
+        
+        $scope.deviceUdid = $rootScope.devices[index].udid;
+        $scope.deviceAlias = $rootScope.devices[index].alias;
+
+
+        console.log('setting source');
+        if (typeof($rootScope.devices[index].source) !== 'undefined' 
+            && $rootScope.devices[index].source != null) {
+            console.log('source');
+            $scope.selectedSource = $rootScope.sources[$rootScope.devices[index].source];
         } else {
-            $scope.deviceIndex = index;
-            $scope.deviceUdid = $rootScope.devices[index].udid;
-            $scope.deviceAlias = $rootScope.devices[index].alias;
-            if (typeof($rootScope.devices[index].source) !== 'undefined' 
-                && $rootScope.devices[index].source != null) {
-                $scope.selectedSourceId = $rootScope.devices[index].source;
-            } else {
-                $scope.selectedSourceId = null;
-            }
-        };
+            console.log('null');
+            $scope.selectedSource = null;
+        }
         
         console.log("scope vars");
-        console.log("selectedSourceId", $scope.selectedSourceId);
-        console.log("deviceIndex", $scope.deviceIndex);
+        console.log("selectedSource", $scope.selectedSource);
         console.log("deviceUdid", $scope.deviceUdid);
         console.log("deviceAlias", $scope.deviceAlias);
     }
