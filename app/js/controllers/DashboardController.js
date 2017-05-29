@@ -234,6 +234,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
         console.log('--- trying to show last build log for ' + deviceUdid);
 
         $scope.modalLogId = $rootScope.meta.builds[deviceUdid][$rootScope.meta.builds[deviceUdid].length - 1];
+        $scope.modalLogBody = [];
         OpenWebSocket($scope.modalLogId);
     }
 
@@ -253,30 +254,28 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
                 $scope.ws.onopen = function() {
                     console.log("Websocket connection estabilished.");
-                    $scope.refreshLog();
-
-                    // open modal log for connection
-                    $('#logModal').modal('show');
                 };
                 $scope.ws.onmessage = function (message) {
-                    console.log('Received log message...');
+                    console.log('Received message...');
 
                     var msg = JSON.parse(message.data);
                     console.log(msg);
 
-                    // if (typeof(msg.notification) !== "undefined") {
-                        // toastr.info(msg.notification.title, msg.notification.body, {timeOut: 5000})    
+                    if (typeof(msg.notification) !== "undefined") {
+                        console.log('Notification:');
+                        console.log(msg.notification);
+                        toastr.info(msg.notification.title, msg.notification.body, {timeOut: 5000})    
                         // $scope.modalLogBody.unshift(msg.notification.title + ": " + msg.notification.body);
-                    // }
-
-                    if (typeof(msg.log) !== "undefined") {
-                        console.log('Received log message');
-                        console.log(msg.log);
-                        $scope.modalLogBody.push(msg.log.message);
-                        $scope.$apply();
                     }
 
-                    renderLogBody();
+                    if (typeof(msg.log) !== "undefined") {
+                        console.log('Log:');
+                        console.log(msg.log);
+                        $scope.modalLogBody.push(msg.log.message);
+                    }
+
+                    $scope.$apply();
+                    $('#logModal').modal('show');
                };
                $scope.ws.onclose = function()
                {
@@ -284,10 +283,11 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                };
             } else {
                 // websocket already open
-                $('#logModal').modal('show');
-
                 console.log("-- websocket status --");
                 console.log($scope.ws.readyState);
+
+                 $scope.refreshLog();
+                 $('#logModal').modal('show');
             }
 
         } else {
@@ -297,7 +297,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
     }
 
     $scope.refreshLog = function() {
-        console.log('-- refresh log: ', $scope.modalLogId)
+        console.log('-- refreshing log: ', $scope.modalLogId)
 
          var message = {
             logtail: {
@@ -310,14 +310,6 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
         $scope.ws.send(JSON.stringify(message));
     }
 
-    function renderLogBody() {
-        console.log("-- rendering modal log body --");
-
-        console.log($scope.modalLogId);
-        console.log($scope.modalLogBody.length);
-        console.log($scope.modalLogBody);
-        $scope.$apply();
-    }
 
     $scope.hasBuildId = function(deviceUdid) {
         if (typeof($rootScope.meta.builds[deviceUdid]) !== 'undefined') {
@@ -431,7 +423,6 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
         };
         
         console.log("scope vars");
-
         console.log("selectedSourceId", $scope.selectedSourceId);
         console.log("deviceIndex", $scope.deviceIndex);
         console.log("deviceUdid", $scope.deviceUdid);
