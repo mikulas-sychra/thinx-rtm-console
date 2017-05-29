@@ -157,9 +157,14 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                     if (response.success) {
                         console.log(response);
 
+                        for (deviceIndex in $rootScope.devices) {
+                            if ($rootScope.devices[deviceIndex].udid == deviceUdid) {
+                                $rootScope.devices[deviceIndex].source = null;
+                            }
+                        }
                         $scope.selectedSourceId = null;
+                        
                         toastr.success('Repository Detached.', 'THiNX RTM Console', {timeOut: 5000})
-                        $root.devices[$scope.deviceIndex].source = null;
                         $scope.$apply()
                         
                     } else {
@@ -426,9 +431,11 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
         };
         
         console.log("scope vars");
-        console.log($scope.deviceIndex);
-        console.log($scope.deviceUdid);
-        console.log($scope.deviceAlias);
+
+        console.log("selectedSourceId", $scope.selectedSourceId);
+        console.log("deviceIndex", $scope.deviceIndex);
+        console.log("deviceUdid", $scope.deviceUdid);
+        console.log("deviceAlias", $scope.deviceAlias);
     }
 
 });

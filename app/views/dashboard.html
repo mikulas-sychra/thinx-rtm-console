@@ -71,7 +71,7 @@
                                     [{{selectedSourceId}}]
                                 </tr>
                             </thead>
-                             <tr ng-repeat="device in $root.devices | filter:$root.searchText track by device.udid" ng-click="resetModal($index)" class="default-row" data-target="#deviceModal" data-toggle="modal" style="background: none !important;">
+                             <tr ng-repeat="device in $root.devices | filter:$root.searchText" ng-click="resetModal($index)" class="default-row" data-target="#deviceModal" data-toggle="modal" style="background: none !important;">
                                 
                                 <td class="device-card">
                                     <div class="table"  style="padding: 10px; background: transparent;">
@@ -249,7 +249,9 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                         <h4 class="modal-title">Device</h4>
                     </div>
-                    [{{selectedSourceId}}]
+                    [deviceIndex {{deviceIndex}}]
+                    <br>
+                    [selectedSourceId {{selectedSourceId}}]
                     <div class="modal-body">
                          <form action="#" class="form-horizontal">
                             <div class="form-group">
@@ -274,7 +276,7 @@
                                             </ui-select-choices>
                                         </ui-select>
                                         <span class="input-group-btn">
-                                            <button type="button" ng-click="detachRepository($root.devices[deviceIndex].udid)" class="btn btn-default">
+                                            <button type="button" ng-click="detachRepository(deviceUdid)" class="btn btn-default">
                                                 <span class="fa fa-chain-broken"></span>
                                             </button>
                                         </span>
@@ -285,7 +287,7 @@
                                 <label class="control-label col-md-3">MQTT Channel</label>
                                 <div class="col-md-9">
                                     <div class="input-group">
-                                        <label class="control-label">/thinx/device/{{$root.devices[deviceIndex].udid}}</label>
+                                        <label class="control-label">/thinx/device/{{deviceUdid}}</label>
                                     </div>
                                 </div>
                             </div>
