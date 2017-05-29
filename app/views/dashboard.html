@@ -68,6 +68,7 @@
                                         <button class="btn btn-small btn-default" ng-click="$root.logoutMe()"> Test Invalid Session</button>
 
                                     </th>
+                                    [{{selectedSourceId}}]
                                 </tr>
                             </thead>
                              <tr ng-repeat="device in $root.devices | filter:$root.searchText track by device.udid" ng-click="resetModal($index)" class="default-row" data-target="#deviceModal" data-toggle="modal" style="background: none !important;">
@@ -122,6 +123,65 @@
                 </div>
             </div>
             <!-- END PORTLET-->
+        </div>
+    </div>
+
+     <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="dashboard-stat green-steel">
+                <div class="visual">
+                    <i class="fa fa-shopping-cart"></i>
+                </div>
+                <div class="details">
+                    <div class="number"> {{$root.stats.total.DEVICE_CHECKIN}} </div>
+                    <div class="desc"> Device Check-ins </div>
+                </div>
+                <a class="more" href="#"> View more
+                    <i class="m-icon-swapright m-icon-white"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="dashboard-stat green-seagreen">
+                <div class="visual">
+                    <i class="fa fa-bar-chart-o"></i>
+                </div>
+                <div class="details">
+                    <div class="number"> {{$root.stats.total.UPDATES}} </div>
+                    <div class="desc"> Available Updates </div>
+                </div>
+                <a class="more" href="#"> View more
+                    <i class="m-icon-swapright m-icon-white"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="dashboard-stat green-meadow">
+                <div class="visual">
+                    <i class="fa fa-comments"></i>
+                </div>
+                <div class="details">
+                    <div class="number"> {{$root.stats.APIKEY_INVALID[0]}} </div>
+                    <div class="desc"> Errors </div>
+                </div>
+                <a class="more" href="#"> View more
+                    <i class="m-icon-swapright m-icon-white"></i>
+                </a>
+            </div>
+        </div> 
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="dashboard-stat green-jungle">
+                <div class="visual">
+                    <i class="fa fa-globe"></i>
+                </div>
+                <div class="details">
+                    <div class="number"> {{$root.stats.total.DEVICES}} </div>
+                    <div class="desc"> Active Devices </div>
+                </div>
+                <a class="more" href="#"> View more
+                    <i class="m-icon-swapright m-icon-white"></i>
+                </a>
+            </div>
         </div>
     </div>
 
@@ -189,6 +249,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                         <h4 class="modal-title">Device</h4>
                     </div>
+                    [{{selectedSourceId}}]
                     <div class="modal-body">
                          <form action="#" class="form-horizontal">
                             <div class="form-group">
@@ -224,7 +285,7 @@
                                 <label class="control-label col-md-3">MQTT Channel</label>
                                 <div class="col-md-9">
                                     <div class="input-group">
-                                        /thinx/device/{{$root.devices[deviceIndex].udid}}
+                                        <label class="control-label">/thinx/device/{{$root.devices[deviceIndex].udid}}</label>
                                     </div>
                                 </div>
                             </div>
@@ -263,66 +324,6 @@
         </div>
     </div>
     <!-- END MODAL LOG VIEW -->
-
-
-    <div class="row">
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-            <div class="dashboard-stat green-steel">
-                <div class="visual">
-                    <i class="fa fa-shopping-cart"></i>
-                </div>
-                <div class="details">
-                    <div class="number"> {{$root.stats.total.DEVICE_CHECKIN}} </div>
-                    <div class="desc"> Device Check-ins </div>
-                </div>
-                <a class="more" href="#"> View more
-                    <i class="m-icon-swapright m-icon-white"></i>
-                </a>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-            <div class="dashboard-stat green-seagreen">
-                <div class="visual">
-                    <i class="fa fa-bar-chart-o"></i>
-                </div>
-                <div class="details">
-                    <div class="number"> {{$root.stats.total.UPDATES}} </div>
-                    <div class="desc"> Available Updates </div>
-                </div>
-                <a class="more" href="#"> View more
-                    <i class="m-icon-swapright m-icon-white"></i>
-                </a>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-            <div class="dashboard-stat green-meadow">
-                <div class="visual">
-                    <i class="fa fa-comments"></i>
-                </div>
-                <div class="details">
-                    <div class="number"> {{$root.stats.APIKEY_INVALID[0]}} </div>
-                    <div class="desc"> Errors </div>
-                </div>
-                <a class="more" href="#"> View more
-                    <i class="m-icon-swapright m-icon-white"></i>
-                </a>
-            </div>
-        </div> 
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-            <div class="dashboard-stat green-jungle">
-                <div class="visual">
-                    <i class="fa fa-globe"></i>
-                </div>
-                <div class="details">
-                    <div class="number"> {{$root.stats.total.DEVICES}} </div>
-                    <div class="desc"> Active Devices </div>
-                </div>
-                <a class="more" href="#"> View more
-                    <i class="m-icon-swapright m-icon-white"></i>
-                </a>
-            </div>
-        </div>
-    </div>
 
     <div class="row hide">
         <div class="col-md-12 col-sm-12">

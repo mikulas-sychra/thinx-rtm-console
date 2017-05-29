@@ -39,11 +39,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
     function updateStats(data) {
 
-        var response = JSON.parse(data);
-
-        console.log("stats data");
-        console.log(response);
-
+        // sparkline stats defaults
         $rootScope.stats = {
             // ID: [],
             // APIKEY_INVALID: [],
@@ -58,16 +54,10 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             // BUILD_FAIL: []
         };
 
-        $rootScope.stats.total = {
-            CHANNELS: 0,
-            DEVICES: 0,
-            UPDATES: 0
-        };
+        var response = JSON.parse(data);
 
-        if(typeof($rootScope.devices) !== 'undefined') {
-            $rootScope.stats.total.DEVICES = $rootScope.devices.length;
-        }
-
+        console.log("stats data");
+        console.log(response);
        
         console.log('-- iterating over stats --');
         if (typeof(data.stats) == 'Object') {
@@ -81,16 +71,22 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                 $rootScope.stats.total[prop] = propTotal;
             }
         } else {
-            console.err('Stats fetch error.');
+            console.log('Stats fetch error.');
         }
-       
 
-        console.log('test stats:');
-        console.log($rootScope.stats);
-
-        // TODO check if proper stats were returned
-        if (response.stats !== 'no_data') {
+        if (response.success) {
             $rootScope.stats = response.stats;
+        }
+        
+        // boxes stats defaults
+        $rootScope.stats.total = {
+            CHANNELS: 0,
+            DEVICES: 0,
+            UPDATES: 0
+        };
+
+        if(typeof($rootScope.devices) !== 'undefined') {
+            $rootScope.stats.total.DEVICES = $rootScope.devices.length;
         }
 
         $("#sparkline_bar").sparkline($rootScope.stats.DEVICE_CHECKIN, {
@@ -111,7 +107,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             negBarColor: '#1ba39c'
         });
 
-        $scope.$apply()
+        $scope.$apply();
 
         console.log('stats:');
         console.log($rootScope.stats);
@@ -128,6 +124,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                         console.log("-- attach success --");
                         console.log(response);
 
+                        $scope.selectedSourceId = response.attached;
                         $rootScope.devices[$scope.deviceIndex].source = response.attached;
 
                         $scope.$apply()
@@ -159,6 +156,8 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                 if (typeof(response) !== 'undefined') {
                     if (response.success) {
                         console.log(response);
+
+                        $scope.selectedSourceId = null;
                         toastr.success('Repository Detached.', 'THiNX RTM Console', {timeOut: 5000})
                         $root.devices[$scope.deviceIndex].source = null;
                         $scope.$apply()
@@ -410,8 +409,6 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
     $scope.resetModal = function(index) {
         console.log('Resetting modal form values...');
 
-        $scope.selectedSourceId = null;
-
         if (typeof(index) == 'undefined') {
             $scope.deviceIndex = null;
             $scope.deviceUdid = null;
@@ -420,8 +417,11 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             $scope.deviceIndex = index;
             $scope.deviceUdid = $rootScope.devices[index].udid;
             $scope.deviceAlias = $rootScope.devices[index].alias;
-            if (typeof($rootScope.devices[index].source) !== 'undefinec' && $rootScope.devices[index].source != null) {
+            if (typeof($rootScope.devices[index].source) !== 'undefined' 
+                && $rootScope.devices[index].source != null) {
                 $scope.selectedSourceId = $rootScope.devices[index].source;
+            } else {
+                $scope.selectedSourceId = null;
             }
         };
         
