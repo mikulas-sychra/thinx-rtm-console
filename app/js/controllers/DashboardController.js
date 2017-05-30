@@ -40,55 +40,53 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
         // sparkline stats defaults
         $rootScope.stats = {
-            // ID: [],
-            // APIKEY_INVALID: [],
-            // PASSWORD_INVALID: [],
-            // APIKEY_MISUSE: [],
-            DEVICE_NEW: [5,4,3,2,1,1,2,3,4,5],
-            DEVICE_CHECKIN: [1,2,3,4,5,5,4,3,2,1],
-            // DEVICE_UPDATE_OK: [],
-            // DEVICE_UPDATE_FAIL: [],
-            // BUILD_STARTED: [],
-            // BUILD_SUCCESS: [],
-            // BUILD_FAIL: []
+            daily: {
+                // ID: [],
+                // APIKEY_INVALID: [],
+                // PASSWORD_INVALID: [],
+                // APIKEY_MISUSE: [],
+                DEVICE_NEW: [5,4,3,2,1,1,2,3,4,5],
+                DEVICE_CHECKIN: [1,2,3,4,5,5,4,3,2,1],
+                // DEVICE_UPDATE_OK: [],
+                // DEVICE_UPDATE_FAIL: [],
+                // BUILD_STARTED: [],
+                // BUILD_SUCCESS: [],
+                // BUILD_FAIL: []
+            },
+            total: {
+                CHANNELS: 0,
+                DEVICES: 0,
+                UPDATES: 0
+            }
         };
 
         var response = JSON.parse(data);
 
         console.log("stats data");
         console.log(response);
-       
-        console.log('-- iterating over stats --');
-        if (typeof(data.stats) == 'Object') {
-            for (var prop in data.stats) {
+
+        if (response.success) {
+            $rootScope.stats.daily = response.stats;
+            
+            console.log('-- iterating over stats --');
+            console.log(response.stats);
+
+            for (var prop in $rootScope.stats.daily) {
                 var propTotal = 0;
-                for (var i = 0; i < $rootScope.stats[prop].length; i++) {
-                    console.log("Looping: prop ", prop, "item", $rootScope.stats[prop][i]);
-                    propTotal = propTotal + parseInt($rootScope.stats[prop][i]);
-                    console.log('adding', $rootScope.stats[prop][i], 'to', prop)
+                for (var i = 0; i < $rootScope.stats.daily[prop].length; i++) {
+                    console.log("Looping: prop ", prop, "item", $rootScope.stats.daily[prop][i]);
+                    propTotal = propTotal + parseInt($rootScope.stats.daily[prop][i]);
+                    console.log('adding', $rootScope.stats.daily[prop][i], 'to', prop)
                 }
                 $rootScope.stats.total[prop] = propTotal;
             }
-        } else {
-            console.log('Stats fetch error.');
         }
-
-        if (response.success) {
-            $rootScope.stats = response.stats;
-        }
-        
-        // boxes stats defaults
-        $rootScope.stats.total = {
-            CHANNELS: 0,
-            DEVICES: 0,
-            UPDATES: 0
-        };
 
         if(typeof($rootScope.devices) !== 'undefined') {
             $rootScope.stats.total.DEVICES = $rootScope.devices.length;
         }
 
-        $("#sparkline_bar").sparkline($rootScope.stats.DEVICE_CHECKIN, {
+        $("#sparkline_bar").sparkline($rootScope.stats.daily.DEVICE_CHECKIN, {
             type: 'bar',
             width: '100',
             barWidth: 5,
@@ -97,7 +95,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             negBarColor: '#29b4b6'
         });
 
-        $("#sparkline_bar2").sparkline($rootScope.stats.DEVICE_NEW, {
+        $("#sparkline_bar2").sparkline($rootScope.stats.daily.DEVICE_NEW, {
             type: 'bar',
             width: '100',
             barWidth: 5,
@@ -125,14 +123,16 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
                         for (index in $rootScope.devices) {
                             if ($rootScope.devices[index].udid == deviceUdid) {
+
+                                console.log('updating device source...');    
                                 $rootScope.devices[index].source = response.attached;
+                                console.log('updating modal selectedSource...');    
                                 $scope.selectedSource = $rootScope.sources[response.attached];
+                                $scope.$apply();
                             }
                         }
 
-                        $scope.$apply();
                         toastr.success('Repository Attached.', 'THiNX RTM Console', {timeOut: 5000})
-                        
                     } else {
                         console.log(response);
                         toastr.error('Attach Failed.', 'THiNX RTM Console', {timeOut: 5000})
@@ -194,7 +194,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
         if (typeof($rootScope.meta.builds[deviceUdid]) == "undefined") {
             $rootScope.meta.builds[deviceUdid] = [];
-        };
+        }
 
         Thinx.build(deviceUdid, sourceId, dryrun)
             .done(function(response) {
@@ -341,8 +341,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             }
         }
 
-
-        if ($scope.deviceAlias == device.alias) {
+        if (typeof(device) !== "undefined" && device.alias == $scope.deviceAlias) {
             console.log('-- no changes, closing dialog --');
             $('#deviceModal').modal('hide');
             return;
