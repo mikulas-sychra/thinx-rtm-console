@@ -119,7 +119,7 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
     if (typeof($rootScope.meta) == "undefined") {
         $rootScope.meta = {};
         $rootScope.meta.builds = []; // for build id queues
-    };
+    }
 
     $rootScope.logoutMe = function () {
         Thinx.getLogout()
@@ -233,26 +233,7 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
                 updateBuildLogList(data);
             })
             .fail(error => console.log('Error:', error));
-
-    
-
-    
-    var counter = 30;
-    function autoUpdater() {
-        counter--;
-        if (counter == 0) {
-            counter = 30;
-            console.log("Refreshing data in " + counter + " seconds...");
-
-            getProfile()
-                .done(function(data) {
-                    updateProfile(data);
-                })
-                .fail(error => console.log('Error:', error));
-        }
-        setTimeout(autoUpdater, 2000);
-    }
-    // autoUpdater();
+            
 
     function registerNotification() {
         $webNotification.showNotification('Wohoo!', {
