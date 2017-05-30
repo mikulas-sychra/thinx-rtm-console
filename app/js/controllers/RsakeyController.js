@@ -9,7 +9,7 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
         $rootScope.settings.layout.pageBodySolid = false;
         $rootScope.settings.layout.pageSidebarClosed = false;
 
-        var jqxhr = Thinx.rsakeyList()
+        Thinx.rsakeyList()
 	        .done( function(data) {
 	        	updateKeys(data)
 	        })

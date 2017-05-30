@@ -20,8 +20,8 @@ angular.module('MetronicApp').controller('ApikeyController', ['$rootScope', '$sc
     });
 
     function updateKeys(data) {
-        var data = JSON.parse(data);
-		$rootScope.apiKeys = data.api_keys;
+        var response = JSON.parse(data);
+		$rootScope.apiKeys = response.api_keys;
 		$scope.$apply()
 
         console.log('keys:');

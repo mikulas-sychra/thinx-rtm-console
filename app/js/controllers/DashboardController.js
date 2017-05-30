@@ -121,7 +121,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                         console.log("-- attach success --");
                         console.log(response);
 
-                        for (index in $rootScope.devices) {
+                        for (var index in $rootScope.devices) {
                             if ($rootScope.devices[index].udid == deviceUdid) {
 
                                 console.log('updating device source...');    
@@ -160,7 +160,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                     if (response.success) {
                         console.log(response);
 
-                        for (index in $rootScope.devices) {
+                        for (var index in $rootScope.devices) {
                             if ($rootScope.devices[index].udid == deviceUdid) {
                                 $rootScope.devices[index].source = null;
                             }
@@ -295,7 +295,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
         } else {
            // The browser doesn't support WebSocket
-           alert("WebSocket NOT supported by your Browser!");
+           toastr.error("Error", "WebSocket NOT supported by your Browser!", {timeOut: 5000})    
         }
     }
 
@@ -335,7 +335,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
     $scope.changeDeviceAlias = function() {
 
-        for (index in $rootScope.devices) {
+        for (var index in $rootScope.devices) {
             if ($rootScope.devices[index].udid == $scope.deviceUdid) {
                 var device = $rootScope.devices[index];
             }

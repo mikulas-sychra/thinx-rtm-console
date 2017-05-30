@@ -45,7 +45,7 @@ angular.module('MetronicApp').controller('UserProfileController', function($root
     console.log($rootScope.profile);
     
     console.log('-- sending data --'); 
-    var jqxhrProfile = Thinx.changeProfile($rootScope.profile)
+    Thinx.changeProfile($rootScope.profile)
             .done(function(response) {
 
                 if (typeof(response) !== 'undefined') {

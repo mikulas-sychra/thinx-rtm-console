@@ -199,16 +199,7 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
         }
         
     }
-
-    function updateBuildLog(data) {
-        var response = JSON.parse(data);
-
-        $rootScope.buildlog = response.logs;
-        $scope.$apply()
-
-        console.log('buildlog:');
-        console.log($rootScope.buildlog);
-    }
+    
     
     Thinx.getProfile()
             .done(function(data) {
