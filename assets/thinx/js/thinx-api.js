@@ -26,9 +26,6 @@ var Thinx = {
     addRsakey: function (rsakeyName, rsakeyValue) {
         return addRsakey(rsakeyName, rsakeyValue);
     },
-    revokeRsakey: function (fingerprint) {
-        return revokeRsakey(fingerprint);
-    },
     revokeRsakeys: function (fingerprints) {
         return revokeRsakeys(fingerprints);
     },

@@ -107,7 +107,7 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
                 $scope.sourceAlias = projectName[0];
             }
         }
-    }
+    };
 
 	$scope.revokeSource = function(sourceId, index) {
 
@@ -141,7 +141,6 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
             });
 	};
 
-
     function revokeSources(selectedItems) {
         console.log('--deleting sources ' + selectedItems.length +'--')
 
@@ -163,7 +162,7 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
                 // TODO throw error message
                 console.log('Error:', error)
             });
-    };
+    }
 
     $scope.revokeSources = function() {
         console.log('-- processing selected items --');
@@ -183,7 +182,7 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
         } else {
             $scope.selectedItems.push(sourceId);
         }
-    }
+    };
 
     $scope.resetModal = function() {
         $scope.sourceAlias = null;
@@ -191,6 +190,6 @@ angular.module('MetronicApp').controller('SourceController', ['$rootScope', '$sc
         $scope.sourceBranch = null;
 
         $scope.selectedItems = [];
-    }
+    };
 
 }]);
