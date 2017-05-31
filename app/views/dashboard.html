@@ -81,15 +81,19 @@
                                             <div class="device-lastseen">{{device.lastupdate | lastSeen}}</div>
                                             <div class="row">
                                                 <div class="col-sm-2">
-                                                    <div class="device-firmware">Firmware</div>
                                                     <div class="device-mac">MAC</div>
+                                                    <div class="device-firmware">Firmware</div>
+                                                    <div class="device-firmware">Source</div>
                                                 </div>
                                                 <div class="col-sm-10">
+                                                    <div class="device-mac">
+                                                        {{device.mac}} 
+                                                    </div>
                                                     <div class="device-firmware">
                                                         {{device.firmware}} 
                                                     </div>
-                                                    <div class="device-mac">
-                                                        {{device.mac}} 
+                                                    <div ng-if="typeof(device.source) !== 'undefined'" class="device-firmware">
+                                                        {{$root.sources[device.source].alias}} 
                                                     </div>
                                                 </div>
                                             </div>
