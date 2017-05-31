@@ -17,9 +17,9 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             })
             .fail(error => console.log('Error:', error));
 
+        $scope.deviceIndex = null;
         $scope.deviceUdid = null;
         $scope.deviceAlias = null;
-        $scope.selectedSource = null;
         $scope.modalLogBody = "";
     });
 
@@ -162,8 +162,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                                 $rootScope.devices[index].source = null;
                             }
                         }
-                        $scope.selectedSource = {key: null, value: null};
-                        
+                        //{key: null, value: null}
                         toastr.success('Repository Detached.', 'THiNX RTM Console', {timeOut: 5000})
                         $scope.$apply()
                         
@@ -415,21 +414,9 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
         console.log('Resetting modal form values...');
         $scope.deviceUdid = $rootScope.devices[index].udid;
         $scope.deviceAlias = $rootScope.devices[index].alias;
+        $scope.deviceIndex = index;
 
-        console.log('setting source');
-        if (typeof($rootScope.devices[index].source) !== "undefined" 
-            && $rootScope.devices[index].source != null) {
-            console.log('source');
-            $scope.selectedSource = {
-                key: $rootScope.devices[index].source,
-                value: $rootScope.sources[$rootScope.devices[index].source]
-            };
-        } else {
-            $scope.selectedSource = null;
-        }
-        
         console.log("scope vars");
-        console.log("selectedSource", $scope.selectedSource);
         console.log("deviceUdid", $scope.deviceUdid);
         console.log("deviceAlias", $scope.deviceAlias);
     }

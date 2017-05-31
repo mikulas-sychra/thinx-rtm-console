@@ -63,8 +63,8 @@
                         <table class="table table-hover table-light">
                             <thead>
                                 <tr class="uppercase">
-                                    
-                                    <th class="text-right">
+                                  
+                                    <th>
                                         <button class="btn btn-small btn-default" ng-click="$root.logoutMe()"> Test Invalid Session</button>
                                     </th>
 
@@ -83,7 +83,7 @@
                                                 <div class="col-sm-2">
                                                     <div class="device-mac">MAC</div>
                                                     <div class="device-firmware">Firmware</div>
-                                                    <div class="device-firmware">Source</div>
+                                                    <div ng-if="hasSource($index)" class="device-firmware">Source</div>
                                                 </div>
                                                 <div class="col-sm-10">
                                                     <div class="device-mac">
@@ -92,7 +92,7 @@
                                                     <div class="device-firmware">
                                                         {{device.firmware}} 
                                                     </div>
-                                                    <div ng-if="typeof(device.source) !== 'undefined'" class="device-firmware">
+                                                    <div ng-if="hasSource($index)" class="device-firmware">
                                                         {{$root.sources[device.source].alias}} 
                                                     </div>
                                                 </div>
@@ -198,8 +198,6 @@
                         <h4 class="modal-title">Device</h4>
                     </div>
                     
-                    <p>Selected: <code>{{selectedSource | json}}</code></p>
-                    
                     <div class="modal-body">
                          <form action="#" class="form-horizontal">
                             <div class="form-group">
@@ -214,7 +212,7 @@
                                 <div class="col-md-9">
                                     <div class="input-group">
                                       
-                                      <ui-select ng-model="selectedSource.key" theme="bootstrap" title="Choose a source"
+                                      <ui-select ng-model="$root.devices[deviceIndex].source" theme="bootstrap" title="Choose a source"
                                       on-select="attachRepository($model, deviceUdid)">
                                         <ui-select-match placeholder="Select source in the list...">{{$select.selected.value.alias}}</ui-select-match>
                                         <ui-select-choices repeat="source.key as (key, source) in $root.sources | filter: { value: { alias: $select.search }}">
