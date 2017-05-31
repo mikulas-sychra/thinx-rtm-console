@@ -20,7 +20,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
         $scope.deviceUdid = null;
         $scope.deviceAlias = null;
         $scope.selectedSource = null;
-        $scope.modalLogBody = [];
+        $scope.modalLogBody = "";
     });
 
     // set sidebar closed and body solid layout mode
@@ -162,7 +162,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                                 $rootScope.devices[index].source = null;
                             }
                         }
-                        // $scope.selectedSource = null;
+                        $scope.selectedSource = {key: null, value: null};
                         
                         toastr.success('Repository Detached.', 'THiNX RTM Console', {timeOut: 5000})
                         $scope.$apply()
@@ -234,7 +234,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
         console.log('--- trying to show last build log for ' + deviceUdid);
 
         $scope.modalLogId = $rootScope.meta.builds[deviceUdid][$rootScope.meta.builds[deviceUdid].length - 1];
-        $scope.modalLogBody = [];
+        $scope.modalLogBody = "";
         OpenWebSocket($scope.modalLogId);
     }
 
@@ -271,7 +271,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                     if (typeof(msg.log) !== "undefined") {
                         console.log('Log:');
                         console.log(msg.log);
-                        $scope.modalLogBody.push(msg.log.message);
+                        $scope.modalLogBody = $scope.modalLogBody + "\n" + (msg.log.message);
                     }
 
                     $scope.$apply();
@@ -411,11 +411,8 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
     $scope.resetModal = function(index) {
         console.log('Resetting modal form values...');
-
-        
         $scope.deviceUdid = $rootScope.devices[index].udid;
         $scope.deviceAlias = $rootScope.devices[index].alias;
-
 
         console.log('setting source');
         if (typeof($rootScope.devices[index].source) !== "undefined" 

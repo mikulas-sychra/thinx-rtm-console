@@ -124,6 +124,7 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
     $rootScope.logoutMe = function () {
         Thinx.getLogout()
             .done(function(data) {
+                console.log("logout response:");
                 console.log(data);
             })
             .fail(error => console.log('Error:', error));

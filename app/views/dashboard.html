@@ -63,12 +63,11 @@
                         <table class="table table-hover table-light">
                             <thead>
                                 <tr class="uppercase">
+                                    
                                     <th class="text-right">
-
                                         <button class="btn btn-small btn-default" ng-click="$root.logoutMe()"> Test Invalid Session</button>
-
                                     </th>
-                                    [{{selectedSource}}]
+
                                 </tr>
                             </thead>
                              <tr ng-repeat="device in $root.devices | filter:$root.searchText" ng-click="resetModal($index)" class="default-row" data-target="#deviceModal" data-toggle="modal" style="background: none !important;">
@@ -195,9 +194,7 @@
                         <h4 class="modal-title">Device</h4>
                     </div>
                     
-                    <p>Selected: <code>{{selectedSource}}</code></p>
-                    
-                    <br>
+                    <p>Selected: <code>{{selectedSource | json}}</code></p>
                     
                     <div class="modal-body">
                          <form action="#" class="form-horizontal">
@@ -256,16 +253,14 @@
 
     <!-- BEGIN MODAL LOG VIEW -->
     <div id="logModal" class="modal container fade" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog log-modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     <h4 class="modal-title">Build Log</h4>
                 </div>
                 <div class="modal-body">
-                     <div ng-repeat="logrow in modalLogBody track by $index">
-                        {{logrow}}
-                     </div>
+                    <pre class="log-view">{{modalLogBody}}</pre>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
