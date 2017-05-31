@@ -356,7 +356,7 @@ function changeProfile(profile) {
                 "info" : profile.info.notifications.info 
         },
 
-        security: { "unique_api_keys" : true },
+        security: profile.info.security,
 
         goals: profile.info.goals,
         username: profile.info.username,
