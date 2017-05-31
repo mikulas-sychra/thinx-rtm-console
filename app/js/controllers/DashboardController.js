@@ -19,6 +19,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
         $scope.deviceUdid = null;
         $scope.deviceAlias = null;
+        $scope.selectedSource = null;
         $scope.modalLogBody = [];
     });
 
@@ -82,7 +83,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             }
         }
 
-        if(typeof($rootScope.devices) !== 'undefined') {
+        if(typeof($rootScope.devices) !== "undefined") {
             $rootScope.stats.total.DEVICES = $rootScope.devices.length;
         }
 
@@ -116,19 +117,15 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
         Thinx.attachRepository(sourceId, deviceUdid)
             .done(function(response) {
-                if (typeof(response) !== 'undefined') {
+                if (typeof(response) !== "undefined") {
                     if (response.success) {
                         console.log("-- attach success --");
                         console.log(response);
 
                         for (var index in $rootScope.devices) {
                             if ($rootScope.devices[index].udid == deviceUdid) {
-
-                                console.log('updating device source...');    
+                                console.log('updating device source and selector...');    
                                 $rootScope.devices[index].source = response.attached;
-                                console.log('updating modal selectedSource...');    
-                                $scope.selectedSource = $rootScope.sources[response.attached];
-                                $scope.$apply();
                             }
                         }
 
@@ -156,7 +153,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
         Thinx.detachRepository(deviceUdid)
             .done(function(response) {
                 
-                if (typeof(response) !== 'undefined') {
+                if (typeof(response) !== "undefined") {
                     if (response.success) {
                         console.log(response);
 
@@ -165,7 +162,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                                 $rootScope.devices[index].source = null;
                             }
                         }
-                        $scope.selectedSource = null;
+                        // $scope.selectedSource = null;
                         
                         toastr.success('Repository Detached.', 'THiNX RTM Console', {timeOut: 5000})
                         $scope.$apply()
@@ -202,8 +199,8 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                 console.log(' --- response ---');
                 console.log(response);
 
-                if (typeof(response) !== 'undefined') {
-                    if (typeof(response.build) !== 'undefined' && response.build.success) {
+                if (typeof(response) !== "undefined") {
+                    if (typeof(response.build) !== "undefined" && response.build.success) {
                         console.log(response.build);
 
                         console.log(' --- save last build id: ' + response.build.id + ' ---');
@@ -315,7 +312,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
 
     $scope.hasBuildId = function(deviceUdid) {
-        if (typeof($rootScope.meta.builds[deviceUdid]) !== 'undefined') {
+        if (typeof($rootScope.meta.builds[deviceUdid]) !== "undefined") {
             if ($rootScope.meta.builds[deviceUdid].length == 0) {
                 return null;
             } else {
@@ -326,7 +323,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
     }
 
     $scope.hasSource = function(index) {
-        if (typeof($rootScope.devices[index].source) !== 'undefined' && 
+        if (typeof($rootScope.devices[index].source) !== "undefined" && 
             $rootScope.devices[index].source !== null) {
             return true;
         }
@@ -352,8 +349,8 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
         Thinx.changeDevice($scope.deviceUdid, $scope.deviceAlias)
             .done(function(response) {
 
-                if (typeof(response) !== 'undefined') {
-                    if (typeof(response.success) !== 'undefined' && response.success) {
+                if (typeof(response) !== "undefined") {
+                    if (typeof(response.success) !== "undefined" && response.success) {
                         console.log(response);
                         toastr.success('Alias updated.', 'THiNX RTM Console', {timeOut: 5000})
 
@@ -421,12 +418,14 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
 
         console.log('setting source');
-        if (typeof($rootScope.devices[index].source) !== 'undefined' 
+        if (typeof($rootScope.devices[index].source) !== "undefined" 
             && $rootScope.devices[index].source != null) {
             console.log('source');
-            $scope.selectedSource = $rootScope.sources[$rootScope.devices[index].source];
+            $scope.selectedSource = {
+                key: $rootScope.devices[index].source,
+                value: $rootScope.sources[$rootScope.devices[index].source]
+            };
         } else {
-            console.log('null');
             $scope.selectedSource = null;
         }
         

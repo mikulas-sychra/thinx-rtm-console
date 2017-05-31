@@ -194,7 +194,9 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                         <h4 class="modal-title">Device</h4>
                     </div>
-                    [selectedSource {{selectedSource}}]
+                    
+                    <p>Selected: <code>{{selectedSource}}</code></p>
+                    
                     <br>
                     
                     <div class="modal-body">
@@ -210,17 +212,17 @@
                                 <label class="control-label col-md-3">Source</label>
                                 <div class="col-md-9">
                                     <div class="input-group">
-                                        <ui-select allow-clear 
-                                        ng-model="selectedSource" theme="bootstrap" 
-                                        on-select="attachRepository($select.selected.key, deviceUdid)">
-                                            <ui-select-match placeholder="none">
-                                                {{$select.selected.alias}}
-                                            </ui-select-match>
-                                            <ui-select-choices repeat="(key, source) in $root.sources | filter: $select.search track by $index">
-                                                <div ng-bind-html="source.value.alias | highlight: $select.search"></div>
-                                                <div ng-bind-html="source.value.url | highlight: $select.search" class="monospace-dropdown"></div>
-                                            </ui-select-choices>
-                                        </ui-select>
+                                      
+                                      <ui-select ng-model="selectedSource.key" theme="bootstrap" title="Choose a source"
+                                      on-select="attachRepository($model, deviceUdid)">
+                                        <ui-select-match placeholder="Select source in the list...">{{$select.selected.value.alias}}</ui-select-match>
+                                        <ui-select-choices repeat="source.key as (key, source) in $root.sources | filter: { value: { alias: $select.search }}">
+                                          <div ng-bind-html="source.value.alias | highlight: $select.search"></div>
+                                          <small>
+                                            {{source.value.url}}
+                                          </small>
+                                        </ui-select-choices>
+                                      </ui-select>
                                         <span class="input-group-btn">
                                             <button type="button" ng-click="detachRepository(deviceUdid)" class="btn btn-default">
                                                 <span class="fa fa-chain-broken"></span>
@@ -229,6 +231,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <label class="control-label col-md-3">MQTT Channel</label>
                                 <div class="col-md-9">
