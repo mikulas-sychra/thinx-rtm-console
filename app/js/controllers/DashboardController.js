@@ -309,7 +309,6 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             }
         }
 
-        // $scope.modalLogBody = [];
         $scope.ws.send(JSON.stringify(message));
     }
 
@@ -433,6 +432,15 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
         console.log("selectedSource", $scope.selectedSource);
         console.log("deviceUdid", $scope.deviceUdid);
         console.log("deviceAlias", $scope.deviceAlias);
+    }
+
+    function startDebugInterval() {
+        var i = 0;
+        setInterval(function(){ 
+            $scope.modalLogBody = $scope.modalLogBody + "\n* " + i + " *\n";
+            $scope.$apply();
+            i++;
+        }, 3000);
     }
 
 });
