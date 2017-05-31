@@ -159,10 +159,10 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
                         for (var index in $rootScope.devices) {
                             if ($rootScope.devices[index].udid == deviceUdid) {
-                                $rootScope.devices[index].source = null;
+                                $rootScope.devices[index].source = undefined;
                             }
                         }
-                        //{key: null, value: null}
+
                         toastr.success('Repository Detached.', 'THiNX RTM Console', {timeOut: 5000})
                         $scope.$apply()
                         
