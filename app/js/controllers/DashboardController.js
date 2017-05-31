@@ -254,6 +254,9 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
                 $scope.ws.onopen = function() {
                     console.log("Websocket connection estabilished.");
+                    $scope.modalLogBody = $scope.modalLogBody + "\n## Websocket connection estabilished ##\n";
+                    $scope.$apply();
+                    startDebugInterval();
                 };
                 $scope.ws.onmessage = function (message) {
                     console.log('Received message...');

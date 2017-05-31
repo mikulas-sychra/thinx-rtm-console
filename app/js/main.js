@@ -9,7 +9,8 @@ var MetronicApp = angular.module("MetronicApp", [
     "oc.lazyLoad",  
     "ngSanitize",
     "angular-web-notification",
-    "tandibar/ng-rollbar"
+    "tandibar/ng-rollbar",
+    "luegg.directives"
 ]);
 
 MetronicApp.config(['RollbarProvider', function(RollbarProvider) {

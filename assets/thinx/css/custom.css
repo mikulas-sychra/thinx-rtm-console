@@ -205,4 +205,6 @@
 	white-space: -moz-pre-wrap;
 	white-space: -o-pre-wrap;
 	word-wrap: break-word;
+	font-size: .8em;
+	max-height: 300px;
 }
