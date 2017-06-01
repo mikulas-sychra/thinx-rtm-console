@@ -18,6 +18,7 @@ exports.config = {
   baseUrl: env.baseUrl + '/',
 
   onPrepare: function() {
+    console.log('url:', env.baseUrl + '/');
     browser.driver.get(env.baseUrl + '/');
 
     browser.driver.findElement(by.name('username')).sendKeys('test');

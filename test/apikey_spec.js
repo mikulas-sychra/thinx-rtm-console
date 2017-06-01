@@ -6,7 +6,7 @@ describe('basic ui tests', function() {
 
     // open page
 	browser.waitForAngularEnabled(false);
-    browser.get(env.baseUrl + '/app');
+    browser.get(env.baseUrl + '/app/');
     browser.waitForAngularEnabled(true);
 
     // open new apikey modal and fill input
