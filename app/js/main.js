@@ -329,7 +329,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/thinx/js/plugins/ui-select/select.min.css',
                             '../assets/thinx/js/plugins/ui-select/select.js',
 
-                            '../assets/pages/scripts/dashboard.js',
+                            '../assets/thinx/js/dashboard.js',
                             'js/controllers/DashboardController.js',
                         ] 
                     });
@@ -408,12 +408,15 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [
                             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css',
-                            '../assets/pages/css/profile.css',
+                            '../assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css',
+
+                            '../assets/thinx/css/profile.css',
                             
                             '../assets/global/plugins/jquery.sparkline.min.js',
                             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
+                            '../assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js',
 
-                            '../assets/pages/scripts/profile.min.js',
+                            '../assets/thinx/js/profile.min.js',
 
                             'js/controllers/UserProfileController.js'
                         ]                    
