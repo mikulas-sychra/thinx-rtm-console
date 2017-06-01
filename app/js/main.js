@@ -9,7 +9,8 @@ var MetronicApp = angular.module("MetronicApp", [
     "oc.lazyLoad",  
     "ngSanitize",
     "angular-web-notification",
-    "tandibar/ng-rollbar"
+    "tandibar/ng-rollbar",
+    "luegg.directives"
 ]);
 
 MetronicApp.config(['RollbarProvider', function(RollbarProvider) {
@@ -124,6 +125,7 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
     $rootScope.logoutMe = function () {
         Thinx.getLogout()
             .done(function(data) {
+                console.log("logout response:");
                 console.log(data);
             })
             .fail(error => console.log('Error:', error));
@@ -199,16 +201,7 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', 'webNotificatio
         }
         
     }
-
-    function updateBuildLog(data) {
-        var response = JSON.parse(data);
-
-        $rootScope.buildlog = response.logs;
-        $scope.$apply()
-
-        console.log('buildlog:');
-        console.log($rootScope.buildlog);
-    }
+    
     
     Thinx.getProfile()
             .done(function(data) {
@@ -333,8 +326,8 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/global/plugins/morris/raphael-min.js',                            
                             '../assets/global/plugins/jquery.sparkline.min.js',
 
-                            '../assets/global/plugins/angularjs/plugins/ui-select/select.min.css',
-                            '../assets/global/plugins/angularjs/plugins/ui-select/select.min.js',
+                            '../assets/thinx/js/plugins/ui-select/select.min.css',
+                            '../assets/thinx/js/plugins/ui-select/select.js',
 
                             '../assets/pages/scripts/dashboard.js',
                             'js/controllers/DashboardController.js',

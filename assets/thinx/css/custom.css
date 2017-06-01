@@ -191,3 +191,24 @@
 .device-card:hover {
   box-shadow: 0 5px 10px rgba(0,0,0,0.18), 0 1px 2px rgba(0,0,0,0.22);
 }
+
+.log-modal-dialog {
+	width: 98%;
+}
+
+.log-view {
+	display: block;
+	background-color: #333333;
+	color: #FAFAFA;
+	margin: 10px;
+	font-family: monospace;
+	white-space: -moz-pre-wrap;
+	white-space: -o-pre-wrap;
+	word-wrap: break-word;
+	font-size: .8em;
+	max-height: 300px;
+}
+
+.header-search-btn {
+	color: #737a99;
+}

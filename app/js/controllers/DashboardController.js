@@ -17,9 +17,10 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             })
             .fail(error => console.log('Error:', error));
 
+        $scope.deviceIndex = null;
         $scope.deviceUdid = null;
         $scope.deviceAlias = null;
-        $scope.modalLogBody = [];
+        $scope.modalLogBody = "";
     });
 
     // set sidebar closed and body solid layout mode
@@ -82,7 +83,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             }
         }
 
-        if(typeof($rootScope.devices) !== 'undefined') {
+        if(typeof($rootScope.devices) !== "undefined") {
             $rootScope.stats.total.DEVICES = $rootScope.devices.length;
         }
 
@@ -116,19 +117,15 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
         Thinx.attachRepository(sourceId, deviceUdid)
             .done(function(response) {
-                if (typeof(response) !== 'undefined') {
+                if (typeof(response) !== "undefined") {
                     if (response.success) {
                         console.log("-- attach success --");
                         console.log(response);
 
-                        for (index in $rootScope.devices) {
+                        for (var index in $rootScope.devices) {
                             if ($rootScope.devices[index].udid == deviceUdid) {
-
-                                console.log('updating device source...');    
+                                console.log('updating device source and selector...');    
                                 $rootScope.devices[index].source = response.attached;
-                                console.log('updating modal selectedSource...');    
-                                $scope.selectedSource = $rootScope.sources[response.attached];
-                                $scope.$apply();
                             }
                         }
 
@@ -156,17 +153,16 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
         Thinx.detachRepository(deviceUdid)
             .done(function(response) {
                 
-                if (typeof(response) !== 'undefined') {
+                if (typeof(response) !== "undefined") {
                     if (response.success) {
                         console.log(response);
 
-                        for (index in $rootScope.devices) {
+                        for (var index in $rootScope.devices) {
                             if ($rootScope.devices[index].udid == deviceUdid) {
-                                $rootScope.devices[index].source = null;
+                                $rootScope.devices[index].source = undefined;
                             }
                         }
-                        $scope.selectedSource = null;
-                        
+
                         toastr.success('Repository Detached.', 'THiNX RTM Console', {timeOut: 5000})
                         $scope.$apply()
                         
@@ -202,8 +198,8 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                 console.log(' --- response ---');
                 console.log(response);
 
-                if (typeof(response) !== 'undefined') {
-                    if (typeof(response.build) !== 'undefined' && response.build.success) {
+                if (typeof(response) !== "undefined") {
+                    if (typeof(response.build) !== "undefined" && response.build.success) {
                         console.log(response.build);
 
                         console.log(' --- save last build id: ' + response.build.id + ' ---');
@@ -237,7 +233,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
         console.log('--- trying to show last build log for ' + deviceUdid);
 
         $scope.modalLogId = $rootScope.meta.builds[deviceUdid][$rootScope.meta.builds[deviceUdid].length - 1];
-        $scope.modalLogBody = [];
+        $scope.modalLogBody = "";
         OpenWebSocket($scope.modalLogId);
     }
 
@@ -257,6 +253,9 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
                 $scope.ws.onopen = function() {
                     console.log("Websocket connection estabilished.");
+                    $scope.modalLogBody = $scope.modalLogBody + "\n## Websocket connection estabilished ##\n";
+                    $scope.$apply();
+                    startDebugInterval();
                 };
                 $scope.ws.onmessage = function (message) {
                     console.log('Received message...');
@@ -274,7 +273,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
                     if (typeof(msg.log) !== "undefined") {
                         console.log('Log:');
                         console.log(msg.log);
-                        $scope.modalLogBody.push(msg.log.message);
+                        $scope.modalLogBody = $scope.modalLogBody + "\n" + (msg.log.message);
                     }
 
                     $scope.$apply();
@@ -295,7 +294,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
         } else {
            // The browser doesn't support WebSocket
-           alert("WebSocket NOT supported by your Browser!");
+           toastr.error("Error", "WebSocket NOT supported by your Browser!", {timeOut: 5000})    
         }
     }
 
@@ -309,13 +308,12 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
             }
         }
 
-        // $scope.modalLogBody = [];
         $scope.ws.send(JSON.stringify(message));
     }
 
 
     $scope.hasBuildId = function(deviceUdid) {
-        if (typeof($rootScope.meta.builds[deviceUdid]) !== 'undefined') {
+        if (typeof($rootScope.meta.builds[deviceUdid]) !== "undefined") {
             if ($rootScope.meta.builds[deviceUdid].length == 0) {
                 return null;
             } else {
@@ -326,7 +324,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
     }
 
     $scope.hasSource = function(index) {
-        if (typeof($rootScope.devices[index].source) !== 'undefined' && 
+        if (typeof($rootScope.devices[index].source) !== "undefined" && 
             $rootScope.devices[index].source !== null) {
             return true;
         }
@@ -335,7 +333,7 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
     $scope.changeDeviceAlias = function() {
 
-        for (index in $rootScope.devices) {
+        for (var index in $rootScope.devices) {
             if ($rootScope.devices[index].udid == $scope.deviceUdid) {
                 var device = $rootScope.devices[index];
             }
@@ -352,8 +350,8 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
         Thinx.changeDevice($scope.deviceUdid, $scope.deviceAlias)
             .done(function(response) {
 
-                if (typeof(response) !== 'undefined') {
-                    if (typeof(response.success) !== 'undefined' && response.success) {
+                if (typeof(response) !== "undefined") {
+                    if (typeof(response.success) !== "undefined" && response.success) {
                         console.log(response);
                         toastr.success('Alias updated.', 'THiNX RTM Console', {timeOut: 5000})
 
@@ -414,26 +412,22 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
 
     $scope.resetModal = function(index) {
         console.log('Resetting modal form values...');
-
-        
         $scope.deviceUdid = $rootScope.devices[index].udid;
         $scope.deviceAlias = $rootScope.devices[index].alias;
+        $scope.deviceIndex = index;
 
-
-        console.log('setting source');
-        if (typeof($rootScope.devices[index].source) !== 'undefined' 
-            && $rootScope.devices[index].source != null) {
-            console.log('source');
-            $scope.selectedSource = $rootScope.sources[$rootScope.devices[index].source];
-        } else {
-            console.log('null');
-            $scope.selectedSource = null;
-        }
-        
         console.log("scope vars");
-        console.log("selectedSource", $scope.selectedSource);
         console.log("deviceUdid", $scope.deviceUdid);
         console.log("deviceAlias", $scope.deviceAlias);
+    }
+
+    function startDebugInterval() {
+        var i = 0;
+        setInterval(function(){ 
+            $scope.modalLogBody = $scope.modalLogBody + "\n* " + i + " *\n";
+            $scope.$apply();
+            i++;
+        }, 3000);
     }
 
 });

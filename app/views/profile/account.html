@@ -86,6 +86,9 @@
                     <!-- END CHANGE AVATAR TAB -->
                     <!-- PRIVACY SETTINGS TAB -->
                     <div class="tab-pane" id="tab_1_3">
+
+                    <p>Security: <code>{{$root.profile.info.security | json}}</code></p>
+                        
                         <form action="#">
                             <table class="table table-light table-hover">
                                 <tr>
@@ -95,10 +98,10 @@
                                     </td>
                                     <td>
                                         <label class="uniform-inline">
-                                        <input type="radio" name="globalPush" ng-model="$root.profile.security.someVal0" value="true"/>
+                                        <input type="radio" data-ng-model="$root.profile.info.security.global_push" data-ng-value="true" />
                                         Yes </label>
                                         <label class="uniform-inline">
-                                        <input type="radio" name="globalPush" ng-model="$root.profile.security.someVal0" value="false"/>
+                                        <input type="radio" data-ng-model="$root.profile.info.security.global_push" data-ng-value="false"/>
                                         No </label>
                                     </td>
                                 </tr>
@@ -109,12 +112,10 @@
                                     </td>
                                     <td>
                                         <label class="uniform-inline">
-                                        <input type="radio" name="importantNotifications" 
-                                        ng-model="$root.profile.security.someVal2" value="true"/>
+                                        <input type="radio" data-ng-model="$root.profile.info.security.important_notifications" data-ng-value="true" />
                                         Yes </label>
                                         <label class="uniform-inline">
-                                        <input type="radio" name="importantNotifications" 
-                                        ng-model="$root.profile.security.someVal2" value="false" checked/>
+                                        <input type="radio" data-ng-model="$root.profile.info.security.important_notifications" data-ng-value="false"/>
                                         No </label>
                                     </td>
                                 </tr>
@@ -125,10 +126,10 @@
                                     </td>
                                     <td>
                                         <label class="uniform-inline">
-                                        <input type="radio" name="forceUniqueKeys" value="true"/>
+                                        <input type="radio" data-ng-model="$root.profile.info.security.unique_api_keys" data-ng-value="true" />
                                         Yes </label>
                                         <label class="uniform-inline">
-                                        <input type="radio" name="forceUniqueKeys" value="false"/>
+                                        <input type="radio" data-ng-model="$root.profile.info.security.unique_api_keys" data-ng-value="false"/>
                                         No </label>
                                     </td>
                                 </tr>

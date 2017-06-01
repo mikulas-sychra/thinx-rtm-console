@@ -9,7 +9,7 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
         $rootScope.settings.layout.pageBodySolid = false;
         $rootScope.settings.layout.pageSidebarClosed = false;
 
-        var jqxhr = Thinx.rsakeyList()
+        Thinx.rsakeyList()
 	        .done( function(data) {
 	        	updateKeys(data)
 	        })
@@ -44,8 +44,6 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
             }
         }
 
-        // return;
-
 		console.log('--adding rsa key ' + $scope.rsakeyAlias +'--')
 
 		Thinx.addRsakey($scope.rsakeyAlias, $scope.rsakeyValue)
@@ -66,7 +64,11 @@ angular.module('MetronicApp').controller('RsakeyController', ['$rootScope', '$sc
 
 	                } else {
 	                    console.log(response.status);
-	                    toastr.error('Error.', 'THiNX RTM Console', {timeOut: 5000});
+	                    if (response.status == "already_exists") {
+	                    	toastr.error('Key already exists.', 'THiNX RTM Console', {timeOut: 5000});
+	                    } else {
+	                    	toastr.error('Error.', 'THiNX RTM Console', {timeOut: 5000});
+	                    }
 	                }
 	            } else {
 	            	console.log('error');

@@ -63,12 +63,11 @@
                         <table class="table table-hover table-light">
                             <thead>
                                 <tr class="uppercase">
-                                    <th class="text-right">
-
+                                  
+                                    <th>
                                         <button class="btn btn-small btn-default" ng-click="$root.logoutMe()"> Test Invalid Session</button>
-
                                     </th>
-                                    [{{selectedSource}}]
+
                                 </tr>
                             </thead>
                              <tr ng-repeat="device in $root.devices | filter:$root.searchText" ng-click="resetModal($index)" class="default-row" data-target="#deviceModal" data-toggle="modal" style="background: none !important;">
@@ -82,15 +81,19 @@
                                             <div class="device-lastseen">{{device.lastupdate | lastSeen}}</div>
                                             <div class="row">
                                                 <div class="col-sm-2">
-                                                    <div class="device-firmware">Firmware</div>
                                                     <div class="device-mac">MAC</div>
+                                                    <div class="device-firmware">Firmware</div>
+                                                    <div ng-if="hasSource($index)" class="device-firmware">Source</div>
                                                 </div>
                                                 <div class="col-sm-10">
+                                                    <div class="device-mac">
+                                                        {{device.mac}} 
+                                                    </div>
                                                     <div class="device-firmware">
                                                         {{device.firmware}} 
                                                     </div>
-                                                    <div class="device-mac">
-                                                        {{device.mac}} 
+                                                    <div ng-if="hasSource($index)" class="device-firmware">
+                                                        {{$root.sources[device.source].alias}} 
                                                     </div>
                                                 </div>
                                             </div>
@@ -194,8 +197,6 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                         <h4 class="modal-title">Device</h4>
                     </div>
-                    [selectedSource {{selectedSource}}]
-                    <br>
                     
                     <div class="modal-body">
                          <form action="#" class="form-horizontal">
@@ -210,17 +211,17 @@
                                 <label class="control-label col-md-3">Source</label>
                                 <div class="col-md-9">
                                     <div class="input-group">
-                                        <ui-select allow-clear 
-                                        ng-model="selectedSource" theme="bootstrap" 
-                                        on-select="attachRepository($select.selected.key, deviceUdid)">
-                                            <ui-select-match placeholder="none">
-                                                {{$select.selected.alias}}
-                                            </ui-select-match>
-                                            <ui-select-choices repeat="(key, source) in $root.sources | filter: $select.search track by $index">
-                                                <div ng-bind-html="source.value.alias | highlight: $select.search"></div>
-                                                <div ng-bind-html="source.value.url | highlight: $select.search" class="monospace-dropdown"></div>
-                                            </ui-select-choices>
-                                        </ui-select>
+                                      
+                                      <ui-select ng-model="$root.devices[deviceIndex].source" theme="bootstrap" title="Choose a source"
+                                      on-select="attachRepository($model, deviceUdid)">
+                                        <ui-select-match placeholder="Select source in the list...">{{$select.selected.value.alias}}</ui-select-match>
+                                        <ui-select-choices repeat="source.key as (key, source) in $root.sources | filter: { value: { alias: $select.search }}">
+                                          <div ng-bind-html="source.value.alias | highlight: $select.search"></div>
+                                          <small>
+                                            {{source.value.url}}
+                                          </small>
+                                        </ui-select-choices>
+                                      </ui-select>
                                         <span class="input-group-btn">
                                             <button type="button" ng-click="detachRepository(deviceUdid)" class="btn btn-default">
                                                 <span class="fa fa-chain-broken"></span>
@@ -229,6 +230,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <label class="control-label col-md-3">MQTT Channel</label>
                                 <div class="col-md-9">
@@ -253,16 +255,16 @@
 
     <!-- BEGIN MODAL LOG VIEW -->
     <div id="logModal" class="modal container fade" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog log-modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     <h4 class="modal-title">Build Log</h4>
                 </div>
                 <div class="modal-body">
-                     <div ng-repeat="logrow in modalLogBody track by $index">
-                        {{logrow}}
-                     </div>
+                
+                    <pre class="log-view" scroll-glue>{{modalLogBody}}</pre>
+                    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
