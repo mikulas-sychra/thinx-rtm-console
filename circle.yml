@@ -11,9 +11,6 @@ dependencies:
     - rm google-chrome.deb
 
 test:
-  override:
-    - google-chrome --version
-    
   pre:
     - npm install .
     - npm install -g protractor
