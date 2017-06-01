@@ -8,7 +8,7 @@ test:
     - npm install .
     - npm install -g protractor
     - webdriver-manager update
-    - bash webdriver-manager start
+    - webdriver-manager start
     
   post:
     - curl -sSL https://download.sourceclear.com/ci.sh | sh
