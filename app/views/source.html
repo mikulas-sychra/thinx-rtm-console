@@ -70,21 +70,21 @@
                                 <div class="modal-body">
                                     <form action="#" class="form-horizontal">
                                         <div class="form-group">
-                                            <label class="control-label col-md-3">Source URL</label>
+                                            <label class="control-label col-md-3">Git URL</label>
                                             <div class="col-md-9">
-                                                <input ng-change="getAliasFromUrl()" ng-model="sourceUrl" type="text" class="form-control" name="sourceUrl" />
+                                                <input ng-change="getAliasFromUrl()" ng-model="sourceUrl" type="text" class="form-control" name="sourceUrl" placeholder="git@github.com:username/repository.git" />
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label col-md-3">Source Alias</label>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control"  ng-model="sourceAlias" name="sourceAlias" />
+                                                <input type="text" class="form-control"  ng-model="sourceAlias" name="sourceAlias" placeholder="Project Name" />
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label col-md-3">Branch</label>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control"  ng-model="sourceBranch" name="sourceBranch" />
+                                                <input type="text" class="form-control"  ng-model="sourceBranch" name="sourceBranch" placeholder="origin/master" />
                                             </div>
                                         </div>
                                     </form>
