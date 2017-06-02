@@ -1,9 +1,10 @@
 #!/bin/bash
 
-curl -L -o google-chrome.deb http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_58.0.3029.110-1_amd64.deb
+set -ex
 
-sudo dpkg -i google-chrome.deb
-
-sudo sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
-
-rm google-chrome.deb
+google-chrome --version
+wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+sudo apt-get update
+sudo apt-get --only-upgrade install google-chrome-stable
+google-chrome --version
