@@ -1,4 +1,6 @@
 machine:
+  hosts:
+    rtm.thinx.loc: 127.0.0.1
   node:
     version:
       7.10.0
