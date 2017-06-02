@@ -1,6 +1,9 @@
 #!/bin/bash
 
 echo "Waiting for servers to start..."
+
+curl -f http://localhost:80/
+
 while true; do
   curl -f http://localhost:80/ > /dev/null 2> /dev/null
   if [ $? = 0 ]; then
