@@ -5,22 +5,23 @@ machine:
 
 dependencies:
   override:
-    - curl -L -o google-chrome.deb http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_58.0.3029.110-1_amd64.deb
-    - sudo dpkg -i google-chrome.deb
-    - sudo sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
-    - rm google-chrome.deb
-
-test:
-  pre:
+    - bash test/scripts/get-latest-chrome.sh
     - npm install .
     - npm install -g protractor
     - webdriver-manager update
-    - bash webdriver-manager start:
+
+    - npm run webdriver:
         background: true
-    
+
+    - bash test/scripts/wait-for-server-start.sh
+
+test:    
   post:
     - curl -sSL https://download.sourceclear.com/ci.sh | sh
 
 ## Custom notifications
 notify:
   - curl -X POST --data-urlencode 'payload={"text":"THiNX-RTM-Console integration completed."}' https://hooks.slack.com/services/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
+
+
+
