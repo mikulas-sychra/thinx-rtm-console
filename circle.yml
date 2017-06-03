@@ -8,7 +8,7 @@ machine:
 dependencies:
   override:
     - sudo apt-get install nginx-light
-    - sudo cp test/scripts/default.nginx-vhost /etc/nginx/sites-avaiable/default
+    - sudo cp test/scripts/default.nginx-vhost /etc/nginx/sites-available/default
     - sudo nginx restart
     - bash test/scripts/get-latest-chrome.sh
     - npm install .
