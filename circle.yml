@@ -12,8 +12,7 @@ dependencies:
     - npm install .
     - npm install -g protractor
     - webdriver-manager update
-
-    - npm run webdriver:
+    - webdriver-manager start
         background: true
 
     - bash test/scripts/wait-for-server-start.sh
