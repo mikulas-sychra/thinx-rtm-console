@@ -8,8 +8,9 @@ machine:
 dependencies:
   override:
     - sudo mkdir -p /etc/nginx/sites-available
-    - sudo cp test/scripts/default.nginx-vhost /etc/nginx/sites-available/default
     - sudo apt-get install nginx-light
+    - sudo cp test/scripts/default.nginx-vhost /etc/nginx/sites-available/default
+    - sudo nginx -s reload
     - bash test/scripts/get-latest-chrome.sh
     - npm install .
     - npm install -g protractor
