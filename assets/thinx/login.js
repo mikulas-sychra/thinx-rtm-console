@@ -45,7 +45,7 @@ var Login = function() {
 
             submitHandler: function(form, event) {
                 event.preventDefault();
-                var url = 'http://thinx.cloud:7442/api/login';
+                var url = '//thinx.cloud:7442/api/login';
 
                 $.ajax({
                     url: url,
