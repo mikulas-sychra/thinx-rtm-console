@@ -54,10 +54,12 @@ describe('basic ui tests', function() {
   });
 
   it('should remove new apikey', function() {
-    console.log("TODO: Remove test key..");
+    console.log("TODO: Remove test key:", newApiKeyFingerprint);
+
+    var revokeButtonQuery = "revokeApikey(" + newApiKeyFingerprint;
     // remove new apikey
 
-    var els = element.all(by.css('tbody tr td a[ng-click*=newApiKeyFingerprint]'));
+    var els = element.all(by.css('tbody tr td a[ng-click*=revokeButtonQuery]'));
     els.filter(function(elem) {
       return elem.getText().then(function(text) {
         console.log(text);
