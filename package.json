@@ -4,7 +4,7 @@
   "description": "THiNX RTM Console",
   "main": "gulpfile.js",
   "scripts": {
-    "test": "protractor test/conf.js"
+    "test": "nyc --reporter=lcov --reporter=text-lcov protractor test/conf.js"
   },
   "author": "Mikulas Sychra @ THiNX",
   "license": "MIT",
@@ -23,6 +23,7 @@
     "gulp-rtlcss": "^0.1.4",
     "gulp-sass": "^2.0.4",
     "gulp-sourcemaps": "^1.5.2",
-    "gulp-uglify": "^1.4.2"
+    "gulp-uglify": "^1.4.2",
+    "nyc": "^11.0.2"
   }
 }

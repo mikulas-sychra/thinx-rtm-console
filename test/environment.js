@@ -22,7 +22,7 @@ module.exports = {
 
   // A base URL for your application under test.
   baseUrl:
-    'http://' + (process.env.HTTP_HOST || 'localhost') +
+    'http://' + (process.env.HTTP_HOST || 'rtm.thinx.loc') +
           ':' + (process.env.HTTP_PORT || webServerDefaultPort)
 
 };
