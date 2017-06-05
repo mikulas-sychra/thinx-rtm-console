@@ -9,8 +9,8 @@ exports.config = {
   framework: 'jasmine',
 
   specs: [
-    'spec.js',
-    'apikey_spec.js'
+    'login.spec.js',
+    'apikey.spec.js'
   ],
 
   capabilities: env.capabilities,
