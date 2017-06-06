@@ -30,7 +30,14 @@
             <div class="portlet-body"> 
             <!-- BEGIN PORTLET-->
 
-                 <a href="#" class="btn green-haze btn-outline" ng-click="resetModal()" data-target="#pageModal" data-toggle="modal">Add Source</a>
+                <div class="row">
+                    <div class="col-md-6">
+                        <a href="#" class="btn green-haze btn-outline" ng-click="resetModal()" data-target="#pageModal" data-toggle="modal">Add Source</a>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <button class="btn btn-circle btn-icon-only" ng-class="selectedItems.length > 0 ? 'btn-danger' : 'btn-default'" ng-click="revokeSources()" type="button" ><i class="fa fa-trash"></i></button>
+                    </div>
+                </div>
 
                 <div class="table-scrollable table-scrollable-borderless">
                     <table class="table table-hover table-light">
@@ -45,7 +52,7 @@
                             </tr>
                         </thead>
 
-                        <tr ng-repeat="(key, source) in $root.sources">
+                        <tr ng-repeat="(key, source) in $root.sources" ng-click="checkItem(key)" ng-class="selectedItems.indexOf(key) > -1 ? 'selected-row' : 'default-row'">
                             <td>
                                 <div>{{source.alias}}</div>
                                 <div class="monospace-red"><span class="branch-name">{{source.branch}}</span> {{source.url}}</div>
