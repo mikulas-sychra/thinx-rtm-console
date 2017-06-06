@@ -171,7 +171,7 @@ angular.module('RTM').controller('SourceController', ['$rootScope', '$scope', 's
         var selectedToRemove = $scope.selectedItems.slice();
 
         revokeSources(selectedToRemove);
-    };
+    };  
 
     $scope.checkItem = function(sourceId) {
         console.log('### toggle item in selectedItems');

@@ -28,21 +28,21 @@ angular.module('RTM').controller('ApikeyController', ['$rootScope', '$scope', 's
         console.log($rootScope.apiKeys);
     }
 
-	$scope.createApikey = function(newApikayAlias) {
+	$scope.createApikey = function(newApikeyAlias) {
 
 		console.log('-- testing for duplicates --');
         for (var apiKeyId in $rootScope.apiKeys) {
             console.log("Looping apiKeys: alias ", $rootScope.apiKeys[apiKeyId].alias);
 
-            if ($rootScope.apiKeys[apiKeyId].alias == newApikayAlias) {
+            if ($rootScope.apiKeys[apiKeyId].alias == newApikeyAlias) {
                 toastr.error('Alias must be unique.', 'THiNX RTM Console', {timeOut: 5000})
                 return;
             }
         }
 
-		console.log('-- asking for new apikey with alias: ' + newApikayAlias + ' --'); 
+		console.log('-- asking for new apikey with alias: ' + newApikeyAlias + ' --'); 
 
-		Thinx.createApikey(newApikayAlias)
+		Thinx.createApikey(newApikeyAlias)
 	        .done(function(response) {
 	            if (typeof(response) !== 'undefined') {
 	                if (response.success) {
@@ -60,15 +60,16 @@ angular.module('RTM').controller('ApikeyController', ['$rootScope', '$scope', 's
 	                    $scope.$apply();
 	                } else {
 	                    console.log(response);
+	                    $('.msg-warning').text(response.status);
+	        			$('.msg-warning').show();
 	                }
 	            } else {
 	            	console.log('error');
 	            	console.log(response);
+	            	toastr.error('Apikey creation failed.', 'THiNX RTM Console', {timeOut: 5000})
 	            }
 	        })
 	        .fail(function(error) {
-	        	$('.msg-warning').text(error);
-	        	$('.msg-warning').show();
 	        	console.log('Error:', error);
 	        });
 
@@ -96,9 +97,9 @@ angular.module('RTM').controller('ApikeyController', ['$rootScope', '$scope', 's
 
 	$scope.resetModal = function() {
 		$scope.newApikey = null;
-		$scope.newApikayAlias = null;
+		$scope.newApikeyAlias = null;
 		$scope.createButtonVisible = true;
-		console.log($scope.newApikayAlias);
+		console.log($scope.newApikeyAlias);
 		console.log('Modal form reset.');
 	}
     

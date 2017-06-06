@@ -13,8 +13,8 @@ var Thinx = {
     apikeyList: function () {
         return apikeyList();
     },
-    createApikey: function (newApikayAlias) {
-        return createApikey(newApikayAlias);
+    createApikey: function (newApikeyAlias) {
+        return createApikey(newApikeyAlias);
     },
     revokeApikey: function (fingerprint) {
         return revokeApikey(fingerprint);
@@ -202,12 +202,12 @@ function apikeyList() {
 	});
 }
 
-function createApikey(newApikayAlias) {
+function createApikey(newApikeyAlias) {
     return $.ajax({
         url: urlBase + '/user/apikey',
         type: 'POST',
         data: JSON.stringify({
-            alias: newApikayAlias
+            alias: newApikeyAlias
         }), 
         dataType: 'json'
     });
