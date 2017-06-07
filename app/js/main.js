@@ -111,6 +111,7 @@ RTM.controller('AppController', ['$scope', '$rootScope', 'webNotification', 'Rol
     $scope.$on('$viewContentLoaded', function() {
         //App.initComponents(); // init core components
         //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive 
+
     });
 
     console.log(' === ROOT === ');
@@ -207,25 +208,25 @@ RTM.controller('AppController', ['$scope', '$rootScope', 'webNotification', 'Rol
             .done(function(data) {
                 updateProfile(data);
             })
-            .fail(error => console.log('Error:', error));
+            .fail(error => console.log('getProfile Error:', error));
 
     Thinx.sourceList()
             .done(function(data) {
                 updateSources(data);
             })
-            .fail(error => console.log('Error:', error));
+            .fail(error => console.log('sourceList Error:', error));
 
     Thinx.getAuditLog()
             .done(function(data) {
                 updateAuditLog(data);
             })
-            .fail(error => console.log('Error:', error));
+            .fail(error => console.log('getAuditLog Error:', error));
 
     Thinx.buildLogList()
             .done(function(data) {
                 updateBuildLogList(data);
             })
-            .fail(error => console.log('Error:', error));
+            .fail(error => console.log('buildLogList Error:', error));
             
 
     function registerNotification() {

@@ -4,10 +4,15 @@
   "description": "THiNX RTM Console",
   "main": "gulpfile.js",
   "scripts": {
-    "test": "nyc --reporter=lcov --reporter=text-lcov protractor test/conf.js"
+    "test": "protractor test/conf.js",
+    "coverage": "nyc report --reporter=text-lcov > coverage.lcov"
   },
   "author": "Mikulas Sychra @ THiNX",
-  "license": "MIT",
+  "repository" : {
+    "type" : "git",
+    "url" : "git://github.com/suculent/thinx-rtm-console.git"
+  },
+  "license": "ISC",
   "dependencies": {
     "qs": "6.0.4",
     "minimatch": "3.0.2",
@@ -24,6 +29,23 @@
     "gulp-sass": "^2.0.4",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-uglify": "^1.4.2",
+    "coveralls" : "^2.13.1",
     "nyc": "^11.0.2"
+  },
+  "nyc": {
+    "check-coverage": true,
+    "include": [
+      "app/**/*.js"
+    ],
+    "exclude": [
+      "test/**/*.spec.js"
+    ],
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ],
+    "cache": true,
+    "all": true,
+    "report-dir": "./coverage"
   }
 }
