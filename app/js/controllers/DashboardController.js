@@ -7,15 +7,13 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
             .done(function(data) {
                 updateDevices(data);
             })
-            .fail(function(error) {
-                console.log('Error:', error);
-            });
+            .fail(error => console.log('deviceList Error:', error));
 
         Thinx.getStats()
             .done(function(data) {
                 updateStats(data);
             })
-            .fail(error => console.log('Error:', error));
+            .fail(error => console.log('getStats Error:', error));
 
         $scope.deviceIndex = null;
         $scope.deviceUdid = null;

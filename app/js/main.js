@@ -207,25 +207,25 @@ RTM.controller('AppController', ['$scope', '$rootScope', 'webNotification', 'Rol
             .done(function(data) {
                 updateProfile(data);
             })
-            .fail(error => console.log('Error:', error));
+            .fail(error => console.log('getProfile Error:', error));
 
     Thinx.sourceList()
             .done(function(data) {
                 updateSources(data);
             })
-            .fail(error => console.log('Error:', error));
+            .fail(error => console.log('sourceList Error:', error));
 
     Thinx.getAuditLog()
             .done(function(data) {
                 updateAuditLog(data);
             })
-            .fail(error => console.log('Error:', error));
+            .fail(error => console.log('getAuditLog Error:', error));
 
     Thinx.buildLogList()
             .done(function(data) {
                 updateBuildLogList(data);
             })
-            .fail(error => console.log('Error:', error));
+            .fail(error => console.log('buildLogList Error:', error));
             
 
     function registerNotification() {
