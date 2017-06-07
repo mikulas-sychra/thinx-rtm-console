@@ -84,7 +84,7 @@ angular.module('RTM').controller('SourceController', ['$rootScope', '$scope', 's
                 $('.msg-warning').text(error);
                 $('.msg-warning').show();
                 console.log('Error:', error);
-                toastr.success('Source Failed.', 'THiNX RTM Console', {timeOut: 5000})
+                toastr.error('Source Failed.', 'THiNX RTM Console', {timeOut: 5000})
             });
 
 	};
@@ -169,8 +169,11 @@ angular.module('RTM').controller('SourceController', ['$rootScope', '$scope', 's
         console.log($scope.selectedItems);
 
         var selectedToRemove = $scope.selectedItems.slice();
-
-        revokeSources(selectedToRemove);
+        if (selectedToRemove.length > 0) {
+            revokeSources(selectedToRemove);
+        } else {
+            toastr.info('Nothing selected.', 'THiNX RTM Console', {timeOut: 1000})
+        }
     };  
 
     $scope.checkItem = function(sourceId) {
@@ -188,7 +191,6 @@ angular.module('RTM').controller('SourceController', ['$rootScope', '$scope', 's
         $scope.sourceAlias = null;
         $scope.sourceUrl = null;
         $scope.sourceBranch = null;
-
         $scope.selectedItems = [];
     };
 

@@ -19,6 +19,9 @@ var Thinx = {
     revokeApikey: function (fingerprint) {
         return revokeApikey(fingerprint);
     },
+    revokeApikeys: function (fingerprints) {
+        return revokeApikeys(fingerprints);
+    },
     // RSA
     rsakeyList: function () {
         return rsakeyList();
@@ -222,6 +225,15 @@ function revokeApikey(fingerprint) {
 	});
 }
 
+function revokeApikeys(fingerprints) {
+    return $.ajax({
+        url: urlBase + '/user/apikey/revoke',
+        type: 'POST',
+        data: JSON.stringify({ fingerprints: fingerprints }), 
+        dataType: 'json'
+    });
+}
+
 
 // Rsakeys /user/rsakey
 //
@@ -249,8 +261,6 @@ function addRsakey(rsakeyAlias, rsakeyValue) {
 }
 
 function revokeRsakey(fingerprint) {
-    console.log(fingerprint);
-
     return $.ajax({
         url: urlBase + '/user/rsakey/revoke',
         type: 'POST',
@@ -262,14 +272,10 @@ function revokeRsakey(fingerprint) {
 }
 
 function revokeRsakeys(fingerprints) {
-    console.log(fingerprints);
-
     return $.ajax({
         url: urlBase + '/user/rsakey/revoke',
         type: 'POST',
-        data: JSON.stringify({ 
-            fingerprints: fingerprints
-        }), 
+        data: JSON.stringify({ fingerprints: fingerprints }), 
         dataType: 'json'
     });
 }
@@ -316,19 +322,6 @@ function revokeSources(sourceIds) {
         data: JSON.stringify({ sourceIds: sourceIds }), 
         dataType: 'json'
     });
-}
-
-function revokeRsakeys(fingerprints) {
-    console.log(fingerprints);
-
-    return $.ajax({
-        url: urlBase + '/user/rsakey/revoke',
-        type: 'POST',
-        data: JSON.stringify({ 
-            fingerprints: fingerprints
-        }), 
-        dataType: 'json'
-    });
 }	
 
 // Profile /user/profile
@@ -362,11 +355,6 @@ function changeProfile(profile) {
         username: profile.info.username,
         owner: profile.info.owner
     }
-
-    console.log('sending profile change request...');
-    console.log({ 
-            info: info
-        });
 
     return $.ajax({
         url: urlBase + '/user/profile',

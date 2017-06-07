@@ -18,7 +18,7 @@
                     <span class="caption-subject bold uppercase">API Keys</span>
                     <span class="caption-helper hide"></span>
                 </div>
-                <div class="actions">
+                <div class="actions hide">
                     <a class="btn btn-circle btn-icon-only btn-default" href="#">
                         <i class="icon-cloud-upload"></i>
                     </a>
@@ -27,8 +27,17 @@
                     </a>
                 </div>
             </div>
-            <div class="portlet-body"> 
-                <a href="#" class="btn green-haze btn-outline" ng-click="resetModal()" data-target="#pageModal" data-toggle="modal">Create API Key</a>
+            <div class="portlet-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <a href="#" class="btn green-haze btn-outline" ng-click="resetModal()" data-target="#pageModal" data-toggle="modal">Create API Key</a>
+
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <button class="btn btn-circle btn-icon-only" ng-class="selectedItems.length > 0 ? 'btn-danger' : 'btn-default'" ng-click="revokeApikeys()" type="button" ><i class="fa fa-trash"></i></button>
+                    </div>
+                </div>
+
                 <div class="table-scrollable table-scrollable-borderless">
                     <table class="table table-hover table-light">
                         <thead>
@@ -45,7 +54,7 @@
                             </tr>
                         </thead>
 
-                        <tr ng-repeat="apikey in $root.apiKeys">
+                        <tr ng-repeat="apikey in $root.apiKeys" ng-click="checkItem(apikey.hash)">
                             <td>
                                 <div>{{apikey.alias}}</div>
                                 <div class="monospace-red">{{apikey.name | limitTo : 10 : apikey.name.length - 10 }}</div>

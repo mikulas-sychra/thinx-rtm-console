@@ -95,12 +95,57 @@ angular.module('RTM').controller('ApikeyController', ['$rootScope', '$scope', 's
 	        });
 	};
 
+	function revokeApikeys(fingerprints) {
+		console.log('--deleting rsa keys ' + hashes.length +'--')
+
+		Thinx.revokeApikeys(fingerprints)
+	        .done(function(data) {
+	        	if (data.success) {
+					toastr.success('Deleted.', 'THiNX RTM Console', {timeOut: 5000})
+	        		console.log('Success:', data);
+
+	        		// remove key from ui
+	        		// clearFromRsaKeys(data.revoked);
+
+	        	} else {
+	        		toastr.error('Revocation failed.', 'THiNX RTM Console', {timeOut: 5000})
+	        	}
+
+	        })
+	        .fail(function (error) {
+	        	// TODO throw error message
+	        	console.log('Error:', error)
+	        });
+	}
+
+	$scope.revokeApikeys = function() {
+		console.log('-- processing selected items --');
+		console.log($scope.selectedItems);
+
+        var selectedToRemove = $scope.selectedItems.slice();
+        if (selectedToRemove.length > 0) {
+            revokeApikeys(selectedToRemove);
+        } else {
+            toastr.info('Nothing selected.', 'THiNX RTM Console', {timeOut: 1000})
+        }
+	};
+
+	$scope.checkItem = function(hash) {
+		console.log('### toggle item in selectedItems');
+		var index = $scope.selectedItems.indexOf(hash);
+		if (index > -1) {
+			console.log('splicing on ', index, ' value ', $scope.selectedItems[index]);
+    		$scope.selectedItems.splice(index, 1);
+		} else {
+			$scope.selectedItems.push(hash);
+		}
+	}
+
 	$scope.resetModal = function() {
 		$scope.newApikey = null;
 		$scope.newApikeyAlias = null;
 		$scope.createButtonVisible = true;
-		console.log($scope.newApikeyAlias);
-		console.log('Modal form reset.');
+		$scope.selectedItems = [];
 	}
     
 }]);

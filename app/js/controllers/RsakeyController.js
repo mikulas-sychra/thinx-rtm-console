@@ -127,13 +127,12 @@ angular.module('RTM').controller('RsakeyController', ['$rootScope', '$scope', 's
 		console.log('-- processing selected items --');
 		console.log($scope.selectedItems);
 
-		var selectedToRemove = $scope.selectedItems.slice();
-
-		revokeRsakeys(selectedToRemove);
-
-		// for (var index in selectedToRemove) {
-            // console.log("Removing ", selectedToRemove[index]);
-        // }
+        var selectedToRemove = $scope.selectedItems.slice();
+        if (selectedToRemove.length > 0) {
+            revokeRsakeys(selectedToRemove);
+        } else {
+            toastr.info('Nothing selected.', 'THiNX RTM Console', {timeOut: 1000})
+        }
 	};	
 
 	$scope.checkItem = function(fingerprint) {
