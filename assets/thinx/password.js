@@ -55,7 +55,7 @@ var PasswordReset = function() {
                 console.log('owner - ' + owner);
                 console.log('reset_key - ' + reset_key);
 
-                var url = 'http://thinx.cloud:7442/api/user/password/set';
+                var url = '//thinx.cloud:7442/api/user/password/set';
 
                 var data = { 
                         password: $('.forget-form input[name=password]').val(), 

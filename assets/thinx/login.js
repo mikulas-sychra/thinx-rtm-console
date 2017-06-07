@@ -133,7 +133,7 @@ var Login = function() {
 
             submitHandler: function(form, event) {
                 event.preventDefault();
-                var url = 'http://thinx.cloud:7442/api/user/password/reset';
+                var url = '//thinx.cloud:7442/api/user/password/reset';
                 $.ajax({
                     url: url,
                     data: { email: $('.forget-form input[name=email]').val() }, //parameters go here in object literal form
@@ -288,7 +288,7 @@ var Login = function() {
 
             submitHandler: function(form, event) {
                 event.preventDefault();
-                var url = 'http://thinx.cloud:7442/api/user/create';
+                var url = '//thinx.cloud:7442/api/user/create';
                 $.ajax({
                     url: url,
                     data: {
