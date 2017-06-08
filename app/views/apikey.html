@@ -54,7 +54,7 @@
                             </tr>
                         </thead>
 
-                        <tr ng-repeat="apikey in $root.apiKeys" ng-click="checkItem(apikey.hash)"
+                        <tr ng-repeat="apikey in $root.apikeys" ng-click="checkItem(apikey.hash)"
                         ng-class="selectedItems.indexOf(apikey.hash) > -1 ? 'selected-row' : 'default-row'">
                             <td>
                                 <div>{{apikey.alias}}</div>

@@ -36,9 +36,9 @@ describe('basic ui tests', function() {
     browser.waitForAngular();
 
     // check new key and close dialog
-    // newApiKey = element(by.css('[name="newApikey"]')).getAttribute('value');
+    // newApikey = element(by.css('[name="newApikey"]')).getAttribute('value');
 
-    // TODO: expect(newApiKey).not.toBe(null);
+    // TODO: expect(newApikey).not.toBe(null);
     // element(by.buttonText("Close")).click();
 
     // wait for modal close

@@ -1,8 +1,8 @@
 // spec.js
 var env = require('./environment.js');
-var newApiKey = null;
+var newApikey = null;
 var newApiAlias = "test-key-alias";
-var newApiKeyFingerprint = null;
+var newApikeyFingerprint = null;
 
 describe('basic ui tests', function() {
   it('should navigate to apikeys and open new apikey modal', function() {
@@ -33,8 +33,8 @@ describe('basic ui tests', function() {
     browser.waitForAngular();
 
     // check new key and close dialog
-    newApiKey = element(by.css('[name="newApikey"]')).getAttribute('value');
-    expect(newApiKey).not.toBe(null);
+    newApikey = element(by.css('[name="newApikey"]')).getAttribute('value');
+    expect(newApikey).not.toBe(null);
     element(by.buttonText("Close")).click();
 
     // wait for modal close
@@ -57,7 +57,7 @@ describe('basic ui tests', function() {
     console.log("TODO: Remove test key..");
     // remove new apikey
 
-    var els = element.all(by.css('tbody tr td a[ng-click*=newApiKeyFingerprint]'));
+    var els = element.all(by.css('tbody tr td a[ng-click*=newApikeyFingerprint]'));
     els.filter(function(elem) {
       return elem.getText().then(function(text) {
         console.log(text);

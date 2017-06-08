@@ -21,20 +21,20 @@ angular.module('RTM').controller('ApikeyController', ['$rootScope', '$scope', 's
 
     function updateKeys(data) {
         var response = JSON.parse(data);
-		$rootScope.apiKeys = response.api_keys;
+		$rootScope.apikeys = response.api_keys;
 		$scope.$apply()
 
         console.log('keys:');
-        console.log($rootScope.apiKeys);
+        console.log($rootScope.apikeys);
     }
 
 	$scope.createApikey = function(newApikeyAlias) {
 
 		console.log('-- testing for duplicates --');
-        for (var apiKeyId in $rootScope.apiKeys) {
-            console.log("Looping apiKeys: alias ", $rootScope.apiKeys[apiKeyId].alias);
+        for (var apikeyId in $rootScope.apikeys) {
+            console.log("Looping apikeys: alias ", $rootScope.apikeys[apikeyId].alias);
 
-            if ($rootScope.apiKeys[apiKeyId].alias == newApikeyAlias) {
+            if ($rootScope.apikeys[apikeyId].alias == newApikeyAlias) {
                 toastr.error('Alias must be unique.', 'THiNX RTM Console', {timeOut: 5000})
                 return;
             }
@@ -82,7 +82,7 @@ angular.module('RTM').controller('ApikeyController', ['$rootScope', '$scope', 's
 	        .done(function(response) {
 	        	if (response.success) {
 	        		console.log('Success:', response.revoked);
-	        		$rootScope.apiKeys.splice(index, 1);
+	        		$rootScope.apikeys.splice(index, 1);
 	        		toastr.success('Revoked.', 'THiNX RTM Console', {timeOut: 5000})
 					$scope.$apply()
 	        	} else {
@@ -96,7 +96,7 @@ angular.module('RTM').controller('ApikeyController', ['$rootScope', '$scope', 's
 	};
 
 	function revokeApikeys(fingerprints) {
-		console.log('--deleting rsa keys ' + hashes.length +'--')
+		console.log('--deleting selected api keys ' + fingerprints.length +'--')
 
 		Thinx.revokeApikeys(fingerprints)
 	        .done(function(data) {
@@ -105,7 +105,7 @@ angular.module('RTM').controller('ApikeyController', ['$rootScope', '$scope', 's
 	        		console.log('Success:', data);
 
 	        		// remove key from ui
-	        		// clearFromRsaKeys(data.revoked);
+	        		// clearFromApikeys(data.revoked);
 
 	        	} else {
 	        		toastr.error('Revocation failed.', 'THiNX RTM Console', {timeOut: 5000})

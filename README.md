@@ -54,7 +54,7 @@ owners (users)
 registratin form
 -- password
 -- password-verify
----> api ---> user will get apiKey
+---> api ---> user will get apikey
 
 
 
