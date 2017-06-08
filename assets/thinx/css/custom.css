@@ -82,8 +82,33 @@
 	opacity: .8;
 }
 
+
+.monospace-muted {
+	font-family: monospace; color: #5bc0de;
+}
+
 .fingerprint-small {
 	font-size: .7em !important;
+}
+
+.monospace-primary {
+	font-family: monospace; color: #0275d8;
+}
+
+.monospace-success {
+	font-family: monospace; color: #5cb85c;
+}
+
+.monospace-info {
+	font-family: monospace; color: #5bc0de;
+}
+
+.monospace-warning {
+	font-family: monospace; color: #f0ad4e;
+}
+
+.monospace-alert {
+	font-family: monospace; color: #d9534f;
 }
 
 .monospace-red {
@@ -130,7 +155,7 @@
 }
 
 .btn-icon-dark i {
-	color: #000000;
+	color: #333;
 	opacity: .8;
 }
 

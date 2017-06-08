@@ -125,19 +125,19 @@ angular.module('RTM').controller('SourceController', ['$rootScope', '$scope', 's
                         toastr.success('Source Removed.', 'THiNX RTM Console', {timeOut: 5000})
                     } else {
                         console.log(response);
-                        toastr.success('Source Removal Failed.', 'THiNX RTM Console', {timeOut: 5000})
+                        toastr.error('Source Removal Failed.', 'THiNX RTM Console', {timeOut: 5000})
                     }
                 } else {
                     console.log('error');
                     console.log(response);
-                    toastr.success('Source Removal Failed.', 'THiNX RTM Console', {timeOut: 5000})
+                    toastr.error('Source Removal Failed.', 'THiNX RTM Console', {timeOut: 5000})
                 }
             })
             .fail(function(error) {
                 $('.msg-warning').text(error);
                 $('.msg-warning').show();
                 console.log('Error:', error);
-                toastr.success('Source Removal Failed.', 'THiNX RTM Console', {timeOut: 5000})
+                toastr.error('Source Removal Failed.', 'THiNX RTM Console', {timeOut: 5000})
             });
 	};
 

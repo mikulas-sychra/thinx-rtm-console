@@ -34,7 +34,7 @@
 
                     </div>
                     <div class="col-md-6 text-right">
-                        <button class="btn btn-circle btn-icon-only" ng-class="selectedItems.length > 0 ? 'btn-warning btn-icon-dark' : 'btn-default'" ng-click="revokeRsakeys()" type="button" ><i class="fa fa-trash"></i></button>
+                        <button class="btn btn-circle btn-icon-only" ng-class="selectedItems.length > 0 ? 'btn-warning btn-icon-dark' : 'btn-default'" ng-click="revokeRsakeys()" type="button" ><i class="icon-trash"></i></button>
                     </div>
                 </div>
 
@@ -55,7 +55,7 @@
                                 <div class="row-item-title">{{rsakey.name}}</div>
                             </td>
                             <td>
-                                <div class="monospace-red">{{rsakey.fingerprint}}</div>
+                                <div class="monospace-info">{{rsakey.fingerprint}}</div>
                             </td>
                         </tr>
                     </table>

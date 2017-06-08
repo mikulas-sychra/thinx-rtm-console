@@ -35,7 +35,7 @@
                         <a href="#" class="btn green-haze btn-outline" ng-click="resetModal()" data-target="#pageModal" data-toggle="modal">Add Source</a>
                     </div>
                     <div class="col-md-6 text-right">
-                        <button class="btn btn-circle btn-icon-only" ng-class="selectedItems.length > 0 ? 'btn-warning' : 'btn-default'" ng-click="revokeSources()" type="button" ><i class="fa fa-trash"></i></button>
+                        <button class="btn btn-circle btn-icon-only" ng-class="selectedItems.length > 0 ? 'btn-warning' : 'btn-default'" ng-click="revokeSources()" type="button" ><i class="icon-trash"></i></button>
                     </div>
                 </div>
 
@@ -55,7 +55,7 @@
                         <tr ng-repeat="(key, source) in $root.sources" ng-click="checkItem(key)" ng-class="selectedItems.indexOf(key) > -1 ? 'selected-row' : 'default-row'">
                             <td>
                                 <div>{{source.alias}}</div>
-                                <div class="monospace-red"><span class="branch-name">{{source.branch}}</span> {{source.url}}</div>
+                                <div class="monospace-info"><span class="branch-name">{{source.branch}}</span> {{source.url}}</div>
                             </td>
                             <td>
                                 <a class="btn btn-circle btn-icon-only btn-danger" href="#" ng-click="revokeSource(key)"><i class="fa fa-times"></i>
