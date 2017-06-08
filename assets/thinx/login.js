@@ -288,7 +288,12 @@ var Login = function() {
 
             submitHandler: function(form, event) {
                 event.preventDefault();
-                var url = '//thinx.cloud:7442/api/user/create';
+
+                var url = 'http://thinx.cloud:7442/api/user/create';
+                if (location.protocol != 'https:') {
+                    var url = 'https://thinx.cloud:7442/api/user/create';
+                }
+                
                 $.ajax({
                     url: url,
                     data: {
