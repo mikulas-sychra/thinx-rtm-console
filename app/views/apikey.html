@@ -34,7 +34,7 @@
 
                     </div>
                     <div class="col-md-6 text-right">
-                        <button class="btn btn-circle btn-icon-only" ng-class="selectedItems.length > 0 ? 'btn-danger' : 'btn-default'" ng-click="revokeApikeys()" type="button" ><i class="fa fa-trash"></i></button>
+                        <button class="btn btn-circle btn-icon-only" ng-class="selectedItems.length > 0 ? 'btn-warning' : 'btn-default'" ng-click="revokeApikeys()" type="button" ><i class="fa fa-trash"></i></button>
                     </div>
                 </div>
 
@@ -54,7 +54,8 @@
                             </tr>
                         </thead>
 
-                        <tr ng-repeat="apikey in $root.apiKeys" ng-click="checkItem(apikey.hash)">
+                        <tr ng-repeat="apikey in $root.apiKeys" ng-click="checkItem(apikey.hash)"
+                        ng-class="selectedItems.indexOf(apikey.hash) > -1 ? 'selected-row' : 'default-row'">
                             <td>
                                 <div>{{apikey.alias}}</div>
                                 <div class="monospace-red">{{apikey.name | limitTo : 10 : apikey.name.length - 10 }}</div>

@@ -126,7 +126,12 @@
 }
 
 .selected-row {
-	border-left: 10px solid red;
+	border-left: 10px solid #f39c12;
+}
+
+.btn-icon-dark i {
+	color: #000000;
+	opacity: .8;
 }
 
 .selected-row:hover {
