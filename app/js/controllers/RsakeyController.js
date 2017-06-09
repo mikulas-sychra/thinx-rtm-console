@@ -84,19 +84,21 @@ angular.module('RTM').controller('RsakeyController', ['$rootScope', '$scope', 's
 
 	};
 
-	function clearFromRsaKeys(fingerprint) {
+	function clearFromRsaKeys(fingerprints) {
 
-		$scope.checkItem(fingerprint);
+		for (var i in fingerprints) {
+			$scope.checkItem(fingerprints[i]);
 
-		// loop through rsaKeys and selectedItems, delete on match, then refresh
-		for (var index in $rootScope.rsaKeys) {
-	        if ($rootScope.rsaKeys[index].fingerprint == fingerprint) {
-	        	delete $rootScope.rsaKeys[index];
-	        }
-	    }
+			// loop through rsaKeys and selectedItems, delete on match, then refresh
+			for (var index in $rootScope.rsaKeys) {
+	        	if ($rootScope.rsaKeys[index].fingerprint == fingerprint) {
+	        		delete $rootScope.rsaKeys[index];
+	        	}
+	    	}
+		}
+		
 	    // remove deleted keys from array
 	    $rootScope.rsaKeys.filter(n => n);
-	    // reuse selectbox function to clear deleted key from selectedItems
 	    $scope.$apply();
 	}
 
@@ -110,7 +112,13 @@ angular.module('RTM').controller('RsakeyController', ['$rootScope', '$scope', 's
 	        		console.log('Success:', data);
 
 	        		// remove key from ui
-	        		// clearFromRsaKeys(data.revoked);
+	        		// clearFromRsaKeys(data.status);
+
+	        		Thinx.rsakeyList()
+					        .done( function(data) {
+					        	updateKeys(data)
+					        })
+					        .fail(error => console.log('Error:', error));
 
 	        	} else {
 	        		toastr.error('Revocation failed.', 'THiNX RTM Console', {timeOut: 5000})
