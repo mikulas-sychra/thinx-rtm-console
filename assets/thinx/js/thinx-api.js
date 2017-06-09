@@ -254,7 +254,7 @@ function rsakeyList() {
 
 function addRsakey(rsakeyAlias, rsakeyValue) {
     return $.ajax({
-        url: urlBase + '/user/rsakey',
+        url: urlBase + '/user/rsakey/add',
         type: 'POST',
         data: JSON.stringify({ 
             alias: rsakeyAlias,
