@@ -1,6 +1,6 @@
 // Thninx API Ajax Class
 var urlBase = 'http://thinx.cloud:7442/api';
-if (location.protocol != 'https:') {
+if (location.protocol == 'https:') {
     var urlBase = 'https://thinx.cloud:7443/api';
 }
 

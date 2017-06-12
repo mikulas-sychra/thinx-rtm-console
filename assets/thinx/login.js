@@ -46,7 +46,7 @@ var Login = function() {
             submitHandler: function(form, event) {
                 event.preventDefault();
                 var url = 'http://thinx.cloud:7442/api/login';
-                if (location.protocol != 'https:') {
+                if (location.protocol == 'https:') {
                     var url = 'https://thinx.cloud:7443/api/login';
                 }
 
@@ -138,7 +138,7 @@ var Login = function() {
                 event.preventDefault();
 
                 var url = 'http://thinx.cloud:7442/api/user/password/reset';
-                if (location.protocol != 'https:') {
+                if (location.protocol == 'https:') {
                     var url = 'https://thinx.cloud:7443/api/user/password/reset';
                 }
 
@@ -298,7 +298,7 @@ var Login = function() {
                 event.preventDefault();
 
                 var url = 'http://thinx.cloud:7442/api/user/create';
-                if (location.protocol != 'https:') {
+                if (location.protocol == 'https:') {
                     var url = 'https://thinx.cloud:7442/api/user/create';
                 }
                 

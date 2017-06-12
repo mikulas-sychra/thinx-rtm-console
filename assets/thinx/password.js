@@ -56,7 +56,7 @@ var PasswordReset = function() {
                 console.log('reset_key - ' + reset_key);
 
                 var url = 'http://thinx.cloud:7442/api/user/password/set';
-                if (location.protocol != 'https:') {
+                if (location.protocol == 'https:') {
                     var url = 'https://thinx.cloud:7443/api/user/password/set';
                 }
 
