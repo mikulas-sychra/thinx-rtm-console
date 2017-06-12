@@ -1,5 +1,10 @@
 var Login = function() {
 
+    var urlBase = 'http://thinx.cloud:7442/api';
+    if (location.protocol == 'https:') {
+        var urlBase = 'https://thinx.cloud:7443/api';
+    }
+
     var handleLogin = function() {
         $('.login-form').validate({
             errorElement: 'span', //default input error message container
@@ -45,13 +50,9 @@ var Login = function() {
 
             submitHandler: function(form, event) {
                 event.preventDefault();
-                var url = 'http://thinx.cloud:7442/api/login';
-                if (location.protocol == 'https:') {
-                    var url = 'https://thinx.cloud:7443/api/login';
-                }
 
                 $.ajax({
-                    url: url,
+                    url: urlBase + '/login',
                     xhrFields: {
                         withCredentials: true
                     },
@@ -137,13 +138,8 @@ var Login = function() {
             submitHandler: function(form, event) {
                 event.preventDefault();
 
-                var url = 'http://thinx.cloud:7442/api/user/password/reset';
-                if (location.protocol == 'https:') {
-                    var url = 'https://thinx.cloud:7443/api/user/password/reset';
-                }
-
                 $.ajax({
-                    url: url,
+                    url: urlBase + '/user/password/reset',
                     data: { email: $('.forget-form input[name=email]').val() }, //parameters go here in object literal form
                     type: 'POST',
                     datatype: 'json',
@@ -296,14 +292,9 @@ var Login = function() {
 
             submitHandler: function(form, event) {
                 event.preventDefault();
-
-                var url = 'http://thinx.cloud:7442/api/user/create';
-                if (location.protocol == 'https:') {
-                    var url = 'https://thinx.cloud:7442/api/user/create';
-                }
                 
                 $.ajax({
-                    url: url,
+                    url: urlBase + '/user/create',
                     data: {
                         first_name: $('.register-form input[name=first_name]').val(),
                         last_name: $('.register-form input[name=last_name]').val(),

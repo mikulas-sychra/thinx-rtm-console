@@ -1,5 +1,10 @@
 var PasswordReset = function() {
 
+    var urlBase = 'http://thinx.cloud:7442/api';
+    if (location.protocol == 'https:') {
+        var urlBase = 'https://thinx.cloud:7443/api';
+    }
+
     var handleForgetPassword = function() {
         $('.forget-form').validate({
             errorElement: 'span', //default input error message container
@@ -51,15 +56,6 @@ var PasswordReset = function() {
                 var owner = $.getQuery('owner');
                 var reset_key = $.getQuery('reset_key');
 
-                console.log('activation - ' + activation);
-                console.log('owner - ' + owner);
-                console.log('reset_key - ' + reset_key);
-
-                var url = 'http://thinx.cloud:7442/api/user/password/set';
-                if (location.protocol == 'https:') {
-                    var url = 'https://thinx.cloud:7443/api/user/password/set';
-                }
-
                 var data = { 
                         password: $('.forget-form input[name=password]').val(), 
                         rpassword: $('.forget-form input[name=rpassword]').val(),
@@ -75,7 +71,7 @@ var PasswordReset = function() {
                 }
 
                 $.ajax({
-                    url: url,
+                    url: urlBase + '/user/password/set',
                     data: data,
                     type: 'POST',
                     datatype: 'json',
