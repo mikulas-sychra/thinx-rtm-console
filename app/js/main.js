@@ -59,6 +59,29 @@ RTM.factory('settings', ['$rootScope', function($rootScope) {
     $rootScope.settings = settings;
     $rootScope.searchText = "";
 
+    console.log(' === ROOT === ');
+    console.log($rootScope);
+
+    // UI temporary data, might be saved to localstorage
+    if (typeof($rootScope.meta) == "undefined") {
+        $rootScope.meta = {};
+        $rootScope.meta.builds = []; // for build id queues
+    }
+
+    $rootScope.sources = [];
+    $rootScope.devices = [];
+    $rootScope.rsakeys = [];
+    $rootScope.apikeys = [];
+    $rootScope.buildlog = [];
+    $rootScope.auditlog = [];
+
+    $rootScope.profile = {};
+    $rootScope.meta = {
+        builds: []
+    };
+
+    $rootScope.stats = {};
+
     return settings;
 }]);
 
@@ -111,146 +134,7 @@ RTM.controller('AppController', ['$scope', '$rootScope', 'webNotification', 'Rol
     $scope.$on('$viewContentLoaded', function() {
         //App.initComponents(); // init core components
         //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive 
-
     });
-
-    console.log(' === ROOT === ');
-    console.log($rootScope);
-
-    // UI temporary data, might be saved to localstorage
-    if (typeof($rootScope.meta) == "undefined") {
-        $rootScope.meta = {};
-        $rootScope.meta.builds = []; // for build id queues
-    }
-
-    $rootScope.logoutMe = function () {
-        Thinx.getLogout()
-            .done(function(data) {
-                console.log("logout response:");
-                console.log(data);
-            })
-            .fail(error => console.log('Error:', error));
-    }
-
-    function updateProfile(data) {
-        var response = JSON.parse(data);
-
-        if (typeof(response) !== 'undefined' && typeof(response.success) !== 'undefined' && response.success) {
-
-            console.log('-- processing profile ---');
-            console.log(response);
-
-            $rootScope.profile = response.profile;
-
-            if (typeof($rootScope.profile.info.goals) == 'undefined') {
-                console.log('- goals not defined yet -');
-                $rootScope.profile.info.goals = [];
-                // $rootScope.profile.info.goals = ['apikey','enroll','rsakey','source','update','build','profile_privacy','profile_avatar'];
-            }
-
-            if (typeof($rootScope.profile.avatar) == 'undefined' || $rootScope.profile.avatar.length == 0) {
-                $rootScope.profile.avatar = '/assets/thinx/img/default_avatar_sm.png';
-            }
-
-            $scope.$apply();
-        }
-    }
-
-    function updateSources(data) {
-
-        console.log('-- processing sources --');        
-        var response = JSON.parse(data);
-        console.log(response);
-
-        $rootScope.sources = {};
-        $.each(response.sources, function(key, value) {
-              $rootScope.sources[key] = value;
-        });
-        $scope.$apply();
-
-        console.log('sources:');
-        console.log($rootScope.sources);
-    }
-
-    function updateAuditLog(data) {
-        var response = JSON.parse(data);
-
-        $rootScope.auditlog = response.logs;
-        $scope.$apply()
-
-        console.log('auditlog:');
-        console.log($rootScope.auditlog);
-    }
-
-    function updateBuildLogList(data) {
-        if (typeof($rootScope.buildlog) == 'undefined') {
-            // build log is not defined yet (can be defined by getBuildLog)
-            $rootScope.buildlog = {};
-        }
-
-        var response = JSON.parse(data);
-        console.log('buildlog list response:');
-        console.log(response)
-
-        if (typeof(response.success !== 'undefined') && response.success) {
-            $rootScope.buildlog = response.builds;
-            $scope.$apply()
-            console.log('buildlog list:');
-            console.log($rootScope.buildlog);
-        } else {
-            console.log('Buildlog list fetch error.') ;
-        }
-        
-    }
-    
-    
-    Thinx.getProfile()
-            .done(function(data) {
-                updateProfile(data);
-            })
-            .fail(error => console.log('getProfile Error:', error));
-
-    Thinx.sourceList()
-            .done(function(data) {
-                updateSources(data);
-            })
-            .fail(error => console.log('sourceList Error:', error));
-
-    Thinx.getAuditLog()
-            .done(function(data) {
-                updateAuditLog(data);
-            })
-            .fail(error => console.log('getAuditLog Error:', error));
-
-    Thinx.buildLogList()
-            .done(function(data) {
-                updateBuildLogList(data);
-            })
-            .fail(error => console.log('buildLogList Error:', error));
-            
-
-    function registerNotification() {
-        $webNotification.showNotification('Wohoo!', {
-            body: 'Browser Notification Test Success.',
-            icon: '/assets/thinx/img/favicon-32x32.png',
-            onClick: function onNotificationClicked() {
-                console.log('Notification clicked.');
-            },
-            autoClose: 4000 //auto close the notification after 4 seconds (you can manually close it via hide function)
-        }, function onShow(error, hide) {
-            if (error) {
-                window.alert('Unable to show notification: ' + error.message);
-            } else {
-                console.log('Notification Shown.');
-
-                setTimeout(function hideNotification() {
-                    console.log('Hiding notification....');
-                    hide(); //manually close the notification (you can skip this if you use the autoClose option)
-                }, 5000);
-            }
-        });
-    }
-
 }]);
 
 /***
@@ -331,6 +215,7 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                             '../assets/thinx/js/plugins/ui-select/select.js',
 
                             '../assets/thinx/js/dashboard.js',
+                            'js/thinx-api.js',
                             'js/controllers/DashboardController.js',
                         ] 
                     });
@@ -351,6 +236,7 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                         insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
                         files: [
                             '../assets/global/plugins/clipboardjs/clipboard.js',
+                            'js/thinx-api.js',
                             'js/controllers/ApikeyController.js'
                         ] 
                     });
@@ -370,6 +256,7 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                         name: 'RTM',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
                         files: [
+                            'js/thinx-api.js',
                             'js/controllers/RsakeyController.js'
                         ] 
                     });
@@ -389,6 +276,7 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                         name: 'RTM',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
                         files: [
+                            'js/thinx-api.js',
                             'js/controllers/SourceController.js'
                         ] 
                     });
@@ -419,6 +307,7 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 
                             '../assets/thinx/js/profile.min.js',
 
+                            'js/thinx-api.js',
                             'js/controllers/UserProfileController.js'
                         ]                    
                     });

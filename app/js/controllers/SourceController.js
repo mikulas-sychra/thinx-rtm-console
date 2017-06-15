@@ -9,9 +9,12 @@ angular.module('RTM').controller('SourceController', ['$rootScope', '$scope', 's
         $rootScope.settings.layout.pageBodySolid = false;
         $rootScope.settings.layout.pageSidebarClosed = false;
 
+        Thinx.init($rootScope, $scope);
+
         Thinx.sourceList()
             .done( function(data) {
-                updateSources(data)
+                console.log('+++ updateSources ');
+                $rootScope.$emit("updateSources", data);
             })
             .fail(error => console.log('Error:', error));
 
@@ -19,21 +22,6 @@ angular.module('RTM').controller('SourceController', ['$rootScope', '$scope', 's
 
     });
 
-    function updateSources(data) {
-
-        console.log('-- processing sources --');        
-        var response = JSON.parse(data);
-        console.log(response);
-
-        $rootScope.sources = {};
-        $.each(response.sources, function(key, value) {
-              $rootScope.sources[key] = value;
-        });
-        $scope.$apply();
-
-        console.log('sources:');
-        console.log($rootScope.sources);
-    }
 
     $scope.addSource = function() {
 	
@@ -63,7 +51,7 @@ angular.module('RTM').controller('SourceController', ['$rootScope', '$scope', 's
 
                         Thinx.sourceList()
                             .done( function(data) {
-                                updateSources(data)
+                                $scope.updateSources(data)
                             })
                             .fail(error => console.log('Error:', error));
 

@@ -98,7 +98,140 @@ var Thinx = {
     },
     getLogout: function () {
         return getLogout();
+    },
+    init: function ($rootScope, $scope) {
+        return init($rootScope, $scope);
     }
+}
+
+function init($rootScope, $scope) {
+
+    console.log('THiNX API INIT');
+
+    console.log($rootScope);
+    console.log($scope);
+
+    $rootScope.$on("updateSources", function(event, data){
+        updateSources(data);
+    });
+
+     function updateSources(data) {
+        console.log('-- processing sources --');        
+        var response = JSON.parse(data);
+        console.log(response);
+
+        $rootScope.sources = {};
+        $.each(response.sources, function(key, value) {
+              $rootScope.sources[key] = value;
+        });
+        $scope.$apply();
+
+        console.log('sources:');
+        console.log($rootScope.sources);
+    }
+
+    // =================================================
+
+    // api related functions
+
+    function updateProfile(data) {
+        var response = JSON.parse(data);
+
+        if (typeof(response) !== 'undefined' && typeof(response.success) !== 'undefined' && response.success) {
+
+            console.log('-- processing profile ---');
+            console.log(response);
+
+            $rootScope.profile = response.profile;
+
+            if (typeof($rootScope.profile.info.goals) == 'undefined') {
+                console.log('- goals not defined yet -');
+                $rootScope.profile.info.goals = [];
+                // $rootScope.profile.info.goals = ['apikey','enroll','rsakey','source','update','build','profile_privacy','profile_avatar'];
+            }
+
+            if (typeof($rootScope.profile.avatar) == 'undefined' || $rootScope.profile.avatar.length == 0) {
+                $rootScope.profile.avatar = '/assets/thinx/img/default_avatar_sm.png';
+            }
+
+            $scope.$apply();
+        }
+    }
+
+
+
+    function updateAuditLog(data) {
+        var response = JSON.parse(data);
+
+        $rootScope.auditlog = response.logs;
+        $scope.$apply()
+
+        console.log('auditlog:');
+        console.log($rootScope.auditlog);
+    }
+
+    function updateBuildLogList(data) {
+        if (typeof($rootScope.buildlog) == 'undefined') {
+            // build log is not defined yet (can be defined by getBuildLog)
+            $rootScope.buildlog = {};
+        }
+
+        var response = JSON.parse(data);
+        console.log('buildlog list response:');
+        console.log(response)
+
+        if (typeof(response.success !== 'undefined') && response.success) {
+            $rootScope.buildlog = response.builds;
+            $scope.$apply()
+            console.log('buildlog list:');
+            console.log($rootScope.buildlog);
+        } else {
+            console.log('Buildlog list fetch error.') ;
+        }
+        
+    }
+            
+
+    function registerNotification() {
+        $webNotification.showNotification('Wohoo!', {
+            body: 'Browser Notification Test Success.',
+            icon: '/assets/thinx/img/favicon-32x32.png',
+            onClick: function onNotificationClicked() {
+                console.log('Notification clicked.');
+            },
+            autoClose: 4000 //auto close the notification after 4 seconds (you can manually close it via hide function)
+        }, function onShow(error, hide) {
+            if (error) {
+                window.alert('Unable to show notification: ' + error.message);
+            } else {
+                console.log('Notification Shown.');
+
+                setTimeout(function hideNotification() {
+                    console.log('Hiding notification....');
+                    hide(); //manually close the notification (you can skip this if you use the autoClose option)
+                }, 5000);
+            }
+        });
+    }
+
+    Thinx.getProfile()
+            .done(function(data) {
+                updateProfile(data);
+            })
+            .fail(error => console.log('getProfile Error:', error));
+
+
+    Thinx.getAuditLog()
+            .done(function(data) {
+                updateAuditLog(data);
+            })
+            .fail(error => console.log('getAuditLog Error:', error));
+
+    Thinx.buildLogList()
+            .done(function(data) {
+                updateBuildLogList(data);
+            })
+            .fail(error => console.log('buildLogList Error:', error));
 }
 
 function updateTimer() {

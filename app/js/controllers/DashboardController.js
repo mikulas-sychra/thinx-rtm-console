@@ -3,17 +3,26 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
         // initialize core components
         App.initAjax();
 
-        Thinx.deviceList()
-            .done(function(data) {
-                updateDevices(data);
-            })
-            .fail(error => console.log('deviceList Error:', error));
+        Thinx.init($rootScope, $scope);
 
         Thinx.getStats()
             .done(function(data) {
                 updateStats(data);
             })
             .fail(error => console.log('getStats Error:', error));
+
+        Thinx.sourceList()
+            .done(function(data) {
+                console.log('+++ updateSources ');
+                $rootScope.$emit("updateSources", data);
+            })
+            .fail(error => console.log('sourceList Error:', error));
+
+        Thinx.deviceList()
+            .done(function(data) {
+                updateDevices(data);
+            })
+            .fail(error => console.log('deviceList Error:', error));
 
         $scope.deviceIndex = null;
         $scope.deviceUdid = null;
@@ -426,6 +435,15 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
             $scope.$apply();
             i++;
         }, 3000);
+    }
+
+    $rootScope.logoutMe = function () {
+        Thinx.getLogout()
+            .done(function(data) {
+                console.log("logout response:");
+                console.log(data);
+            })
+            .fail(error => console.log('Error:', error));
     }
 
 });
