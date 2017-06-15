@@ -94,7 +94,16 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
             $rootScope.stats.total.DEVICES = $rootScope.devices.length;
         }
 
-        $("#sparkline_bar").sparkline($rootScope.stats.daily.DEVICE_CHECKIN, {
+        var debugData = []; // $rootScope.stats.daily.DEVICE_CHECKIN
+        for(i = 0; i < 10; i++) {
+            debugData.push( 
+                
+                (parseInt($rootScope.stats.daily.DEVICE_CHECKIN) * Math.floor((Math.random() * 100) + 1))
+
+                 );
+        };
+
+        $("#sparkline_bar").sparkline(debugData, {
             type: 'bar',
             width: '100',
             barWidth: 5,
@@ -103,7 +112,16 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
             negBarColor: '#29b4b6'
         });
 
-        $("#sparkline_bar2").sparkline($rootScope.stats.daily.DEVICE_NEW, {
+        var debugData = []; // $rootScope.stats.daily.DEVICE_NEW
+        for(i = 0; i < 10; i++) {
+            debugData.push( 
+                
+                (parseInt($rootScope.stats.daily.DEVICE_NEW) * Math.floor((Math.random() * 100) + 1))
+
+                 );
+        };
+
+        $("#sparkline_bar2").sparkline(debugData, {
             type: 'bar',
             width: '100',
             barWidth: 5,
