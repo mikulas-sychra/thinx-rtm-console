@@ -182,26 +182,41 @@
     background: transparent;
 }
 
-.device-lastseen {
-	background-color: rgba(50,197,210,1);
+.device-lastseen-label {
+	background-color: rgba(38, 194, 129, 0.08);
 	padding: 3px 5px 3px 5px;
 	font-size: .6em;
 	display: inline-block;
-	color: white;
+	color: #20b376;
+	border: 1px solid #26c281;
+}
+
+.device-mac-label {
+	background-color: rgba(128, 128, 128, 0.08);
+	padding: 3px 5px 3px 5px;
+	font-size: .6em;
+	display: inline-block;
+	color: #000000;
+	border: 1px solid rgba(128, 128, 128, 0.08);
+}
+
+.mac-label {
+	font-weight: bold;
+	margin-right: 1em;
 }
 
 .device-firmware {
-	margin-top: 10px;
+	margin-top: 4px;
 	font-size: .9em;
 }
 
 .device-mac {
-	margin-top: 10px;
+	margin-top: 4px;
 	font-size: .9em;
 }
 
 .device-alias {
-	font-size: 1.5em;
+	font-size: 1.2em;
 }
 
 
