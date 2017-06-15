@@ -111,12 +111,14 @@ angular.module('RTM').controller('RsakeyController', ['$rootScope', '$scope', 's
 					toastr.success('Deleted.', 'THiNX RTM Console', {timeOut: 5000})
 	        		console.log('Success:', data);
 
+	        		$scope.selectedItems = [];
+
 	        		// remove key from ui
 	        		// clearFromRsaKeys(data.status);
 
 	        		Thinx.rsakeyList()
 					        .done( function(data) {
-					        	updateKeys(data)
+					        	updateKeys(data);
 					        })
 					        .fail(error => console.log('Error:', error));
 
