@@ -224,20 +224,20 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
                 console.log(response);
 
                 if (typeof(response) !== "undefined") {
-                    if (typeof(response.build) !== "undefined" && response.build.success) {
-                        console.log(response.build);
+                    if (typeof(response) !== "undefined" && response.success) {
+                        console.log(response);
 
-                        console.log(' --- save last build id: ' + response.build.id + ' ---');
+                        console.log(' --- save last build id: ' + response.build_id + ' ---');
 
                         // prepare user metadata for particular device
-                        $rootScope.meta.builds[deviceUdid].push(response.build.id);
+                        $rootScope.meta.builds[deviceUdid].push(response.build_id);
                         $scope.$apply();
 
-                        toastr.info(response.build.status, 'THiNX RTM Console', {timeOut: 5000});
+                        toastr.info(response.status, 'THiNX RTM Console', {timeOut: 5000});
             
                     } else {
                         console.log(response);
-                        toastr.error(response.build.status, 'THiNX RTM Console', {timeOut: 5000})
+                        toastr.error(response.status, 'THiNX RTM Console', {timeOut: 5000})
                     }
                 } else {
                     console.log('error');
