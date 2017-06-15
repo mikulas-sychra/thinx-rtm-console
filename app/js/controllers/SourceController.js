@@ -51,7 +51,7 @@ angular.module('RTM').controller('SourceController', ['$rootScope', '$scope', 's
 
                         Thinx.sourceList()
                             .done( function(data) {
-                                $scope.updateSources(data)
+                                $rootScope.$emit("updateSources", data);
                             })
                             .fail(error => console.log('Error:', error));
 
