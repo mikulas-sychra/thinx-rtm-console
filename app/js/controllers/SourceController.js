@@ -97,38 +97,6 @@ angular.module('RTM').controller('SourceController', ['$rootScope', '$scope', 's
         }
     };
 
-	$scope.revokeSource = function(sourceId, index) {
-
-		console.log('-- removing source ' + sourceId + '--'); 
-
-        Thinx.revokeSource(sourceId)
-            .done(function(response) {
-                if (typeof(response) !== 'undefined') {
-                    if (response.success) {
-                        console.log(response);
-                        
-                        delete $rootScope.sources[sourceId];
-                        
-                        $scope.$apply()
-                        toastr.success('Source Removed.', 'THiNX RTM Console', {timeOut: 5000})
-                    } else {
-                        console.log(response);
-                        toastr.error('Source Removal Failed.', 'THiNX RTM Console', {timeOut: 5000})
-                    }
-                } else {
-                    console.log('error');
-                    console.log(response);
-                    toastr.error('Source Removal Failed.', 'THiNX RTM Console', {timeOut: 5000})
-                }
-            })
-            .fail(function(error) {
-                $('.msg-warning').text(error);
-                $('.msg-warning').show();
-                console.log('Error:', error);
-                toastr.error('Source Removal Failed.', 'THiNX RTM Console', {timeOut: 5000})
-            });
-	};
-
     function revokeSources(selectedItems) {
         console.log('--deleting sources ' + selectedItems.length +'--')
 
@@ -140,6 +108,12 @@ angular.module('RTM').controller('SourceController', ['$rootScope', '$scope', 's
 
                     // remove source from ui
                     // clearFromRsaKeys(data.revoked);
+
+                    Thinx.sourceList()
+                            .done( function(data) {
+                                $rootScope.$emit("updateSources", data);
+                            })
+                            .fail(error => console.log('Error:', error));
 
                 } else {
                     toastr.error('Revocation failed.', 'THiNX RTM Console', {timeOut: 5000})
@@ -160,7 +134,7 @@ angular.module('RTM').controller('SourceController', ['$rootScope', '$scope', 's
         if (selectedToRemove.length > 0) {
             revokeSources(selectedToRemove);
         } else {
-            toastr.info('Nothing selected.', 'THiNX RTM Console', {timeOut: 1000})
+            toastr.warning('Nothing selected.', 'THiNX RTM Console', {timeOut: 1000})
         }
     };  
 

@@ -141,7 +141,7 @@ angular.module('RTM').controller('RsakeyController', ['$rootScope', '$scope', 's
         if (selectedToRemove.length > 0) {
             revokeRsakeys(selectedToRemove);
         } else {
-            toastr.info('Nothing selected.', 'THiNX RTM Console', {timeOut: 1000})
+            toastr.warning('Nothing selected.', 'THiNX RTM Console', {timeOut: 1000})
         }
 	};	
 

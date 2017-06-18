@@ -75,26 +75,6 @@ angular.module('RTM').controller('ApikeyController', ['$rootScope', '$scope', 's
 
 	};
 
-	$scope.revokeApikey = function(fingerprint, index) {
-		console.log('--revoking key ' + fingerprint +'--')
-
-		Thinx.revokeApikey(fingerprint)
-	        .done(function(response) {
-	        	if (response.success) {
-	        		console.log('Success:', response.revoked);
-	        		$rootScope.apikeys.splice(index, 1);
-	        		toastr.success('Revoked.', 'THiNX RTM Console', {timeOut: 5000})
-					$scope.$apply()
-	        	} else {
-	        		toastr.error('Revocation failed.', 'THiNX RTM Console', {timeOut: 5000})
-	        	}
-	        })
-	        .fail(function (error) {
-	        	// TODO throw error message
-	        	console.log('Error:', error)
-	        });
-	};
-
 	function revokeApikeys(fingerprints) {
 		console.log('--deleting selected api keys ' + fingerprints.length +'--')
 

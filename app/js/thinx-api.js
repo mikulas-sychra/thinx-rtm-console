@@ -456,7 +456,7 @@ function revokeSources(sourceIds) {
     return $.ajax({
         url: urlBase + '/user/source/revoke',
         type: 'POST',
-        data: JSON.stringify({ sourceIds: sourceIds }), 
+        data: JSON.stringify({ source_ids: sourceIds }), 
         dataType: 'json'
     });
 }	
