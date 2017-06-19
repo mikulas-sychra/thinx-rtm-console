@@ -28,6 +28,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
         $scope.deviceUdid = null;
         $scope.deviceAlias = null;
         $scope.modalLogBody = "";
+        $scope.modalLogBodyBuffer = "";
     });
 
     // set sidebar closed and body solid layout mode
@@ -278,31 +279,34 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
 
                 $scope.ws.onopen = function() {
                     console.log("Websocket connection estabilished.");
-                    $scope.modalLogBody = $scope.modalLogBody + "\n## Websocket connection estabilished ##\n";
-                    $scope.$apply();
+                    $scope.modalLogBodyBuffer = $scope.modalLogBodyBuffer + "\n## Websocket connection estabilished ##\n";
+
+                    $scope.refreshLog();
+
+                    $('#logModal').modal('show');
                     startDebugInterval();
+
                 };
                 $scope.ws.onmessage = function (message) {
                     console.log('Received message...');
 
-                    var msg = JSON.parse(message.data);
-                    console.log(msg);
+                    // var msg = JSON.parse(message.data);
+                    console.log(message.data);
+                    var msgType = message.data.substr(2, 12);
 
-                    if (typeof(msg.notification) !== "undefined") {
+                    if (msgType == "notification") {
                         console.log('Notification:');
-                        console.log(msg.notification);
-                        toastr.info(msg.notification.title, msg.notification.body, {timeOut: 5000})    
-                        // $scope.modalLogBody.unshift(msg.notification.title + ": " + msg.notification.body);
+                        var msgBody = JSON.parse(message.data);
+                        console.log(msgBody.notification);
+                        toastr.info(msgBody.notification.title, msgBody.notification.body, {timeOut: 5000})    
+                    } else {
+                        // if (typeof(msg.log) !== "undefined") {
+                        // console.log('Log:');
+                        // console.log(msg.log.message);
+                        $scope.modalLogBodyBuffer = $scope.modalLogBodyBuffer + "\n" + message.data;
+                        // }
                     }
-
-                    if (typeof(msg.log) !== "undefined") {
-                        console.log('Log:');
-                        console.log(msg.log);
-                        $scope.modalLogBody = $scope.modalLogBody + "\n" + (msg.log.message);
-                    }
-
-                    $scope.$apply();
-                    $('#logModal').modal('show');
+                    
                };
                $scope.ws.onclose = function()
                {
@@ -449,10 +453,10 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     function startDebugInterval() {
         var i = 0;
         setInterval(function(){ 
-            $scope.modalLogBody = $scope.modalLogBody + "\n* " + i + " *\n";
-            $scope.$apply();
+            $scope.modalLogBody = $scope.modalLogBodyBuffer + "\n* " + i + " *\n";
+            $scope.$digest();
             i++;
-        }, 3000);
+        }, 2000);
     }
 
     $rootScope.logoutMe = function () {
