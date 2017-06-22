@@ -155,7 +155,38 @@
 }
 
 .selected-row {
-	border-left: 10px solid #f39c12;
+	/*border-left: 10px solid #f39c12;*/
+}
+
+/* The animation code */
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+.selected-row td::before{
+	content: '\f057';
+	font-family: FontAwesome;
+	/* font-style: normal; */
+	/* font-weight: normal; */
+	/* text-decoration: inherit; */
+	text-align: center;
+	/* vertical-align: top; */
+	font-size: 15px;
+	/* margin-top: 0px; */
+	color: #ed6b75;
+	position: absolute;
+	display: inline-block;
+	animation-name: fadeIn;
+  animation-duration: .5s;
+	width: 20px;
+	height: 20px;
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
+	border-radius: 10px;
+	background-color: #FFFFFF;
+	margin-left: -5px;
+	margin-top: -5px;
 }
 
 .btn-icon-dark i {
@@ -277,7 +308,7 @@
 .key-label {
 	background-color: rgba(50, 197, 210, 0.08);
 	padding: 3px 5px 3px 5px;
-	font-size: .8em;
+	font-size: 1em;
 	display: inline-block;
 	border: 1px solid rgba(50, 197, 210, 0.2);
 }
