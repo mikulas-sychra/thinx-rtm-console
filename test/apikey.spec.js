@@ -8,7 +8,7 @@ describe('basic ui tests', function() {
   it('should navigate to apikeys and open new apikey modal', function() {
 
     // open page
-	browser.waitForAngularEnabled(false);
+    browser.waitForAngularEnabled(false);
     browser.get(env.baseUrl + '/app/');
     browser.waitForAngularEnabled(true);
 
@@ -45,11 +45,11 @@ describe('basic ui tests', function() {
   it('should find new apikey on page', function() {
     // find apikey
     var apikeys = element.all(by.css('tbody tr td div:first-child')).map(function (elm) {
-        return elm.getText();
+      return elm.getText();
     });
 
     apikeys.then(function (result) {
-        expect(result).toContain(newApiAlias);
+      expect(result).toContain(newApiAlias);
     });
   });
 
@@ -58,18 +58,19 @@ describe('basic ui tests', function() {
     var checkitems = element.all(by.css('[ng-click*=checkItem]'));
 
     checkitems.then(function (results) {
-        console.log("rows found: ", results.length);
-        for (var i in results) {
-          var resultAlias = results[i].element(by.css('div:first-child'));
-          resultAlias.getText().then(function (text) {
-              if (text == newApiAlias) {
-                  console.log("selecting element for removal: ", text);
-                  results[i].click();
-                  browser.sleep(1000);
-                  element(by.css('[ng-click*=revokeApikeys]')).click();
-              }
-          });
-        }
+      console.log("rows found: ", results.length);
+      for (var i in results) {
+        var resultAlias = results[i].element(by.css('div:first-child'));
+        resultAlias.getText().then(function (text) {
+          if (text == newApiAlias) {
+            console.log("selecting element for removal: ", text);
+            results[i].click();
+            browser.sleep(1000);
+            element(by.css('[ng-click*=revokeApikeys]')).click();
+            browser.sleep(1000);
+          }
+        });
+      }
     });
 
   });
