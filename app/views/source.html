@@ -45,11 +45,7 @@
                             <td>
                                 <div class="row-item-title">{{source.alias}}</div>
                                 <div>
-                                  <span class="source-label" ng-if="source.branch.length > 0">
-                                    <span class="source-origin">{{source.branch | split:"/":0}}</span>
-                                    /
-                                    <span class="source-branch">{{source.branch | split:"/":1}}</span>
-                                  </span>
+                                  <span class="source-label" ng-if="source.branch.length > 0"><span class="source-origin">{{source.branch | split:"/":0}}</span> / <span class="source-branch">{{source.branch | split:"/":1}}</span></span>
                                   <span class="source-label monospace-info">{{source.url}}</span>
                                 </div>
                             </td>
