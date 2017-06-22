@@ -49,6 +49,16 @@ var Thinx = {
   revokeSources: function (sourceIds) {
     return revokeSources(sourceIds);
   },
+  // RSA
+  enviroList: function () {
+    return enviroList();
+  },
+  addEnviro: function (enviroName, enviroValue) {
+    return addEnviro(enviroyName, enviroValue);
+  },
+  revokeEnviros: function (names) {
+    return revokeEnviros(names);
+  },
   // DEVICE
   deviceList: function () {
     return deviceList();
@@ -396,22 +406,45 @@ function addRsakey(rsakeyAlias, rsakeyValue) {
   });
 }
 
-function revokeRsakey(fingerprint) {
-  return $.ajax({
-    url: urlBase + '/user/rsakey/revoke',
-    type: 'POST',
-    data: JSON.stringify({
-      fingerprint: fingerprint
-    }),
-    dataType: 'json'
-  });
-}
-
 function revokeRsakeys(fingerprints) {
   return $.ajax({
     url: urlBase + '/user/rsakey/revoke',
     type: 'POST',
     data: JSON.stringify({ fingerprints: fingerprints }),
+    dataType: 'json'
+  });
+}
+
+// Enviros /user/enviro
+//
+// createKey /
+// revokeKey [keyToRevoke] /
+// keyList /list
+
+function enviroList() {
+  return $.ajax({
+    url: urlBase + '/user/env/list',
+    type: 'GET'
+  });
+}
+
+function addEnviro(enviroName, enviroValue) {
+  return $.ajax({
+    url: urlBase + '/user/env/add',
+    type: 'POST',
+    data: JSON.stringify({
+      name: enviroName,
+      value: enviroValue
+    }),
+    dataType: 'json'
+  });
+}
+
+function revokeEnviros(enviroNames) {
+  return $.ajax({
+    url: urlBase + '/user/env/revoke',
+    type: 'POST',
+    data: JSON.stringify({ names: enviroNames }),
     dataType: 'json'
   });
 }

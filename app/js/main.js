@@ -73,6 +73,7 @@ RTM.factory('settings', ['$rootScope', function($rootScope) {
   $rootScope.devices = [];
   $rootScope.rsakeys = [];
   $rootScope.apikeys = [];
+  $rootScope.enviros = [];
   $rootScope.buildlog = [];
   $rootScope.auditlog = [];
 
@@ -266,6 +267,26 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
           files: [
             'js/thinx-api.js',
             'js/controllers/RsakeyController.js'
+          ]
+        });
+      }]
+    }
+  })
+
+  // Rsakey Page
+  .state('enviro', {
+    url: "/enviro",
+    templateUrl: "views/enviro.html",
+    data: {pageTitle: 'Environment Variables Management'},
+    controller: "EnviroController",
+    resolve: {
+      deps: ['$ocLazyLoad', function($ocLazyLoad) {
+        return $ocLazyLoad.load({
+          name: 'RTM',
+          insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+          files: [
+            'js/thinx-api.js',
+            'js/controllers/EnviroController.js'
           ]
         });
       }]
