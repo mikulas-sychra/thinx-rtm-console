@@ -212,13 +212,11 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
   $scope.build = function(deviceUdid, sourceId, index) {
     console.log('-- building firmware for ' + deviceUdid + '/' + $rootScope.sources[sourceId].alias + ' --');
 
-    var dryrun = true;
-
     if (typeof($rootScope.meta.builds[deviceUdid]) == "undefined") {
       $rootScope.meta.builds[deviceUdid] = [];
     }
 
-    Thinx.build(deviceUdid, sourceId, dryrun)
+    Thinx.build(deviceUdid, sourceId)
     .done(function(response) {
 
       console.log(' --- response ---');

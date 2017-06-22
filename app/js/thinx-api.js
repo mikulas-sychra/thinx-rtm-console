@@ -65,8 +65,8 @@ var Thinx = {
   detachRepository: function (deviceUdid) {
     return detachRepository(deviceUdid);
   },
-  build: function (deviceUdid, sourceId, dryrun) {
-    return build(deviceUdid, sourceId, dryrun);
+  build: function (deviceUdid, sourceId) {
+    return build(deviceUdid, sourceId);
   },
   // PROFILE
   getProfile: function () {
@@ -316,14 +316,13 @@ function getLogout() {
   });
 }
 
-function build(deviceUdid, sourceId, dryrun) {
+function build(deviceUdid, sourceId) {
   return $.ajax({
     url: urlBase + '/build',
     type: 'POST',
     data: JSON.stringify({build: {
       udid: deviceUdid,
-      source_id: sourceId,
-      dryrun: dryrun,
+      source_id: sourceId
     }}),
     dataType: 'json'
   });
