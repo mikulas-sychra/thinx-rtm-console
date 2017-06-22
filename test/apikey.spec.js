@@ -26,7 +26,7 @@ describe('basic ui tests', function() {
 
   it('fill new apikey alias, submit, wait for confirmation and close modal', function() {
     // fill input
-    element(by.css('[name="newApikayAlias"]')).sendKeys(newApiAlias);
+    element(by.css('[name="newApikeyAlias"]')).sendKeys(newApiAlias);
 
     // create api key
     element(by.buttonText("Create")).click();
@@ -48,33 +48,29 @@ describe('basic ui tests', function() {
         return elm.getText();
     });
 
-    apikeys.then(function (result) {        
+    apikeys.then(function (result) {
         expect(result).toContain(newApiAlias);
     });
   });
 
   it('should remove new apikey', function() {
-    console.log("TODO: Remove test key..");
-    // remove new apikey
 
-    var els = element.all(by.css('tbody tr td a[ng-click*=newApikeyFingerprint]'));
-    els.filter(function(elem) {
-      return elem.getText().then(function(text) {
-        console.log(text);
-        return text === 'should click';
-      });
-    }).click(); 
+    var checkitems = element.all(by.css('[ng-click*=checkItem]'));
 
-    element.all(by.css("tbody tr in names")).each(function (elm) {
-    var link = elm.element(by.css("a[ng-click*=editName]"));
-    link.click();
-
-    // assertions/expectations
+    checkitems.then(function (results) {
+        console.log("rows found: ", results.length);
+        for (var i in results) {
+          var resultAlias = results[i].element(by.css('div:first-child'));
+          resultAlias.getText().then(function (text) {
+              if (text == newApiAlias) {
+                  console.log("selecting element for removal: ", text);
+                  results[i].click();
+                  browser.sleep(1000);
+                  element(by.css('[ng-click*=revokeApikeys]')).click();
+              }
+          });
+        }
     });
 
-
   });
-
-  
-
 });

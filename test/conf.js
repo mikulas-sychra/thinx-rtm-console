@@ -9,7 +9,8 @@ exports.config = {
   framework: 'jasmine',
 
   specs: [
-    'login.spec.js',
+  //  'login.spec.js',
+//'rsakey.spec.js',
     'apikey.spec.js'
   ],
 
