@@ -27,7 +27,7 @@
                     </a>
                 </div>
             </div>
-            <div class="portlet-body"> 
+            <div class="portlet-body">
             <!-- BEGIN PORTLET-->
 
                 <div class="row">
@@ -41,18 +41,17 @@
 
                 <div class="table-scrollable table-scrollable-borderless">
                     <table class="table table-hover table-light">
-                        <thead>
-                            <tr class="uppercase">
-                                <th>
-                                    Alias / Url
-                                </th>
-                            </tr>
-                        </thead>
-
                         <tr ng-repeat="(key, source) in $root.sources" ng-click="checkItem(key)" ng-class="selectedItems.indexOf(key) > -1 ? 'selected-row' : 'default-row'">
                             <td>
-                                <div>{{source.alias}}</div>
-                                <div class="monospace-info"><span class="branch-name">{{source.branch}}</span> {{source.url}}</div>
+                                <div class="row-item-title">{{source.alias}}</div>
+                                <div>
+                                  <span class="source-label" ng-if="source.branch.length > 0">
+                                    <span class="source-origin">{{source.branch | split:"/":0}}</span>
+                                    /
+                                    <span class="source-branch">{{source.branch | split:"/":1}}</span>
+                                  </span>
+                                  <span class="source-label monospace-info">{{source.url}}</span>
+                                </div>
                             </td>
                         </tr>
                     </table>
@@ -98,7 +97,7 @@
                     </div>
                 </form>
                 <!-- END FORM-->
-                
+
             <!-- END PORTLET-->
             </div>
         </div>

@@ -91,6 +91,10 @@
 	font-size: .7em !important;
 }
 
+.monospace-default {
+	font-family: monospace; color: #111111;
+}
+
 .monospace-primary {
 	font-family: monospace; color: #0275d8;
 }
@@ -170,7 +174,7 @@
 }
 
 .row-item-title {
-	font-size: 1.6em;
+	font-size: 1.3em;
 }
 
 .icon-button {
@@ -219,7 +223,6 @@
 	font-size: 1.2em;
 }
 
-
 .device-card {
   background: #fff;
   border-radius: 2px;
@@ -256,4 +259,24 @@
 
 .header-search-btn {
 	color: #737a99;
+}
+
+.source-label {
+	background-color: rgba(50, 197, 210, 0.08);
+	padding: 3px 5px 3px 5px;
+	font-size: .8em;
+	display: inline-block;
+	border: 1px solid rgba(50, 197, 210, 0.2);
+}
+
+.source-branch {
+	font-weight: bold;
+}
+
+.key-label {
+	background-color: rgba(50, 197, 210, 0.08);
+	padding: 3px 5px 3px 5px;
+	font-size: .8em;
+	display: inline-block;
+	border: 1px solid rgba(50, 197, 210, 0.2);
 }

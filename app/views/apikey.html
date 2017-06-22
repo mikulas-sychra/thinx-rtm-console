@@ -40,25 +40,11 @@
 
                 <div class="table-scrollable table-scrollable-borderless">
                     <table class="table table-hover table-light">
-                        <thead>
-                            <tr class="uppercase">
-                                <th>
-                                    Alias / Name
-                                </th>
-                                <th>
-                                    Fingerprint
-                                </th>
-                            </tr>
-                        </thead>
-
                         <tr ng-repeat="apikey in $root.apikeys" ng-click="checkItem(apikey.hash)"
                         ng-class="selectedItems.indexOf(apikey.hash) > -1 ? 'selected-row' : 'default-row'">
                             <td>
-                                <div>{{apikey.alias}}</div>
-                                <div class="monospace-info">{{apikey.name | limitTo : 10 : apikey.name.length - 10 }}</div>
-                            </td>
-                            <td class="fingerprint-small">
-                                {{apikey.hash}}
+                                <div class="row-item-title">{{apikey.alias}}</div>
+                                <div class="key-label monospace-info">{{apikey.name | limitTo : 10 : apikey.name.length - 10 }}</div>
                             </td>
                         </tr>
                     </table>

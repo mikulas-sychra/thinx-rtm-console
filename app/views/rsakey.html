@@ -27,7 +27,7 @@
                     </a>
                 </div>
             </div>
-            <div class="portlet-body"> 
+            <div class="portlet-body">
                 <div class="row">
                     <div class="col-md-6">
                         <a href="#" class="btn green-haze btn-outline" ng-click="resetModal()" data-target="#pageModal" data-toggle="modal">Create RSA Key</a>
@@ -40,22 +40,10 @@
 
                 <div class="table-scrollable table-scrollable-borderless">
                     <table class="table table-hover table-light">
-                        <thead>
-                            <tr class="uppercase">
-                                <th>
-                                    Alias
-                                </th>
-                                <th>
-                                    Fingerprint
-                                </th>
-                            </tr>
-                        </thead>
                         <tr ng-repeat="rsakey in $root.rsaKeys" ng-click="checkItem(rsakey.fingerprint)" ng-class="selectedItems.indexOf(rsakey.fingerprint) > -1 ? 'selected-row' : 'default-row'">
                             <td>
                                 <div class="row-item-title">{{rsakey.name}}</div>
-                            </td>
-                            <td>
-                                <div class="monospace-info">{{rsakey.fingerprint}}</div>
+                                <div class="key-label monospace-info">{{rsakey.fingerprint}}</div>
                             </td>
                         </tr>
                     </table>
