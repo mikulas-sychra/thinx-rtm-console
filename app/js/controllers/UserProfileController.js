@@ -4,6 +4,8 @@ angular.module('RTM').controller('UserProfileController', function($rootScope, $
     Layout.setAngularJsSidebarMenuActiveLink('set', $('#sidebar_menu_link_profile'), $state); // set profile link active in sidebar menu
 
     $scope.newAvatar = null;
+    Thinx.init($rootScope, $scope);
+    $("[type='checkbox']").bootstrapSwitch();
 
   });
 
@@ -11,7 +13,7 @@ angular.module('RTM').controller('UserProfileController', function($rootScope, $
   // set sidebar closed and body solid layout mode
   $rootScope.settings.layout.pageBodySolid = true;
   // $rootScope.settings.layout.pageSidebarClosed = true;
-  
+
 
   function updateProfile(data) {
     var response = JSON.parse(data);

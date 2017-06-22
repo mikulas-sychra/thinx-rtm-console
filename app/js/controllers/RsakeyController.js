@@ -9,6 +9,8 @@ angular.module('RTM').controller('RsakeyController', ['$rootScope', '$scope', 's
     $rootScope.settings.layout.pageBodySolid = false;
     $rootScope.settings.layout.pageSidebarClosed = false;
 
+    Thinx.init($rootScope, $scope);
+
     Thinx.rsakeyList()
     .done( function(data) {
       updateKeys(data)

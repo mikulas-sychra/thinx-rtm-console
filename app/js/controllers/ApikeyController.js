@@ -9,6 +9,8 @@ angular.module('RTM').controller('ApikeyController', ['$rootScope', '$scope', 's
     $rootScope.settings.layout.pageBodySolid = false;
     $rootScope.settings.layout.pageSidebarClosed = false;
 
+    Thinx.init($rootScope, $scope);
+
     Thinx.apikeyList()
     .done( function(data) {
       updateKeys(data)

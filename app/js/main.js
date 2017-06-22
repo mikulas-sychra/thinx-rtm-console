@@ -10,7 +10,8 @@ var RTM = angular.module("RTM", [
   "ngSanitize",
   "angular-web-notification",
   "tandibar/ng-rollbar",
-  "luegg.directives"
+  "luegg.directives",
+  "frapontillo.bootstrap-switch"
 ]);
 
 RTM.config(['RollbarProvider', function(RollbarProvider) {
