@@ -10,9 +10,10 @@ exports.config = {
 
   specs: [
     'login.spec.js',
-    'rsakey.spec.js',
-    'apikey.spec.js',
-    'source.spec.js'
+    // 'rsakey.spec.js',
+    // 'apikey.spec.js',
+    // 'source.spec.js',
+    'enviro.spec.js'
   ],
 
   capabilities: env.capabilities,

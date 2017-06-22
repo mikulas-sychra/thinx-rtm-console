@@ -54,7 +54,7 @@ var Thinx = {
     return enviroList();
   },
   addEnviro: function (enviroName, enviroValue) {
-    return addEnviro(enviroyName, enviroValue);
+    return addEnviro(enviroName, enviroValue);
   },
   revokeEnviros: function (names) {
     return revokeEnviros(names);
@@ -433,7 +433,7 @@ function addEnviro(enviroName, enviroValue) {
     url: urlBase + '/user/env/add',
     type: 'POST',
     data: JSON.stringify({
-      name: enviroName,
+      key: enviroName,
       value: enviroValue
     }),
     dataType: 'json'

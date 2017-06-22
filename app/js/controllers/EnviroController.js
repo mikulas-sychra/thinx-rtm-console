@@ -23,11 +23,12 @@ angular.module('RTM').controller('EnviroController', ['$rootScope', '$scope', 's
   function updateKeys(data) {
     var keys = JSON.parse(data);
 
-    $rootScope.enviros = keys.enviros;
+    $rootScope.enviros = keys.env_vars;
     $scope.$apply()
 
     console.log('enviros:');
     console.log($rootScope.enviros);
+
   }
 
   $scope.addEnviro = function() {
@@ -36,20 +37,31 @@ angular.module('RTM').controller('EnviroController', ['$rootScope', '$scope', 's
     for (var enviroId in $rootScope.enviros) {
       console.log("Looping enviros: alias/name", $rootScope.enviros[enviroId].name, "fingerprint", $rootScope.enviros[enviroId].fingerprint);
 
-      if ($rootScope.enviros[enviroId].name == $scope.enviroAlias) {
+      if ($rootScope.enviros[enviroId].name == $scope.enviroName) {
         toastr.error('Alias must be unique.', 'THiNX RTM Console', {timeOut: 5000})
         return;
       }
     }
 
-    console.log('--adding enviro key ' + $scope.enviroAlias +'--')
+    console.log('--adding enviro key ' + $scope.enviroName +'--')
 
-    Thinx.addEnviro($scope.enviroAlias, $scope.enviroValue)
+    Thinx.addEnviro($scope.enviroName, $scope.enviroValue)
     .done(function(response) {
 
       if (typeof(response) !== 'undefined') {
         if (response.success) {
           console.log(response);
+
+
+                          // {
+                        // "err": 0,
+                        // "result": {
+                          // "id": null,
+                          // "uuid": "69d240f4-7256-47e9-e90a-9048e3633768"
+                        // }
+                      // }
+
+
           toastr.success('Key saved.', 'THiNX RTM Console', {timeOut: 5000});
 
           Thinx.enviroList()
@@ -133,7 +145,7 @@ angular.module('RTM').controller('EnviroController', ['$rootScope', '$scope', 's
   }
 
   $scope.resetModal = function() {
-    $scope.enviroAlias = null;
+    $scope.enviroName = null;
     $scope.enviroValue = null;
     $scope.selectedItems = [];
   }
