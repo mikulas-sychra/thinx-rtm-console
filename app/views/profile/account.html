@@ -97,12 +97,15 @@
                                         <p><small>Disables Push Notifications for all devices.</small></p>
                                     </td>
                                     <td>
-                                        <label class="uniform-inline">
-                                        <input type="radio" data-ng-model="$root.profile.info.security.global_push" data-ng-value="true" />
-                                        Yes </label>
-                                        <label class="uniform-inline">
-                                        <input type="radio" data-ng-model="$root.profile.info.security.global_push" data-ng-value="false"/>
-                                        No </label>
+                                      <input
+                                        bs-switch
+                                        ng-model="$root.profile.info.security.global_push"
+                                        type="checkbox"
+                                        switch-size="tiny"
+                                        switch-on-text="YES"
+                                        switch-off-text="NO"
+                                        ng-true-value="true"
+                                        ng-false-value="false">
                                     </td>
                                 </tr>
                                 <tr>
@@ -111,8 +114,15 @@
                                         <p><small>Device owner will get email on API outages or important updates.</small></p>
                                     </td>
                                     <td>
-                                      {{$root.profile.info.security.important_notifications}}
-                                        <input type="checkbox" ng-model="$root.profile.info.security.important_notifications" ng-true-value="true" ng-false-value="false">
+                                      <input
+                                        bs-switch
+                                        ng-model="$root.profile.info.security.important_notifications"
+                                        type="checkbox"
+                                        switch-size="tiny"
+                                        switch-on-text="YES"
+                                        switch-off-text="NO"
+                                        ng-true-value="true"
+                                        ng-false-value="false">
                                     </td>
                                 </tr>
                                 <tr>
@@ -121,8 +131,15 @@
                                         <p><small>Allow each key for single device only</small></p>
                                     </td>
                                     <td>
-                                      {{$root.profile.info.security.unique_api_keys}}
-                                        <input type="checkbox" ng-model="$root.profile.info.security.unique_api_keys" ng-true-value="true" ng-false-value="false">
+                                      <input
+                                        bs-switch
+                                        ng-model="$root.profile.info.security.unique_api_keys"
+                                        type="checkbox"
+                                        switch-size="tiny"
+                                        switch-on-text="YES"
+                                        switch-off-text="NO"
+                                        ng-true-value="true"
+                                        ng-false-value="false">
                                     </td>
                                 </tr>
                             </table>
