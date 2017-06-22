@@ -14,7 +14,7 @@
         <div class="portlet light bordered">
             <div class="portlet-title">
                 <div class="caption font-green-sharp">
-                    <i class="icon-organization font-green-sharp"></i>
+                    <i class="icon-globe font-green-sharp"></i>
                     <span class="caption-subject bold uppercase">Environment Variables</span>
                     <span class="caption-helper hide"></span>
                 </div>
@@ -40,7 +40,7 @@
 
                 <div class="table-scrollable table-scrollable-borderless">
                     <table class="table table-hover table-light">
-                        <tr ng-repeat="enviro in $root.enviros" ng-click="checkItem(enviro)" ng-class="selectedItems.indexOf(enviro) > -1 ? 'selected-row' : 'default-row'">
+                        <tr ng-repeat="enviro in $root.enviros track by $index" ng-click="checkItem(enviro)" ng-class="selectedItems.indexOf(enviro) > -1 ? 'selected-row' : 'default-row'">
                             <td>
                                 <div class="row-item-title">{{enviro}}</div>
                             </td>
