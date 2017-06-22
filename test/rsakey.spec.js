@@ -18,6 +18,7 @@ describe('basic ui tests', function() {
 
     // navigate to rsakey view
     element(by.css('[ui-sref="rsakey"]')).click();
+    browser.sleep(1000);
 
     // open modal
     element(by.css('[ng-click="resetModal()"]')).click();
@@ -34,7 +35,7 @@ describe('basic ui tests', function() {
     // create api key
     element(by.buttonText("Submit")).click();
 
-    browser.sleep(2000);
+    browser.sleep(3000);
     browser.waitForAngular();
 
     // TODO: expect(newrsakey).not.toBe(null);
@@ -65,6 +66,7 @@ describe('basic ui tests', function() {
                   results[i].click();
                   browser.sleep(1000);
                   element(by.css('[ng-click*=revokeRsakeys]')).click();
+                  browser.sleep(1000);
               }
           });
         }
