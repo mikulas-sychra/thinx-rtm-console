@@ -14,32 +14,6 @@ angular.module('RTM').controller('UserProfileController', function($rootScope, $
   $rootScope.settings.layout.pageBodySolid = true;
   // $rootScope.settings.layout.pageSidebarClosed = true;
 
-
-  function updateProfile(data) {
-    var response = JSON.parse(data);
-
-    if (typeof(response) !== 'undefined' && typeof(response.success) !== 'undefined' && response.success) {
-
-      console.log('-- processing profile ---');
-      console.log(response);
-
-      $rootScope.profile = response.profile;
-
-      if (typeof($rootScope.profile.info.goals) == 'undefined') {
-        console.log('- goals not defined yet -');
-        $rootScope.profile.info.goals = [];
-        // $rootScope.profile.info.goals = ['apikey','enroll','rsakey','source','update','build','profile_privacy','profile_avatar'];
-      }
-
-      if (typeof($rootScope.profile.avatar) == 'undefined' || $rootScope.profile.avatar.length == 0) {
-        $rootScope.profile.avatar = '/assets/thinx/img/default_avatar_sm.png';
-      }
-
-      $scope.$apply();
-    }
-  }
-
-
   $scope.changeProfile = function() {
     console.log('-- changing user profile --');
 
@@ -57,7 +31,7 @@ angular.module('RTM').controller('UserProfileController', function($rootScope, $
           console.log(response);
 
           Thinx.getProfile().done(function(data) {
-            updateProfile(data);
+            $rootScope.$emit("updateProfile", data);
           })
           .fail(error => console.log('Error:', error));
 
@@ -105,9 +79,7 @@ angular.module('RTM').controller('UserProfileController', function($rootScope, $
       // no file selected
       $scope.newAvatar = null;
     }
-
     $scope.$apply();
-
   };
 
 
@@ -130,7 +102,7 @@ angular.module('RTM').controller('UserProfileController', function($rootScope, $
           console.log('-- avatar success, refreshing profile --');
 
           Thinx.getProfile().done(function(data) {
-            updateProfile(data);
+            $rootScope.$emit("updateProfile", data);
           })
           .fail(error => console.log('Error:', error));
 
@@ -152,7 +124,6 @@ angular.module('RTM').controller('UserProfileController', function($rootScope, $
   }
 
   $scope.removeGoal = function(goalId) {
-
     console.log('-- current goals: ' + $rootScope.profile.info.goals);
     console.log('-- removing goal: ' + goalId);
 
@@ -160,7 +131,6 @@ angular.module('RTM').controller('UserProfileController', function($rootScope, $
     if (index > -1) {
       $rootScope.profile.info.goals.splice(index, 1);
     };
-
   };
 
 });

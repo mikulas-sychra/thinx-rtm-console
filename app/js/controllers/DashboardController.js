@@ -437,6 +437,13 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     });
   };
 
+  $scope.updateProfile = function() {
+    Thinx.changeProfile($rootScope.profile).done( function(data) {
+      console.log('updateProfile ');
+    })
+    .fail(error => console.log('Error:', error));
+  }
+
   $scope.resetModal = function(index) {
     console.log('Resetting modal form values...');
     $scope.deviceUdid = $rootScope.devices[index].udid;

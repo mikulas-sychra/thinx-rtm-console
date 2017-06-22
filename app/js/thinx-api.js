@@ -141,8 +141,11 @@ function init($rootScope, $scope) {
   }
 
   // =================================================
-
   // api related functions
+
+  $rootScope.$on("updateProfile", function(event, data){
+    updateProfile(data);
+  });
 
   function updateProfile(data) {
     var response = JSON.parse(data);
@@ -167,7 +170,6 @@ function init($rootScope, $scope) {
       $scope.$apply();
     }
   }
-
 
 
   function updateAuditLog(data) {
@@ -198,9 +200,7 @@ function init($rootScope, $scope) {
     } else {
       console.log('Buildlog list fetch error.') ;
     }
-
   }
-
 
   function registerNotification() {
     $webNotification.showNotification('Wohoo!', {
@@ -230,7 +230,6 @@ function init($rootScope, $scope) {
   })
   .fail(error => console.log('getProfile Error:', error));
 
-
   Thinx.getAuditLog()
   .done(function(data) {
     updateAuditLog(data);
@@ -242,6 +241,7 @@ function init($rootScope, $scope) {
     updateBuildLogList(data);
   })
   .fail(error => console.log('buildLogList Error:', error));
+
 }
 
 function updateTimer() {
@@ -268,11 +268,7 @@ function deviceList() {
 }
 
 function changeDevice(deviceId, deviceAlias) {
-
   var data = JSON.stringify({ changes: { udid: deviceId, alias: deviceAlias } });
-
-  console.log(data);
-
   return $.ajax({
     url: urlBase + '/device/edit',
     type: 'POST',
