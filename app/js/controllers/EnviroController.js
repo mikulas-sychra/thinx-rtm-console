@@ -35,15 +35,15 @@ angular.module('RTM').controller('EnviroController', ['$rootScope', '$scope', 's
 
     console.log('-- testing for duplicates --');
     for (var enviroId in $rootScope.enviros) {
-      console.log("Looping enviros: alias/name", $rootScope.enviros[enviroId].name, "fingerprint", $rootScope.enviros[enviroId].fingerprint);
+      console.log("Looping enviros: alias/name", $rootScope.enviros[enviroId]);
 
-      if ($rootScope.enviros[enviroId].name == $scope.enviroName) {
-        toastr.error('Alias must be unique.', 'THiNX RTM Console', {timeOut: 5000})
+      if ($rootScope.enviros[enviroId] == $scope.enviroName) {
+        toastr.error('Name must be unique.', 'THiNX RTM Console', {timeOut: 5000})
         return;
       }
     }
 
-    console.log('--adding enviro key ' + $scope.enviroName +'--')
+    console.log('--adding enviro variable ' + $scope.enviroName +'--')
 
     Thinx.addEnviro($scope.enviroName, $scope.enviroValue)
     .done(function(response) {
@@ -51,18 +51,7 @@ angular.module('RTM').controller('EnviroController', ['$rootScope', '$scope', 's
       if (typeof(response) !== 'undefined') {
         if (response.success) {
           console.log(response);
-
-
-                          // {
-                        // "err": 0,
-                        // "result": {
-                          // "id": null,
-                          // "uuid": "69d240f4-7256-47e9-e90a-9048e3633768"
-                        // }
-                      // }
-
-
-          toastr.success('Key saved.', 'THiNX RTM Console', {timeOut: 5000});
+          toastr.success('Variable saved.', 'THiNX RTM Console', {timeOut: 5000});
 
           Thinx.enviroList()
           .done( function(data) {
@@ -75,7 +64,7 @@ angular.module('RTM').controller('EnviroController', ['$rootScope', '$scope', 's
         } else {
           console.log(response.status);
           if (response.status == "already_exists") {
-            toastr.error('Key already exists.', 'THiNX RTM Console', {timeOut: 5000});
+            toastr.error('Variable already exists.', 'THiNX RTM Console', {timeOut: 5000});
           } else {
             toastr.error('Error.', 'THiNX RTM Console', {timeOut: 5000});
           }
@@ -95,7 +84,7 @@ angular.module('RTM').controller('EnviroController', ['$rootScope', '$scope', 's
   };
 
   function revokeEnviros(fingerprints) {
-    console.log('--deleting enviro values ' + fingerprints.length +'--')
+    console.log('--deleting enviro variables ' + fingerprints.length +'--')
 
     Thinx.revokeEnviros(fingerprints)
     .done(function(data) {
@@ -112,7 +101,7 @@ angular.module('RTM').controller('EnviroController', ['$rootScope', '$scope', 's
         .fail(error => console.log('Error:', error));
 
       } else {
-        toastr.error('Revocation failed.', 'THiNX RTM Console', {timeOut: 5000})
+        toastr.error('Delete failed.', 'THiNX RTM Console', {timeOut: 5000})
       }
     })
     .fail(function (error) {
