@@ -77,7 +77,9 @@ RTM.factory('settings', ['$rootScope', function($rootScope) {
   $rootScope.buildlog = [];
   $rootScope.auditlog = [];
 
-  $rootScope.profile = {};
+  $rootScope.profile = {
+    avatar: null
+  };
   $rootScope.meta = {
     builds: []
   };
