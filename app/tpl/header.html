@@ -40,18 +40,18 @@
                     <ul class="dropdown-menu">
                         <li class="external">
                             <h3>
-                                <span class="bold">{{$root.auditlog.total_rows}} pending</span> notifications</h3>
+                                <span class="bold">{{$root.auditlog.length}} pending</span> notifications</h3>
                             <a href="#/profile/dashboard">view all</a>
                         </li>
                         <li>
                             <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
-                                <li ng-repeat="row in $root.auditlog.rows | limitTo:10">
+                                <li ng-repeat="row in $root.auditlog | limitTo:10">
                                     <a href="javascript:;">
-                                        <span class="time">{{row.doc.date | lastSeen}}</span>
+                                        <span class="time">{{row.date | lastSeen}}</span>
                                         <span class="details">
                                             <span class="label label-sm label-icon label-success">
                                                 <i class="fa fa-plus"></i>
-                                            </span> {{row.doc.message}} </span>
+                                            </span> {{row.message}} </span>
                                     </a>
                                 </li>
                             </ul>
@@ -80,7 +80,7 @@
                                         <span class="details">
                                             <span class="label label-sm label-icon label-success">
                                                 <i class="fa fa-plus"></i>
-                                            </span> 
+                                            </span>
                                             <span class="">
                                                 {{build.udid | limitTo:6}} {{build.message}}
                                             </span>
