@@ -138,7 +138,7 @@
                     <div class="tab-pane active" id="tab_1_1">
                         <div class="scroller" style="height: 500px;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
                             <ul class="feeds">
-                                <li ng-repeat="row in $root.auditlog | limitTo:100">
+                                <li ng-repeat="(date, value) in $root.auditlog | limitTo:100">
                                     <div class="col1">
                                         <div class="cont">
                                             <div class="cont-col1">
@@ -147,12 +147,12 @@
                                                 </div>
                                             </div>
                                             <div class="cont-col2">
-                                                <div class="desc"> {{row.message}}</div>
+                                                <div class="desc"> {{value}}</div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col2">
-                                        <div class="date"> {{row.date | lastSeen}} </div>
+                                        <div class="date"> {{date | lastSeen}} </div>
                                     </div>
                                 </li>
                             </ul>
