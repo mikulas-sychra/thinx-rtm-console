@@ -23,20 +23,26 @@ angular.module('RTM').controller('RsakeyController', ['$rootScope', '$scope', 's
   function updateKeys(data) {
     var keys = JSON.parse(data);
 
-    $rootScope.rsaKeys = keys.rsa_keys;
+    $rootScope.rsakeys = keys.rsa_keys;
+
+    // TODO save profile
+    if ($rootScope.rsakeys.length > 0 && !$rootScope.profile.info.goals.includes('rsakey')) {
+      $rootScope.profile.info.goals.push('rsakey');
+    };
+
     $scope.$apply()
 
     console.log('rsakeys:');
-    console.log($rootScope.rsaKeys);
+    console.log($rootScope.rsakeys);
   }
 
   $scope.addRsakey = function() {
 
     console.log('-- testing for duplicates --');
-    for (var rsaKeyId in $rootScope.rsaKeys) {
-      console.log("Looping rsaKeys: alias/name", $rootScope.rsaKeys[rsaKeyId].name, "fingerprint", $rootScope.rsaKeys[rsaKeyId].fingerprint);
+    for (var rsakeyId in $rootScope.rsakeys) {
+      console.log("Looping rsakeys: alias/name", $rootScope.rsakeys[rsakeyId].name, "fingerprint", $rootScope.rsakeys[rsakeyId].fingerprint);
 
-      if ($rootScope.rsaKeys[rsaKeyId].name == $scope.rsakeyAlias) {
+      if ($rootScope.rsakeys[rsakeyId].name == $scope.rsakeyAlias) {
         toastr.error('Alias must be unique.', 'THiNX RTM Console', {timeOut: 5000})
         return;
       }
