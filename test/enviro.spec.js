@@ -39,11 +39,11 @@ describe('basic ui tests', function() {
 
   it('should find new enviro on page', function() {
     // find apikey
-    var sources = element.all(by.css('.row-item-title')).map(function (elm) {
+    var enviros = element.all(by.css('.row-item-title')).map(function (elm) {
       return elm.getText();
     });
 
-    sources.then(function (result) {
+    enviros.then(function (result) {
       expect(result).toContain(enviroName);
     });
   });

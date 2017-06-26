@@ -150,20 +150,23 @@ function init($rootScope, $scope) {
   function updateProfile(data) {
     var response = JSON.parse(data);
 
+    // validate response and refresh view
     if (typeof(response) !== 'undefined' && typeof(response.success) !== 'undefined' && response.success) {
 
       console.log('-- processing profile ---');
       console.log(response);
-
       $rootScope.profile = response.profile;
 
+      // set goals object on first run
       if (typeof($rootScope.profile.info.goals) == 'undefined') {
         console.log('- goals not defined yet -');
         $rootScope.profile.info.goals = [];
         // $rootScope.profile.info.goals = ['apikey','enroll','rsakey','source','update','build','profile_privacy','profile_avatar'];
       }
 
+      // set default avatar if one's missing
       if (typeof($rootScope.profile.avatar) == 'undefined' || $rootScope.profile.avatar.length == 0) {
+        console.log('- avatar note defined, falling back to default -');
         $rootScope.profile.avatar = '/assets/thinx/img/default_avatar_sm.png';
       }
 
