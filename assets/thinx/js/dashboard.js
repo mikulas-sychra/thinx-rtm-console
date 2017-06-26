@@ -14,7 +14,7 @@ var Dashboard = function() {
 
             var setMap = function(name) {
                 var map = jQuery('#vmap_' + name);
-                
+
                 if (map.size() !== 1) {
                     return;
                 }
@@ -50,7 +50,7 @@ var Dashboard = function() {
                 };
 
                 data.map = name + '_en';
-              
+
                 map.width(map.parent().parent().width());
                 map.show();
                 map.vectorMap(data);
@@ -1371,21 +1371,22 @@ var Dashboard = function() {
 
         init: function() {
 
-            this.initJQVMAP();
-            this.initCalendar();
-            this.initCharts();
-            this.initEasyPieCharts();
-            this.initSparklineCharts();
-            this.initChat();
-            this.initDashboardDaterange();
-            this.initMorisCharts();
+            // TODO: enable some or remove whole class
+            // this.initJQVMAP();
+            // this.initCalendar();
+            // this.initCharts();
+            // this.initEasyPieCharts();
+            // this.initSparklineCharts();
+            // this.initChat();
+            // this.initDashboardDaterange();
+            // this.initMorisCharts();
 
-            this.initAmChart1();
-            this.initAmChart2();
-            this.initAmChart3();
-            this.initAmChart4();
+            // this.initAmChart1();
+            // this.initAmChart2();
+            // this.initAmChart3();
+            // this.initAmChart4();
 
-            this.initWorldMapStats();
+            // this.initWorldMapStats();
         }
     };
 

@@ -225,7 +225,7 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
             '../assets/thinx/js/plugins/ui-select/select.min.css',
             '../assets/thinx/js/plugins/ui-select/select.js',
 
-            '../assets/thinx/js/dashboard.js',
+            // '../assets/thinx/js/dashboard.js',
             'js/thinx-api.js',
             'js/controllers/DashboardController.js',
           ]
