@@ -121,14 +121,14 @@
             <div class="portlet-title tabbable-line">
                 <div class="caption caption-md">
                     <i class="icon-globe theme-font hide"></i>
-                    <span class="caption-subject font-blue-madison bold uppercase">Event Log</span>
+                    <span class="caption-subject font-blue-madison bold uppercase">History</span>
                 </div>
                 <ul class="nav nav-tabs">
                     <li class="active">
-                        <a href="#" data-target="#tab_1_1" data-toggle="tab"> Audit </a>
+                        <a href="#" data-target="#tab_1_1" data-toggle="tab"> Audit Log </a>
                     </li>
                     <li>
-                        <a href="#" data-target="#tab_1_2" data-toggle="tab"> Build </a>
+                        <a href="#" data-target="#tab_1_2" data-toggle="tab"> Builds </a>
                     </li>
                 </ul>
             </div>
@@ -140,20 +140,20 @@
                             <ul class="feeds">
                                 <li ng-repeat="(date, value) in $root.auditlog | limitTo:100">
                                     <div class="col1">
+
+                                      <div class="date">
+                                          <i class="fa fa-bell-o"></i>
+                                       {{date | lastSeen}} </div>
                                         <div class="cont">
                                             <div class="cont-col1">
-                                                <div class="label label-sm label-success">
-                                                    <i class="fa fa-bell-o"></i>
-                                                </div>
+
                                             </div>
                                             <div class="cont-col2">
                                                 <div class="desc"> {{value}}</div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col2">
-                                        <div class="date"> {{date | lastSeen}} </div>
-                                    </div>
+
                                 </li>
                             </ul>
                         </div>
