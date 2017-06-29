@@ -51,7 +51,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
 
     // sparkline stats defaults
     $rootScope.stats = {
-      daily: {
+      daily: [
         // ID: [],
         // APIKEY_INVALID: [],
         // PASSWORD_INVALID: [],
@@ -63,7 +63,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
         // BUILD_STARTED: [],
         // BUILD_SUCCESS: [],
         // BUILD_FAIL: []
-      },
+      ],
       total: {
         CHANNELS: 0,
         DEVICES: 0,
@@ -78,14 +78,11 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
 
     if (response.success) {
 
-
       console.log('-- iterating over stats --');
       console.log(response.stats);
 
       for (var index in response.stats) {
         var dayStats = response.stats[index];
-
-        $rootScope.stats.daily = response.stats[response.stats.length - 1];
 
         for (var prop in dayStats) {
           var propTotal = 0;
@@ -95,6 +92,8 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
             console.log('adding', dayStats[prop][i], 'to', prop)
           }
           $rootScope.stats.total[prop] = propTotal;
+
+          $rootScope.stats.daily.push(dayStats);
         }
       }
     }
@@ -102,7 +101,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     if(typeof($rootScope.devices) !== "undefined") {
       $rootScope.stats.total.DEVICES = $rootScope.devices.length;
     }
-
+/*
     var debugData = []; // $rootScope.stats.daily.DEVICE_CHECKIN
     for(i = 0; i < 10; i++) {
       debugData.push(
@@ -111,8 +110,8 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
 
       );
     };
-
-    $("#sparkline_bar").sparkline(debugData, {
+*/
+    $("#sparkline_bar").sparkline($rootScope.stats.daily.DEVICE_CHECKIN, {
       type: 'bar',
       width: '100',
       barWidth: 5,
@@ -121,7 +120,8 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
       negBarColor: '#29b4b6'
     });
 
-    var debugData = []; // $rootScope.stats.daily.DEVICE_NEW
+/*
+    var debugData = []; //
     for(i = 0; i < 10; i++) {
       debugData.push(
 
@@ -129,8 +129,9 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
 
       );
     };
-
-    $("#sparkline_bar2").sparkline(debugData, {
+*/
+    console.log('dailystats', $rootScope.stats.daily.DEVICE_NEW);
+    $("#sparkline_bar2").sparkline($rootScope.stats.daily.DEVICE_NEW, {
       type: 'bar',
       width: '100',
       barWidth: 5,
