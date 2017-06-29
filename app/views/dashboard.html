@@ -5,6 +5,8 @@
         <i class="fa fa-circle"></i>
     </li>
     <li class="active"> Dashboard </li>
+
+    <a ng-click="showLogOverlay()">asd</a>
 </ul>
 <!-- END PAGE BREADCRUMB -->
 <!-- BEGIN MAIN CONTENT -->
@@ -97,7 +99,7 @@
                                         <div class="col-md-4 text-right">
 
                                             <span ng-if="hasBuildId(device.udid)">
-                                                <a class="btn btn-circle btn-icon-only btn-default"  data-target="#logModal" data-target="#full-width" data-toggle="modal" ng-click="showDeviceLastBuild(device.udid, $event)">
+                                                <a class="btn btn-circle btn-icon-only btn-default" ng-click="showDeviceLastBuild(device.udid, $event)">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
                                             </span>
@@ -266,6 +268,15 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="log-view-overlay-conatiner" style="display:none">
+      <div class="log-view-overlay-controls">
+        <a ng-click="refreshLog()"><i class="icon-refresh"></i></a>
+        <a ng-click="hideLogOverlay()"><i class="icon-close"></i></a>
+        <div class="overlay-title">Build {{modalLogId}}</div>
+      </div>
+      <pre class="log-view-overlay" scroll-glue>{{modalLogBody}}</pre>
     </div>
     <!-- END MODAL LOG VIEW -->
 
