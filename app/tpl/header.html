@@ -13,7 +13,7 @@
     <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"> </a>
     <!-- END RESPONSIVE MENU TOGGLER -->
     <!-- BEGIN PAGE TOP -->
-    <div class="page-top">
+    <div class="page-top" style="height: inherit;">
         <!-- BEGIN HEADER SEARCH BOX -->
         <!-- DOC: Apply "search-form-expanded" right after the "search-form" class to have half expanded search box -->
         <form class="search-form" action="#" method="GET">
@@ -30,9 +30,9 @@
         <!-- BEGIN TOP NAVIGATION MENU -->
         <div class="top-menu">
             <ul class="nav navbar-nav pull-right">
-                <li class="separator" style="background: none"></li>
+                <li class="separator hidden-xs" style="background: none"></li>
                 <!-- BEGIN NOTIFICATION DROPDOWN -->
-                <li class="dropdown dropdown-extended dropdown-dark dropdown-notification" id="header_notification_bar">
+                <li class="dropdown dropdown-extended dropdown-dark dropdown-notification hidden-xs" id="header_notification_bar">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                         <i class="icon-bell"></i>
                         <span class="badge badge-success" ng-if="$root.auditlog.total_rows > 0"> {{$root.auditlog.total_rows}} </span>
@@ -59,9 +59,9 @@
                     </ul>
                 </li>
                 <!-- END NOTIFICATION DROPDOWN -->
-                <li class="separator" style="background: none"></li>
+                <li class="separator hidden-xs" style="background: none"></li>
                 <!-- BEGIN TODO: INBOX DROPDOWN -->
-                <li class="dropdown dropdown-extended dropdown-dark dropdown-notification" id="header_inbox_bar">
+                <li class="dropdown dropdown-extended dropdown-dark dropdown-notification hidden-xs" id="header_inbox_bar">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                         <i class="icon-envelope-open"></i>
                         <span class="badge badge-danger" ng-if="$root.buildlog.length > 0"> {{$root.buildlog.length}} </span>
@@ -93,7 +93,7 @@
                 </li>
                 <!-- END INBOX DROPDOWN -->
                 <!-- BEGIN USER LOGIN DROPDOWN -->
-                <li class="dropdown dropdown-user dropdown-dark">
+                <li class="dropdown dropdown-user dropdown-dark hidden-xs">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                         <span class="username username-hide-on-mobile"> {{$root.profile.info.first_name}} {{$root.profile.info.last_name}} </span>
                         <!-- DOC: Do not remove below empty space(&nbsp;) as its purposely used -->
