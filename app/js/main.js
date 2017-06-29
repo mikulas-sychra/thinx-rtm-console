@@ -80,7 +80,7 @@ RTM.factory('settings', ['$rootScope', function($rootScope) {
   $rootScope.auditlog = [];
 
   $rootScope.profile = {
-    avatar: null,
+    avatar: '/assets/thinx/img/default_avatar_sm.png',
     info: {
       first_name: '',
       last_name: '',
