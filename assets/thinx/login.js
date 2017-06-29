@@ -51,15 +51,18 @@ var Login = function() {
             submitHandler: function(form, event) {
                 event.preventDefault();
 
+                var data = {
+                    username: $('input[name=username]').val(),
+                    password: $('input[name=password]').val(),
+                    remember: $('input[name=remember]').val()
+                };
+
                 $.ajax({
                     url: urlBase + '/login',
                     xhrFields: {
                         withCredentials: true
                     },
-                    data: { 
-                        username: $('input[name=username]').val(), 
-                        password: $('input[name=password]').val()
-                    }, 
+                    data: data,
                     type: 'POST',
                     datatype: 'json',
                     success: function(data, status, xhr) {
