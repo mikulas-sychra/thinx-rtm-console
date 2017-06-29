@@ -128,6 +128,11 @@ function init($rootScope, $scope) {
   function xhrFailed(error) {
     console.log('## xhr failed: ', error);
     //window.location = "/";
+    if (error.status == 401) {
+        console.log('error 401');
+        window.location = '/';
+    }
+
   }
 
   $rootScope.$on("updateSources", function(event, data){
