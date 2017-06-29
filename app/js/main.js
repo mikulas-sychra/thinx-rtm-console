@@ -58,7 +58,7 @@ RTM.factory('settings', ['$rootScope', function($rootScope) {
   };
 
   $rootScope.settings = settings;
-  $rootScope.searchText = "";
+  $rootScope.searchText = '';
 
   console.log(' === ROOT === ');
   console.log($rootScope);
@@ -68,6 +68,8 @@ RTM.factory('settings', ['$rootScope', function($rootScope) {
     $rootScope.meta = {};
     $rootScope.meta.builds = []; // for build id queues
   }
+
+  $rootScope.stats = {};
 
   $rootScope.sources = [];
   $rootScope.devices = [];
@@ -80,15 +82,24 @@ RTM.factory('settings', ['$rootScope', function($rootScope) {
   $rootScope.profile = {
     avatar: null,
     info: {
-      goals: []
+      first_name: '',
+      last_name: '',
+      mobile_phone: '',
+      // notifications: {
+        // 'all': false,
+        // 'important': false,
+        // 'info': false
+      // },
+      security: {
+        "unique_api_keys": null,
+        "global_push": null,
+        "important_notifications": true
+      },
+      goals: [], // ['apikey','enroll', 'enroll-setup','rsakey','source','update','build','profile-privacy','profile-avatar']
+      username: '',
+      owner: ''
     }
   };
-  // $rootScope.profile.info.goals = ['apikey','enroll', 'enroll-setup','rsakey','source','update','build','profile_privacy','profile_avatar'];
-  $rootScope.meta = {
-    builds: []
-  };
-
-  $rootScope.stats = {};
 
   return settings;
 }]);
