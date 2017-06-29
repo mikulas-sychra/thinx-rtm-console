@@ -56,8 +56,8 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
         // APIKEY_INVALID: [],
         // PASSWORD_INVALID: [],
         // APIKEY_MISUSE: [],
-        DEVICE_NEW: [5,4,3,2,1,1,2,3,4,5],
-        DEVICE_CHECKIN: [1,2,3,4,5,5,4,3,2,1],
+        // DEVICE_NEW: [5,4,3,2,1,1,2,3,4,5],
+        // DEVICE_CHECKIN: [1,2,3,4,5,5,4,3,2,1],
         // DEVICE_UPDATE_OK: [],
         // DEVICE_UPDATE_FAIL: [],
         // BUILD_STARTED: [],
@@ -77,19 +77,25 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     console.log(response);
 
     if (response.success) {
-      $rootScope.stats.daily = response.stats;
+
 
       console.log('-- iterating over stats --');
       console.log(response.stats);
 
-      for (var prop in $rootScope.stats.daily) {
-        var propTotal = 0;
-        for (var i = 0; i < $rootScope.stats.daily[prop].length; i++) {
-          console.log("Looping: prop ", prop, "item", $rootScope.stats.daily[prop][i]);
-          propTotal = propTotal + parseInt($rootScope.stats.daily[prop][i]);
-          console.log('adding', $rootScope.stats.daily[prop][i], 'to', prop)
+      for (var index in response.stats) {
+        var dayStats = response.stats[index];
+
+        $rootScope.stats.daily = response.stats[response.stats.length - 1];
+
+        for (var prop in dayStats) {
+          var propTotal = 0;
+          for (var i = 0; i < dayStats[prop].length; i++) {
+            console.log("Looping: prop ", prop, "item", dayStats[prop][i]);
+            propTotal = propTotal + parseInt(dayStats[prop][i]);
+            console.log('adding', dayStats[prop][i], 'to', prop)
+          }
+          $rootScope.stats.total[prop] = propTotal;
         }
-        $rootScope.stats.total[prop] = propTotal;
       }
     }
 
