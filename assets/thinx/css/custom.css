@@ -289,6 +289,8 @@
 	max-height: 300px;
 }
 
+/* overlay log feature */
+
 .log-view-overlay-conatiner {
 	position: fixed;
   display: block;
@@ -309,6 +311,7 @@
 		z-index: 10001 !important;
 		font-size: 30px;
 		padding: 20px;
+		padding-bottom: 0px;
 		text-align: center;
 		margin:auto;
 }
@@ -322,31 +325,46 @@
 }
 
 .overlay-title {
-		color: #DDDDDD !important;
-    font-size: 10pt;
+		color: rgb(48, 214, 222);
+    font-size: 14pt;
+    margin-top: 8px;
+}
+
+.overlay-title span {
+		color: rgba(255, 255, 255, 0.67);
+		font-size: 11pt !important;
     margin-top: 8px;
 }
 
 .log-view-overlay {
 	display: block;
-
 	color: #FAFAFA;
 	font-family: monospace;
-	white-space: -moz-pre-wrap;
-	white-space: -o-pre-wrap;
-	word-wrap: break-word;
 	font-size: .8em;
 	background: none;
-
-	height: 30%;
+	height: 80%;
 	max-height: 100%;
-
 	margin: 20px;
 	margin-top: 0px;
+	padding-top: 0px;
 	margin-right: 30px;
   border: 0;
   border-radius: 0;
 	pointer-events: auto;
+
+	padding: 10px;
+	line-height: 1.3em;
+
+	white-space: pre;
+	overflow: auto;
+}
+
+.force-word-wrap {
+	white-space: -moz-pre-wrap !important; /* Firefox */
+	white-space: -o-pre-wrap !important; /* Opera */
+	white-space: pre-wrap !important; /* Chrome */
+	word-wrap: break-word !important; /* IE */
+	/*width: 100%;*/
 }
 
 .header-search-btn {

@@ -5,8 +5,6 @@
         <i class="fa fa-circle"></i>
     </li>
     <li class="active"> Dashboard </li>
-
-    <a ng-click="showLogOverlay()">asd</a>
 </ul>
 <!-- END PAGE BREADCRUMB -->
 <!-- BEGIN MAIN CONTENT -->
@@ -272,11 +270,15 @@
 
     <div class="log-view-overlay-conatiner" style="display:none">
       <div class="log-view-overlay-controls">
-        <a ng-click="refreshLog()"><i class="icon-refresh"></i></a>
-        <a ng-click="hideLogOverlay()"><i class="icon-close"></i></a>
-        <div class="overlay-title">Build {{modalLogId}}</div>
+        <a ng-click="refreshLog()" title="Refresh status"><i class="icon-refresh"></i></a>
+        <a ng-click="switchWrap()" title="Toggle Word Wrap"><i class="icon-frame"></i></a>
+        <a ng-click="hideLogOverlay()" title="Close Log"><i class="icon-close"></i></a>
+
       </div>
-      <pre class="log-view-overlay" scroll-glue>{{modalLogBody}}</pre>
+      <div class="log-view-overlay log-view-body force-word-wrap" scroll-glue>
+        <div class="overlay-title">Build Log <span>{{modalLogId}}</span></div>
+        
+        {{modalLogBody}}</div>
     </div>
     <!-- END MODAL LOG VIEW -->
 

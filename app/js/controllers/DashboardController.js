@@ -278,6 +278,14 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     $('.log-view-overlay-conatiner').fadeOut();
   }
 
+  $scope.switchWrap = function() {
+    event.stopPropagation();
+
+    console.log('--- trying to enable word-wrap --- ');
+    $('.log-view-body').toggleClass('force-word-wrap');
+  }
+
+
   function OpenWebSocket(buildId) {
     if ("WebSocket" in window) {
       // Fill this from your client
