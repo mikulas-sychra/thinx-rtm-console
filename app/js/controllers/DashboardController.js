@@ -24,6 +24,8 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     })
     .fail(error => console.log('deviceList Error:', error));
 
+    $scope.hideLogOverlay();
+
     $scope.deviceIndex = null;
     $scope.deviceUdid = null;
     $scope.deviceAlias = null;
@@ -251,14 +253,23 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
   };
 
   $scope.showDeviceLastBuild = function(deviceUdid, event) {
-
     event.stopPropagation();
-
     console.log('--- trying to show last build log for ' + deviceUdid);
-
     $scope.modalLogId = $rootScope.meta.builds[deviceUdid][$rootScope.meta.builds[deviceUdid].length - 1];
     $scope.modalLogBody = "";
+    $scope.showLogOverlay();
     OpenWebSocket($scope.modalLogId);
+  }
+
+  $scope.showLogOverlay = function() {
+    event.stopPropagation();
+    console.log('--- trying to show log overlay --- ');
+    $('.log-view-overlay-conatiner').fadeIn();
+  }
+  $scope.hideLogOverlay = function() {
+    event.stopPropagation();
+    console.log('--- trying to hide log overlay --- ');
+    $('.log-view-overlay-conatiner').fadeOut();
   }
 
   function OpenWebSocket(buildId) {
@@ -278,12 +289,10 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
         $scope.ws.onopen = function() {
           console.log("Websocket connection estabilished.");
           $scope.modalLogBodyBuffer = $scope.modalLogBodyBuffer + "\n## Websocket connection estabilished ##\n";
-
           $scope.refreshLog();
-
-          $('#logModal').modal('show');
+          //$('#logModal').modal('show');
+          $scope.showLogOverlay();
           startDebugInterval();
-
         };
         $scope.ws.onmessage = function (message) {
           console.log('Received message...');
@@ -316,7 +325,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
         console.log($scope.ws.readyState);
 
         $scope.refreshLog();
-        $('#logModal').modal('show');
+        //$('#logModal').modal('show');
       }
 
     } else {
