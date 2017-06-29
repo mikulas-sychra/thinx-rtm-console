@@ -15,7 +15,7 @@ angular.module('RTM').controller('RsakeyController', ['$rootScope', '$scope', 's
     .done( function(data) {
       updateKeys(data)
     })
-    .fail(error => console.log('Error:', error));
+    .fail(error => $rootScope.$emit("xhrFailed", error));
 
     $scope.resetModal();
   });
@@ -62,7 +62,7 @@ angular.module('RTM').controller('RsakeyController', ['$rootScope', '$scope', 's
           .done( function(data) {
             updateKeys(data)
           })
-          .fail(error => console.log('Error:', error));
+          .fail(error => $rootScope.$emit("xhrFailed", error));
 
           $('#pageModal').modal('hide');
 
@@ -82,7 +82,7 @@ angular.module('RTM').controller('RsakeyController', ['$rootScope', '$scope', 's
     .fail(function(error) {
       $('.msg-warning').text(error);
       $('.msg-warning').show();
-      console.log('Error:', error);
+      $rootScope.$emit("xhrFailed", error)
       toastr.error('Error.', 'THiNX RTM Console', {timeOut: 5000});
     });
 
@@ -99,20 +99,16 @@ angular.module('RTM').controller('RsakeyController', ['$rootScope', '$scope', 's
         $scope.selectedItems = [];
         Thinx.rsakeyList()
         .done( function(data) {
-
           toastr.success('Deleted.', 'THiNX RTM Console', {timeOut: 5000})
           updateKeys(data);
         })
-        .fail(error => console.log('Error:', error));
+        .fail(error => $rootScope.$emit("xhrFailed", error));
 
       } else {
         toastr.error('Revocation failed.', 'THiNX RTM Console', {timeOut: 5000})
       }
     })
-    .fail(function (error) {
-      // TODO throw error message
-      console.log('Error:', error)
-    });
+    .fail(error => $rootScope.$emit("xhrFailed", error));
   }
 
   $scope.revokeRsakeys = function() {

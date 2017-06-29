@@ -121,6 +121,15 @@ function init($rootScope, $scope) {
   console.log($rootScope);
   console.log($scope);
 
+  $rootScope.$on("xhrFailed", function(event, error){
+    xhrFailed(error);
+  });
+
+  function xhrFailed(error) {
+    console.log('## xhr failed: ', error);
+    //window.location = "/";
+  }
+
   $rootScope.$on("updateSources", function(event, data){
     updateSources(data);
   });
@@ -231,19 +240,19 @@ function init($rootScope, $scope) {
   .done(function(data) {
     updateProfile(data);
   })
-  .fail(error => console.log('getProfile Error:', error));
+  .fail(error => $rootScope.$emit("xhrFailed", error));
 
   Thinx.getAuditLog()
   .done(function(data) {
     updateAuditLog(data);
   })
-  .fail(error => console.log('getAuditLog Error:', error));
+  .fail(error => $rootScope.$emit("xhrFailed", error));
 
   Thinx.buildLogList()
   .done(function(data) {
     updateBuildLogList(data);
   })
-  .fail(error => console.log('buildLogList Error:', error));
+  .fail(error => $rootScope.$emit("xhrFailed", error));
 
 }
 

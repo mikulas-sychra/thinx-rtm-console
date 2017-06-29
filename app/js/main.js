@@ -83,6 +83,7 @@ RTM.factory('settings', ['$rootScope', function($rootScope) {
       goals: []
     }
   };
+  // $rootScope.profile.info.goals = ['apikey','enroll', 'enroll-setup','rsakey','source','update','build','profile_privacy','profile_avatar'];
   $rootScope.meta = {
     builds: []
   };
