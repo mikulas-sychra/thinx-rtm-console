@@ -3,7 +3,7 @@
 }
 
 .has-error .help-block, .has-error .help-inline, .has-error .control-label, .has-error .radio, .has-error .checkbox, .has-error .radio-inline, .has-error .checkbox-inline {
-	color: #a7282d; !important
+	color: #a7282d !important;
 }
 
 .login .logo {
