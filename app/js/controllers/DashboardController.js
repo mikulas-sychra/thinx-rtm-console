@@ -79,23 +79,26 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     if (response.success) {
 
       console.log('-- iterating over stats --');
-      console.log(response.stats);
 
-      for (var index in response.stats) {
-        var dayStats = response.stats[index];
+      var days = response.stats;
+      console.log(days);
 
-        for (var prop in dayStats) {
+      // for (var index in response.stats) {
+        // var dayStats = response.stats[index];
+
+        for (var prop in days) {
+          console.log(prop, days[prop]);
           var propTotal = 0;
-          for (var i = 0; i < dayStats[prop].length; i++) {
-            console.log("Looping: prop ", prop, "item", dayStats[prop][i]);
-            propTotal = propTotal + parseInt(dayStats[prop][i]);
-            console.log('adding', dayStats[prop][i], 'to', prop)
+          for (var i = 0; i < days[prop].length; i++) {
+            console.log("Looping: prop ", prop, "item", days[prop][i]);
+            propTotal = propTotal + parseInt(days[prop][i]);
+            console.log('adding', days[prop][i], 'to', prop)
           }
           $rootScope.stats.total[prop] = propTotal;
 
-          $rootScope.stats.daily.push(dayStats);
+          $rootScope.stats.daily[prop] = days[prop];
         }
-      }
+      // }
     }
 
     if(typeof($rootScope.devices) !== "undefined") {
