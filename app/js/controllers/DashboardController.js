@@ -83,61 +83,37 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
       var days = response.stats;
       console.log(days);
 
-      // for (var index in response.stats) {
-        // var dayStats = response.stats[index];
-
         for (var prop in days) {
-          console.log(prop, days[prop]);
+          // console.log(prop, days[prop]);
           var propTotal = 0;
           for (var i = 0; i < days[prop].length; i++) {
-            console.log("Looping: prop ", prop, "item", days[prop][i]);
+            // console.log("Looping: prop ", prop, "item", days[prop][i]);
             propTotal = propTotal + parseInt(days[prop][i]);
-            console.log('adding', days[prop][i], 'to', prop)
+            // console.log('adding', days[prop][i], 'to', prop)
           }
           $rootScope.stats.total[prop] = propTotal;
-
           $rootScope.stats.daily[prop] = days[prop];
         }
-      // }
     }
 
     if(typeof($rootScope.devices) !== "undefined") {
       $rootScope.stats.total.DEVICES = $rootScope.devices.length;
     }
-/*
-    var debugData = []; // $rootScope.stats.daily.DEVICE_CHECKIN
-    for(i = 0; i < 10; i++) {
-      debugData.push(
 
-        (parseInt($rootScope.stats.daily.DEVICE_CHECKIN) * Math.floor((Math.random() * 100) + 1))
-
-      );
-    };
-*/
     $("#sparkline_bar").sparkline($rootScope.stats.daily.DEVICE_CHECKIN, {
       type: 'bar',
-      width: '100',
-      barWidth: 5,
+      width: '80',
+      barWidth: 8,
       height: '55',
       barColor: '#29b4b6',
       negBarColor: '#29b4b6'
     });
 
-/*
-    var debugData = []; //
-    for(i = 0; i < 10; i++) {
-      debugData.push(
-
-        (parseInt($rootScope.stats.daily.DEVICE_NEW) * Math.floor((Math.random() * 100) + 1))
-
-      );
-    };
-*/
     console.log('dailystats', $rootScope.stats.daily.DEVICE_NEW);
     $("#sparkline_bar2").sparkline($rootScope.stats.daily.DEVICE_NEW, {
       type: 'bar',
-      width: '100',
-      barWidth: 5,
+      width: '80',
+      barWidth: 8,
       height: '55',
       barColor: '#1ba39c',
       negBarColor: '#1ba39c'
