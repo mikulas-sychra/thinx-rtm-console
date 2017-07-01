@@ -1379,7 +1379,7 @@ var Dashboard = function() {
             // this.initSparklineCharts();
             // this.initChat();
             // this.initDashboardDaterange();
-            // this.initMorisCharts();
+            this.initMorisCharts();
 
             // this.initAmChart1();
             // this.initAmChart2();

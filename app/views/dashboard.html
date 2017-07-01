@@ -58,6 +58,31 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <!-- END PORTLET-->
+        </div>
+    </div>
+
+    <!-- BEGIN DASHBOARD STATS -->
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <!-- BEGIN PORTLET-->
+            <div class="portlet light bordered ">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart font-red"></i>
+                        <span class="caption-subject font-red bold uppercase">Active Devices</span>
+                    </div>
+                    <div class="actions">
+
+                          <button class="btn btn-circle btn-icon-only" ng-class="selectedItems.length > 0 ? 'btn-danger' : 'btn-default'" ng-click="revokeDevices()" type="button" ><i class="icon-trash"></i></button>
+                          <button ng-disabled="true" type="button" class="btn green btn-outline" ng-click="revokeDevice()"><i class="fa fa-times"></i> Revoke</button>
+                          <button ng-disabled="true" type="button" class="btn red btn-outline" ng-click="transferDevice()"><i class="icon-paper-plane"></i> Transfer</button>
+
+                    </div>
+                </div>
+                <div class="portlet-body">
                     <div class="table-scrollable table-scrollable-borderless">
                         <table class="table table-hover table-light">
                             <thead>
@@ -182,6 +207,8 @@
         </div>
     </div>
 
+
+
      <!-- BEGIN FORM-->
     <form action="#" class="form-horizontal form-bordered" name="deviceModalForm">
         <div id="deviceModal" class="modal fade" role="dialog" aria-hidden="true">
@@ -237,8 +264,6 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary" ng-click="changeDeviceAlias()"><i class="fa fa-check"></i> Submit</button>
-
-                        <button type="button" class="btn red btn-outline pull-left" ng-click="revokeDevice()"><i class="fa fa-times"></i> Revoke</button>
                     </div>
                 </div>
             </div>
@@ -336,7 +361,7 @@
     </div>
 
 
-    <div class="row hide">
+    <div class="row">
         <div class="col-md-12 col-sm-12">
             <!-- BEGIN PORTLET-->
             <div class="portlet light bordered ">
@@ -344,7 +369,6 @@
                     <div class="caption caption-md">
                         <i class="icon-settings font-green"></i>
                         <span class="caption-subject font-green bold uppercase">Sales Summary</span>
-                        <span class="caption-helper hide">weekly stats...</span>
                     </div>
                     <div class="actions">
                         <div class="btn-group btn-group-devided" data-toggle="buttons">
@@ -384,35 +408,6 @@
                             </div>
                         </div>
                     </div>
-                    <ul class="list-separated list-inline-xs hide">
-                        <li>
-                            <div class="font-grey-mint font-sm"> Total Sales </div>
-                            <div class="uppercase font-hg font-red-flamingo"> 13760
-                                <span class="font-lg font-grey-mint">$</span>
-                            </div>
-                        </li>
-                        <li> </li>
-                        <li class="border">
-                            <div class="font-grey-mint font-sm"> Revenue </div>
-                            <div class="uppercase font-hg font-green"> 4760
-                                <span class="font-lg font-grey-mint">$</span>
-                            </div>
-                        </li>
-                        <li class="divider"> </li>
-                        <li>
-                            <div class="font-grey-mint font-sm"> Expenses </div>
-                            <div class="uppercase font-hg font-purple"> 1760
-                                <span class="font-lg font-grey-mint">$</span>
-                            </div>
-                        </li>
-                        <li class="divider"> </li>
-                        <li>
-                            <div class="font-grey-mint font-sm"> Growth </div>
-                            <div class="uppercase font-hg font-blue"> 9760
-                                <span class="font-lg font-grey-mint">$</span>
-                            </div>
-                        </li>
-                    </ul>
                     <div id="sales_statistics" class="portlet-body-morris-fit morris-chart" style="height: 260px"> </div>
                 </div>
             </div>
@@ -423,6 +418,6 @@
 <!-- END MAIN CONTENT -->
 <!-- BEGIN MAIN JS & CSS -->
 <script>
-    // Dashboard.init();
+    Dashboard.init();
 </script>
 <!-- BEGIN MAIN JS & CSS
