@@ -30,7 +30,7 @@ var PasswordReset = function() {
                 }
             },
 
-            invalidHandler: function(event, validator) { //display error alert on form submit   
+            invalidHandler: function(event, validator) { //display error alert on form submit
 
             },
 
@@ -56,12 +56,12 @@ var PasswordReset = function() {
                 var owner = $.getQuery('owner');
                 var reset_key = $.getQuery('reset_key');
 
-                var data = { 
-                        password: $('.forget-form input[name=password]').val(), 
+                var data = {
+                        password: $('.forget-form input[name=password]').val(),
                         rpassword: $('.forget-form input[name=rpassword]').val(),
                         owner: owner
                 };
-                
+
                 if (activation !== false) {
                     data.activation = activation;
                 }
@@ -79,8 +79,8 @@ var PasswordReset = function() {
                         console.log('--password set request success--');
 
                         try {
-                           var response = JSON.parse(data);  
-                           console.log(data);  
+                           var response = JSON.parse(data);
+                           console.log(data);
                         }
                         catch(e) {
                            console.log(e);
@@ -106,7 +106,7 @@ var PasswordReset = function() {
                                 if (response.status == 'activated_user_not_found') {
                                     $('.msg-error', $('.forget-form')).text('Activated User not found.');
                                     $('.msg-error', $('.forget-form')).show();
-                                } 
+                                }
                             }
                         }
 
@@ -133,12 +133,12 @@ var PasswordReset = function() {
             }
         });
 
-    }   
+    }
 
     return {
         //main function to initiate the module
         init: function() {
-            // retrieve GET parameters            
+            // retrieve GET parameters
             $('.forget-form').show();
             $('.show-on-success', $('.forget-form')).hide();
             handleForgetPassword();
@@ -158,7 +158,7 @@ jQuery(document).ready(function() {
             var results = regex.exec( window.location.href );
             if( results !== null ) {
                 return results[1];
-                return decodeURIComponent(results[1].replace(/\+/g, " "));
+                // return decodeURIComponent(results[1].replace(/\+/g, " "));
             } else {
                 return false;
             }
