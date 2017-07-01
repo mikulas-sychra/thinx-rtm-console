@@ -61,8 +61,10 @@ describe('basic ui tests', function() {
             console.log("selecting element for removal: ", text);
             results[i].click();
             browser.sleep(1000);
-            element(by.css('[ng-click*=revokeEnviros]')).click();
-            browser.sleep(1000);
+            browser.executeScript('window.scrollTo(0,0);').then(function() {
+              element(by.css('[ng-click*=revokeEnviros]')).click();
+              browser.sleep(1000);
+            });
           }
         });
       }

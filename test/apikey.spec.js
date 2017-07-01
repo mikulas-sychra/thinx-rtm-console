@@ -43,8 +43,7 @@ describe('basic ui tests', function() {
   });
 
   it('should find new apikey on page', function() {
-    // find apikey
-    var apikeys = element.all(by.css('tbody tr td div:first-child')).map(function (elm) {
+    var apikeys = element.all(by.css('.row-item-title')).map(function (elm) {
       return elm.getText();
     });
 
@@ -66,8 +65,10 @@ describe('basic ui tests', function() {
             console.log("selecting element for removal: ", text);
             results[i].click();
             browser.sleep(1000);
-            element(by.css('[ng-click*=revokeApikeys]')).click();
-            browser.sleep(1000);
+            browser.executeScript('window.scrollTo(0,0);').then(function() {
+              element(by.css('[ng-click*=revokeApikeys]')).click();
+              browser.sleep(1000);
+            });
           }
         });
       }
