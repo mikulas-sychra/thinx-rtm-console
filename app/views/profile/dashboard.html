@@ -46,7 +46,7 @@
                   <div class="tab-pane" id="tab_1_2">
                       <div class="scroller" style="height: 638px;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
                           <ul class="feeds">
-                              <li ng-repeat="(key, build) in $root.buildlog | filter:message:searchText | limitTo:200 track by $index">
+                              <li ng-repeat="build in $root.buildlog | filter:searchText | limitTo:200 track by $index">
                                 <div class="col1">
                                   <div class="date">
                                       <i class="fa fa-cogs"></i> {{build.date | lastSeen}} {{build.udid | limitTo:6}}
