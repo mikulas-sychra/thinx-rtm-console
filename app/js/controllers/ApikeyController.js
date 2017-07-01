@@ -24,8 +24,7 @@ angular.module('RTM').controller('ApikeyController', ['$rootScope', '$scope', 's
   function updateKeys(data) {
     var response = JSON.parse(data);
     $rootScope.apikeys = response.api_keys;
-    $scope.$apply()
-
+    $scope.$apply();
     console.log('keys:');
     console.log($rootScope.apikeys);
   }
@@ -55,7 +54,13 @@ angular.module('RTM').controller('ApikeyController', ['$rootScope', '$scope', 's
 
           Thinx.apikeyList()
           .done( function(data) {
-            updateKeys(data)
+            updateKeys(data);
+
+            // save user-spcific goal achievement
+            if ($rootScope.apikeys.length > 0 && !$rootScope.profile.info.goals.includes('apikey')) {
+              $rootScope.profile.info.goals.push('apikey');
+              $scope.$emit("saveProfile");
+            };
           })
           .fail(error => console.log('Error:', error));
 

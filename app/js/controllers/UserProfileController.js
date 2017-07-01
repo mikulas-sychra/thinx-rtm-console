@@ -5,22 +5,23 @@ angular.module('RTM').controller('UserProfileController', function($rootScope, $
 
     $scope.newAvatar = null;
     $scope.searchText = null;
+
+    console.log('calling');
     Thinx.init($rootScope, $scope);
   });
-
 
   // set sidebar closed and body solid layout mode
   $rootScope.settings.layout.pageBodySolid = true;
   // $rootScope.settings.layout.pageSidebarClosed = true;
 
-  $scope.changeProfile = function() {
+  $scope.submitProfile = function() {
     console.log('-- changing user profile --');
 
     console.log('current profile');
     console.log($rootScope.profile);
 
     console.log('-- sending data --');
-    Thinx.changeProfile($rootScope.profile)
+    Thinx.submitProfile($rootScope.profile)
     .done(function(response) {
 
       if (typeof(response) !== 'undefined') {
@@ -82,7 +83,7 @@ angular.module('RTM').controller('UserProfileController', function($rootScope, $
   };
 
 
-  $scope.changeProfileAvatar = function() {
+  $scope.submitProfileAvatar = function() {
     console.log('-- changing user avatar --');
     console.log($scope.newAvatar);
 
@@ -91,7 +92,7 @@ angular.module('RTM').controller('UserProfileController', function($rootScope, $
       return;
     }
 
-    Thinx.changeProfileAvatar($scope.newAvatar)
+    Thinx.submitProfileAvatar($scope.newAvatar)
     .done(function(response) {
 
       if (typeof(response) !== 'undefined') {

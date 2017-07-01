@@ -63,8 +63,8 @@ var Thinx = {
   deviceList: function () {
     return deviceList();
   },
-  changeDevice: function (deviceUdid, deviceAlias) {
-    return changeDevice(deviceUdid, deviceAlias);
+  submitDevice: function (deviceUdid, deviceAlias) {
+    return submitDevice(deviceUdid, deviceAlias);
   },
   revokeDevice: function (deviceUdid) {
     return revokeDevice(deviceUdid);
@@ -82,14 +82,14 @@ var Thinx = {
   getProfile: function () {
     return getProfile();
   },
-  changeProfile: function (profile) {
-    return changeProfile(profile);
+  submitProfile: function (profile) {
+    return submitProfile(profile);
   },
-  changeProfileAvatar: function (avatar) {
-    return changeProfileAvatar(avatar);
+  submitProfileAvatar: function (avatar) {
+    return submitProfileAvatar(avatar);
   },
-  changeProfileSecurity: function (security) {
-    return changeProfileSecurity(security);
+  submitProfileSecurity: function (security) {
+    return submitProfileSecurity(security);
   },
   getAuditLog: function () {
     return getAuditLog();
@@ -148,6 +148,7 @@ function init($rootScope, $scope) {
     $.each(response.sources, function(key, value) {
       $rootScope.sources[key] = value;
     });
+
     $scope.$apply();
 
     console.log('sources:');
@@ -157,37 +158,47 @@ function init($rootScope, $scope) {
   // =================================================
   // api related functions
 
-  $rootScope.$on("updateProfile", function(event, data){
+  $scope.$on("saveProfile", function(event) {
+    // event.stopPropagation();
+    console.log('SAVING PROFILE');
+    submitProfile($rootScope.profile);
+  });
+
+  $scope.$on("updateProfile", function(event, data){
     updateProfile(data);
   });
 
   function updateProfile(data) {
-    var response = JSON.parse(data);
-
-    // validate response and refresh view
-    if (typeof(response) !== 'undefined' && typeof(response.success) !== 'undefined' && response.success) {
-
+    if (typeof(data) !== "undefined") {
+      var response = JSON.parse(data);
       console.log('-- processing profile ---');
       console.log(response);
-      $rootScope.profile = response.profile;
 
-      // set goals object on first run
-      if (typeof($rootScope.profile.info.goals) == 'undefined') {
-        console.log('- goals not defined yet -');
-        $rootScope.profile.info.goals = [];
-        // $rootScope.profile.info.goals = ['apikey','enroll','rsakey','source','update','build','profile_privacy','profile_avatar'];
+      // validate response and refresh view
+      if (typeof(response) !== "undefined" && typeof(response.success) !== "undefined" && response.success) {
+
+        var profile = response.profile;
+
+        // set default avatar if one's missing
+        if (typeof(profile.avatar) == "undefined" || profile.avatar.length == 0) {
+          console.log('- avatar not defined, falling back to default -');
+          profile.avatar = '/assets/thinx/img/default_avatar_sm.png';
+        }
+        if (typeof(profile.info.goals) == "undefined") {
+          console.log('- goals not defined, retaining current -');
+          profile.info['goals'] = $rootScope.profile.info.goals;
+        }
+
+        console.log('profile response');
+        console.log(profile);
+
+        $rootScope.profile = profile;
       }
-
-      // set default avatar if one's missing
-      if (typeof($rootScope.profile.avatar) == 'undefined' || $rootScope.profile.avatar.length == 0) {
-        console.log('- avatar note defined, falling back to default -');
-        $rootScope.profile.avatar = '/assets/thinx/img/default_avatar_sm.png';
-      }
-
       $scope.$apply();
+    } else {
+      console.log('// updateProfile with no argument is deprecated');
     }
   }
-
 
   function updateAuditLog(data) {
     var response = JSON.parse(data);
@@ -518,18 +529,20 @@ function getProfile() {
   });
 }
 
-function changeProfile(profile) {
+function submitProfile(profile) {
+
+  console.log('Submitting profile...');
 
   var info = {
     first_name: profile.info.first_name,
     last_name: profile.info.last_name,
     mobile_phone: profile.info.mobile_phone,
 
-    notifications: {
-      "all" : profile.info.notifications.all,
-      "important" : profile.info.notifications.important,
-      "info" : profile.info.notifications.info
-    },
+    // notifications: {
+      // "all" : profile.info.notifications.all,
+      // "important" : profile.info.notifications.important,
+      // "info" : profile.info.notifications.info
+    // },
 
     security: profile.info.security,
 
@@ -548,7 +561,7 @@ function changeProfile(profile) {
   });
 }
 
-function changeProfileAvatar(avatar) {
+function submitProfileAvatar(avatar) {
   // var avatar = btoa(avatar);
 
   return $.ajax({

@@ -22,16 +22,8 @@ angular.module('RTM').controller('RsakeyController', ['$rootScope', '$scope', 's
 
   function updateKeys(data) {
     var keys = JSON.parse(data);
-
     $rootScope.rsakeys = keys.rsa_keys;
-
-    // TODO save profile
-    if ($rootScope.rsakeys.length > 0 && !$rootScope.profile.info.goals.includes('rsakey')) {
-      $rootScope.profile.info.goals.push('rsakey');
-    };
-
     $scope.$apply()
-
     console.log('rsakeys:');
     console.log($rootScope.rsakeys);
   }
@@ -60,7 +52,13 @@ angular.module('RTM').controller('RsakeyController', ['$rootScope', '$scope', 's
 
           Thinx.rsakeyList()
           .done( function(data) {
-            updateKeys(data)
+            updateKeys(data);
+
+            // save user-spcific goal achievement
+            if ($rootScope.rsakeys.length > 0 && !$rootScope.profile.info.goals.includes('rsakey')) {
+              $rootScope.profile.info.goals.push('rsakey');
+              $scope.$emit("saveProfile");
+            };
           })
           .fail(error => $rootScope.$emit("xhrFailed", error));
 

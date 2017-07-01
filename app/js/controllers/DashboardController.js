@@ -21,6 +21,12 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     Thinx.deviceList()
     .done(function(data) {
       updateDevices(data);
+      // save user-spcific goal achievement
+      if ($rootScope.devices.length > 0 && !$rootScope.profile.info.goals.includes('enroll')) {
+        $rootScope.profile.info.goals.push('enroll');
+        $rootScope.profile.info.goals.push('enroll-setup');
+        $scope.$emit("saveProfile");
+      };
     })
     .fail(error => console.log('deviceList Error:', error));
 
@@ -42,7 +48,6 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     var devices = JSON.parse(data);
     $rootScope.devices = devices.devices;
     $scope.$apply();
-
     console.log('devices:');
     console.log($rootScope.devices);
   }
@@ -218,6 +223,13 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
 
           // prepare user metadata for particular device
           $rootScope.meta.builds[deviceUdid].push(response.build_id);
+
+          // save user-spcific goal achievement
+          if (!$rootScope.profile.info.goals.includes('update')) {
+            $rootScope.profile.info.goals.push('update');
+            $scope.$emit("saveProfile");
+          };
+
           $scope.$apply();
 
           toastr.info(response.status, 'THiNX RTM Console', {timeOut: 5000});
@@ -248,12 +260,10 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
   }
 
   $scope.showLogOverlay = function() {
-    event.stopPropagation();
     console.log('--- trying to show log overlay --- ');
     $('.log-view-overlay-conatiner').fadeIn();
   }
   $scope.hideLogOverlay = function() {
-    event.stopPropagation();
     console.log('--- trying to hide log overlay --- ');
     $('.log-view-overlay-conatiner').fadeOut();
   }
@@ -439,13 +449,6 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
       console.log('Error:', error)
     });
   };
-
-  $scope.updateProfile = function() {
-    Thinx.changeProfile($rootScope.profile).done( function(data) {
-      console.log('updateProfile ');
-    })
-    .fail(error => console.log('Error:', error));
-  }
 
   $scope.resetModal = function(index) {
     console.log('Resetting modal form values...');
