@@ -76,9 +76,9 @@
                     </div>
                     <div class="actions">
 
-                          <button class="btn btn-circle btn-icon-only" ng-class="selectedItems.length > 0 ? 'btn-danger' : 'btn-default'" ng-click="revokeDevices()" type="button" ><i class="icon-trash"></i></button>
-                          <button ng-disabled="true" type="button" class="btn green btn-outline" ng-click="revokeDevice()"><i class="fa fa-times"></i> Revoke</button>
-                          <button ng-disabled="true" type="button" class="btn red btn-outline" ng-click="transferDevice()"><i class="icon-paper-plane"></i> Transfer</button>
+                          <!-- <button class="btn btn-circle btn-icon-only"  ng-disbaled="selectedItems.length <> 1" ng-class="selectedItems.length > 0 ? 'btn-info' : 'btn-default'" ng-click="resetModal(device.udid)" type="button" title="Revoke" ><i class="fa fa-wrench"></i></button> -->
+                          <button class="btn btn-circle btn-icon-only" ng-disbaled="selectedItems.length <> 1" ng-class="selectedItems.length > 0 ? 'btn-danger' : 'btn-default'" ng-click="revokeDevices()" type="button" title="Revoke" ><i class="icon-trash"></i></button>
+                          <button class="btn btn-circle btn-icon-only" ng-class="selectedItems.length > 0 ? 'btn-warning' : 'btn-default'" ng-click="transferDevices()" type="button" title="Transfer" ><i class="icon-exchange"></i></button>
 
                     </div>
                 </div>
@@ -92,7 +92,8 @@
                                     </th>
                                 </tr>
                             </thead>
-                             <tr ng-repeat="device in $root.devices | filter:$root.searchText" ng-click="resetModal($index)" class="default-row" data-target="#deviceModal" data-toggle="modal" style="background: none !important;">
+                            <!-- ng-click="resetModal($index)"  data-target="#deviceModal" data-toggle="modal" -->
+                             <tr ng-repeat="device in $root.devices | filter:$root.searchText"  ng-click="checkItem(device.udid)" ng-class="selectedItems.indexOf(device.udid) > -1 ? 'selected-row' : 'default-row'" style="background: none !important;">
 
                                 <td class="device-card">
                                     <div class="table"  style="padding: 10px; margin-bottom: 0px; background: transparent;">
@@ -132,6 +133,10 @@
 
                                              <a class="btn btn-circle icon-button btn-icon-only btn-default" href="#" ng-if="hasSource($index)" ng-click="build(device.udid, device.source, $index); $event.stopPropagation()" ng-hide="hasBuildId($index) == null">
                                                 <i class="fa fa-cogs"></i>
+                                            </a>
+
+                                            <a class="btn btn-circle btn-icon-only btn-default" ng-click="openModal($index, $event)">
+                                                <i class="fa fa-wrench"></i>
                                             </a>
 
                                         </div>

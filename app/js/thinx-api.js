@@ -60,6 +60,9 @@ var Thinx = {
   revokeDevice: function (deviceUdid) {
     return revokeDevice(deviceUdid);
   },
+  transferDevices: function (email, deviceUdids) {
+    return transferDevices(email, deviceUdids);
+  },
   attachRepository: function (sourceId, deviceUdid) {
     return attachRepository(sourceId, deviceUdid);
   },
@@ -301,6 +304,15 @@ function revokeDevice(deviceUdid) {
     url: urlBase + '/device/revoke',
     type: 'POST',
     data: JSON.stringify({ udid: deviceUdid }),
+    dataType: 'json'
+  });
+}
+
+function transferDevices(email, deviceUdids) {
+  return $.ajax({
+    url: urlBase + '/api/device/transfer/request',
+    type: 'POST',
+    data: JSON.stringify({ udids: deviceUdids, to: email }),
     dataType: 'json'
   });
 }

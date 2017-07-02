@@ -37,6 +37,9 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     $scope.deviceAlias = null;
     $scope.modalLogBody = "";
     $scope.modalLogBodyBuffer = "";
+
+    $scope.selectedItems = [];
+    $scope.transferEmail = null;
   });
 
   // set sidebar closed and body solid layout mode
@@ -450,7 +453,57 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     });
   };
 
-  $scope.resetModal = function(index) {
+  function transferDevices(email, deviceUdids) {
+    console.log('--transferring devices ' + deviceUdids.length +'--')
+
+    Thinx.transferDevices(email, deviceUdids)
+    .done(function(data) {
+      if (data.success) {
+        console.log('Success:', data);
+
+        $scope.selectedItems = [];
+        $scope.transferEmail = null;
+
+        Thinx.deviceList()
+        .done(function(data) {
+          updateDevices(data);
+          //$('#deviceModal').modal('hide');
+        })
+        .fail(error =>  $rootScope.$emit("xhrFailed", error));
+
+      } else {
+        toastr.error('Transfer failed.', 'THiNX RTM Console', {timeOut: 5000})
+      }
+    })
+    .fail(error => $rootScope.$emit("xhrFailed", error));
+  }
+
+  $scope.transferDevices = function() {
+    console.log('-- processing selected items (transfer) --');
+    console.log($scope.selectedItems);
+
+    var selectedToTransfer = $scope.selectedItems.slice();
+    if (selectedToTransfer.length > 0) {
+      transferDevices($scope.transferEmail, selectedToTransfer);
+    } else {
+      toastr.warning('Nothing selected.', 'THiNX RTM Console', {timeOut: 1000})
+    }
+  };
+
+  $scope.checkItem = function(udid) {
+    console.log('### toggle item in selectedItems');
+    var index = $scope.selectedItems.indexOf(udid);
+    if (index > -1) {
+      console.log('splicing on ', index, ' value ', $scope.selectedItems[index]);
+      $scope.selectedItems.splice(index, 1);
+    } else {
+      $scope.selectedItems.push(udid);
+    }
+  }
+
+  $scope.openModal = function(index, event) {
+    event.stopPropagation();
+
     console.log('Resetting modal form values...');
     $scope.deviceUdid = $rootScope.devices[index].udid;
     $scope.deviceAlias = $rootScope.devices[index].alias;
@@ -459,6 +512,8 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     console.log("scope vars");
     console.log("deviceUdid", $scope.deviceUdid);
     console.log("deviceAlias", $scope.deviceAlias);
+
+    $('#deviceModal').modal('show');
   }
 
   function startDebugInterval() {
