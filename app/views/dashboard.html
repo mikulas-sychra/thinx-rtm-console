@@ -77,8 +77,34 @@
                     <div class="actions">
 
                           <!-- <button class="btn btn-circle btn-icon-only"  ng-disbaled="selectedItems.length <> 1" ng-class="selectedItems.length > 0 ? 'btn-info' : 'btn-default'" ng-click="resetModal(device.udid)" type="button" title="Revoke" ><i class="fa fa-wrench"></i></button> -->
-                          <button class="btn btn-circle btn-icon-only" ng-disbaled="selectedItems.length <> 1" ng-class="selectedItems.length > 0 ? 'btn-danger' : 'btn-default'" ng-click="revokeDevices()" type="button" title="Revoke" ><i class="icon-trash"></i></button>
-                          <button class="btn btn-circle btn-icon-only" ng-class="selectedItems.length > 0 ? 'btn-warning' : 'btn-default'" ng-click="transferDevices()" type="button" title="Transfer" ><i class="icon-exchange"></i></button>
+                          <!-- <button class="btn btn-circle btn-icon-only" ng-disbaled="selectedItems.length <> 1" ng-class="selectedItems.length > 0 ? 'btn-danger' : 'btn-default'" ng-click="revokeDevices()" type="button" title="Revoke" ><i class="icon-trash"></i></button> -->
+                          <!-- <button class="btn btn-circle btn-icon-only" ng-class="selectedItems.length > 0 ? 'btn-warning' : 'btn-default'" ng-click="transferDevices()" type="button" title="Transfer" ><i class="icon-exchange"></i></button> -->
+
+                          <div class="btn-group">
+                            <a ng-show="selectedItems.length > 0" class="btn btn-primary" href="javascript:;" data-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-bars"></i> Actions
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu pull-right">
+                                <!-- <li> -->
+                                    <!-- <a href="javascript:;"> -->
+                                        <!-- <i class="fa fa-pencil"></i> Edit </a> -->
+                                <!-- </li> -->
+                                <li>
+                                    <a href="javascript:;" ng-click="revokeDevices()">
+                                        <i class="icon-trash"></i> Revoke <span class="badge badge-warning"> {{selectedItems.length}} </span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" ng-click="transferDevices()">
+                                        <i class="fa fa-exchange"></i> Transfer <span class="badge badge-danger"> {{selectedItems.length}} </span></a>
+                                </li>
+                                <li class="divider"> </li>
+                                <li>
+                                    <a href="javascript:;">
+                                        <i class="i"></i> What now? </a>
+                                </li>
+                            </ul>
+                        </div>
 
                     </div>
                 </div>
