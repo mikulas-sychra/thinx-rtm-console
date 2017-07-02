@@ -310,7 +310,7 @@ function revokeDevice(deviceUdid) {
 
 function transferDevices(email, deviceUdids) {
   return $.ajax({
-    url: urlBase + '/api/device/transfer/request',
+    url: urlBase + '/device/transfer/request',
     type: 'POST',
     data: JSON.stringify({ udids: deviceUdids, to: email }),
     dataType: 'json'
