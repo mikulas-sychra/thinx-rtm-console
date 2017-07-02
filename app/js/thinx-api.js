@@ -1,8 +1,5 @@
 // Thninx API Ajax Class
-var urlBase = 'http://thinx.cloud:7442/api';
-if (location.protocol == 'https:') {
-  var urlBase = 'https://thinx.cloud:7443/api';
-}
+var urlBase = 'https://thinx.cloud:7443/api';
 
 var counter = 30;
 $.ajaxSetup({
@@ -19,9 +16,6 @@ var Thinx = {
   },
   createApikey: function (newApikeyAlias) {
     return createApikey(newApikeyAlias);
-  },
-  revokeApikey: function (fingerprint) {
-    return revokeApikey(fingerprint);
   },
   revokeApikeys: function (fingerprints) {
     return revokeApikeys(fingerprints);
@@ -42,9 +36,6 @@ var Thinx = {
   },
   addSource: function (sourceUrl, sourceAlias, sourceBranch) {
     return addSource(sourceUrl, sourceAlias, sourceBranch);
-  },
-  revokeSource: function (sourceId) {
-    return revokeSource(sourceId);
   },
   revokeSources: function (sourceIds) {
     return revokeSources(sourceIds);
@@ -386,15 +377,6 @@ function createApikey(newApikeyAlias) {
   });
 }
 
-function revokeApikey(fingerprint) {
-  return $.ajax({
-    url: urlBase + '/user/apikey/revoke',
-    type: 'POST',
-    data: JSON.stringify({ fingerprint: fingerprint }),
-    dataType: 'json'
-  });
-}
-
 function revokeApikeys(fingerprints) {
   return $.ajax({
     url: urlBase + '/user/apikey/revoke',
@@ -495,15 +477,6 @@ function addSource(url, alias, branch) {
       alias: alias,
       branch: branch
     }),
-    dataType: 'json'
-  });
-}
-
-function revokeSource(sourceId) {
-  return $.ajax({
-    url: urlBase + '/user/source/revoke',
-    type: 'POST',
-    data: JSON.stringify({ source_id: sourceId }),
     dataType: 'json'
   });
 }
