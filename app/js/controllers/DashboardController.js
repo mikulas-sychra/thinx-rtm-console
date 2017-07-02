@@ -516,6 +516,12 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     $('#deviceModal').modal('show');
   }
 
+  $scope.openTransferModal = function() {
+    console.log('Resetting transfer modal form values...');
+    $scope.transferEmail = null;
+    $('#transferModal').modal('show');
+  }
+
   function startDebugInterval() {
     var i = 0;
     setInterval(function(){

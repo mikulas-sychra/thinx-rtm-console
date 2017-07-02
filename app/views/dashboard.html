@@ -95,7 +95,7 @@
                                         <i class="icon-trash"></i> Revoke <span class="badge badge-warning"> {{selectedItems.length}} </span></a>
                                 </li>
                                 <li>
-                                    <a href="javascript:;" ng-click="transferDevices()">
+                                    <a href="javascript:;" ng-click="openTransferModal()">
                                         <i class="fa fa-exchange"></i> Transfer <span class="badge badge-danger"> {{selectedItems.length}} </span></a>
                                 </li>
                                 <li class="divider"> </li>
@@ -318,6 +318,34 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" ng-click="refreshLog()"><i class="fa fa-refresh"></i> Refresh</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BEGIN MODAL LOG VIEW -->
+    <div id="transferModal" class="modal container fade" role="dialog" aria-hidden="true">
+        <div class="modal-dialog transfer-modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Transfer Devices</h4>
+                </div>
+                <div class="modal-body">
+
+                  <form action="#" class="form-horizontal">
+                     <div class="form-group">
+                         <label class="control-label col-md-3">Email</label>
+                         <div class="col-md-9">
+                             <input type="text" ng-model="transferEmail" name="transferEmail" class="form-control" />
+                         </div>
+                     </div>
+                  </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" ng-click="transferDevices()"><i class="fa fa-exchange"></i> Transfer</button>
                 </div>
             </div>
         </div>
