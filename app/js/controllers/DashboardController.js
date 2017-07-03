@@ -262,20 +262,46 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     OpenWebSocket($scope.modalLogId);
   }
 
+  $rootScope.$on("openBuildLog", function(event, build_id) {
+    event.stopPropagation();
+    $scope.openBuildLog(build_id);
+  });
+
+  $scope.openBuildLog = function(build_id) {
+    console.log('--- trying to show log for build_id ' + build_id);
+    $scope.modalLogId = build_id;
+    $scope.modalLogBody = "";
+    $scope.showLogOverlay();
+    OpenWebSocket($scope.modalLogId);
+  }
+
   $scope.showLogOverlay = function() {
     console.log('--- trying to show log overlay --- ');
     $('.log-view-overlay-conatiner').fadeIn();
+
+    if (typeof($scope.logFresh) == "undefined") {
+      var i = 0;
+      $scope.logFresh = setInterval(function(){
+          $scope.modalLogBody = $scope.modalLogBodyBuffer + "\n* " + i + " *\n";
+          $scope.$digest();
+          console.log('refreshing log view...');
+          i++;
+        }, 2000);
+    }
   }
   $scope.hideLogOverlay = function() {
     console.log('--- trying to hide log overlay --- ');
     $('.log-view-overlay-conatiner').fadeOut();
+    clearInterval($scope.logFresh);
+    if (typeof($scope.ws) !== "undefined") {
+      $scope.ws.close();
+    }
   }
 
   $scope.switchWrap = function() {
-    event.stopPropagation();
-
-    console.log('--- trying to enable word-wrap --- ');
+    console.log('--- toggle word-wrap --- ');
     $('.log-view-body').toggleClass('force-word-wrap');
+    $('.icon-frame').toggleClass('overlay-highlight');
   }
 
 
@@ -296,10 +322,9 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
         $scope.ws.onopen = function() {
           console.log("Websocket connection estabilished.");
           $scope.modalLogBodyBuffer = $scope.modalLogBodyBuffer + "\n## Websocket connection estabilished ##\n";
-          $scope.refreshLog();
           //$('#logModal').modal('show');
-          $scope.showLogOverlay();
-          startDebugInterval();
+          $scope.showLogOverlay(); // open modal
+          // $scope.refreshLog(); // sent tail request
         };
         $scope.ws.onmessage = function (message) {
           console.log('Received message...');
@@ -331,7 +356,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
         console.log("-- websocket status --");
         console.log($scope.ws.readyState);
 
-        $scope.refreshLog();
+        // $scope.refreshLog();
         //$('#logModal').modal('show');
       }
 
@@ -353,7 +378,6 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
 
     $scope.ws.send(JSON.stringify(message));
   }
-
 
   $scope.hasBuildId = function(deviceUdid) {
     if (typeof($rootScope.meta.builds[deviceUdid]) !== "undefined") {
@@ -520,15 +544,6 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     console.log('Resetting transfer modal form values...');
     $scope.transferEmail = null;
     $('#transferModal').modal('show');
-  }
-
-  function startDebugInterval() {
-    var i = 0;
-    setInterval(function(){
-      $scope.modalLogBody = $scope.modalLogBodyBuffer + "\n* " + i + " *\n";
-      $scope.$digest();
-      i++;
-    }, 2000);
   }
 
   $rootScope.logoutMe = function () {

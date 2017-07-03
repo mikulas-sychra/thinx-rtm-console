@@ -233,7 +233,9 @@
 	pointer-events: auto;
 }
 .log-view-overlay-controls a {
-	color : #DDDDDD !important ;
+	color : #DDDDDD !important;
+	margin-left: 10px;
+	margin-right: 10px;
 }
 .log-view-overlay-controls a:hover {
 	color : white !important ;
@@ -291,4 +293,8 @@
 	font-size : 1em;
 	display : inline-block;
 	border : rgba(50, 197, 210, 0.2) solid 1px;
+}
+
+.overlay-highlight {
+	color: #00cbe0;
 }
