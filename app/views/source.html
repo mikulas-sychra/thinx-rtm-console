@@ -1,107 +1,113 @@
 <!-- BEGIN PAGE BREADCRUMB -->
 <ul class="page-breadcrumb breadcrumb">
-    <li>
-        <a ui-sref="dashboard">Home</a>
-        <i class="fa fa-circle"></i>
-    </li>
-    <li class="active"> Source Management </li>
+  <li>
+    <a ui-sref="dashboard">Home</a>
+    <i class="fa fa-circle"></i>
+  </li>
+  <li class="active"> Source Management </li>
 </ul>
 <!-- END PAGE BREADCRUMB -->
 <!-- BEGIN MAIN CONTENT -->
 <div class="row" ng-controller="SourceController">
-    <div class="col-md-12">
-        <!-- BEGIN: ACCORDION DEMO -->
-        <div class="portlet light bordered">
-            <div class="portlet-title">
-                <div class="caption font-green-sharp">
-                    <i class="icon-folder-alt font-green-sharp"></i>
-                    <span class="caption-subject bold uppercase">Sources</span>
-                    <span class="caption-helper hide"></span>
-                </div>
-                <div class="actions hide">
-                    <a class="btn btn-circle btn-icon-only btn-default" href="#">
-                        <i class="icon-cloud-upload"></i>
-                    </a>
-                    <a class="btn btn-circle btn-icon-only btn-default" href="#">
-                        <i class="icon-wrench"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="portlet-body">
-            <!-- BEGIN PORTLET-->
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <a href="#" class="btn green-haze btn-outline" ng-click="resetModal()" data-target="#pageModal" data-toggle="modal">Add Source</a>
-                    </div>
-                    <div class="col-md-6 text-right">
-                        <button class="btn btn-circle btn-icon-only" ng-class="selectedItems.length > 0 ? 'btn-danger' : 'btn-default'" ng-click="revokeSources()" type="button" ><i class="icon-trash"></i></button>
-                    </div>
-                </div>
-
-                <div class="table-scrollable table-scrollable-borderless">
-                    <table class="table table-hover table-light">
-                        <tr ng-repeat="(key, source) in $root.sources" ng-click="checkItem(key)" ng-class="selectedItems.indexOf(key) > -1 ? 'selected-row' : 'default-row'">
-                            <td>
-                                <div class="row-item-title">{{source.alias}}</div>
-                                <div>
-                                  <span class="source-label" ng-if="source.branch.length > 0"><span class="source-origin">{{source.branch | split:"/":0}}</span> / <span class="source-branch">{{source.branch | split:"/":1}}</span></span>
-                                  <span class="source-label monospace-info">{{source.url}}</span>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-                <!-- BEGIN FORM-->
-                <form action="#" class="form-horizontal form-bordered" name="sourceModal">
-                    <div id="pageModal" class="modal fade" role="dialog" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                    <h4 class="modal-title">New Source</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <form action="#" class="form-horizontal">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3">Git URL</label>
-                                            <div class="col-md-9">
-                                                <input ng-change="getAliasFromUrl()" ng-model="sourceUrl" type="text" class="form-control" name="sourceUrl" placeholder="git@github.com:username/repository.git" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3">Source Alias</label>
-                                            <div class="col-md-9">
-                                                <input type="text" class="form-control"  ng-model="sourceAlias" name="sourceAlias" placeholder="Project Name" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3">Branch</label>
-                                            <div class="col-md-9">
-                                                <input type="text" class="form-control"  ng-model="sourceBranch" name="sourceBranch" placeholder="origin/master" />
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary" ng-click="addSource()" ng-disabled="(sourceUrl == null || sourceUrl.length < 1) || (sourceAlias == null || sourceAlias.length < 1)"><i class="fa fa-check"></i> Submit</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <!-- END FORM-->
-
-            <!-- END PORTLET-->
-            </div>
-        </div>
+  <div class="col-md-12">
+    <div class="note note-info" ng-hide="$root.profile.info.goals.includes('source-info')">
+      <h3>Sources
+        <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('source-info'); $emit('saveProfile');"></span>
+      </h3>
+      <p>
+        Add your GIT repositories with sources. In case the repositories are private, add a key in the RSA Keys section to access them securely.
+      </p>
     </div>
+
+    <!-- BEGIN: ACCORDION DEMO -->
+    <div class="portlet light bordered">
+      <div class="portlet-title">
+        <div class="caption font-green-sharp">
+          <i class="icon-folder-alt font-green-sharp"></i>
+          <span class="caption-subject bold uppercase">Sources</span>
+          <span class="caption-helper hide"></span>
+        </div>
+        <div class="actions hide">
+          <a class="btn btn-circle btn-icon-only btn-default" href="#">
+            <i class="icon-cloud-upload"></i>
+          </a>
+          <a class="btn btn-circle btn-icon-only btn-default" href="#">
+            <i class="icon-wrench"></i>
+          </a>
+        </div>
+      </div>
+      <div class="portlet-body">
+        <!-- BEGIN PORTLET-->
+        <div class="row">
+          <div class="col-md-6">
+            <a href="#" class="btn green-haze btn-outline" ng-click="resetModal()" data-target="#pageModal" data-toggle="modal">Add Source</a>
+          </div>
+          <div class="col-md-6 text-right">
+            <button class="btn btn-circle btn-icon-only" ng-class="selectedItems.length > 0 ? 'btn-danger' : 'btn-default'" ng-click="revokeSources()" type="button" ><i class="icon-trash"></i></button>
+          </div>
+        </div>
+        <div class="table-scrollable table-scrollable-borderless">
+          <table class="table table-hover table-light">
+            <tr ng-repeat="(key, source) in $root.sources" ng-click="checkItem(key)" ng-class="selectedItems.indexOf(key) > -1 ? 'selected-row' : 'default-row'">
+              <td>
+                <div class="row-item-title">{{source.alias}}</div>
+                <div>
+                  <span class="source-label" ng-if="source.branch.length > 0"><span class="source-origin">{{source.branch | split:"/":0}}</span> / <span class="source-branch">{{source.branch | split:"/":1}}</span></span>
+                  <span class="source-label monospace-info">{{source.url}}</span>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <!-- BEGIN FORM-->
+        <form action="#" class="form-horizontal form-bordered" name="sourceModal">
+          <div id="pageModal" class="modal fade" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                  <h4 class="modal-title">New Source</h4>
+                </div>
+                <div class="modal-body">
+                  <form action="#" class="form-horizontal">
+                    <div class="form-group">
+                      <label class="control-label col-md-3">Git URL</label>
+                      <div class="col-md-9">
+                        <input ng-change="getAliasFromUrl()" ng-model="sourceUrl" type="text" class="form-control" name="sourceUrl" placeholder="git@github.com:username/repository.git" />
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-3">Source Alias</label>
+                      <div class="col-md-9">
+                        <input type="text" class="form-control"  ng-model="sourceAlias" name="sourceAlias" placeholder="Project Name" />
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-3">Branch</label>
+                      <div class="col-md-9">
+                        <input type="text" class="form-control"  ng-model="sourceBranch" name="sourceBranch" placeholder="origin/master" />
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" ng-click="addSource()" ng-disabled="(sourceUrl == null || sourceUrl.length < 1) || (sourceAlias == null || sourceAlias.length < 1)"><i class="fa fa-check"></i> Submit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <!-- END FORM-->
+
+        <!-- END PORTLET-->
+      </div>
+    </div>
+  </div>
 </div>
 <!-- END MAIN CONTENT -->
 <!-- BEGIN MAIN JS-->
 <script>
-    // call any jquery or angularjs code ehre
+// call any jquery or angularjs code ehre
 </script>
 <!-- BEGIN MAIN JS

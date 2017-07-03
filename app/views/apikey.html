@@ -1,98 +1,104 @@
 <!-- BEGIN PAGE BREADCRUMB -->
 <ul class="page-breadcrumb breadcrumb">
-    <li>
-        <a ui-sref="dashboard">Home</a>
-        <i class="fa fa-circle"></i>
-    </li>
-    <li class="active"> API Key Management </li>
+  <li>
+    <a ui-sref="dashboard">Home</a>
+    <i class="fa fa-circle"></i>
+  </li>
+  <li class="active"> API Key Management </li>
 </ul>
 <!-- END PAGE BREADCRUMB -->
 <!-- BEGIN MAIN CONTENT -->
 <div class="row" ng-controller="ApikeyController">
-    <div class="col-md-12">
-        <!-- BEGIN: ACCORDION DEMO -->
-        <div class="portlet light bordered">
-            <div class="portlet-title">
-                <div class="caption font-green-sharp">
-                    <i class="icon-key font-green-sharp"></i>
-                    <span class="caption-subject bold uppercase">API Keys</span>
-                    <span class="caption-helper hide"></span>
-                </div>
-                <div class="actions hide">
-                    <a class="btn btn-circle btn-icon-only btn-default" href="#">
-                        <i class="icon-cloud-upload"></i>
-                    </a>
-                    <a class="btn btn-circle btn-icon-only btn-default" href="#">
-                        <i class="icon-wrench"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="portlet-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <a href="#" class="btn green-haze btn-outline" ng-click="resetModal()" data-target="#pageModal" data-toggle="modal">Create API Key</a>
-
-                    </div>
-                    <div class="col-md-6 text-right">
-                        <button class="btn btn-circle btn-icon-only" ng-class="selectedItems.length > 0 ? 'btn-danger' : 'btn-default'" ng-click="revokeApikeys()" type="button" ><i class="icon-trash"></i></button>
-                    </div>
-                </div>
-
-                <div class="table-scrollable table-scrollable-borderless">
-                    <table class="table table-hover table-light">
-                        <tr ng-repeat="apikey in $root.apikeys" ng-click="checkItem(apikey.hash)"
-                        ng-class="selectedItems.indexOf(apikey.hash) > -1 ? 'selected-row' : 'default-row'">
-                            <td>
-                                <div class="row-item-title">{{apikey.alias}}</div>
-                                <div class="key-label monospace-info">{{apikey.name | limitTo : 10 : apikey.name.length - 10 }}</div>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
+  <div class="col-md-12">
+    <div class="note note-info" ng-hide="$root.profile.info.goals.includes('apikey-info')">
+      <h3>API Keys
+        <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('apikey-info'); $emit('saveProfile');"></span>
+      </h3>
+      <p>
+        Access keys for your devices. You can create as many keys as you like, preferably one per device. Per-build API Key rotation feature is coming soon.
+      </p>
     </div>
-    <!-- BEGIN FORM-->
-    <form action="#" class="form-horizontal form-bordered" name="apikeyModal">
-        <div id="pageModal" class="modal fade" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                        <h4 class="modal-title">New API Key</h4>
-                    </div>
-                    <div class="modal-body">
-                         <form action="#" class="form-horizontal">
-                            <div class="form-group">
-                                <label class="control-label col-md-3">Key Alias</label>
-                                <div class="col-md-9">
-                                    <input type="text" ng-model="newApikeyAlias" name="newApikeyAlias" class="form-control" placeholder="New Alias" />
-                                </div>
-                            </div>
-                            <div class="form-group last">
-                                <label class="control-label col-md-3">Key Value</label>
-                                <div class="col-md-9">
-                                    <input type="text" id="newApikey" name="newApikey" class="form-control new-apikey" ng-value="newApikey" ng-readonly="true" />
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <p class="msg-warning display-hide">WARNING: Now is the last time you can save your key!</p>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" ng-show="createButtonVisible" class="btn btn-primary" ng-click="createApikey(newApikeyAlias)" ng-disabled="(newApikeyAlias == null || newApikeyAlias.length < 1)"><i class="fa fa-check"></i> Create</button>
-                        <button type="button" ng-hide="createButtonVisible" class="btn btn-default copy-btn" data-clipboard-target="#newApikey"><i class="fa fa-clipboard"></i> Copy</button>
-                    </div>
-                </div>
-            </div>
+    
+    <!-- BEGIN: ACCORDION DEMO -->
+    <div class="portlet light bordered">
+      <div class="portlet-title">
+        <div class="caption font-green-sharp">
+          <i class="icon-key font-green-sharp"></i>
+          <span class="caption-subject bold uppercase">API Keys</span>
+          <span class="caption-helper hide"></span>
         </div>
-    </form>
-    <!-- END FORM-->
+        <div class="actions hide">
+          <a class="btn btn-circle btn-icon-only btn-default" href="#">
+            <i class="icon-cloud-upload"></i>
+          </a>
+          <a class="btn btn-circle btn-icon-only btn-default" href="#">
+            <i class="icon-wrench"></i>
+          </a>
+        </div>
+      </div>
+      <div class="portlet-body">
+        <div class="row">
+          <div class="col-md-6">
+            <a href="#" class="btn green-haze btn-outline" ng-click="resetModal()" data-target="#pageModal" data-toggle="modal">Create API Key</a>
+          </div>
+          <div class="col-md-6 text-right">
+            <button class="btn btn-circle btn-icon-only" ng-class="selectedItems.length > 0 ? 'btn-danger' : 'btn-default'" ng-click="revokeApikeys()" type="button" ><i class="icon-trash"></i></button>
+          </div>
+        </div>
+        <div class="table-scrollable table-scrollable-borderless">
+          <table class="table table-hover table-light">
+            <tr ng-repeat="apikey in $root.apikeys" ng-click="checkItem(apikey.hash)" ng-class="selectedItems.indexOf(apikey.hash) > -1 ? 'selected-row' : 'default-row'">
+              <td>
+                <div class="row-item-title">{{apikey.alias}}</div>
+                <div class="key-label monospace-info">{{apikey.name | limitTo : 10 : apikey.name.length - 10 }}</div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- BEGIN FORM-->
+  <form action="#" class="form-horizontal form-bordered" name="apikeyModal">
+    <div id="pageModal" class="modal fade" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h4 class="modal-title">New API Key</h4>
+          </div>
+          <div class="modal-body">
+            <form action="#" class="form-horizontal">
+              <div class="form-group">
+                <label class="control-label col-md-3">Key Alias</label>
+                <div class="col-md-9">
+                  <input type="text" ng-model="newApikeyAlias" name="newApikeyAlias" class="form-control" placeholder="New Alias" />
+                </div>
+              </div>
+              <div class="form-group last">
+                <label class="control-label col-md-3">Key Value</label>
+                <div class="col-md-9">
+                  <input type="text" id="newApikey" name="newApikey" class="form-control new-apikey" ng-value="newApikey" ng-readonly="true" />
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <p class="msg-warning display-hide">WARNING: Now is the last time you can save your key!</p>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" ng-show="createButtonVisible" class="btn btn-primary" ng-click="createApikey(newApikeyAlias)" ng-disabled="(newApikeyAlias == null || newApikeyAlias.length < 1)"><i class="fa fa-check"></i> Create</button>
+            <button type="button" ng-hide="createButtonVisible" class="btn btn-default copy-btn" data-clipboard-target="#newApikey"><i class="fa fa-clipboard"></i> Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <!-- END FORM-->
 </div>
 <!-- END MAIN CONTENT -->
 <!-- BEGIN MAIN JS-->
 <script>
-    new Clipboard('.copy-btn');
-    // call any jquery or angularjs code ehre
+new Clipboard('.copy-btn');
+// call any jquery or angularjs code ehre
 </script>
 <!-- BEGIN MAIN JS -->

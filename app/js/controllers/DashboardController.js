@@ -374,7 +374,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     return false;
   }
 
-  $scope.changeDeviceAlias = function() {
+  $scope.submitDeviceAlias = function() {
 
     for (var index in $rootScope.devices) {
       if ($rootScope.devices[index].udid == $scope.deviceUdid) {
@@ -390,7 +390,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
 
     console.log('-- changing device alias to ' + $scope.deviceAlias + '  for ' + $scope.deviceUdid + ' --');
 
-    Thinx.changeDevice($scope.deviceUdid, $scope.deviceAlias)
+    Thinx.submitDevice($scope.deviceUdid, $scope.deviceAlias)
     .done(function(response) {
 
       if (typeof(response) !== "undefined") {

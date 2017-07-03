@@ -1,482 +1,450 @@
 <!-- BEGIN PAGE BREADCRUMB -->
 <ul class="page-breadcrumb breadcrumb">
-    <li>
-        <a ui-sref="dashboard">Home</a>
-        <i class="fa fa-circle"></i>
-    </li>
-    <li class="active"> Dashboard </li>
+  <li>
+    <a ui-sref="dashboard">Home</a>
+    <i class="fa fa-circle"></i>
+  </li>
+  <li class="active"> Dashboard </li>
 </ul>
 <!-- END PAGE BREADCRUMB -->
 <!-- BEGIN MAIN CONTENT -->
 <div ng-controller="DashboardController">
 
-    <!-- BEGIN DASHBOARD STATS -->
-    <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <!-- BEGIN PORTLET-->
-            <div class="portlet light bordered ">
-                <div class="portlet-title">
-                    <div class="caption caption-md">
-                        <i class="icon-bar-chart font-red"></i>
-                        <span class="caption-subject font-red bold uppercase">Activity</span>
-                    </div>
-                    <div class="actions">
-                        <div class="btn-group btn-group-devided" data-toggle="buttons">
-                            <label class="btn green btn-outline btn-circle btn-sm active">
-                                <input type="radio" name="options" class="toggle" id="option1">Check-ins</label>
-                            <label class="btn red btn-outline btn-circle btn-sm">
-                                <input type="radio" name="options" class="toggle" id="option2">Updates</label>
-                            <label class="btn blue btn-outline btn-circle btn-sm">
-                                <input type="radio" name="options" class="toggle" id="option2">MQTT</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="portlet-body">
-                    <div class="row number-stats margin-bottom-30">
-                        <div class="col-md-6 col-sm-6 col-xs-6">
-                            <div class="stat-left">
-                                <div class="stat-chart">
-                                    <!-- do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break -->
-                                    <div id="sparkline_bar"></div>
-                                </div>
-                                <div class="stat-number">
-                                    <div class="title"> Daily Check-ins </div>
-                                    <div class="number"> {{$root.stats.total.DEVICE_CHECKIN}} </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-xs-6">
-                            <div class="stat-right">
-                                <div class="stat-chart">
-                                    <!-- do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break -->
-                                    <div id="sparkline_bar2"></div>
-                                </div>
-                                <div class="stat-number">
-                                    <div class="title"> New Check-ins</div>
-                                    <div class="number"> {{$root.stats.total.DEVICE_NEW}} </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  <!-- BEGIN DASHBOARD STATS -->
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <!-- BEGIN PORTLET-->
+      <div class="portlet light bordered ">
+        <div class="portlet-title">
+          <div class="caption caption-md">
+            <i class="icon-bar-chart font-red"></i>
+            <span class="caption-subject font-red bold uppercase">Activity</span>
+          </div>
+          <div class="actions">
+            <div class="btn-group btn-group-devided" data-toggle="buttons">
+              <label class="btn green btn-outline btn-circle btn-sm active">
+                <input type="radio" name="options" class="toggle" id="option1" />
+                Check-ins
+              </label>
+              <label class="btn red btn-outline btn-circle btn-sm">
+                <input type="radio" name="options" class="toggle" id="option2" />
+                Updates
+              </label>
+              <label class="btn blue btn-outline btn-circle btn-sm">
+                <input type="radio" name="options" class="toggle" id="option2" />
+                MQTT
+              </label>
             </div>
-            <!-- END PORTLET-->
+          </div>
         </div>
-    </div>
-
-    <!-- BEGIN DASHBOARD STATS -->
-    <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <!-- BEGIN PORTLET-->
-            <div class="portlet light bordered ">
-                <div class="portlet-title">
-                    <div class="caption caption-md">
-                        <i class="icon-bar-chart font-red"></i>
-                        <span class="caption-subject font-red bold uppercase">Devices</span>
-                    </div>
-                    <div class="actions">
-
-                          <!-- <button class="btn btn-circle btn-icon-only"  ng-disbaled="selectedItems.length <> 1" ng-class="selectedItems.length > 0 ? 'btn-info' : 'btn-default'" ng-click="resetModal(device.udid)" type="button" title="Revoke" ><i class="fa fa-wrench"></i></button> -->
-                          <!-- <button class="btn btn-circle btn-icon-only" ng-disbaled="selectedItems.length <> 1" ng-class="selectedItems.length > 0 ? 'btn-danger' : 'btn-default'" ng-click="revokeDevices()" type="button" title="Revoke" ><i class="icon-trash"></i></button> -->
-                          <!-- <button class="btn btn-circle btn-icon-only" ng-class="selectedItems.length > 0 ? 'btn-warning' : 'btn-default'" ng-click="transferDevices()" type="button" title="Transfer" ><i class="icon-exchange"></i></button> -->
-
-                          <div class="btn-group">
-                            <a ng-show="selectedItems.length > 0" class="btn btn-primary" href="javascript:;" data-toggle="dropdown" aria-expanded="false">
-                                <i class="fa fa-bars"></i> Actions
-                                <i class="fa fa-angle-down"></i>
-                            </a>
-                            <ul class="dropdown-menu pull-right">
-                                <!-- <li> -->
-                                    <!-- <a href="javascript:;"> -->
-                                        <!-- <i class="fa fa-pencil"></i> Edit </a> -->
-                                <!-- </li> -->
-                                <li>
-                                    <a href="javascript:;" ng-click="revokeDevices()">
-                                        <i class="icon-trash"></i> Revoke <span class="badge badge-warning"> {{selectedItems.length}} </span></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:;" ng-click="openTransferModal()">
-                                        <i class="fa fa-exchange"></i> Transfer <span class="badge badge-danger"> {{selectedItems.length}} </span></a>
-                                </li>
-                                <li class="divider"> </li>
-                                <li>
-                                    <a href="javascript:;">
-                                        <i class="i"></i> What now? </a>
-                                </li>
-                            </ul>
-                        </div>
-
-                    </div>
+        <div class="portlet-body">
+          <div class="row number-stats margin-bottom-30">
+            <div class="col-md-6 col-sm-6 col-xs-6">
+              <div class="stat-left">
+                <div class="stat-chart">
+                  <!-- do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break -->
+                  <div id="sparkline_bar"></div>
                 </div>
-                <div class="portlet-body">
-                    <div class="table-scrollable table-scrollable-borderless">
-                        <table class="table table-hover table-light">
-                            <thead>
-                                <tr class="uppercase">
-                                    <th>
-                                        <button class="btn btn-small btn-default hidden" ng-click="$root.logoutMe()"> Test Invalid Session</button>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <!-- ng-click="resetModal($index)"  data-target="#deviceModal" data-toggle="modal" -->
-                             <tr ng-repeat="device in $root.devices | filter:$root.searchText"  ng-click="checkItem(device.udid)" ng-class="selectedItems.indexOf(device.udid) > -1 ? 'selected-row' : 'default-row'" style="background: none !important;">
-
-                                <td class="device-card">
-                                    <div class="table"  style="padding: 10px; margin-bottom: 0px; background: transparent;">
-                                    <div class="row">
-                                        <div class="col-md-8">
-
-                                            <div><span class="green-haze device-alias">{{device.alias}}</span></div>
-                                            <div class="device-lastseen-label">{{device.lastupdate | lastSeen}}</div>
-                                            <div class="device-mac-label"><span class="mac-label">MAC</span>{{device.mac}}</div>
-                                            <div class="row">
-                                                <div class="col-sm-2">
-                                                    <div class="device-firmware">Firmware</div>
-                                                    <div ng-if="hasSource($index)" class="device-firmware">Source</div>
-                                                </div>
-                                                <div class="col-sm-10">
-                                                    <div class="device-firmware">
-                                                        {{device.firmware}}
-                                                    </div>
-                                                    <div ng-if="hasSource($index)" class="device-firmware">
-                                                        {{$root.sources[device.source].alias}}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4 text-right">
-
-                                            <span ng-if="hasBuildId(device.udid)">
-                                                <a class="btn btn-circle btn-icon-only btn-default" ng-click="showDeviceLastBuild(device.udid, $event)">
-                                                    <i class="fa fa-eye"></i>
-                                                </a>
-                                            </span>
-
-                                            <span ng-if="hasBuildId(device.udid) == null" ng-disabled="true" class="btn btn-circle">
-                                                <i class="fa fa-spin fa-circle-o-notch"></i>
-                                            </span>
-
-                                             <a class="btn btn-circle icon-button btn-icon-only btn-default" href="#" ng-if="hasSource($index)" ng-click="build(device.udid, device.source, $index); $event.stopPropagation()" ng-hide="hasBuildId($index) == null">
-                                                <i class="fa fa-cogs"></i>
-                                            </a>
-
-                                            <a class="btn btn-circle btn-icon-only btn-default" ng-click="openModal($index, $event)">
-                                                <i class="fa fa-wrench"></i>
-                                            </a>
-
-                                        </div>
-                                    </div>
-                                    </div>
-
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                <div class="stat-number">
+                  <div class="title"> Daily Check-ins </div>
+                  <div class="number"> {{$root.stats.total.DEVICE_CHECKIN}} </div>
                 </div>
+              </div>
             </div>
-            <!-- END PORTLET-->
-        </div>
-    </div>
-
-     <div class="row">
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-            <div class="dashboard-stat green-steel">
-                <div class="visual">
-                    <i class="fa fa-shopping-cart"></i>
+            <div class="col-md-6 col-sm-6 col-xs-6">
+              <div class="stat-right">
+                <div class="stat-chart">
+                  <!-- do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break -->
+                  <div id="sparkline_bar2"></div>
                 </div>
-                <div class="details">
-                    <div class="number"> {{$root.stats.total.DEVICE_CHECKIN}} </div>
-                    <div class="desc"> Device Check-ins </div>
+                <div class="stat-number">
+                  <div class="title"> New Check-ins</div>
+                  <div class="number"> {{$root.stats.total.DEVICE_NEW}} </div>
                 </div>
-                <a class="more" href="#"> View more
-                    <i class="m-icon-swapright m-icon-white"></i>
-                </a>
+              </div>
             </div>
+          </div>
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-            <div class="dashboard-stat green-seagreen">
-                <div class="visual">
-                    <i class="fa fa-bar-chart-o"></i>
-                </div>
-                <div class="details">
-                    <div class="number"> {{$root.stats.total.UPDATES}} </div>
-                    <div class="desc"> Available Updates </div>
-                </div>
-                <a class="more" href="#"> View more
-                    <i class="m-icon-swapright m-icon-white"></i>
-                </a>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-            <div class="dashboard-stat green-meadow">
-                <div class="visual">
-                    <i class="fa fa-comments"></i>
-                </div>
-                <div class="details">
-                    <div class="number"> {{$root.stats.total.APIKEY_INVALID}} </div>
-                    <div class="desc"> Errors </div>
-                </div>
-                <a class="more" href="#"> View more
-                    <i class="m-icon-swapright m-icon-white"></i>
-                </a>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-            <div class="dashboard-stat green-jungle">
-                <div class="visual">
-                    <i class="fa fa-globe"></i>
-                </div>
-                <div class="details">
-                    <div class="number"> {{$root.stats.total.DEVICES}} </div>
-                    <div class="desc"> Active Devices </div>
-                </div>
-                <a class="more" href="#"> View more
-                    <i class="m-icon-swapright m-icon-white"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-
-
-
-     <!-- BEGIN FORM-->
-    <form action="#" class="form-horizontal form-bordered" name="deviceModalForm">
-        <div id="deviceModal" class="modal fade" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                        <h4 class="modal-title">Device</h4>
-                    </div>
-
-                    <div class="modal-body">
-                         <form action="#" class="form-horizontal">
-                            <div class="form-group">
-                                <label class="control-label col-md-3">Alias</label>
-                                <div class="col-md-9">
-                                    <input type="text" ng-model="deviceAlias" name="deviceAlias" class="form-control" />
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="control-label col-md-3">Source</label>
-                                <div class="col-md-9">
-                                    <div class="input-group">
-                                      <ui-select ng-model="$root.devices[deviceIndex].source" theme="bootstrap" title="Choose a source"
-                                      on-select="attachRepository($model, deviceUdid)">
-                                        <ui-select-match placeholder="Select source in the list...">{{$select.selected.value.alias}}</ui-select-match>
-                                        <ui-select-choices repeat="source.key as (key, source) in $root.sources | filter: { value: { alias: $select.search }}">
-                                          <div ng-bind-html="source.value.alias | highlight: $select.search"></div>
-                                          <small>
-                                            {{source.value.url}}
-                                          </small>
-                                        </ui-select-choices>
-                                      </ui-select>
-                                        <span class="input-group-btn">
-                                            <button type="button" ng-click="detachRepository(deviceUdid)" class="btn btn-default">
-                                                <span class="fa fa-chain-broken"></span>
-                                            </button>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="control-label col-md-3">MQTT Channel</label>
-                                <div class="col-md-9">
-                                    <div class="input-group">
-                                        <label class="control-label">/thinx/device/{{deviceUdid}}</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" ng-click="changeDeviceAlias()"><i class="fa fa-check"></i> Submit</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-    <!-- END FORM-->
-
-    <!-- BEGIN MODAL LOG VIEW -->
-    <div id="logModal" class="modal container fade" role="dialog" aria-hidden="true">
-        <div class="modal-dialog log-modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title">Build Log</h4>
-                </div>
-                <div class="modal-body">
-
-                    <pre class="log-view" scroll-glue>{{modalLogBody}}</pre>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" ng-click="refreshLog()"><i class="fa fa-refresh"></i> Refresh</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- BEGIN MODAL LOG VIEW -->
-    <div id="transferModal" class="modal container fade" role="dialog" aria-hidden="true">
-        <div class="modal-dialog transfer-modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title">Transfer Devices</h4>
-                </div>
-                <div class="modal-body">
-
-                  <form action="#" class="form-horizontal">
-                     <div class="form-group">
-                         <label class="control-label col-md-3">Email</label>
-                         <div class="col-md-9">
-                             <input type="text" ng-model="transferEmail" name="transferEmail" class="form-control" />
-                         </div>
-                     </div>
-                  </form>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger" ng-click="transferDevices()"><i class="fa fa-exchange"></i> Transfer</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="log-view-overlay-conatiner" style="display:none">
-      <div class="log-view-overlay-controls">
-        <a ng-click="refreshLog()" title="Refresh status"><i class="icon-refresh"></i></a>
-        <a ng-click="switchWrap()" title="Toggle Word Wrap"><i class="icon-frame"></i></a>
-        <a ng-click="hideLogOverlay()" title="Close Log"><i class="icon-close"></i></a>
-
       </div>
-      <div class="log-view-overlay log-view-body force-word-wrap" scroll-glue>
-        <div class="overlay-title">Build Log <span>{{modalLogId}}</span></div>
+      <!-- END PORTLET-->
+    </div>
+  </div>
 
-        {{modalLogBody}}</div>
-    </div>
-    <!-- END MODAL LOG VIEW -->
+  <!-- BEGIN DASHBOARD STATS -->
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <!-- BEGIN PORTLET-->
+      <div class="portlet light bordered ">
+        <div class="portlet-title">
+          <div class="caption caption-md">
+            <i class="icon-bar-chart font-red"></i>
+            <span class="caption-subject font-red bold uppercase">Devices</span>
+          </div>
+          <div class="actions">
 
-    <div class="note note-info" ng-hide="$root.profile.info.goals.includes('apikey')">
-        <h3>1. API Key
-            <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('apikey'); updateProfile();"></span>
-        </h3>
-        <a ui-sref="apikey">Create your first API Key</a>
-        <p>
-            Enter API Keys Management
-        </p>
-        </span>
-    </div>
-    <div class="note note-info" ng-hide="$root.profile.info.goals.includes('enroll')">
-        <h3>2. Device Enrollment
-            <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('enroll'); updateProfile();"></span>
-        </h3>
-        <a>Enroll your device</a>
-        <p>
-            To start managing your first device via THiNX RTM Console you need to flash Vanilla Firmware with new API Key first.
-            <br><br>
-            Si má uživatel nainstalovat platformio, příslušnej USB driver, a uploadnout si na svoje ESP8266 vanilla binárku
-        </p>
-        </span>
-    </div>
-    <div class="note note-info" ng-hide="$root.profile.info.goals.includes('enroll-setup')">
-        <h3>3. Device Setup
-            <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('enroll-setup'); updateProfile();"></span>
-        </h3>
-        <a>Connect your device to internet</a>
-        <p>
-            Na device se pak uživatel připojí jako na AP, zadá login do WiFi a API Key… a je to.
-            A mohla by mu přijít desktop notifikace, že se zaregistroval nový device.
-        </p>
-        </span>
-    </div>
-    <div class="note note-danger" ng-hide="$root.profile.info.goals.includes('rsakey')">
-        <h3>Security
-            <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('rsakey'); updateProfile();"></span>
-        </h3>
-        <a ui-sref="rsakey">Add RSA Key</a>
-        <p>
-            Adding your public key will enable access to your private repositories.
-        </p>
-        </span>
-    </div>
-    <div class="note note-success" ng-hide="$root.profile.info.goals.includes('update')">
-        <h3>Well Done!
-            <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('update'); updateProfile();"></span>
-        </h3>
-        <a>Update your device</a>
-        <p>
-            Ale na to musíme dořešit HTTPS.
-        </p>
-        </span>
-    </div>
+            <!-- <button class="btn btn-circle btn-icon-only"  ng-disbaled="selectedItems.length <> 1" ng-class="selectedItems.length > 0 ? 'btn-info' : 'btn-default'" ng-click="resetModal(device.udid)" type="button" title="Revoke" ><i class="fa fa-wrench"></i></button> -->
+            <!-- <button class="btn btn-circle btn-icon-only" ng-disbaled="selectedItems.length <> 1" ng-class="selectedItems.length > 0 ? 'btn-danger' : 'btn-default'" ng-click="revokeDevices()" type="button" title="Revoke" ><i class="icon-trash"></i></button> -->
+            <!-- <button class="btn btn-circle btn-icon-only" ng-class="selectedItems.length > 0 ? 'btn-warning' : 'btn-default'" ng-click="transferDevices()" type="button" title="Transfer" ><i class="icon-exchange"></i></button> -->
 
-
-    <div class="row">
-        <div class="col-md-12 col-sm-12">
-            <!-- BEGIN PORTLET-->
-            <div class="portlet light bordered ">
-                <div class="portlet-title">
-                    <div class="caption caption-md">
-                        <i class="icon-settings font-green"></i>
-                        <span class="caption-subject font-green bold uppercase">Summary</span>
-                    </div>
-                    <div class="actions">
-                        <div class="btn-group btn-group-devided" data-toggle="buttons">
-                            <label class="btn dark btn-outline btn-circle btn-sm active">
-                                <input type="radio" name="options" class="toggle" id="option1">Today</label>
-                            <label class="btn dark btn-outline btn-circle btn-sm">
-                                <input type="radio" name="options" class="toggle" id="option2">Week</label>
-                            <label class="btn dark btn-outline btn-circle btn-sm">
-                                <input type="radio" name="options" class="toggle" id="option2">Month</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="portlet-body">
-                    <div class="row list-separated">
-                        <div class="col-md-3 col-sm-3 col-xs-6">
-                            <div class="font-grey-mint font-sm"> Total Sales </div>
-                            <div class="uppercase font-hg font-red-flamingo"> 13760
-                                <span class="font-lg font-grey-mint">$</span>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-3 col-xs-6">
-                            <div class="font-grey-mint font-sm"> Revenue </div>
-                            <div class="uppercase font-hg font-green"> 4760
-                                <span class="font-lg font-grey-mint">$</span>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-3 col-xs-6">
-                            <div class="font-grey-mint font-sm"> Expenses </div>
-                            <div class="uppercase font-hg font-purple"> 1760
-                                <span class="font-lg font-grey-mint">$</span>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-3 col-xs-6">
-                            <div class="font-grey-mint font-sm"> Growth </div>
-                            <div class="uppercase font-hg font-blue"> 9760
-                                <span class="font-lg font-grey-mint">$</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="sales_statistics" class="portlet-body-morris-fit morris-chart" style="height: 260px"> </div>
-                </div>
+            <div class="btn-group">
+              <a ng-show="selectedItems.length > 0" class="btn btn-primary" href="javascript:;" data-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-bars"></i> Actions
+                <i class="fa fa-angle-down"></i>
+              </a>
+              <ul class="dropdown-menu pull-right">
+                <!-- <li><a href="javascript:;"><i class="fa fa-pencil"></i> Edit </a></li> -->
+                <li><a href="javascript:;" ng-click="revokeDevices()"><i class="icon-trash"></i> Revoke <span class="badge badge-warning"> {{selectedItems.length}} </span></a></li>
+                <li><a href="javascript:;" ng-click="openTransferModal()"><i class="fa fa-exchange"></i> Transfer <span class="badge badge-danger"> {{selectedItems.length}} </span></a></li>
+                <li class="divider"> </li>
+                <li><a href="javascript:;"><i class="i"></i> What now? </a></li>
+              </ul>
             </div>
-            <!-- END PORTLET-->
+
+          </div>
         </div>
+        <div class="portlet-body">
+          <div class="table-scrollable table-scrollable-borderless">
+            <table class="table table-hover table-light">
+              <thead>
+                <tr class="uppercase">
+                  <th>
+                    <button class="btn btn-small btn-default hidden" ng-click="$root.logoutMe()"> Test Invalid Session</button>
+                  </th>
+                </tr>
+              </thead>
+              <!-- ng-click="resetModal($index)"  data-target="#deviceModal" data-toggle="modal" -->
+              <tr ng-repeat="device in $root.devices | filter:$root.searchText"  ng-click="checkItem(device.udid)" ng-class="selectedItems.indexOf(device.udid) > -1 ? 'selected-row' : 'default-row'" style="background: none !important;">
+
+                <td class="device-card">
+                  <div class="table"  style="padding: 10px; margin-bottom: 0px; background: transparent;">
+                    <div class="row">
+                      <div class="col-md-8">
+
+                        <div><span class="green-haze device-alias">{{device.alias}}</span></div>
+                        <div class="device-lastseen-label">{{device.lastupdate | lastSeen}}</div>
+                        <div class="device-mac-label"><span class="mac-label">MAC</span>{{device.mac}}</div>
+                        <div class="row">
+                          <div class="col-sm-2">
+                            <div class="device-firmware">Firmware</div>
+                            <div ng-if="hasSource($index)" class="device-firmware">Source</div>
+                          </div>
+                          <div class="col-sm-10">
+                            <div class="device-firmware">
+                              {{device.firmware}}
+                            </div>
+                            <div ng-if="hasSource($index)" class="device-firmware">
+                              {{$root.sources[device.source].alias}}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4 text-right">
+                        <span ng-if="hasBuildId(device.udid)">
+                          <a class="btn btn-circle btn-icon-only btn-default" ng-click="showDeviceLastBuild(device.udid, $event)">
+                            <i class="fa fa-eye"></i>
+                          </a>
+                        </span>
+                        <span ng-if="hasBuildId(device.udid) == null" ng-disabled="true" class="btn btn-circle">
+                          <i class="fa fa-spin fa-circle-o-notch"></i>
+                        </span>
+                        <a class="btn btn-circle icon-button btn-icon-only btn-default" href="#" ng-if="hasSource($index)" ng-click="build(device.udid, device.source, $index); $event.stopPropagation()" ng-hide="hasBuildId($index) == null">
+                          <i class="fa fa-cogs"></i>
+                        </a>
+                        <a class="btn btn-circle btn-icon-only btn-default" ng-click="openModal($index, $event)">
+                          <i class="fa fa-wrench"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- END PORTLET-->
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+      <div class="dashboard-stat green-steel">
+        <div class="visual">
+          <i class="fa fa-shopping-cart"></i>
+        </div>
+        <div class="details">
+          <div class="number"> {{$root.stats.total.DEVICE_CHECKIN}} </div>
+          <div class="desc"> Device Check-ins </div>
+        </div>
+        <a class="more" href="#"> View more
+          <i class="m-icon-swapright m-icon-white"></i>
+        </a>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+      <div class="dashboard-stat green-seagreen">
+        <div class="visual">
+          <i class="fa fa-bar-chart-o"></i>
+        </div>
+        <div class="details">
+          <div class="number"> {{$root.stats.total.UPDATES}} </div>
+          <div class="desc"> Available Updates </div>
+        </div>
+        <a class="more" href="#"> View more
+          <i class="m-icon-swapright m-icon-white"></i>
+        </a>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+      <div class="dashboard-stat green-meadow">
+        <div class="visual">
+          <i class="fa fa-comments"></i>
+        </div>
+        <div class="details">
+          <div class="number"> {{$root.stats.total.APIKEY_INVALID}} </div>
+          <div class="desc"> Errors </div>
+        </div>
+        <a class="more" href="#"> View more
+          <i class="m-icon-swapright m-icon-white"></i>
+        </a>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+      <div class="dashboard-stat green-jungle">
+        <div class="visual">
+          <i class="fa fa-globe"></i>
+        </div>
+        <div class="details">
+          <div class="number"> {{$root.stats.total.DEVICES}} </div>
+          <div class="desc"> Active Devices </div>
+        </div>
+        <a class="more" href="#"> View more
+          <i class="m-icon-swapright m-icon-white"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- BEGIN FORM-->
+  <form action="#" class="form-horizontal form-bordered" name="deviceModalForm">
+    <div id="deviceModal" class="modal fade" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h4 class="modal-title">Device</h4>
+          </div>
+
+          <div class="modal-body">
+            <!-- <form action="#" class="form-horizontal"> -->
+            <div class="form-group">
+              <label class="control-label col-md-3">Alias</label>
+              <div class="col-md-9">
+                <input type="text" ng-model="deviceAlias" name="deviceAlias" class="form-control" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-md-3">Source</label>
+              <div class="col-md-9">
+                <div class="input-group">
+                  <ui-select ng-model="$root.devices[deviceIndex].source" theme="bootstrap" title="Choose a source" on-select="attachRepository($model, deviceUdid)">
+                    <ui-select-match placeholder="Select source in the list...">{{$select.selected.value.alias}}</ui-select-match>
+                    <ui-select-choices repeat="source.key as (key, source) in $root.sources | filter: { value: { alias: $select.search }}">
+                      <div ng-bind-html="source.value.alias | highlight: $select.search"></div>
+                      <small>{{source.value.url}}</small>
+                    </ui-select-choices>
+                  </ui-select>
+                  <span class="input-group-btn">
+                    <button type="button" ng-click="detachRepository(deviceUdid)" class="btn btn-default"><span class="fa fa-chain-broken"></span></button>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-md-3">MQTT Channel</label>
+              <div class="col-md-9">
+                <div class="input-group">
+                  <label class="control-label">/thinx/device/{{deviceUdid}}</label>
+                </div>
+              </div>
+            </div>
+            <!-- </form> -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" ng-click="submitDeviceAlias()"><i class="fa fa-check"></i> Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <!-- END FORM-->
+
+  <!-- BEGIN MODAL LOG VIEW -->
+  <div id="logModal" class="modal container fade" role="dialog" aria-hidden="true">
+    <div class="modal-dialog log-modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+          <h4 class="modal-title">Build Log</h4>
+        </div>
+        <div class="modal-body">
+
+          <pre class="log-view" scroll-glue>{{modalLogBody}}</pre>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" ng-click="refreshLog()"><i class="fa fa-refresh"></i> Refresh</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BEGIN MODAL LOG VIEW -->
+  <div id="transferModal" class="modal container fade" role="dialog" aria-hidden="true">
+    <div class="modal-dialog transfer-modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+          <h4 class="modal-title">Transfer Devices</h4>
+        </div>
+        <div class="modal-body">
+          <form action="#" class="form-horizontal">
+            <div class="form-group">
+              <label class="control-label col-md-3">Email</label>
+              <div class="col-md-9">
+                <input type="text" ng-model="transferEmail" name="transferEmail" class="form-control" />
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" ng-click="transferDevices()"><i class="fa fa-exchange"></i> Transfer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="log-view-overlay-conatiner" style="display:none">
+    <div class="log-view-overlay-controls">
+      <a ng-click="refreshLog()" title="Refresh status"><i class="icon-refresh"></i></a>
+      <a ng-click="switchWrap()" title="Toggle Word Wrap"><i class="icon-frame"></i></a>
+      <a ng-click="hideLogOverlay()" title="Close Log"><i class="icon-close"></i></a>
+    </div>
+    <div class="log-view-overlay log-view-body force-word-wrap" scroll-glue>
+      <div class="overlay-title">Build Log <span>{{modalLogId}}</span></div>
+      {{modalLogBody}}
+    </div>
+  </div>
+  <!-- END MODAL LOG VIEW -->
+
+  <div class="note note-info" ng-hide="$root.profile.info.goals.includes('apikey')">
+    <h3>1. API Key <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('apikey'); updateProfile();"></span></h3>
+    <a ui-sref="apikey">Create your first API Key</a>
+    <p>
+      Enter API Keys Management
+    </p>
+  </div>
+  <div class="note note-info" ng-hide="$root.profile.info.goals.includes('enroll')">
+    <h3>2. Device Enrollment
+      <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('enroll'); updateProfile();"></span>
+    </h3>
+    <a>Enroll your device</a>
+    <p>
+      To start managing your first device via THiNX RTM Console you need to flash Vanilla Firmware with new API Key first.
+      <br><br>
+      Si má uživatel nainstalovat platformio, příslušnej USB driver, a uploadnout si na svoje ESP8266 vanilla binárku
+    </p>
+  </div>
+  <div class="note note-info" ng-hide="$root.profile.info.goals.includes('enroll-setup')">
+    <h3>3. Device Setup
+      <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('enroll-setup'); updateProfile();"></span>
+    </h3>
+    <a>Connect your device to internet</a>
+    <p>
+      Na device se pak uživatel připojí jako na AP, zadá login do WiFi a API Key… a je to.
+      A mohla by mu přijít desktop notifikace, že se zaregistroval nový device.
+    </p>
+  </div>
+  <div class="note note-danger" ng-hide="$root.profile.info.goals.includes('rsakey')">
+    <h3>Security
+      <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('rsakey'); updateProfile();"></span>
+    </h3>
+    <a ui-sref="rsakey">Add RSA Key</a>
+    <p>
+      Adding your public key will enable access to your private repositories.
+    </p>
+  </div>
+  <div class="note note-success" ng-hide="$root.profile.info.goals.includes('update')">
+    <h3>Well Done!
+      <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('update'); updateProfile();"></span>
+    </h3>
+    <a>Update your device</a>
+    <p>
+      Ale na to musíme dořešit HTTPS.
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 col-sm-12">
+      <!-- BEGIN PORTLET-->
+      <div class="portlet light bordered ">
+        <div class="portlet-title">
+          <div class="caption caption-md">
+            <i class="icon-settings font-green"></i>
+            <span class="caption-subject font-green bold uppercase">Summary</span>
+          </div>
+          <div class="actions">
+            <div class="btn-group btn-group-devided" data-toggle="buttons">
+              <label class="btn dark btn-outline btn-circle btn-sm active"><input type="radio" name="options" class="toggle" id="option1" />Today</label>
+              <label class="btn dark btn-outline btn-circle btn-sm"><input type="radio" name="options" class="toggle" id="option2" />Week</label>
+              <label class="btn dark btn-outline btn-circle btn-sm"><input type="radio" name="options" class="toggle" id="option2" />Month</label>
+            </div>
+          </div>
+        </div>
+        <div class="portlet-body">
+          <div class="row list-separated">
+            <div class="col-md-3 col-sm-3 col-xs-6">
+              <div class="font-grey-mint font-sm"> Total Sales </div>
+              <div class="uppercase font-hg font-red-flamingo"> 13760
+                <span class="font-lg font-grey-mint">$</span>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-6">
+              <div class="font-grey-mint font-sm"> Revenue </div>
+              <div class="uppercase font-hg font-green"> 4760
+                <span class="font-lg font-grey-mint">$</span>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-6">
+              <div class="font-grey-mint font-sm"> Expenses </div>
+              <div class="uppercase font-hg font-purple"> 1760
+                <span class="font-lg font-grey-mint">$</span>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-6">
+              <div class="font-grey-mint font-sm"> Growth </div>
+              <div class="uppercase font-hg font-blue"> 9760
+                <span class="font-lg font-grey-mint">$</span>
+              </div>
+            </div>
+          </div>
+          <div id="sales_statistics" class="portlet-body-morris-fit morris-chart" style="height: 260px"> </div>
+        </div>
+      </div>
+      <!-- END PORTLET-->
+    </div>
     <!-- END DASHBOARD STATS -->
-</div>
-<!-- END MAIN CONTENT -->
-<!-- BEGIN MAIN JS & CSS -->
-<script>
-    Dashboard.init();
-</script>
-<!-- BEGIN MAIN JS & CSS
+  </div>
+  <!-- END MAIN CONTENT -->
+  <!-- BEGIN MAIN JS & CSS -->
+  <script>
+  Dashboard.init();
+  </script>
+  <!-- BEGIN MAIN JS & CSS

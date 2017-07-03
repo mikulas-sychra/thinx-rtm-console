@@ -289,7 +289,7 @@ function deviceList() {
   });
 }
 
-function changeDevice(deviceId, deviceAlias) {
+function submitDevice(deviceId, deviceAlias) {
   var data = JSON.stringify({ changes: { udid: deviceId, alias: deviceAlias } });
   return $.ajax({
     url: urlBase + '/device/edit',
