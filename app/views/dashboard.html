@@ -81,18 +81,12 @@
             <span class="caption-subject font-red bold uppercase">Devices</span>
           </div>
           <div class="actions">
-
-            <!-- <button class="btn btn-circle btn-icon-only"  ng-disbaled="selectedItems.length <> 1" ng-class="selectedItems.length > 0 ? 'btn-info' : 'btn-default'" ng-click="resetModal(device.udid)" type="button" title="Revoke" ><i class="fa fa-wrench"></i></button> -->
-            <!-- <button class="btn btn-circle btn-icon-only" ng-disbaled="selectedItems.length <> 1" ng-class="selectedItems.length > 0 ? 'btn-danger' : 'btn-default'" ng-click="revokeDevices()" type="button" title="Revoke" ><i class="icon-trash"></i></button> -->
-            <!-- <button class="btn btn-circle btn-icon-only" ng-class="selectedItems.length > 0 ? 'btn-warning' : 'btn-default'" ng-click="transferDevices()" type="button" title="Transfer" ><i class="icon-exchange"></i></button> -->
-
             <div class="btn-group">
               <a ng-show="selectedItems.length > 0" class="btn btn-primary" href="javascript:;" data-toggle="dropdown" aria-expanded="false">
                 <i class="fa fa-bars"></i> Actions
                 <i class="fa fa-angle-down"></i>
               </a>
               <ul class="dropdown-menu pull-right">
-                <!-- <li><a href="javascript:;"><i class="fa fa-pencil"></i> Edit </a></li> -->
                 <li><a href="javascript:;" ng-click="revokeDevices()"><i class="icon-trash"></i> Revoke <span class="badge badge-warning"> {{selectedItems.length}} </span></a></li>
                 <li><a href="javascript:;" ng-click="openTransferModal()"><i class="fa fa-exchange"></i> Transfer <span class="badge badge-danger"> {{selectedItems.length}} </span></a></li>
                 <li class="divider"> </li>
@@ -112,7 +106,6 @@
                   </th>
                 </tr>
               </thead>
-              <!-- ng-click="resetModal($index)"  data-target="#deviceModal" data-toggle="modal" -->
               <tr ng-repeat="device in $root.devices | filter:$root.searchText"  ng-click="checkItem(device.udid)" ng-class="selectedItems.indexOf(device.udid) > -1 ? 'selected-row' : 'default-row'" style="background: none !important;">
 
                 <td class="device-card">
@@ -148,7 +141,7 @@
                         <span ng-if="hasBuildId(device.udid) == null" ng-disabled="true" class="btn btn-circle">
                           <i class="fa fa-spin fa-circle-o-notch"></i>
                         </span>
-                        <a class="btn btn-circle icon-button btn-icon-only btn-default" href="#" ng-if="hasSource($index)" ng-click="build(device.udid, device.source, $index); $event.stopPropagation()" ng-hide="hasBuildId($index) == null">
+                        <a class="btn btn-circle btn-icon-only btn-default" href="#" ng-if="hasSource($index)" ng-click="build(device.udid, device.source, $index); $event.stopPropagation()" ng-hide="hasBuildId($index) == null">
                           <i class="fa fa-cogs"></i>
                         </a>
                         <a class="btn btn-circle btn-icon-only btn-default" ng-click="openModal($index, $event)">
@@ -238,14 +231,12 @@
           </div>
 
           <div class="modal-body">
-            <!-- <form action="#" class="form-horizontal"> -->
             <div class="form-group">
               <label class="control-label col-md-3">Alias</label>
               <div class="col-md-9">
                 <input type="text" ng-model="deviceAlias" name="deviceAlias" class="form-control" />
               </div>
             </div>
-
             <div class="form-group">
               <label class="control-label col-md-3">Source</label>
               <div class="col-md-9">
@@ -263,7 +254,6 @@
                 </div>
               </div>
             </div>
-
             <div class="form-group">
               <label class="control-label col-md-3">MQTT Channel</label>
               <div class="col-md-9">
@@ -272,7 +262,6 @@
                 </div>
               </div>
             </div>
-            <!-- </form> -->
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -293,9 +282,7 @@
           <h4 class="modal-title">Build Log</h4>
         </div>
         <div class="modal-body">
-
           <pre class="log-view" scroll-glue>{{modalLogBody}}</pre>
-
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
