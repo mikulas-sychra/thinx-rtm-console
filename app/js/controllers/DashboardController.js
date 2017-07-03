@@ -291,7 +291,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
       if (typeof($scope.ws) == "undefined") {
         // open websocket
         console.log('-- opening websocket with credentials --');
-        $scope.ws = new WebSocket("ws://thinx.cloud:7444/"+owner_id +"/"+build_id );
+        $scope.ws = new WebSocket("wss://thinx.cloud:7444/"+owner_id +"/"+build_id );
 
         $scope.ws.onopen = function() {
           console.log("Websocket connection estabilished.");
