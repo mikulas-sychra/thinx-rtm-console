@@ -359,7 +359,8 @@ function build(deviceUdid, sourceId) {
     type: 'POST',
     data: JSON.stringify({build: {
       udid: deviceUdid,
-      source_id: sourceId
+      source_id: sourceId,
+      dryrun: false
     }}),
     dataType: 'json'
   });
