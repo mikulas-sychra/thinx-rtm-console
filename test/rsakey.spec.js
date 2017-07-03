@@ -37,7 +37,7 @@ describe('basic ui tests', function() {
     // create api key
     element(by.buttonText("Submit")).click();
 
-    browser.sleep(3000);
+    browser.sleep(4000);
     browser.waitForAngular();
 
     // TODO: expect(newrsakey).not.toBe(null);
