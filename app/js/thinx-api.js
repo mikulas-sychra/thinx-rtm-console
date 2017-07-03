@@ -250,19 +250,19 @@ function init($rootScope, $scope) {
   .done(function(data) {
     updateProfile(data);
   })
-  .fail(error => $rootScope.$emit("xhrFailed", error));
+  .fail(error => $scope.$emit("xhrFailed", error));
 
   Thinx.getAuditLog()
   .done(function(data) {
     updateAuditLog(data);
   })
-  .fail(error => $rootScope.$emit("xhrFailed", error));
+  .fail(error => $scope.$emit("xhrFailed", error));
 
   Thinx.buildLogList()
   .done(function(data) {
     updateBuildLogList(data);
   })
-  .fail(error => $rootScope.$emit("xhrFailed", error));
+  .fail(error => $scope.$emit("xhrFailed", error));
 
 }
 

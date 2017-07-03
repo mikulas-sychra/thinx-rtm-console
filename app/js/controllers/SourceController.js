@@ -14,7 +14,7 @@ angular.module('RTM').controller('SourceController', ['$rootScope', '$scope', 's
     Thinx.sourceList()
     .done( function(data) {
       console.log('+++ updateSources ');
-      $rootScope.$emit("updateSources", data);
+      $scope.$emit("updateSources", data);
     })
     .fail(error => console.log('Error:', error));
 
@@ -51,7 +51,7 @@ angular.module('RTM').controller('SourceController', ['$rootScope', '$scope', 's
 
           Thinx.sourceList()
           .done( function(data) {
-            $rootScope.$emit("updateSources", data);
+            $scope.$emit("updateSources", data);
 
             // save user-spcific goal achievement
             if (Object.keys($rootScope.sources).length > 0 && !$rootScope.profile.info.goals.includes('source')) {
@@ -113,7 +113,7 @@ angular.module('RTM').controller('SourceController', ['$rootScope', '$scope', 's
 
         Thinx.sourceList()
         .done( function(data) {
-          $rootScope.$emit("updateSources", data);
+          $scope.$emit("updateSources", data);
           toastr.success('Deleted.', 'THiNX RTM Console', {timeOut: 5000})
         })
         .fail(error => console.log('Error:', error));

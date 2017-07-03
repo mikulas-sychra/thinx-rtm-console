@@ -14,7 +14,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     Thinx.sourceList()
     .done(function(data) {
       console.log('+++ updateSources ');
-      $rootScope.$emit("updateSources", data);
+      $scope.$emit("updateSources", data);
     })
     .fail(error => console.log('sourceList Error:', error));
 
@@ -469,13 +469,13 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
           updateDevices(data);
           //$('#deviceModal').modal('hide');
         })
-        .fail(error =>  $rootScope.$emit("xhrFailed", error));
+        .fail(error =>  $scope.$emit("xhrFailed", error));
 
       } else {
         toastr.error('Transfer failed.', 'THiNX RTM Console', {timeOut: 5000})
       }
     })
-    .fail(error => $rootScope.$emit("xhrFailed", error));
+    .fail(error => $scope.$emit("xhrFailed", error));
   }
 
   $scope.transferDevices = function() {

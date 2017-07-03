@@ -31,7 +31,7 @@ angular.module('RTM').controller('UserProfileController', function($rootScope, $
           console.log(response);
 
           Thinx.getProfile().done(function(data) {
-            $rootScope.$emit("updateProfile", data);
+            $scope.$emit("updateProfile", data);
           })
           .fail(error => console.log('Error:', error));
 
@@ -102,7 +102,7 @@ angular.module('RTM').controller('UserProfileController', function($rootScope, $
           console.log('-- avatar success, refreshing profile --');
 
           Thinx.getProfile().done(function(data) {
-            $rootScope.$emit("updateProfile", data);
+            $scope.$emit("updateProfile", data);
           })
           .fail(error => console.log('Error:', error));
 
