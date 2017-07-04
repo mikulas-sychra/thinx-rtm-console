@@ -9,7 +9,7 @@ while true; do
   if [ $? = 0 ]; then
     echo "Frontend started"
 
-    curl -f http://thinx.cloud:80/ > /dev/null 2> /dev/null
+    curl -f http://rtm.thinx.cloud:80/ > /dev/null 2> /dev/null
     if [ $? = 0 ]; then
       echo "Backend started"
       break
