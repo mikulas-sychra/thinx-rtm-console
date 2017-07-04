@@ -274,25 +274,6 @@
   <!-- END FORM-->
 
   <!-- BEGIN MODAL LOG VIEW -->
-  <div id="logModal" class="modal container fade" role="dialog" aria-hidden="true">
-    <div class="modal-dialog log-modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-          <h4 class="modal-title">Build Log</h4>
-        </div>
-        <div class="modal-body">
-          <pre class="log-view" scroll-glue>{{modalLogBody}}</pre>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" ng-click="refreshLog()"><i class="fa fa-refresh"></i> Refresh</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- BEGIN MODAL LOG VIEW -->
   <div id="transferModal" class="modal container fade" role="dialog" aria-hidden="true">
     <div class="modal-dialog transfer-modal-dialog">
       <div class="modal-content">
@@ -320,13 +301,13 @@
 
   <div class="log-view-overlay-conatiner" style="display:none">
     <div class="log-view-overlay-controls">
-      <a ng-click="refreshLog()" title="Refresh status"><i class="icon-refresh"></i></a>
+      <a ng-click="wsstailLog($root.modalBuildId)" title="Refresh status"><i class="icon-refresh"></i></a>
       <a ng-click="switchWrap()" title="Toggle Word Wrap"><i class="icon-frame"></i></a>
-      <a ng-click="hideLogOverlay()" title="Close Log"><i class="icon-close"></i></a>
+      <a ng-click="hideLogOverlay($root.modalBuildId)" title="Close Log"><i class="icon-close"></i></a>
     </div>
     <div class="log-view-overlay log-view-body force-word-wrap" scroll-glue>
-      <div class="overlay-title">Build Log <span>{{modalLogId}}</span></div>
-      {{modalLogBody}}
+      <div class="overlay-title">Build Log <span>{{$root.modalBuildId}}</span></div>
+      {{$root.logdata[$root.modalBuildId]}}
     </div>
   </div>
   <!-- END MODAL LOG VIEW -->

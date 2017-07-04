@@ -205,11 +205,6 @@ function init($rootScope, $scope) {
   }
 
   function updateBuildLogList(data) {
-    if (typeof($rootScope.buildlog) == 'undefined') {
-      // build log is not defined yet (can be defined by getBuildLog)
-      $rootScope.buildlog = {};
-    }
-
     var response = JSON.parse(data);
     console.log('buildlog list response:');
     console.log(response)

@@ -50,7 +50,7 @@
                                 <div class="col1">
                                   <div class="date">
                                       <i class="fa fa-cogs"></i> {{build.date | lastSeen}} {{build.udid | limitTo:6}}
-                                      <a class="btn btn-circle btn-icon-only btn-default"  data-target="#logModal" data-target="#full-width" data-toggle="modal" ng-click="showBuild(build.build_id)">
+                                      <a class="btn btn-circle btn-icon-only btn-default" ng-click="$emit('showLogOverlay', build.build_id)">
                                           <i class="fa fa-eye"></i>
                                       </a>
                                   </div>

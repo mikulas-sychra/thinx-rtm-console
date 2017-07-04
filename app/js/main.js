@@ -79,6 +79,11 @@ RTM.factory('settings', ['$rootScope', function($rootScope) {
   $rootScope.buildlog = [];
   $rootScope.auditlog = [];
 
+  $rootScope.logdata = {
+    buffer:{},
+    watchers:{}
+  };
+
   $rootScope.profile = {
     avatar: '/assets/thinx/img/default_avatar_sm.png',
     info: {
