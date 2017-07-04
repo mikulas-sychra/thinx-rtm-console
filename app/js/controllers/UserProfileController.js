@@ -4,7 +4,7 @@ angular.module('RTM').controller('UserProfileController', function($rootScope, $
     Layout.setAngularJsSidebarMenuActiveLink('set', $('#sidebar_menu_link_profile'), $state); // set profile link active in sidebar menu
 
     $scope.newAvatar = null;
-    $scope.searchText = null;
+    $scope.searchText = "";
 
     console.log('calling');
     Thinx.init($rootScope, $scope);
