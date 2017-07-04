@@ -1,6 +1,6 @@
 var Login = function() {
 
-  var urlBase = 'https://thinx.cloud:7443/api';
+  var urlBase = 'https://rtm.thinx.cloud:7443/api';
 
   var handleLogin = function() {
     $('.login-form').validate({

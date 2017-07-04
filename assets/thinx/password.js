@@ -1,6 +1,6 @@
 var PasswordReset = function() {
 
-  var urlBase = 'https://thinx.cloud:7443/api';
+  var urlBase = 'https://rtm.thinx.cloud:7443/api';
 
   var handleForgetPassword = function() {
     $('.forget-form').validate({
