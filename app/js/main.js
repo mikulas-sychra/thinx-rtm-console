@@ -110,11 +110,6 @@ RTM.factory('settings', ['$rootScope', function($rootScope) {
 }]);
 
 
-
-
-
-
-
 RTM.filter('lastSeen', function() {
   return function(date) {
     return moment(date).fromNow();
@@ -270,8 +265,8 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
             '../assets/thinx/js/dashboard.js',
 
             'js/thinx-api.js',
-            'js/controllers/LogviewController.js',
             'js/controllers/DashboardController.js',
+            'js/controllers/LogviewController.js',
           ]
         });
       }]
@@ -383,8 +378,8 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
             '../assets/thinx/js/profile.min.js',
 
             'js/thinx-api.js',
+            'js/controllers/UserProfileController.js',
             'js/controllers/LogviewController.js',
-            'js/controllers/UserProfileController.js'
           ]
         });
       }]

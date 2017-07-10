@@ -2,11 +2,9 @@
 angular.module('RTM').controller('LogviewController', ['$rootScope', '$scope', 'settings', function($rootScope, $scope, settings) {
   $scope.$on('$viewContentLoaded', function() {
 
+    console.log('#### Build Log Overlauy init')
 
   });
-
-
-  console.log('#### logview viewinit')
 
   function openSocket() {
     if ("WebSocket" in window) {
@@ -51,8 +49,7 @@ angular.module('RTM').controller('LogviewController', ['$rootScope', '$scope', '
       toastr.error("Error", "WebSocket NOT supported by your Browser!", {timeOut: 5000})
     }
   }
-
-  console.log('##### logview init')
+  console.log('##### websocket init')
   openSocket();
 
   $rootScope.$on("showLogOverlay", function(event, build_id) {
@@ -62,7 +59,6 @@ angular.module('RTM').controller('LogviewController', ['$rootScope', '$scope', '
     // $scope.showLogOverlay(build_id);
     $rootScope.showLog(build_id);
   });
-
 
   $rootScope.wsstailLog = function(build_id) {
     console.log('-- refreshing log: ', build_id)
@@ -96,9 +92,9 @@ angular.module('RTM').controller('LogviewController', ['$rootScope', '$scope', '
     // start auto refresh
     console.log('--- starting refresh timer --- ');
     $rootScope.logdata.watchers[build_id] = setInterval(function(){
-        console.log('Refreshing log view...');
-        $rootScope.$digest();
-      }, 500);
+      console.log('Refreshing log view...');
+      $rootScope.$digest();
+    }, 500);
 
     $rootScope.modalBuildId = build_id;
 
@@ -111,18 +107,10 @@ angular.module('RTM').controller('LogviewController', ['$rootScope', '$scope', '
     }
   }
 
-
-
   $rootScope.switchWrap = function() {
     console.log('--- toggle word-wrap --- ');
     $('.log-view-body').toggleClass('force-word-wrap');
     $('.icon-frame').toggleClass('overlay-highlight');
   }
-
-
-
-
-
-
 
 }]);
