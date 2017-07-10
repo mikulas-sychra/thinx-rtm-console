@@ -251,8 +251,10 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     });
   };
 
-  $rootScope.$on("showLogOverlay", function($event, build_id) {
-    $event.stopPropagation();
+  $rootScope.$on("showLogOverlay", function(event, build_id) {
+    console.log('firetwice event');
+    console.log(event);
+    // $event.stopPropagation();
     // $scope.showLogOverlay(build_id);
     $scope.showLog(build_id);
   });
@@ -282,34 +284,6 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     }
   }
 
-  $scope.showLogOverlayX = function(build_id) {
-    console.log('--[ logdata ]-- ');
-    console.log($rootScope.logdata);
-    console.log('--- opening log for build_id: ' + build_id, ' ---');
-    $('.log-view-overlay-conatiner').fadeIn();
-
-    // start auto refresh
-    console.log('--- starting refresh timer --- ');
-    $rootScope.logdata.watchers[build_id] = setInterval(function(){
-        console.log('Refreshing log view...');
-        // for (var build_id in $rootScope.logdata.buffer) {
-          // if ($rootScope.logdata.buffer[build_id].length > 0) {
-            // $rootScope.logdata[build_id] = $rootScope.logdata.buffer[build_id];
-            // $rootScope.logdata.buffer[build_id] = "";
-          // }
-        // }
-        $scope.$digest();
-      }, 500);
-
-    if (typeof($rootScope.ws) !== "undefined") {
-      console.log('Socket ready, tailing log...');
-      $scope.tailLog(build_id);
-    } else {
-      console.log('Socket not ready, trying to open it...')
-      openWebSocket(build_id);
-    }
-  }
-
   $scope.hideLogOverlay = function(build_id) {
     console.log('--- hiding log overlay --- ');
     $('.log-view-overlay-conatiner').fadeOut();
@@ -323,45 +297,6 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     $('.icon-frame').toggleClass('overlay-highlight');
   }
 
-  function openWebSocketX(build_id) {
-    if ("WebSocket" in window) {
-      if (typeof($rootScope.ws) == "undefined") {
-        // open websocket
-        console.log('## Opening websocket with credentials ##');
-        $rootScope.ws = new WebSocket("wss://rtm.thinx.cloud:7444/" + $rootScope.profile.owner + "/" + build_id);
-        $rootScope.ws.onopen = function() {
-          // $rootScope.logdata.buffer[build_id] = "## Websocket connection estabilished ##\n";
-          console.log("## Websocket connection estabilished ##");
-          $scope.tailLog(build_id);
-        };
-        $rootScope.ws.onmessage = function (message) {
-          if (typeof($rootScope.logdata[build_id]) == "undefined") {
-              $rootScope.logdata[build_id] = "## Websocket connection estabilished ##\n";
-          }
-          console.log("-> ", message.data);
-          var msgType = message.data.substr(2, 12);
-          if (msgType == "notification") {
-            var msgBody = JSON.parse(message.data);
-            toastr.info(msgBody.notification.title, msgBody.notification.body, {timeOut: 2000})
-          } else {
-            // save build data to build buffer
-            // $rootScope.logdata.buffer[build_id] = $rootScope.logdata.buffer[build_id] + "\n" + message.data;
-            $rootScope.logdata[build_id] = $rootScope.logdata[build_id] + "\n" + message.data;
-          }
-        };
-        $rootScope.ws.onclose = function() {
-          console.log("## Websocket connection is closed... ##");
-        };
-      } else {
-        // websocket already open
-        console.log("## Websocket status:", $rootScope.ws.readyState, " ##");
-      }
-    } else {
-      // The browser doesn't support WebSocket
-      toastr.error("Error", "WebSocket NOT supported by your Browser!", {timeOut: 5000})
-    }
-  }
-
   $scope.tailLog = function(build_id) {
     console.log('-- refreshing log: ', build_id)
     var message = {
@@ -372,6 +307,17 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     }
     // $rootScope.logdata.buffer[$rootScope.modalBuildId] = "";
     $rootScope.logdata[build_id] = "";
+    $rootScope.ws.send(JSON.stringify(message));
+  }
+
+  $scope.unwatchLog = function(build_id) {
+    console.log('-- unwatching log: ', build_id)
+    var message = {
+      unwatch: {
+        owner_id: $rootScope.profile.owner,
+        build_id: build_id
+      }
+    }
     $rootScope.ws.send(JSON.stringify(message));
   }
 
@@ -391,6 +337,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
         };
         $rootScope.wss.onmessage = function (message) {
           console.log("-> ", message.data);
+
           var msgType = message.data.substr(2, 12);
           if (msgType == "notification") {
             var msgBody = JSON.parse(message.data);
