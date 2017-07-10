@@ -113,4 +113,17 @@ angular.module('RTM').controller('LogviewController', ['$rootScope', '$scope', '
     $('.icon-frame').toggleClass('overlay-highlight');
   }
 
+  /*
+    $scope.unwatchLog = function(build_id) {
+      console.log('-- unwatching log: ', build_id)
+      var message = {
+        unwatch: {
+          owner_id: $rootScope.profile.owner,
+          build_id: build_id
+        }
+      }
+      $rootScope.ws.send(JSON.stringify(message));
+    }
+  */
+
 }]);
