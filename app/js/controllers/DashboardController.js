@@ -3,7 +3,6 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     // initialize core components
     App.initAjax();
 
-    Thinx.init($rootScope, $scope);
 
     Thinx.getStats()
     .done(function(data) {
@@ -39,6 +38,8 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     $scope.selectedItems = [];
     $scope.transferEmail = null;
   });
+
+  Thinx.init($rootScope, $scope);
 
   // set sidebar closed and body solid layout mode
   $rootScope.settings.layout.pageContentWhite = true;

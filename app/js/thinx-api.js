@@ -130,6 +130,7 @@ function init($rootScope, $scope) {
   }
 
   $rootScope.$on("updateSources", function(event, data){
+    event.stopPropagation();
     updateSources(data);
   });
 

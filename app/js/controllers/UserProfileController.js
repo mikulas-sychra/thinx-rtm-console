@@ -6,9 +6,10 @@ angular.module('RTM').controller('UserProfileController', function($rootScope, $
     $scope.newAvatar = null;
     $scope.searchText = "";
 
-    console.log('calling');
-    Thinx.init($rootScope, $scope);
   });
+
+  console.log('calling');
+  Thinx.init($rootScope, $scope);
 
   // set sidebar closed and body solid layout mode
   $rootScope.settings.layout.pageBodySolid = true;
