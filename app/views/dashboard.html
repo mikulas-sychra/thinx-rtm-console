@@ -144,7 +144,7 @@
                         <a class="btn btn-circle btn-icon-only btn-default" href="#" ng-if="hasSource($index)" ng-click="build(device.udid, device.source, $index); $event.stopPropagation()" ng-hide="hasBuildId($index) == null">
                           <i class="fa fa-cogs"></i>
                         </a>
-                        <a class="btn btn-circle btn-icon-only btn-default" ng-click="openModal($index, $event)">
+                        <a class="btn btn-circle btn-icon-only btn-default" ng-click="openDeviceModal($index, $event)">
                           <i class="fa fa-wrench"></i>
                         </a>
                       </div>
@@ -298,18 +298,6 @@
       </div>
     </div>
   </div>
-
-  <div class="log-view-overlay-conatiner" style="display:none">
-    <div class="log-view-overlay-controls">
-      <a ng-click="wsstailLog($root.modalBuildId)" title="Refresh status"><i class="icon-refresh"></i></a>
-      <a ng-click="switchWrap()" title="Toggle Word Wrap"><i class="icon-frame"></i></a>
-      <a ng-click="hideLogOverlay($root.modalBuildId)" title="Close Log"><i class="icon-close"></i></a>
-    </div>
-    <div class="log-view-overlay log-view-body force-word-wrap" scroll-glue>
-      <div class="overlay-title">Build Log <span>{{$root.modalBuildId}}</span></div>
-      {{$root.logdata[$root.modalBuildId]}}
-    </div>
-  </div>
   <!-- END MODAL LOG VIEW -->
 
   <div class="note note-info" ng-hide="$root.profile.info.goals.includes('apikey')">
@@ -411,6 +399,21 @@
     <!-- END DASHBOARD STATS -->
   </div>
   <!-- END MAIN CONTENT -->
+
+  <!-- START PAGE LOG OVERLAY -->
+  <div ng-controller="LogviewController" class="log-view-overlay-conatiner" style="display:none">
+    <div class="log-view-overlay-controls">
+      <a ng-click="wsstailLog($root.modalBuildId)" title="Refresh status"><i class="icon-refresh"></i></a>
+      <a ng-click="switchWrap()" title="Toggle Word Wrap"><i class="icon-frame"></i></a>
+      <a ng-click="hideLogOverlay($root.modalBuildId)" title="Close Log"><i class="icon-close"></i></a>
+    </div>
+    <div class="log-view-overlay log-view-body force-word-wrap" scroll-glue>
+      <div class="overlay-title">Build Log <span>{{$root.modalBuildId}}</span></div>
+      {{$root.logdata[$root.modalBuildId]}}
+    </div>
+  </div>
+  <!-- END PAGE LOG OVERLAY -->
+
   <!-- BEGIN MAIN JS & CSS -->
   <script>
   Dashboard.init();
