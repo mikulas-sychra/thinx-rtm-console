@@ -298,3 +298,17 @@
 .overlay-highlight {
 	color: #00cbe0;
 }
+
+.log-row {
+	padding: 2px;
+}
+
+.log-row .date {
+	font-size: .8em;
+}
+
+.log-row .msg {
+	font-size: .9em;
+	padding-left: 18px;
+	padding-right: 18px;
+}

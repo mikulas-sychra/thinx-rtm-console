@@ -368,12 +368,14 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
           files: [
             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css',
             '../assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css',
+            '../assets/apps/css/todo-2.css',
 
             '../assets/thinx/css/profile.css',
 
             '../assets/global/plugins/jquery.sparkline.min.js',
             '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
             '../assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js',
+            '../assets/apps/scripts/todo-2.min.js',
 
             '../assets/thinx/js/profile.min.js',
 
