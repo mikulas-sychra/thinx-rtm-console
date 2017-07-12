@@ -3,16 +3,17 @@
   <h1>
 
     <span data-ng-bind="$state.current.data.pageTitle"></span>
-    <small data-ng-bind="$state.current.data.pageSubTitle"></small>
-
     <span ng-if="$root.wss.readyState">
       <a class="btn btn-circle btn-icon-only btn-default"
       title="Conection Status"
+      ng-click="displaySocketStatus($root.wss.readyState)"
       ng-disabled="!$root.wss.readyState"
-      style="background: none">
+      style="background: none; color: #a2a2a2">
         <i class="fa fa-plug"></i>
       </a>
+      <span class="badge badge-success websocket-badge">{{socketStatus}}</span>
     </span>
+    <small data-ng-bind="$state.current.data.pageSubTitle"></small>
 
   </h1>
 </div>

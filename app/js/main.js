@@ -11,7 +11,7 @@ var RTM = angular.module("RTM", [
   "angular-web-notification",
   "tandibar/ng-rollbar",
   "luegg.directives",
-  "frapontillo.bootstrap-switch"
+  "frapontillo.bootstrap-switch",
 ]);
 
 RTM.config(['RollbarProvider', function(RollbarProvider) {
@@ -217,7 +217,21 @@ RTM.controller('SidebarController', ['$state', '$scope', function($state, $scope
 RTM.controller('PageHeadController', ['$scope', function($scope) {
   $scope.$on('$includeContentLoaded', function() {
     Demo.init(); // init theme panel
+    $scope.socketStatus = null;
   });
+
+  $scope.displaySocketStatus = function(status) {
+    if (status == 1) {
+      $scope.socketStatus = 'WebSocket Connected';
+    } else if (status == 0) {
+      $scope.socketStatus = 'WebSocket Connecting...';
+    }
+    $('.websocket-badge').fadeIn();
+    setTimeout(function(){
+      console.log("timeout");
+      $('.websocket-badge').fadeOut();
+    }, 2000)
+  }
 }]);
 
 /* Setup Layout Part - Quick Sidebar */
