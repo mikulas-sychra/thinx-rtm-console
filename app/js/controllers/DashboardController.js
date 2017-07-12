@@ -53,9 +53,9 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     console.log($rootScope.devices);
 
     // TODO only for testing purposes
-    for (var index in $rootScope.devices) {
-      $rootScope.devices[index].platform = 'platformio';
-    }
+    // for (var index in $rootScope.devices) {
+      // $rootScope.devices[index].platform = 'platformio';
+    // }
 
   }
 
