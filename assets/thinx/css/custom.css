@@ -312,3 +312,15 @@
 	padding-left: 18px;
 	padding-right: 18px;
 }
+
+.platform-icon {
+    width: 32px;
+    height: 32px;
+    margin: 10px;
+    background-color: #666666;
+    padding: 2px;
+    border-radius: 16px;
+}
+.platform-title {
+    margin-top: 15px;
+}

@@ -3,7 +3,6 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     // initialize core components
     App.initAjax();
 
-
     Thinx.getStats()
     .done(function(data) {
       updateStats(data);
@@ -52,6 +51,12 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     $scope.$apply();
     console.log('devices:');
     console.log($rootScope.devices);
+
+    // TODO only for testing purposes
+    for (var index in $rootScope.devices) {
+      $rootScope.devices[index].platform = 'platformio';
+    }
+
   }
 
   function updateStats(data) {

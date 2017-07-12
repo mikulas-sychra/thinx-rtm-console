@@ -84,6 +84,14 @@ RTM.factory('settings', ['$rootScope', function($rootScope) {
     watchers:{}
   };
 
+  $rootScope.platforms = [
+    {id:'arduino', name:'Arduino'},
+    {id:'platformio', name:'Platform.io'},
+    {id:'nodemcu', name:'NodeMCU / LUA'},
+    {id:'micropython', name:'Micropython'},
+    {id:'mongoose', name:'MongooseOS'}
+  ];
+
   $rootScope.profile = {
     avatar: '/assets/thinx/img/default_avatar_sm.png',
     info: {
