@@ -8,14 +8,13 @@ angular.module('RTM').controller('UserProfileController', function($rootScope, $
 
   });
 
-  console.log('calling');
   Thinx.init($rootScope, $scope);
 
   // set sidebar closed and body solid layout mode
   $rootScope.settings.layout.pageBodySolid = true;
   // $rootScope.settings.layout.pageSidebarClosed = true;
 
-  $scope.submitProfile = function() {
+  $scope.submitProfileForm = function() {
     console.log('-- changing user profile --');
 
     console.log('current profile');
@@ -84,7 +83,7 @@ angular.module('RTM').controller('UserProfileController', function($rootScope, $
   };
 
 
-  $scope.submitProfileAvatar = function() {
+  $scope.submitAvatarForm = function() {
     console.log('-- changing user avatar --');
     console.log($scope.newAvatar);
 
