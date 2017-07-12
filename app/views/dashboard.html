@@ -118,10 +118,14 @@
                         <div class="device-mac-label"><span class="mac-label">MAC</span>{{device.mac}}</div>
                         <div class="row">
                           <div class="col-sm-2">
+                            <div class="device-firmware">Platform</div>
                             <div class="device-firmware">Firmware</div>
                             <div ng-if="hasSource($index)" class="device-firmware">Source</div>
                           </div>
                           <div class="col-sm-10">
+                            <div class="device-firmware">
+                              {{$root.platforms[device.platform].name}}
+                            </div>
                             <div class="device-firmware">
                               {{device.firmware}}
                             </div>
@@ -235,10 +239,13 @@
               <label class="control-label col-md-3">Platform</label>
               <div class="col-md-9">
                   <ui-select ng-model="$root.devices[deviceIndex].platform" theme="bootstrap" title="Choose platfourm">
-                    <ui-select-match placeholder="Select platform in the list...">{{$select.selected.value.name}}</ui-select-match>
-                    <ui-select-choices repeat="platform in $root.platforms | filter:$select.search">
-                      <img src="../assets/thinx/img/external/{{platform.id}}_logo_200.png" class="platform-icon pull-left" />
-                      <div class="platform-title" ng-bind-html="platform.name | highlight: $select.search"></div><br>
+                    <ui-select-match placeholder="Select platform from the list...">
+                      <img ng-src="../assets/thinx/img/external/{{$select.selected.id}}_logo_200.png" class="platform-icon-sm pull-left {{$select.selected.id}}-platform-color" />
+                      {{$select.selected.value.name}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="platform.id as (id, platform) in $root.platforms | filter:$select.search">
+                      <img ng-src="../assets/thinx/img/external/{{platform.id}}_logo_200.png" class="platform-icon pull-left {{platform.id}}-platform-color" />
+                      <div class="platform-title" ng-bind-html="platform.value.name | highlight: $select.search"></div><br>
                     </ui-select-choices>
                   </ui-select>
               </div>

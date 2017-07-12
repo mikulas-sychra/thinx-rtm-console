@@ -314,13 +314,39 @@
 }
 
 .platform-icon {
-    width: 32px;
-    height: 32px;
-    margin: 10px;
-    background-color: #666666;
-    padding: 2px;
-    border-radius: 16px;
+	width: 32px;
+	height: 32px;
+	margin: 10px;
+	margin-left: 0px;
+	/*background-color: #666666;*/
+	padding: 2px;
+	border-radius: 16px;
 }
+
 .platform-title {
-    margin-top: 15px;
+	margin-top: 15px;
+}
+
+.platform-icon-sm {
+	width: 16px;
+	height: 16px;
+	margin-top: 2px;
+	margin-right: 10px;
+	border-radius: 8px;
+}
+
+.arduino-platform-color {
+	background-color: #00979d;
+}
+.platformio-platform-color {
+	background-color: #ff9125;
+}
+.nodemcu-platform-color {
+	background-color: #005780;
+}
+.micropython-platform-color {
+	background-color: #3c393a;
+}
+.mongoose-platform-color {
+	background-color: #0e7cad;
 }
