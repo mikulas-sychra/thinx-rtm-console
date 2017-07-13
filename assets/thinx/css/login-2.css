@@ -42,7 +42,6 @@
   margin: 0;
 }
 .login .content .form-control {
-  border: none;
   background-color: #6ba3c8;
   border: #6ba3c8 solid 1px;
   height: 43px;
