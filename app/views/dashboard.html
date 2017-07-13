@@ -241,11 +241,11 @@
               <div class="col-md-9">
                   <ui-select ng-model="devicePlatform" theme="bootstrap" title="Choose platfourm">
                     <ui-select-match placeholder="Select platform from the list...">
-                      <img ng-src="../assets/thinx/img/external/{{$select.selected.id}}_logo_200.png" class="platform-icon-sm pull-left {{$select.selected.id}}-platform-color" />
+                      <img ng-src="../assets/thinx/img/external/{{$select.selected.id}}_logo_200.png" class="platform-icon-sm pull-left {{$select.selected.id}}-platform-color" alt="{{$select.selected.id}} icon" />
                       {{$select.selected.value.name}}
                     </ui-select-match>
                     <ui-select-choices repeat="platform.id as (id, platform) in $root.platforms | filter:$select.search">
-                      <img ng-src="../assets/thinx/img/external/{{platform.id}}_logo_200.png" class="platform-icon pull-left {{platform.id}}-platform-color" />
+                      <img ng-src="../assets/thinx/img/external/{{platform.id}}_logo_200.png" class="platform-icon pull-left {{platform.id}}-platform-color" alt="{{platform.id}} icon" />
                       <div class="platform-title" ng-bind-html="platform.value.name | highlight: $select.search"></div><br>
                     </ui-select-choices>
                   </ui-select>
@@ -387,31 +387,31 @@
         <div class="portlet-body">
           <div class="row list-separated">
             <div class="col-md-3 col-sm-3 col-xs-6">
-              <div class="font-grey-mint font-sm"> Total Sales </div>
-              <div class="uppercase font-hg font-red-flamingo"> 13760
-                <span class="font-lg font-grey-mint">$</span>
+              <div class="font-grey-mint font-sm"> Devices </div>
+              <div class="uppercase font-hg font-red-flamingo"> 2
+                <span class="font-lg font-grey-mint"></span>
               </div>
             </div>
             <div class="col-md-3 col-sm-3 col-xs-6">
-              <div class="font-grey-mint font-sm"> Revenue </div>
-              <div class="uppercase font-hg font-green"> 4760
-                <span class="font-lg font-grey-mint">$</span>
+              <div class="font-grey-mint font-sm"> Errors </div>
+              <div class="uppercase font-hg font-green"> 20
+                <span class="font-lg font-grey-mint"></span>
               </div>
             </div>
             <div class="col-md-3 col-sm-3 col-xs-6">
-              <div class="font-grey-mint font-sm"> Expenses </div>
-              <div class="uppercase font-hg font-purple"> 1760
-                <span class="font-lg font-grey-mint">$</span>
+              <div class="font-grey-mint font-sm"> Check-ins </div>
+              <div class="uppercase font-hg font-purple"> 17
+                <span class="font-lg font-grey-mint"></span>
               </div>
             </div>
             <div class="col-md-3 col-sm-3 col-xs-6">
               <div class="font-grey-mint font-sm"> Growth </div>
-              <div class="uppercase font-hg font-blue"> 9760
-                <span class="font-lg font-grey-mint">$</span>
+              <div class="uppercase font-hg font-blue"> 32
+                <span class="font-lg font-grey-mint"></span>
               </div>
             </div>
           </div>
-          <div id="sales_statistics" class="portlet-body-morris-fit morris-chart" style="height: 260px"> </div>
+          <div id="device_statistics" class="portlet-body-morris-fit morris-chart" style="height: 230px"> </div>
         </div>
       </div>
       <!-- END PORTLET-->
