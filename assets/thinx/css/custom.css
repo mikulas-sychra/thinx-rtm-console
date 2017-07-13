@@ -139,6 +139,8 @@
   animation-duration: .5s;
   width: 20px;
   height: 20px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
   border-radius: 10px;
   background-color: #ffffff;
   margin-left: -5px;
@@ -190,6 +192,8 @@
 }
 .device-card {
   background: #fff;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
   border-radius: 2px;
   border: #eeeeee solid 1px !important;
   display: block;
@@ -219,6 +223,8 @@
   left: 0;
   margin: 0;
   border: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
   border-radius: 0;
   opacity: .800000011920928955078125;
   background-color: #282c34;
@@ -263,6 +269,8 @@
   padding-top: 0;
   margin-right: 30px;
   border: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
   border-radius: 0;
   padding: 10px;
   line-height: 1.3em;
@@ -320,6 +328,8 @@
   margin-left: 0;
   /*background-color: #666666;*/
   padding: 2px;
+  -webkit-border-radius: 16px;
+  -moz-border-radius: 16px;
   border-radius: 16px;
 }
 
@@ -332,6 +342,8 @@
   height: 16px;
   margin-top: 2px;
   margin-right: 10px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
   border-radius: 8px;
 }
 

@@ -1,8 +1,8 @@
 .login {
-  background-color : #5c97bd;
+  background-color: #5c97bd;
 }
 .login a {
-  color : #edf4f8 !important;
+  color: #edf4f8 !important;
 }
 .login .logo {
   margin: 0 auto;
@@ -18,21 +18,21 @@
   margin-bottom: 20px;
 }
 .login .form-title {
-  color : #edf4f8;
+  color: #edf4f8;
   font-size: 19px;
   font-weight: 400 !important;
 }
 .login .form-subtitle {
-  color : #c9dce9;
+  color: #c9dce9;
   font-size: 17px;
   font-weight: 300 !important;
   padding-left: 10px;
 }
 .login .content h4 {
-  color : #555;
+  color: #555;
 }
 .login .content .hint {
-  color : #b7d1e2;
+  color: #b7d1e2;
   padding: 0;
   font-size: 14px;
   margin: 15px 0 7px 0;
@@ -43,23 +43,23 @@
 }
 .login .content .form-control {
   border: none;
-  background-color : #6ba3c8;
-  border : #6ba3c8 solid 1px;
+  background-color: #6ba3c8;
+  border: #6ba3c8 solid 1px;
   height: 43px;
-  color : #d9ecf9;
+  color: #d9ecf9;
 }
 .login .content .form-control:focus, .login .content .form-control:active {
-  border : #83b8db solid 1px;
+  border: #83b8db solid 1px;
 }
 .login .content .form-control::-moz-placeholder {
-  color : #d9ecf9;
+  color: #d9ecf9;
   opacity: 1;
 }
 .login .content .form-control:-ms-input-placeholder {
-  color : #d9ecf9;
+  color: #d9ecf9;
 }
 .login .content .form-control::-webkit-input-placeholder {
-  color : #d9ecf9;
+  color: #d9ecf9;
 }
 .login .content select.form-control {
   padding-left: 9px;
@@ -79,8 +79,8 @@
   clear: both;
   border: 0;
   padding: 0 30px 25px 30px;
-  margin-left : -30px;
-  margin-right : -30px;
+  margin-left: -30px;
+  margin-right: -30px;
 }
 .form-actions .forget-password-block {
   padding-top: 7px;
@@ -96,7 +96,7 @@
   margin-top: 8px;
   font-weight: 600;
   font-size: 15px;
-  color : #b7d1e2 !important;
+  color: #b7d1e2 !important;
 }
 .login .forget-password {
   font-size: 14px;
@@ -126,41 +126,41 @@
   margin-top: 1px;
 }
 .login .btn {
-  background-color : #5995bb;
-  border : #72a9cc solid 1px;
-  color : #8fc4e5;
+  background-color: #5995bb;
+  border: #72a9cc solid 1px;
+  color: #8fc4e5;
   font-weight: 600;
   padding: 10px 25px !important;
 }
 .login .btn:hover {
-  border : #90bbd7 solid 1px;
-  background-color : #5995bb;
-  color : #8fc4e5;
+  border: #90bbd7 solid 1px;
+  background-color: #5995bb;
+  color: #8fc4e5;
 }
 .login .btn-default {
-  background-color : #5995bb;
-  border : #72a9cc solid 1px;
-  color : #8fc4e5;
+  background-color: #5995bb;
+  border: #72a9cc solid 1px;
+  color: #8fc4e5;
   font-weight: 600;
   padding: 10px 25px !important;
 }
 .login .btn-default:hover {
-  border : #90bbd7 solid 1px;
-  background-color : #5995bb;
-  color : #8fc4e5;
+  border: #90bbd7 solid 1px;
+  background-color: #5995bb;
+  color: #8fc4e5;
 }
 .login .content .forget-password {
-  color : #d7eaf7;
+  color: #d7eaf7;
   font-size: 15px;
 }
 .login .content .rememberme {
   margin-top: 8px;
 }
 .login .content .mt-checkbox {
-  color : #c9dce9 !important;
+  color: #c9dce9 !important;
 }
 .login .content .mt-checkbox > span:after {
-  border-color : #c9dce9 !important;
+  border-color: #c9dce9 !important;
 }
 .login .content .create-account {
   text-align: center;
@@ -169,7 +169,7 @@
 .login .content .create-account p a {
   font-weight: 300;
   font-size: 16px;
-  color : #ffffff;
+  color: #ffffff;
 }
 .login .content .create-account a {
   display: inline-block;

@@ -1,5 +1,7 @@
 var Dashboard = function() {
 
+    var dashboardMainChart = null;
+
     return {
 
         initMorisCharts: function() {
