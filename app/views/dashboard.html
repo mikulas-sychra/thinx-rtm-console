@@ -241,11 +241,11 @@
               <div class="col-md-9">
                   <ui-select ng-model="$root.devices[deviceIndex].platform" theme="bootstrap" title="Choose platfourm">
                     <ui-select-match placeholder="Select platform from the list...">
-                      <img ng-src="../assets/thinx/img/external/{{$select.selected.id}}_logo_200.png" class="platform-icon-sm pull-left {{$select.selected.id}}-platform-color" />
+                      <img ng-src="../assets/thinx/img/external/{{$select.selected.id}}_logo_200.png" class="platform-icon-sm pull-left {{$select.selected.id}}-platform-color" alt="{{$select.selected.id}} icon" />
                       {{$select.selected.value.name}}
                     </ui-select-match>
                     <ui-select-choices repeat="platform.id as (id, platform) in $root.platforms | filter:$select.search">
-                      <img ng-src="../assets/thinx/img/external/{{platform.id}}_logo_200.png" class="platform-icon pull-left {{platform.id}}-platform-color" />
+                      <img ng-src="../assets/thinx/img/external/{{platform.id}}_logo_200.png" class="platform-icon pull-left {{platform.id}}-platform-color" alt="{{platform.id}} icon" />
                       <div class="platform-title" ng-bind-html="platform.value.name | highlight: $select.search"></div><br>
                     </ui-select-choices>
                   </ui-select>

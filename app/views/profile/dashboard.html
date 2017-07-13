@@ -34,7 +34,7 @@
                               <li ng-repeat="(date, value) in $root.auditlog | objFilter:searchText | limitTo:200 track by $index">
 
                                 <div class="todo-tasklist-item todo-tasklist-item-border-green">
-                                    <img class="todo-userpic pull-left" src="../assets/thinx/img/default_avatar_sm.png" width="27px" height="27px">
+                                    <img class="todo-userpic pull-left" src="../assets/thinx/img/default_avatar_sm.png" width="27px" height="27px" alt="Event Reporter">
                                     <div class="todo-tasklist-item-title"> {{value | limitTo:32}} </div>
                                     <div class="todo-tasklist-item-text"> {{value}} </div>
                                     <div class="todo-tasklist-controls pull-left">
@@ -54,7 +54,7 @@
                               <li ng-repeat="build in $root.buildlog | filter:searchText | limitTo:200 track by $index">
 
                                 <div class="todo-tasklist-item todo-tasklist-item-border-green">
-                                    <img class="todo-userpic pull-left" src="../assets/thinx/img/default_avatar_sm.png" width="27px" height="27px">
+                                    <img class="todo-userpic pull-left" src="../assets/thinx/img/default_avatar_sm.png" width="27px" height="27px" alt="Build Reporter">
                                     <div class="todo-tasklist-item-title"> {{build.message | limitTo:32}}
 
                                       <a class="btn btn-circle btn-icon-only btn-default pull-right" ng-click="$root.$emit('showLogOverlay', build.build_id)">
