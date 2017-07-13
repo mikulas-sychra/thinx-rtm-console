@@ -129,7 +129,7 @@
 }
 .selected-row td::before {
   content: '\f057';
-  font-family: FontAwesome;
+  font-family: 'FontAwesome';
   text-align: center;
   font-size: 15px;
   color: #ed6b75;
