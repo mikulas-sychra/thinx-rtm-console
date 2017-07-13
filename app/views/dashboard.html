@@ -239,7 +239,7 @@
             <div class="form-group">
               <label class="control-label col-md-3">Platform</label>
               <div class="col-md-9">
-                  <ui-select ng-model="$root.devices[deviceIndex].platform" theme="bootstrap" title="Choose platfourm">
+                  <ui-select ng-model="devicePlatform" theme="bootstrap" title="Choose platfourm">
                     <ui-select-match placeholder="Select platform from the list...">
                       <img ng-src="../assets/thinx/img/external/{{$select.selected.id}}_logo_200.png" class="platform-icon-sm pull-left {{$select.selected.id}}-platform-color" />
                       {{$select.selected.value.name}}
@@ -285,7 +285,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" ng-click="submitDeviceAlias()"><i class="fa fa-check"></i> Submit</button>
+            <button type="button" class="btn btn-primary" ng-click="submitDeviceForm()"><i class="fa fa-check"></i> Submit</button>
           </div>
         </div>
       </div>

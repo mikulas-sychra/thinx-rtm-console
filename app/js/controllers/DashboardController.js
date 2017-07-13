@@ -33,6 +33,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     $scope.deviceIndex = null;
     $scope.deviceUdid = null;
     $scope.deviceAlias = null;
+    $scope.devicePlatform = null;
 
     $scope.selectedItems = [];
     $scope.transferEmail = null;
@@ -51,12 +52,6 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     $scope.$apply();
     console.log('devices:');
     console.log($rootScope.devices);
-
-    // TODO only for testing purposes
-    // for (var index in $rootScope.devices) {
-      // $rootScope.devices[index].platform = 'platformio';
-    // }
-
   }
 
   function updateStats(data) {
@@ -281,23 +276,11 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     return false;
   }
 
-  $scope.submitDeviceAlias = function() {
+  $scope.submitDeviceForm = function() {
 
-    for (var index in $rootScope.devices) {
-      if ($rootScope.devices[index].udid == $scope.deviceUdid) {
-        var device = $rootScope.devices[index];
-      }
-    }
+    console.log('-- changing device: ' + $scope.deviceUdid + ' -> ' + $scope.deviceAlias + ', ' + $scope.devicePlatform + ' --');
 
-    if (typeof(device) !== "undefined" && device.alias == $scope.deviceAlias) {
-      console.log('-- no changes, closing dialog --');
-      $('#deviceModal').modal('hide');
-      return;
-    }
-
-    console.log('-- changing device alias to ' + $scope.deviceAlias + '  for ' + $scope.deviceUdid + ' --');
-
-    Thinx.submitDevice($scope.deviceUdid, $scope.deviceAlias)
+    Thinx.submitDevice($scope.deviceUdid, $scope.deviceAlias, $scope.devicePlatform)
     .done(function(response) {
 
       if (typeof(response) !== "undefined") {
@@ -416,9 +399,16 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     $scope.deviceAlias = $rootScope.devices[index].alias;
     $scope.deviceIndex = index;
 
+    if (typeof($rootScope.devices[index].platform) !== "undefined") {
+      $scope.devicePlatform = $rootScope.devices[index].platform;
+    } else {
+      $scope.devicePlatform = null;
+    }
+
     console.log("scope vars");
     console.log("deviceUdid", $scope.deviceUdid);
     console.log("deviceAlias", $scope.deviceAlias);
+    console.log("devicePlatform", $scope.devicePlatform);
 
     $('#deviceModal').modal('show');
   }

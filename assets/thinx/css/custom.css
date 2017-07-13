@@ -157,6 +157,12 @@
 .row-item-title {
 	font-size : 1.3em;
 }
+.row-item-title-small {
+	font-size : 1.1em;
+}
+.row-item-title-small td {
+	padding: 5px;
+}
 .device-lastseen-label {
 	background-color : rgba(38, 194, 129, 0.08);
 	padding : 3px 5px 3px 5px;

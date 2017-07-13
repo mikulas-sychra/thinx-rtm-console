@@ -54,8 +54,8 @@ var Thinx = {
   deviceList: function () {
     return deviceList();
   },
-  submitDevice: function (deviceUdid, deviceAlias) {
-    return submitDevice(deviceUdid, deviceAlias);
+  submitDevice: function (deviceUdid, deviceAlias, devicePlatform) {
+    return submitDevice(deviceUdid, deviceAlias, devicePlatform);
   },
   revokeDevice: function (deviceUdid) {
     return revokeDevice(deviceUdid);
@@ -285,8 +285,14 @@ function deviceList() {
   });
 }
 
-function submitDevice(deviceId, deviceAlias) {
-  var data = JSON.stringify({ changes: { udid: deviceId, alias: deviceAlias } });
+function submitDevice(deviceId, deviceAlias, devicePlatform) {
+  var data = JSON.stringify({
+    changes: {
+      udid: deviceId,
+      alias: deviceAlias,
+      platform: devicePlatform
+    }
+  });
   return $.ajax({
     url: urlBase + '/device/edit',
     type: 'POST',

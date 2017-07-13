@@ -49,8 +49,7 @@
           <table class="table table-hover table-light">
             <tr ng-repeat="apikey in $root.apikeys" ng-click="checkItem(apikey.hash)" ng-class="selectedItems.indexOf(apikey.hash) > -1 ? 'selected-row' : 'default-row'">
               <td>
-                <div class="row-item-title">{{apikey.alias}}</div>
-                <div class="key-label monospace-info">{{apikey.name | limitTo : 10 : apikey.name.length - 10 }}</div>
+                <div class="row-item-title-small"><span class="key-label monospace-info"><i class="fa fa-key" style="font-size: .8em; margin-left: 5px; color: rgba(91, 192, 222, 0.63)"></i> {{apikey.name | limitTo : 10 : apikey.name.length - 10 }}</span>  &nbsp; {{apikey.alias}}</div>
               </td>
             </tr>
           </table>
