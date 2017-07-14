@@ -140,6 +140,7 @@ function init($rootScope, $scope) {
     var response = JSON.parse(data);
     console.log(response);
 
+    $rootScope.sources = [];
     $.each(response.sources, function(sourceId, value) {
       value.sourceId = sourceId;
       $rootScope.sources.push(value);
