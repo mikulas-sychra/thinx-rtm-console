@@ -18,7 +18,10 @@ angular.module('RTM').controller('RsakeyController', ['$rootScope', '$scope', 's
     .fail(error => $scope.$emit("xhrFailed", error));
 
     $scope.resetModal();
+    $scope.searchText = '';
   });
+
+  $scope.searchText = '';
 
   function updateKeys(data) {
     var keys = JSON.parse(data);

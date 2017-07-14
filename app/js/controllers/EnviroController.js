@@ -18,7 +18,10 @@ angular.module('RTM').controller('EnviroController', ['$rootScope', '$scope', 's
     .fail(error => console.log('Error:', error));
 
     $scope.resetModal();
+    $scope.searchText = '';
   });
+
+  $scope.searchText = '';
 
   function updateKeys(data) {
     var keys = JSON.parse(data);

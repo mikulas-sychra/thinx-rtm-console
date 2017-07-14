@@ -19,9 +19,10 @@ angular.module('RTM').controller('SourceController', ['$rootScope', '$scope', 's
     .fail(error => console.log('Error:', error));
 
     $scope.resetModal();
-
+    $scope.searchText = '';
   });
 
+  $scope.searchText = '';
 
   $scope.addSource = function() {
 

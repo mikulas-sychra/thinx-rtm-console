@@ -18,8 +18,11 @@ angular.module('RTM').controller('ApikeyController', ['$rootScope', '$scope', 's
     .fail(error => console.log('Error:', error));
 
     $scope.resetModal();
+    $scope.searchText = '';
 
   });
+
+  $scope.searchText = '';
 
   function updateKeys(data) {
     var response = JSON.parse(data);

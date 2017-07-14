@@ -34,10 +34,13 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     $scope.deviceUdid = null;
     $scope.deviceAlias = null;
     $scope.devicePlatform = null;
+    $scope.searchText = '';
 
     $scope.selectedItems = [];
     $scope.transferEmail = null;
   });
+
+  $scope.searchText = '';
 
   Thinx.init($rootScope, $scope);
 
