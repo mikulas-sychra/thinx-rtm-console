@@ -41,6 +41,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
   });
 
   $scope.searchText = '';
+  $scope.filterPlatform = '';
 
   Thinx.init($rootScope, $scope);
 

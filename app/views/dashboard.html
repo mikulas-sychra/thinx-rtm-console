@@ -81,22 +81,48 @@
             <span class="caption-subject font-red bold uppercase">Devices</span>
           </div>
           <div class="actions">
-            <div class="btn-group">
-              <a ng-show="selectedItems.length > 0" class="btn btn-primary" href="javascript:;" data-toggle="dropdown" aria-expanded="false">
-                <i class="fa fa-bars"></i> Actions
-                <i class="fa fa-angle-down"></i>
-              </a>
-              <ul class="dropdown-menu pull-right">
-                <li><a href="javascript:;" ng-click="revokeDevices()"><i class="icon-trash"></i> Revoke <span class="badge badge-warning"> {{selectedItems.length}} </span></a></li>
-                <li><a href="javascript:;" ng-click="openTransferModal()"><i class="fa fa-exchange"></i> Transfer <span class="badge badge-danger"> {{selectedItems.length}} </span></a></li>
-                <li class="divider"> </li>
-                <li><a href="javascript:;"><i class="i"></i> What now? </a></li>
-              </ul>
+            <div class="btn-group btn-group-devided" data-toggle="buttons">
+              <label class="btn btn-default btn-outline btn-circle btn-sm active">
+                <input type="radio" name="filterPlatform" class="toggle" id="platformio" ng-model="filterPlatform" />
+                Pl
+              </label>
+              <label class="btn btn-default btn-outline btn-circle btn-sm">
+                <input type="radio" name="filterPlatform" class="toggle" id="nodemcu" ng-model="filterPlatform" />
+                Lu
+              </label>
+              <label class="btn btn-default btn-circle btn-sm">
+                <input type="radio" name="filterPlatform" class="toggle" id="micropython" ng-model="filterPlatform" />
+                Mi
+              </label>
+              <label class="btn btn-default btn-circle btn-sm">
+                <input type="radio" name="filterPlatform" class="toggle" id="mongoose" ng-model="filterPlatform" />
+                Mo
+              </label>
             </div>
-
           </div>
         </div>
         <div class="portlet-body">
+          <div class="row">
+            <div class="col-xs-6">
+              <a href="#" class="btn green-haze btn-outline" ng-click="resetModal()" data-target="#pageModal" data-toggle="modal">Create API Key</a>
+              <div class="btn-group">
+                <a ng-show="selectedItems.length > 0" class="btn red btn-outline" href="javascript:;" data-toggle="dropdown" aria-expanded="false">
+                  <i class="fa fa-bars"></i> Actions
+                  <i class="fa fa-angle-down"></i>
+                </a>
+                <ul class="dropdown-menu pull-right">
+                  <li><a href="javascript:;" ng-click="revokeDevices()"><i class="icon-trash"></i> Revoke</a></li>
+                  <li><a href="javascript:;" ng-click="openTransferModal()"><i class="fa fa-exchange"></i> Transfer</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-xs-6 text-right">
+              <span class="input-icon right xtop-list-search">
+                  <i class="icon-magnifier"></i>
+                  <input type="text" class="form-control form-control-solid" ng-model="searchText" placeholder="Search...">
+              </span>
+            </div>
+          </div>
           <div class="table-scrollable table-scrollable-borderless">
             <table class="table table-hover table-light">
               <thead>
@@ -105,10 +131,6 @@
                     <button class="btn btn-small btn-default hidden" ng-click="$root.logoutMe()"> Test Invalid Session</button>
                   </th>
                 </tr>
-                <div class="input-icon right top-list-search">
-                    <i class="icon-magnifier"></i>
-                    <input type="text" class="form-control form-control-solid" ng-model="searchText" placeholder="Search...">
-                </div>
               </thead>
               <tr ng-repeat="device in $root.devices | propsFilter:{alias:searchText}"  ng-click="checkItem(device.udid)" ng-class="selectedItems.indexOf(device.udid) > -1 ? 'selected-row' : 'default-row'" style="background: none !important;">
                 <td class="device-card">

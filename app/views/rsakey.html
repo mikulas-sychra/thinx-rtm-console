@@ -40,17 +40,25 @@
         <div class="row">
           <div class="col-xs-6">
             <a href="#" class="btn green-haze btn-outline" ng-click="resetModal()" data-target="#pageModal" data-toggle="modal">Create RSA Key</a>
+            <div class="btn-group btn-actions">
+              <a ng-show="selectedItems.length > 0" class="btn red btn-outline" href="javascript:;" data-toggle="dropdown" aria-expanded="false">
+                Actions
+                <i class="fa fa-angle-down"></i>
+              </a>
+              <ul class="dropdown-menu pull-right">
+                <li><a href="javascript:;" ng-click="revokeRsakeys()"><i class="icon-trash"></i> Revoke selected</a></li>
+              </ul>
+            </div>
           </div>
           <div class="col-xs-6 text-right">
-            <button class="btn btn-outline btn-circle btn-icon-only" ng-class="selectedItems.length > 0 ? 'btn-danger' : 'btn-default'" ng-click="revokeRsakeys()" type="button" ><i class="icon-trash"></i></button>
+            <span class="input-icon right xtop-list-search">
+                <i class="icon-magnifier"></i>
+                <input type="text" class="form-control form-control-solid" ng-model="searchText" placeholder="Search...">
+            </span>
           </div>
         </div>
         <div class="table-scrollable table-scrollable-borderless">
           <table class="table table-hover table-light">
-            <div class="input-icon right top-list-search">
-                <i class="icon-magnifier"></i>
-                <input type="text" class="form-control form-control-solid" ng-model="searchText" placeholder="Search...">
-            </div>
             <tr ng-repeat="rsakey in $root.rsakeys | propsFilter:{fingerprint:searchText,name:searchText}" ng-click="checkItem(rsakey.fingerprint)" ng-class="selectedItems.indexOf(rsakey.fingerprint) > -1 ? 'selected-row' : 'default-row'">
               <td>
                 <div class="row-item-title">{{rsakey.name}}</div>
