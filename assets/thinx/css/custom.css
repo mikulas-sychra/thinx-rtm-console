@@ -143,8 +143,15 @@
   /*-moz-border-radius: 10px;*/
   /*border-radius: 10px;*/
   /*background-color: #ffffff;*/
-  margin-left: -23px;
+  /*margin-left: -23px;*/
   margin-top: -0px;
+  /*padding-left: 23px;*/
+  margin-left: -23px;
+}
+.selected-row td {
+  /*margin-left: 23px;*/
+  padding-left: 23px !important;
+
 }
 .btn-icon-dark i {
   color: #333333;
