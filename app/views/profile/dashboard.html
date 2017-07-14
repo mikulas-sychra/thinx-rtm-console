@@ -22,17 +22,13 @@
                   <div class="portlet-input" style="margin-bottom: 10px">
                       <div class="input-icon right">
                           <i class="icon-magnifier"></i>
-                          <input type="text" class="form-control form-control-solid" ng-model="searchText" placeholder="search...">
+                          <input type="text" class="form-control form-control-solid" ng-model="searchText" placeholder="Search...">
                       </div>
                   </div>
                   <div class="tab-pane active" id="tab_1_1">
                       <div class="scroller" style="height: 638px;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
-
-
-
                           <ul class="feeds">
                               <li ng-repeat="(date, value) in $root.auditlog | objFilter:searchText | limitTo:200 track by $index">
-
                                 <div class="todo-tasklist-item todo-tasklist-item-border-green">
                                     <img class="todo-userpic pull-left" src="../assets/thinx/img/default_avatar_sm.png" width="27px" height="27px" alt="Event Reporter">
                                     <div class="todo-tasklist-item-title"> {{value | limitTo:32}} </div>
@@ -43,7 +39,6 @@
                                         <span class="todo-tasklist-badge badge badge-roundless badge-warning">Warning</span>
                                     </div>
                                 </div>
-
                               </li>
                           </ul>
                       </div>
@@ -52,15 +47,12 @@
                       <div class="scroller" style="height: 638px;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
                           <ul class="feeds">
                               <li ng-repeat="build in $root.buildlog | filter:searchText | limitTo:200 track by $index">
-
                                 <div class="todo-tasklist-item todo-tasklist-item-border-green">
                                     <img class="todo-userpic pull-left" src="../assets/thinx/img/default_avatar_sm.png" width="27px" height="27px" alt="Build Reporter">
                                     <div class="todo-tasklist-item-title"> {{build.message | limitTo:32}}
-
                                       <a class="btn btn-circle btn-icon-only btn-default pull-right" ng-click="$root.$emit('showLogOverlay', build.build_id)">
                                           <i class="fa fa-eye"></i>
                                       </a>
-
                                     </div>
                                     <div class="todo-tasklist-item-text"> {{build.udid}} <br> {{build.message}} </div>
                                     <div class="todo-tasklist-controls pull-left">
@@ -69,7 +61,6 @@
                                         <span class="todo-tasklist-badge badge badge-roundless badge-success">Success</span>
                                     </div>
                                 </div>
-
                               </li>
                           </ul>
                       </div>

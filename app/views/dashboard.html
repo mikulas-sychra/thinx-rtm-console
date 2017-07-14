@@ -105,9 +105,12 @@
                     <button class="btn btn-small btn-default hidden" ng-click="$root.logoutMe()"> Test Invalid Session</button>
                   </th>
                 </tr>
+                <div class="input-icon right top-list-search">
+                    <i class="icon-magnifier"></i>
+                    <input type="text" class="form-control form-control-solid" ng-model="searchText" placeholder="Search...">
+                </div>
               </thead>
-              <tr ng-repeat="device in $root.devices | filter:$root.searchText"  ng-click="checkItem(device.udid)" ng-class="selectedItems.indexOf(device.udid) > -1 ? 'selected-row' : 'default-row'" style="background: none !important;">
-
+              <tr ng-repeat="device in $root.devices | propsFilter:{alias:searchText}"  ng-click="checkItem(device.udid)" ng-class="selectedItems.indexOf(device.udid) > -1 ? 'selected-row' : 'default-row'" style="background: none !important;">
                 <td class="device-card">
                   <div class="table"  style="padding: 10px; margin-bottom: 0px; background: transparent;">
                     <div class="row">

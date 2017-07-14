@@ -39,16 +39,20 @@
       </div>
       <div class="portlet-body">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-xs-6">
             <a href="#" class="btn green-haze btn-outline" ng-click="resetModal()" data-target="#pageModal" data-toggle="modal">Create Environment Variable</a>
           </div>
-          <div class="col-md-6 text-right">
+          <div class="col-xs-6 text-right">
             <button class="btn btn-circle btn-icon-only" ng-class="selectedItems.length > 0 ? 'btn-danger' : 'btn-default'" ng-click="revokeEnviros()" type="button" ><i class="icon-trash"></i></button>
           </div>
         </div>
         <div class="table-scrollable table-scrollable-borderless">
+          <div class="input-icon right top-list-search">
+              <i class="icon-magnifier"></i>
+              <input type="text" class="form-control form-control-solid" ng-model="searchText" placeholder="Search...">
+          </div>
           <table class="table table-hover table-light">
-            <tr ng-repeat="enviro in $root.enviros track by $index" ng-click="checkItem(enviro)" ng-class="selectedItems.indexOf(enviro) > -1 ? 'selected-row' : 'default-row'">
+            <tr ng-repeat="enviro in $root.enviros | filter:searchText track by $index" ng-click="checkItem(enviro)" ng-class="selectedItems.indexOf(enviro) > -1 ? 'selected-row' : 'default-row'">
               <td>
                 <div class="row-item-title">{{enviro}}</div>
               </td>
