@@ -114,7 +114,6 @@ var Thinx = {
 function init($rootScope, $scope) {
 
   console.log('THiNX API INIT');
-
   console.log($rootScope);
   console.log($scope);
 
@@ -129,7 +128,6 @@ function init($rootScope, $scope) {
         console.log('error 401');
         window.location = '/';
     }
-
   }
 
   $rootScope.$on("updateSources", function(event, data){
@@ -142,10 +140,11 @@ function init($rootScope, $scope) {
     var response = JSON.parse(data);
     console.log(response);
 
-    $rootScope.sources = {};
-    $.each(response.sources, function(key, value) {
-      $rootScope.sources[key] = value;
+    $.each(response.sources, function(sourceId, value) {
+      value.sourceId = sourceId;
+      $rootScope.sources.push(value);
     });
+    // $rootScope.sources = response.sources;
 
     $scope.$apply();
 
@@ -267,13 +266,11 @@ function init($rootScope, $scope) {
 
 function updateTimer() {
   counter--;
-
   if (counter == 0) {
     counter = 30;
     console.log("Refreshing data in " + counter + " seconds...");
     // update some data
   }
-
   setTimeout(autoUpdater, 2000);
 }
 
