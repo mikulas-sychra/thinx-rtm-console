@@ -343,6 +343,42 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     });
   };
 
+  $scope.revokeDevices = function() {
+    console.log('-- processing selected items --');
+    console.log($scope.selectedItems);
+
+    var selectedToRemove = $scope.selectedItems.slice();
+    if (selectedToRemove.length > 0) {
+      revokeDevices(selectedToRemove);
+    } else {
+      toastr.warning('Nothing selected.', 'THiNX RTM Console', {timeOut: 1000})
+    }
+  };
+
+  function revokeDevices(deviceUdids) {
+    console.log('--revoking ' + deviceUdids.length + ' devices --')
+
+    Thinx.revokeDevices(deviceUdids)
+    .done(function(data) {
+      if (data.success) {
+        console.log('Success:', data);
+        toastr.success('Devices Transferred.', 'THiNX RTM Console', {timeOut: 5000})
+
+        $scope.selectedItems = [];
+
+        Thinx.deviceList()
+        .done(function(data) {
+          updateDevices(data);
+        })
+        .fail(error =>  $scope.$emit("xhrFailed", error));
+
+      } else {
+        toastr.error('Revocation failed.', 'THiNX RTM Console', {timeOut: 5000})
+      }
+    })
+    .fail(error => $scope.$emit("xhrFailed", error));
+  }
+
   function transferDevices(email, deviceUdids) {
     console.log('--transferring devices ' + deviceUdids.length +'--')
 
@@ -350,6 +386,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     .done(function(data) {
       if (data.success) {
         console.log('Success:', data);
+        toastr.success('Devices Transferred.', 'THiNX RTM Console', {timeOut: 5000})
 
         $scope.selectedItems = [];
         $scope.transferEmail = null;
