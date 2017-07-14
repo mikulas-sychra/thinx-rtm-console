@@ -58,7 +58,6 @@ RTM.factory('settings', ['$rootScope', function($rootScope) {
   };
 
   $rootScope.settings = settings;
-  $rootScope.searchText = '';
 
   console.log(' === ROOT === ');
   console.log($rootScope);
