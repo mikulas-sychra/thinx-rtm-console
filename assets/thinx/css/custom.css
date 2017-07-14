@@ -128,23 +128,23 @@
   }
 }
 .selected-row td::before {
-  content: '\f057';
+  content: '\f00c';
   font-family: 'FontAwesome';
   text-align: center;
-  font-size: 15px;
-  color: #ed6b75;
+  font-size: 16px;
+  color: #AAAAAA;
   position: absolute;
   display: inline-block;
   animation-name: fadeIn;
   animation-duration: .5s;
-  width: 20px;
-  height: 20px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
-  background-color: #ffffff;
-  margin-left: -5px;
-  margin-top: -5px;
+  width: 16px;
+  height: 16px;
+  /*-webkit-border-radius: 10px;*/
+  /*-moz-border-radius: 10px;*/
+  /*border-radius: 10px;*/
+  /*background-color: #ffffff;*/
+  margin-left: -23px;
+  margin-top: -0px;
 }
 .btn-icon-dark i {
   color: #333333;
@@ -367,4 +367,12 @@
 }
 .mongoose-platform-color {
   background-color: #0e7cad;
+}
+
+.top-list-search {
+  margin: 8px;
+}
+
+.btn-actions .btn {
+  border-radius: 4px !important;
 }
