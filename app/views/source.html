@@ -52,7 +52,7 @@
               <input type="text" class="form-control form-control-solid" ng-model="searchText" placeholder="Search...">
           </div>
           <table class="table table-hover table-light">
-            <tr ng-repeat="(key, source) in $root.sources | propsFilter:searchText" ng-click="checkItem(key)" ng-class="selectedItems.indexOf(key) > -1 ? 'selected-row' : 'default-row'">
+            <tr ng-repeat="source in $root.sources | propsFilter:{'alias':searchText, 'url':searchText}" ng-click="checkItem(source.sourceId)" ng-class="selectedItems.indexOf(source.sourceId) > -1 ? 'selected-row' : 'default-row'">
               <td>
                 <div class="row-item-title">{{source.alias}}</div>
                 <div>

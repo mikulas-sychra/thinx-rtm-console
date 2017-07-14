@@ -132,8 +132,6 @@ angular.module('RTM').controller('SourceController', ['$rootScope', '$scope', 's
 
   $scope.revokeSources = function() {
     console.log('-- processing selected items --');
-    console.log($scope.selectedItems);
-
     var selectedToRemove = $scope.selectedItems.slice();
     if (selectedToRemove.length > 0) {
       revokeSources(selectedToRemove);
@@ -144,6 +142,7 @@ angular.module('RTM').controller('SourceController', ['$rootScope', '$scope', 's
 
   $scope.checkItem = function(sourceId) {
     console.log('### toggle item in selectedItems');
+    console.log($scope.selectedItems);
     var index = $scope.selectedItems.indexOf(sourceId);
     if (index > -1) {
       console.log('splicing on ', index, ' value ', $scope.selectedItems[index]);
