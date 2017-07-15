@@ -315,6 +315,26 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
     }
   })
 
+  // Apikey Page
+  .state('source', {
+    url: "/source",
+    templateUrl: "views/source.html",
+    data: {pageTitle: 'Source Management'},
+    controller: "SourceController",
+    resolve: {
+      deps: ['$ocLazyLoad', function($ocLazyLoad) {
+        return $ocLazyLoad.load({
+          name: 'RTM',
+          insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+          files: [
+            'js/thinx-api.js',
+            'js/controllers/SourceController.js'
+          ]
+        });
+      }]
+    }
+  })
+
   // Rsakey Page
   .state('rsakey', {
     url: "/rsakey",
@@ -355,12 +375,12 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
     }
   })
 
-  // Apikey Page
-  .state('source', {
-    url: "/source",
-    templateUrl: "views/source.html",
-    data: {pageTitle: 'Source Management'},
-    controller: "SourceController",
+  // Rsakey Page
+  .state('history', {
+    url: "/history",
+    templateUrl: "views/history.html",
+    data: {pageTitle: 'History'},
+    controller: "HistoryController",
     resolve: {
       deps: ['$ocLazyLoad', function($ocLazyLoad) {
         return $ocLazyLoad.load({
@@ -368,7 +388,8 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
           insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
           files: [
             'js/thinx-api.js',
-            'js/controllers/SourceController.js'
+            'js/controllers/HistoryController.js',
+            'js/controllers/LogviewController.js'
           ]
         });
       }]
@@ -401,8 +422,7 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
             '../assets/thinx/js/profile.min.js',
 
             'js/thinx-api.js',
-            'js/controllers/UserProfileController.js',
-            'js/controllers/LogviewController.js',
+            'js/controllers/UserProfileController.js'
           ]
         });
       }]
