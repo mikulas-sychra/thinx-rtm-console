@@ -132,7 +132,7 @@
                   </th>
                 </tr>
               </thead>
-              <tr ng-repeat="device in $root.devices | propsFilter:{alias:searchText}"  ng-click="checkItem(device.udid)" ng-class="selectedItems.indexOf(device.udid) > -1 ? 'selected-row' : 'default-row'" style="background: none !important;">
+              <tr ng-repeat="device in $root.devices | propsFilter:{'alias':searchText, 'mac':searchText}"  ng-click="checkItem(device.udid)" ng-class="selectedItems.indexOf(device.udid) > -1 ? 'selected-row' : 'default-row'" style="background: none !important;">
                 <td class="">
                   <div class="table"  style="padding: 10px; margin-bottom: 0px; background: transparent;">
                     <div class="row">
