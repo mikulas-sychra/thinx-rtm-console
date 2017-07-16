@@ -117,9 +117,12 @@ function init($rootScope, $scope) {
   console.log($rootScope);
   console.log($scope);
 
-  $rootScope.$on("xhrFailed", function(event, error){
-    xhrFailed(error);
-  });
+  if (typeof(xhrFailedListener) == "undefined") {
+    var xhrFailedListener = $rootScope.$on('xhrFailed', function(event, error){
+        event.stopPropagation();
+        xhrFailed(error);
+    });
+  }
 
   function xhrFailed(error) {
     console.log('## xhr failed: ', error);
@@ -130,10 +133,12 @@ function init($rootScope, $scope) {
     }
   }
 
-  $rootScope.$on("updateSources", function(event, data){
-    event.stopPropagation();
-    updateSources(data);
-  });
+  if (typeof(updateSourcesListener) == "undefined") {
+    var updateSourcesListener = $rootScope.$on('updateSources', function(event, data){
+        event.stopPropagation();
+        updateSources(data);
+    });
+  }
 
   function updateSources(data) {
     console.log('-- processing sources --');

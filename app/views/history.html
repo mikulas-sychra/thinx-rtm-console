@@ -69,7 +69,7 @@
                               <div class="todo-tasklist-item todo-tasklist-item-border-green">
                                   <img class="todo-userpic pull-left" src="../assets/thinx/img/default_avatar_sm.png" width="27px" height="27px" alt="Build Reporter">
                                   <div class="todo-tasklist-item-title"> {{build.message | limitTo:32}}
-                                    <a class="btn btn-circle btn-icon-only btn-default pull-right" ng-click="$root.$emit('showLogOverlay', build.build_id)">
+                                    <a class="btn btn-circle btn-icon-only btn-default pull-right" ng-click="$emit('showLogOverlay', build.build_id)">
                                         <i class="fa fa-eye"></i>
                                     </a>
                                   </div>

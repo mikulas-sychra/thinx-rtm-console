@@ -49,16 +49,21 @@ angular.module('RTM').controller('LogviewController', ['$rootScope', '$scope', '
       toastr.error("Error", "WebSocket NOT supported by your Browser!", {timeOut: 5000})
     }
   }
+
+  // Open websocket to for log & notifications transfer
   console.log('##### websocket init')
   openSocket();
 
-  $rootScope.$on("showLogOverlay", function(event, build_id) {
-    console.log('firetwice event');
-    console.log(event);
-    // $event.stopPropagation();
-    // $scope.showLogOverlay(build_id);
-    $rootScope.showLog(build_id);
-  });
+  if (typeof(showLogOverlayListener) == "undefined") {
+    var showLogOverlayListener = $scope.$on('showLogOverlay', function(event, build_id){
+
+      console.log('firetwice event');
+      console.log(event);
+
+        event.stopPropagation();
+        $rootScope.showLog(build_id);
+    });
+  }
 
   $rootScope.wsstailLog = function(build_id) {
     console.log('-- refreshing log: ', build_id)
