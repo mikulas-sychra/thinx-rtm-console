@@ -51,7 +51,7 @@ angular.module('RTM').controller('EnviroController', ['$rootScope', '$scope', 's
     Thinx.addEnviro($scope.enviroName, $scope.enviroValue)
     .done(function(response) {
 
-      if (typeof(response) !== 'undefined') {
+      if (typeof(response) !== "undefined") {
         if (response.success) {
           console.log(response);
           toastr.success('Variable saved.', 'THiNX RTM Console', {timeOut: 5000});

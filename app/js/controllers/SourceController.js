@@ -46,7 +46,7 @@ angular.module('RTM').controller('SourceController', ['$rootScope', '$scope', 's
     Thinx.addSource($scope.sourceUrl, $scope.sourceAlias, $scope.sourceBranch)
     .done(function(response) {
 
-      if (typeof(response) !== 'undefined') {
+      if (typeof(response) !== "undefined") {
         if (response.success) {
           console.log(response);
 
@@ -90,7 +90,7 @@ angular.module('RTM').controller('SourceController', ['$rootScope', '$scope', 's
       try {
         var urlParts = $scope.sourceUrl.replace(/\/\s*$/,'').split('/');
         console.log(urlParts[1]);
-        if (typeof(urlParts[0]) !== 'undefined' && /git/.test(urlParts[0])) {
+        if (typeof(urlParts[0]) !== "undefined" && /git/.test(urlParts[0])) {
           var projectName = urlParts[1].split('.', 1);
           console.log('detected projectname:');
           console.log(projectName[0]);
@@ -98,7 +98,7 @@ angular.module('RTM').controller('SourceController', ['$rootScope', '$scope', 's
       } catch(e) {
         console.log(e);
       }
-      if ((typeof(projectName) !== 'undefined') && (projectName.length > 0) && ($scope.sourceAlias == null || $scope.sourceAlias == '')) {
+      if ((typeof(projectName) !== "undefined") && (projectName.length > 0) && ($scope.sourceAlias == null || $scope.sourceAlias == '')) {
         $scope.sourceAlias = projectName[0];
       }
     }

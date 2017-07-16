@@ -48,7 +48,7 @@ angular.module('RTM').controller('ApikeyController', ['$rootScope', '$scope', 's
 
     Thinx.createApikey(newApikeyAlias)
     .done(function(response) {
-      if (typeof(response) !== 'undefined') {
+      if (typeof(response) !== "undefined") {
         if (response.success) {
           console.log(response.api_key);
           $scope.createButtonVisible = false;

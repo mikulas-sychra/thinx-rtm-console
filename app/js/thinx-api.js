@@ -218,7 +218,7 @@ function init($rootScope, $scope) {
     console.log('buildlog list response:');
     console.log(response)
 
-    if (typeof(response.success !== 'undefined') && response.success) {
+    if (typeof(response.success !== "undefined") && response.success) {
       $rootScope.buildlog = response.builds;
       $scope.$apply()
       console.log('buildlog list:');

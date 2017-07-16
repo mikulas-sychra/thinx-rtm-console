@@ -83,9 +83,9 @@ var PasswordReset = function() {
               console.log(e);
             }
 
-            if (typeof(response) !== 'undefined') {
+            if (typeof(response) !== "undefined") {
               if (response.success) {
-                if (typeof response.redirect !== 'undefined') {
+                if (typeof(response.redirect) !== "undefined") {
                   $('.msg-error', $('.forget-form')).hide();
                   $('.forget-form').hide();
                   $('.msg-success').show();

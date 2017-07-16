@@ -48,7 +48,7 @@ angular.module('RTM').controller('RsakeyController', ['$rootScope', '$scope', 's
     Thinx.addRsakey($scope.rsakeyAlias, $scope.rsakeyValue)
     .done(function(response) {
 
-      if (typeof(response) !== 'undefined') {
+      if (typeof(response) !== "undefined") {
         if (response.success) {
           console.log(response);
           toastr.success('Key saved.', 'THiNX RTM Console', {timeOut: 5000});

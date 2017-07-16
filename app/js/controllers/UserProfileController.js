@@ -24,8 +24,8 @@ angular.module('RTM').controller('UserProfileController', function($rootScope, $
     Thinx.submitProfile($rootScope.profile)
     .done(function(response) {
 
-      if (typeof(response) !== 'undefined') {
-        if (typeof(response.success) !== 'undefined' && response.success) {
+      if (typeof(response) !== "undefined") {
+        if (typeof(response.success) !== "undefined" && response.success) {
 
           console.log(' == Profile update success ==');
           console.log(response);
@@ -95,8 +95,8 @@ angular.module('RTM').controller('UserProfileController', function($rootScope, $
     Thinx.submitProfileAvatar($scope.newAvatar)
     .done(function(response) {
 
-      if (typeof(response) !== 'undefined') {
-        if (typeof(response.success) !== 'undefined' && response.success) {
+      if (typeof(response) !== "undefined") {
+        if (typeof(response.success) !== "undefined" && response.success) {
           console.log(response);
 
           console.log('-- avatar success, refreshing profile --');

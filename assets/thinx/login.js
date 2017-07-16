@@ -66,8 +66,8 @@ var Login = function() {
             console.log('-- login response --');
             var response = JSON.parse(data);
             console.log(response);
-            if (typeof(response) !== 'undefined') {
-              if (typeof(response.redirectURL) !== 'undefined') {
+            if (typeof(response) !== "undefined") {
+              if (typeof(response.redirectURL) !== "undefined") {
                 console.log('-- Succes! Redirecting to "' + response.redirectURL + '"--' );
                 window.location = response.redirectURL;
               } else {
@@ -153,7 +153,7 @@ var Login = function() {
               console.log(e);
             }
 
-            if (typeof(response) !== 'undefined') {
+            if (typeof(response) !== "undefined") {
               if (response.success) {
                 console.log(response.status)
                 if (response.status == 'email_sent') {
@@ -314,7 +314,7 @@ var Login = function() {
               console.log(e);
             }
 
-            if (typeof(response) !== 'undefined') {
+            if (typeof(response) !== "undefined") {
               if (response.success) {
                 console.log(response.status)
                 if (response.status == 'email_sent') {
