@@ -154,7 +154,7 @@ var Login = function() {
             }
 
             if (typeof(response) !== "undefined") {
-              if (response.success) {
+              if (response.success || response.status == 'email_sent') {
                 console.log(response.status)
                 if (response.status == 'email_sent') {
                   $('.msg-error', $('.forget-form')).hide();

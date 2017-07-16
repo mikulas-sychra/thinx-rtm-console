@@ -85,14 +85,13 @@ var PasswordReset = function() {
 
             if (typeof(response) !== "undefined") {
               if (response.success) {
-                if (typeof(response.redirect) !== "undefined") {
+                if (response.status == "email_sent") {
                   $('.msg-error', $('.forget-form')).hide();
                   $('.forget-form').hide();
                   $('.msg-success').show();
 
-                  console.log('--Redirecting to "' + response.redirect + '"--' );
-                  $('.login-button').attr('href', response.redirect);
-                  window.location = response.redirect;
+                  console.log('--Redirecting to login--' );
+                  $('.login-button').attr('href', '/');
                 }
               } else {
                 console.log(response.status)
