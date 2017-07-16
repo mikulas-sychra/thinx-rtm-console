@@ -359,7 +359,7 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
   .state('enviro', {
     url: "/enviro",
     templateUrl: "views/enviro.html",
-    data: {pageTitle: 'Environment Variables Management'},
+    data: {pageTitle: 'Environment Variables'},
     controller: "EnviroController",
     resolve: {
       deps: ['$ocLazyLoad', function($ocLazyLoad) {
