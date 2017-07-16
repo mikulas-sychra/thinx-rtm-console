@@ -54,8 +54,8 @@ angular.module('RTM').controller('LogviewController', ['$rootScope', '$scope', '
   console.log('##### websocket init')
   openSocket();
 
-  if (typeof(showLogOverlayListener) == "undefined") {
-    var showLogOverlayListener = $scope.$on('showLogOverlay', function(event, build_id){
+  if (typeof($rootScope.showLogOverlayListener) == "undefined") {
+    $rootScope.showLogOverlayListener = $rootScope.$on('showLogOverlay', function(event, build_id){
 
       console.log('firetwice event');
       console.log(event);
