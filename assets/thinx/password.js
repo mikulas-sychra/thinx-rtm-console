@@ -92,7 +92,7 @@ var PasswordReset = function() {
 
                   console.log('--Redirecting to "' + response.redirect + '"--' );
                   $('.login-button').attr('href', response.redirect);
-                  // window.location = response.redirect;
+                  window.location = response.redirect;
                 }
               } else {
                 console.log(response.status)
