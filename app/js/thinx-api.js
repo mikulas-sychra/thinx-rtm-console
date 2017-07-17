@@ -152,7 +152,7 @@ function init($rootScope, $scope) {
     });
     // $rootScope.sources = response.sources;
 
-    $scope.$apply();
+    $rootScope.$apply();
 
     console.log('sources:');
     console.log($rootScope.sources);

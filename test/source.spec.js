@@ -33,8 +33,9 @@ describe('basic ui tests', function() {
     element(by.buttonText("Submit")).click();
 
     // wait for modal close
-    browser.sleep(4000);
     browser.waitForAngular();
+    browser.sleep(5000);
+
   });
 
   it('should find new source on page', function() {
