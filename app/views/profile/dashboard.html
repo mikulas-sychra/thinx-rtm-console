@@ -1,6 +1,22 @@
 <div class="row">
   <div class="col-md-12">
-      Co sem?
+
+      <div class="portlet light">
+          <div class="portlet-title ">
+              <div class="caption caption-md">
+                  <i class="icon-globe theme-font hide"></i>
+                  <span class="caption-subject font-blue-madison bold uppercase">Profile</span>
+              </div>
+          </div>
+          <div class="portlet-body">
+              <div>
+                <h3>{{$root.profile.info.first_name}} {{$root.profile.info.last_name}} ({{$root.profile.username}})</h2>
+                <small>Owner ID</small><br>
+                <small>{{$root.profile.owner}}</small>
+              </div>
+          </div>
+      </div>
+
   </div>
 </div>
 
