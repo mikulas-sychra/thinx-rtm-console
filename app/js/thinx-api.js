@@ -117,8 +117,8 @@ function init($rootScope, $scope) {
   console.log($rootScope);
   console.log($scope);
 
-  if (typeof(xhrFailedListener) == "undefined") {
-    var xhrFailedListener = $rootScope.$on('xhrFailed', function(event, error){
+  if (typeof($rootScope.xhrFailedListener) == "undefined") {
+        $rootScope.xhrFailedListener = $rootScope.$on('xhrFailed', function(event, error){
         event.stopPropagation();
         xhrFailed(error);
     });
@@ -133,8 +133,8 @@ function init($rootScope, $scope) {
     }
   }
 
-  if (typeof(updateSourcesListener) == "undefined") {
-    var updateSourcesListener = $rootScope.$on('updateSources', function(event, data){
+  if (typeof($rootScope.updateSourcesListener) == "undefined") {
+        $rootScope.updateSourcesListener = $rootScope.$on('updateSources', function(event, data){
         event.stopPropagation();
         updateSources(data);
     });
