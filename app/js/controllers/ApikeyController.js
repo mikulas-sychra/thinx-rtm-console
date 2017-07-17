@@ -93,11 +93,12 @@ angular.module('RTM').controller('ApikeyController', ['$rootScope', '$scope', 's
       if (data.success) {
         console.log('Success:', data);
 
+        $scope.selectedItems = [];
         Thinx.apikeyList()
         .done( function(data) {
 
           toastr.success('Deleted.', 'THiNX RTM Console', {timeOut: 5000})
-          updateKeys(data)
+          updateKeys(data);
         })
         .fail(error => console.log('Error:', error));
 

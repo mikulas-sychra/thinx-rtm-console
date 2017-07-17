@@ -112,6 +112,7 @@ angular.module('RTM').controller('SourceController', ['$rootScope', '$scope', 's
       if (data.success) {
         console.log('Success:', data);
 
+        $scope.selectedItems = [];
         Thinx.sourceList()
         .done( function(data) {
           $scope.$emit("updateSources", data);
