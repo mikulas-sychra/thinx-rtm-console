@@ -43,7 +43,7 @@ describe('basic ui tests', function() {
   });
 
   it('should find new apikey on page', function() {
-    var apikeys = element.all(by.css('.row-item-title')).map(function (elm) {
+    var apikeys = element.all(by.css('.apikey-alias')).map(function (elm) {
       return elm.getText();
     });
 
@@ -59,7 +59,7 @@ describe('basic ui tests', function() {
     checkitems.then(function (results) {
       console.log("rows found: ", results.length);
       for (var i in results) {
-        var resultAlias = results[i].element(by.css('div:first-child'));
+        var resultAlias = results[i].element(by.css('.apikey-alias'));
         resultAlias.getText().then(function (text) {
           if (text == newApiAlias) {
             console.log("selecting element for removal: ", text);

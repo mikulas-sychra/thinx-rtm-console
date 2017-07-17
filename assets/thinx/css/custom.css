@@ -383,3 +383,12 @@
 .btn-actions .btn {
   border-radius: 4px !important;
 }
+
+.apikey-alias {
+
+}
+.apikey-icon {
+  font-size: .8em;
+  margin-left: 5px;
+  color: rgba(91, 192, 222, 0.63)
+}

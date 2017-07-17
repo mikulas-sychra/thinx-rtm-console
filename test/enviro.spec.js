@@ -38,7 +38,6 @@ describe('basic ui tests', function() {
   });
 
   it('should find new enviro on page', function() {
-    // find apikey
     var enviros = element.all(by.css('.row-item-title')).map(function (elm) {
       return elm.getText();
     });

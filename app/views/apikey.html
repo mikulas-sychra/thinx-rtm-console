@@ -63,7 +63,7 @@
           <table class="table table-hover table-light">
             <tr ng-repeat="apikey in $root.apikeys | propsFilter:{hash:searchText,alias:searchText}" ng-click="checkItem(apikey.hash)" ng-class="selectedItems.indexOf(apikey.hash) > -1 ? 'selected-row' : 'default-row'">
               <td>
-                <div class="row-item-title-small"><span class="key-label monospace-info"><i class="fa fa-key" style="font-size: .8em; margin-left: 5px; color: rgba(91, 192, 222, 0.63)"></i> {{apikey.name | limitTo : 10 : apikey.name.length - 10 }}</span>  &nbsp; {{apikey.alias}}</div>
+                <div class="row-item-title-small"><span class="key-label monospace-info"><i class="fa fa-key apikey-icon"></i> {{apikey.name | limitTo : 10 : apikey.name.length - 10 }}</span>  &nbsp; <span class="apikey-alias">{{apikey.alias}}<span></div>
               </td>
             </tr>
           </table>
