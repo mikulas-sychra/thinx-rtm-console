@@ -62,6 +62,7 @@ describe('basic ui tests', function() {
             results[i].click();
             browser.sleep(1000);
             browser.executeScript('window.scrollTo(0,0);').then(function() {
+              element(By.css("a[class='btn red btn-outline']")).click();
               element(by.css('[ng-click*=revokeSources]')).click();
               browser.sleep(1000);
             });
