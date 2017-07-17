@@ -308,7 +308,8 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
           files: [
             '../assets/global/plugins/clipboardjs/clipboard.js',
             'js/thinx-api.js',
-            'js/controllers/ApikeyController.js'
+            'js/controllers/ApikeyController.js',
+            'js/controllers/LogviewController.js'
           ]
         });
       }]
@@ -328,7 +329,8 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
           insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
           files: [
             'js/thinx-api.js',
-            'js/controllers/SourceController.js'
+            'js/controllers/SourceController.js',
+            'js/controllers/LogviewController.js'
           ]
         });
       }]
@@ -348,7 +350,8 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
           insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
           files: [
             'js/thinx-api.js',
-            'js/controllers/RsakeyController.js'
+            'js/controllers/RsakeyController.js',
+            'js/controllers/LogviewController.js'
           ]
         });
       }]
@@ -368,7 +371,8 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
           insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
           files: [
             'js/thinx-api.js',
-            'js/controllers/EnviroController.js'
+            'js/controllers/EnviroController.js',
+            'js/controllers/LogviewController.js'
           ]
         });
       }]
@@ -422,7 +426,8 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
             '../assets/thinx/js/profile.min.js',
 
             'js/thinx-api.js',
-            'js/controllers/UserProfileController.js'
+            'js/controllers/UserProfileController.js',
+            'js/controllers/LogviewController.js'
           ]
         });
       }]

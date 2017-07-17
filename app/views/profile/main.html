@@ -62,3 +62,17 @@
     </div>
 </div>
 <!-- END PAGE CONTENT-->
+
+<!-- START PAGE LOG OVERLAY -->
+<div ng-controller="LogviewController" class="log-view-overlay-conatiner" style="display:none">
+  <div class="log-view-overlay-controls">
+    <a ng-click="wsstailLog($root.modalBuildId)" title="Refresh status"><i class="icon-refresh"></i></a>
+    <a ng-click="switchWrap()" title="Toggle Word Wrap"><i class="icon-frame"></i></a>
+    <a ng-click="hideLogOverlay($root.modalBuildId)" title="Close Log"><i class="icon-close"></i></a>
+  </div>
+  <div class="log-view-overlay log-view-body force-word-wrap" scroll-glue>
+    <div class="overlay-title">Build Log <span>{{$root.modalBuildId}}</span></div>
+    {{$root.logdata[$root.modalBuildId]}}
+  </div>
+</div>
+<!-- END PAGE LOG OVERLAY -->
