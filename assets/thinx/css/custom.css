@@ -132,7 +132,7 @@
   font-family: 'FontAwesome';
   text-align: center;
   font-size: 16px;
-  color: #AAAAAA;
+  color: #aaaaaa;
   position: absolute;
   display: inline-block;
   animation-name: fadeIn;
@@ -167,10 +167,10 @@
   font-size: 1.3em;
 }
 .row-item-title-small {
-	font-size : 1.1em;
+  font-size: 1.1em;
 }
 .row-item-title-small td {
-	padding: 5px;
+  padding: 5px;
 }
 .device-lastseen-label {
   background-color: rgba(38, 194, 129, .08);
