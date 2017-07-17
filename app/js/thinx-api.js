@@ -88,8 +88,8 @@ var Thinx = {
   submitProfileSecurity: function (security) {
     return submitProfileSecurity(security);
   },
-  getAuditLog: function () {
-    return getAuditLog();
+  getAuditHistory: function () {
+    return getAuditHistory();
   },
   getBuildLog: function (buildId) {
     return getBuildLog(buildId);
@@ -97,8 +97,8 @@ var Thinx = {
   tailBuildLog: function (buildId) {
     return tailBuildLog(buildId);
   },
-  buildLogList: function () {
-    return buildLogList();
+  getBuildHistory: function () {
+    return getBuildHistory();
   },
   getStats: function () {
     return getStats();
@@ -114,8 +114,8 @@ var Thinx = {
 function init($rootScope, $scope) {
 
   console.log('THiNX API INIT');
-  console.log($rootScope);
-  console.log($scope);
+  console.log('$rootScope', $rootScope);
+  console.log('$scope', $scope);
 
   if (typeof($rootScope.xhrFailedListener) == "undefined") {
         $rootScope.xhrFailedListener = $rootScope.$on('xhrFailed', function(event, error){
@@ -141,21 +141,27 @@ function init($rootScope, $scope) {
   }
 
   function updateSources(data) {
-    console.log('-- processing sources --');
     var response = JSON.parse(data);
-    console.log(response);
+    console.log('sources response:', response);
 
-    $rootScope.sources = [];
-    $.each(response.sources, function(sourceId, value) {
-      value.sourceId = sourceId;
-      $rootScope.sources.push(value);
-    });
-    // $rootScope.sources = response.sources;
+    if (typeof(response.success !== "undefined") && response.success) {
 
-    $rootScope.$apply();
+      $rootScope.sources = [];
 
-    console.log('sources:');
-    console.log($rootScope.sources);
+      $.each(response.sources, function(sourceId, value) {
+        value.sourceId = sourceId;
+        $rootScope.sources.push(value);
+      });
+      // $rootScope.sources = response.sources;
+
+      console.log('sources:');
+      console.log($rootScope.sources);
+      console.log('refreshing view...');
+      $rootScope.$apply()
+
+    } else {
+      console.log('auditHistory fetch error.') ;
+    }
   }
 
   // =================================================
@@ -174,8 +180,8 @@ function init($rootScope, $scope) {
   function updateProfile(data) {
     if (typeof(data) !== "undefined") {
       var response = JSON.parse(data);
-      console.log('-- processing profile ---');
-      console.log(response);
+
+      console.log('profile response:', response);
 
       // validate response and refresh view
       if (typeof(response) !== "undefined" && typeof(response.success) !== "undefined" && response.success) {
@@ -192,9 +198,6 @@ function init($rootScope, $scope) {
           profile.info['goals'] = $rootScope.profile.info.goals;
         }
 
-        console.log('profile response');
-        console.log(profile);
-
         $rootScope.profile = profile;
       }
       $scope.$apply();
@@ -203,28 +206,30 @@ function init($rootScope, $scope) {
     }
   }
 
-  function updateAuditLog(data) {
+  function updateAuditHistory(data) {
     var response = JSON.parse(data);
-
-    $rootScope.auditlog = response.logs;
-    $scope.$apply()
-
-    console.log('auditlog:');
-    console.log($rootScope.auditlog);
-  }
-
-  function updateBuildLogList(data) {
-    var response = JSON.parse(data);
-    console.log('buildlog list response:');
-    console.log(response)
+    console.log('auditHistory response:', response);
 
     if (typeof(response.success !== "undefined") && response.success) {
-      $rootScope.buildlog = response.builds;
+      $rootScope.auditlog = response.logs;
+      console.log('refreshing view...');
       $scope.$apply()
-      console.log('buildlog list:');
-      console.log($rootScope.buildlog);
     } else {
-      console.log('Buildlog list fetch error.') ;
+      console.log('auditHistory fetch error.') ;
+    }
+  }
+
+  function updateBuildHistory(data) {
+    var response = JSON.parse(data);
+    console.log('buildHistory list response:', response);
+
+    if (typeof(response.success !== "undefined") && response.success) {
+      console.log('buildHistory list length:', response.builds.length);
+      $rootScope.buildHistory = response.builds;
+      console.log('refreshing view...');
+      $scope.$apply()
+    } else {
+      console.log('buildHistory fetch error.') ;
     }
   }
 
@@ -256,15 +261,15 @@ function init($rootScope, $scope) {
   })
   .fail(error => $scope.$emit("xhrFailed", error));
 
-  Thinx.getAuditLog()
+  Thinx.getAuditHistory()
   .done(function(data) {
-    updateAuditLog(data);
+    updateAuditHistory(data);
   })
   .fail(error => $scope.$emit("xhrFailed", error));
 
-  Thinx.buildLogList()
+  Thinx.getBuildHistory()
   .done(function(data) {
-    updateBuildLogList(data);
+    updateBuildHistory(data);
   })
   .fail(error => $scope.$emit("xhrFailed", error));
 
@@ -303,15 +308,6 @@ function submitDevice(deviceId, deviceAlias, devicePlatform) {
     url: urlBase + '/device/edit',
     type: 'POST',
     data: data,
-    dataType: 'json'
-  });
-}
-
-function revokeDevice(deviceUdid) {
-  return $.ajax({
-    url: urlBase + '/device/revoke',
-    type: 'POST',
-    data: JSON.stringify({ udid: deviceUdid }),
     dataType: 'json'
   });
 }
@@ -580,7 +576,7 @@ function submitProfileAvatar(avatar) {
 
 // Audit log
 
-function getAuditLog() {
+function getAuditHistory() {
   return $.ajax({
     url: urlBase + '/user/logs/audit',
     type: 'GET'
@@ -589,7 +585,7 @@ function getAuditLog() {
 
 // Build log
 
-function buildLogList() {
+function getBuildHistory() {
   return $.ajax({
     url: urlBase + '/user/logs/build/list',
     type: 'GET'

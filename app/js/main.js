@@ -75,7 +75,7 @@ RTM.factory('settings', ['$rootScope', function($rootScope) {
   $rootScope.rsakeys = [];
   $rootScope.apikeys = [];
   $rootScope.enviros = [];
-  $rootScope.buildlog = [];
+  $rootScope.buildHistory = [];
   $rootScope.auditlog = [];
 
   $rootScope.logdata = {
