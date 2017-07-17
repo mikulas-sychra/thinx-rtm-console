@@ -117,9 +117,9 @@ angular.module('RTM').controller('EnviroController', ['$rootScope', '$scope', 's
     console.log('-- processing selected items --');
     console.log($scope.selectedItems);
 
-    var selectedToRemove = $scope.selectedItems.slice();
-    if (selectedToRemove.length > 0) {
-      revokeEnviros(selectedToRemove);
+    var selectedToRevoke = $scope.selectedItems.slice();
+    if (selectedToRevoke.length > 0) {
+      revokeEnviros(selectedToRevoke);
     } else {
       toastr.warning('Nothing selected.', 'THiNX RTM Console', {timeOut: 1000})
     }

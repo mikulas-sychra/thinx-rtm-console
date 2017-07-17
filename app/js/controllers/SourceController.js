@@ -133,9 +133,9 @@ angular.module('RTM').controller('SourceController', ['$rootScope', '$scope', 's
 
   $scope.revokeSources = function() {
     console.log('-- processing selected items --');
-    var selectedToRemove = $scope.selectedItems.slice();
-    if (selectedToRemove.length > 0) {
-      revokeSources(selectedToRemove);
+    var selectedToRevoke = $scope.selectedItems.slice();
+    if (selectedToRevoke.length > 0) {
+      revokeSources(selectedToRevoke);
     } else {
       toastr.warning('Nothing selected.', 'THiNX RTM Console', {timeOut: 1000})
     }

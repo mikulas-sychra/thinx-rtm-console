@@ -117,9 +117,9 @@ angular.module('RTM').controller('ApikeyController', ['$rootScope', '$scope', 's
     console.log('-- processing selected items --');
     console.log($scope.selectedItems);
 
-    var selectedToRemove = $scope.selectedItems.slice();
-    if (selectedToRemove.length > 0) {
-      revokeApikeys(selectedToRemove);
+    var selectedToRevoke = $scope.selectedItems.slice();
+    if (selectedToRevoke.length > 0) {
+      revokeApikeys(selectedToRevoke);
     } else {
       toastr.info('Nothing selected.', 'THiNX RTM Console', {timeOut: 1000})
     }
