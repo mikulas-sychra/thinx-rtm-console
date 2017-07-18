@@ -9,7 +9,6 @@
 <!-- END PAGE BREADCRUMB -->
 <!-- BEGIN MAIN CONTENT -->
 <div>
-
   <!-- BEGIN DASHBOARD STATS -->
   <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -70,14 +69,14 @@
     </div>
   </div>
 
-  <!-- BEGIN DASHBOARD STATS -->
+  <!-- BEGIN DEVICES -->
   <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <!-- BEGIN PORTLET-->
       <div class="portlet light bordered ">
         <div class="portlet-title">
           <div class="caption caption-md">
-            <i class="icon-bar-chart font-red"></i>
+            <i class="icon-bulb font-red"></i>
             <span class="caption-subject font-red bold uppercase">Devices</span>
           </div>
           <div class="actions">
@@ -104,7 +103,6 @@
         <div class="portlet-body">
           <div class="row">
             <div class="col-xs-6">
-              <a href="#" class="btn green-haze btn-outline" ng-click="resetModal()" data-target="#pageModal" data-toggle="modal">Create API Key</a>
               <div class="btn-group">
                 <a ng-show="selectedItems.length > 0" class="btn red btn-outline" href="javascript:;" data-toggle="dropdown" aria-expanded="false">
                   <i class="fa fa-bars"></i> Actions
@@ -118,8 +116,8 @@
             </div>
             <div class="col-xs-6 text-right">
               <span class="input-icon right xtop-list-search">
-                  <i class="icon-magnifier"></i>
-                  <input type="text" class="form-control form-control-solid" ng-model="searchText" placeholder="Search...">
+                <i class="icon-magnifier"></i>
+                <input type="text" class="form-control form-control-solid" ng-model="searchText" placeholder="Search...">
               </span>
             </div>
           </div>
@@ -190,7 +188,50 @@
       <!-- END PORTLET-->
     </div>
   </div>
+  <!-- END DEVICES -->
 
+  <!-- BEGIN DASHBOARD STATS -->
+  <div class="row" ng-hide`="$root.profile.info.goals.includes('update')">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <!-- BEGIN PORTLET-->
+      <div class="portlet light bordered ">
+        <div class="portlet-title">
+          <div class="caption caption-md">
+            <i class="icon-trophy font-red"></i>
+            <span class="caption-subject font-red bold uppercase">Progress</span>
+          </div>
+        </div>
+        <div class="portlet-body">
+          <div class="row user-journey">
+            <div class="col-xs-3 text-center" ng-class="$root.profile.info.goals.includes('apikey') ? 'journey-success' : 'journey-info'">
+              <span class="user-journey-bar1"></span>
+              <i class="fa fa-circle"></i><br>
+              PREPARE
+            </div>
+            <div class="col-xs-3 text-center" ng-class="$root.profile.info.goals.includes('enroll') ? 'journey-success' : 'journey-info'">
+              <span class="user-journey-bar2"></span>
+              <i class="fa fa-circle"></i><br>
+              ENROLL
+            </div>
+            <div class="col-xs-3 text-center" ng-class="$root.profile.info.goals.includes('build') ? 'journey-success' : 'journey-info'">
+              <span class="user-journey-bar3"></span>
+              <i class="fa fa-circle"></i><br>
+              BUILD
+            </div>
+            <div class="col-xs-3 text-center" ng-class="$root.profile.info.goals.includes('update') ? 'journey-success' : 'journey-info'">
+              <i class="fa fa-circle"></i><br>
+              UPDATE
+            </div>
+          </div>
+        </div>
+        {{$root.profile.info.goals | json}}
+      </div>
+      <!-- END PORTLET-->
+    </div>
+  </div>
+  <!-- END JOURNEY -->
+
+  <!-- START STATS -->
   <div class="row">
     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
       <div class="dashboard-stat green-steel">
@@ -249,6 +290,7 @@
       </div>
     </div>
   </div>
+  <!-- END STATS -->
 
   <!-- BEGIN FORM-->
   <form action="#" class="form-horizontal form-bordered" name="deviceModalForm">
@@ -264,16 +306,16 @@
             <div class="form-group">
               <label class="control-label col-md-3">Platform</label>
               <div class="col-md-9">
-                  <ui-select ng-model="devicePlatform" theme="bootstrap" title="Choose platfourm">
-                    <ui-select-match placeholder="Select platform from the list...">
-                      <img ng-src="../assets/thinx/img/external/{{$select.selected.id}}_logo_200.png" class="platform-icon-sm pull-left {{$select.selected.id}}-platform-color" alt="{{$select.selected.id}} icon" />
-                      {{$select.selected.value.name}}
-                    </ui-select-match>
-                    <ui-select-choices repeat="platform.id as (id, platform) in $root.platforms | filter:$select.search">
-                      <img ng-src="../assets/thinx/img/external/{{platform.id}}_logo_200.png" class="platform-icon pull-left {{platform.id}}-platform-color" alt="{{platform.id}} icon" />
-                      <div class="platform-title" ng-bind-html="platform.value.name | highlight: $select.search"></div><br>
-                    </ui-select-choices>
-                  </ui-select>
+                <ui-select ng-model="devicePlatform" theme="bootstrap" title="Choose platfourm">
+                  <ui-select-match placeholder="Select platform from the list...">
+                    <img ng-src="../assets/thinx/img/external/{{$select.selected.id}}_logo_200.png" class="platform-icon-sm pull-left {{$select.selected.id}}-platform-color" alt="{{$select.selected.id}} icon" />
+                    {{$select.selected.value.name}}
+                  </ui-select-match>
+                  <ui-select-choices repeat="platform.id as (id, platform) in $root.platforms | filter:$select.search">
+                    <img ng-src="../assets/thinx/img/external/{{platform.id}}_logo_200.png" class="platform-icon pull-left {{platform.id}}-platform-color" alt="{{platform.id}} icon" />
+                    <div class="platform-title" ng-bind-html="platform.value.name | highlight: $select.search"></div><br>
+                  </ui-select-choices>
+                </ui-select>
               </div>
             </div>
             <div class="form-group">
@@ -318,7 +360,7 @@
   </form>
   <!-- END FORM-->
 
-  <!-- BEGIN MODAL LOG VIEW -->
+  <!-- BEGIN MODAL TRANSFER -->
   <div id="transferModal" class="modal container fade" role="dialog" aria-hidden="true">
     <div class="modal-dialog transfer-modal-dialog">
       <div class="modal-content">
@@ -343,8 +385,9 @@
       </div>
     </div>
   </div>
-  <!-- END MODAL LOG VIEW -->
+  <!-- END MODAL TRANSFER -->
 
+  <!-- START GOALS -->
   <div class="note note-info" ng-hide="$root.profile.info.goals.includes('apikey')">
     <h3>1. API Key <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('apikey'); $emit('saveProfile');"></span></h3>
     <a ui-sref="apikey">Create your first API Key</a>
@@ -391,14 +434,16 @@
       Ale na to musíme dořešit HTTPS.
     </p>
   </div>
+  <!-- END GOALS -->
 
+  <!-- START SUMMARY -->
   <div class="row">
     <div class="col-md-12 col-sm-12">
       <!-- BEGIN PORTLET-->
       <div class="portlet light bordered ">
         <div class="portlet-title">
           <div class="caption caption-md">
-            <i class="icon-settings font-green"></i>
+            <i class="icon-graph font-green"></i>
             <span class="caption-subject font-green bold uppercase">Summary</span>
           </div>
           <div class="actions">
@@ -441,26 +486,27 @@
       </div>
       <!-- END PORTLET-->
     </div>
-    <!-- END DASHBOARD STATS -->
   </div>
-  <!-- END MAIN CONTENT -->
+  <!-- END SUMMARY -->
+</div>
+<!-- END MAIN CONTENT -->
 
-  <!-- START PAGE LOG OVERLAY -->
-  <div ng-controller="LogviewController" class="log-view-overlay-conatiner" style="display:none">
-    <div class="log-view-overlay-controls">
-      <a ng-click="wsstailLog($root.modalBuildId)" title="Refresh status"><i class="icon-refresh"></i></a>
-      <a ng-click="switchWrap()" title="Toggle Word Wrap"><i class="icon-frame"></i></a>
-      <a ng-click="hideLogOverlay($root.modalBuildId)" title="Close Log"><i class="icon-close"></i></a>
-    </div>
-    <div class="log-view-overlay log-view-body force-word-wrap" scroll-glue>
-      <div class="overlay-title">Build Log <span>{{$root.modalBuildId}}</span></div>
-      {{$root.logdata[$root.modalBuildId]}}
-    </div>
+<!-- START PAGE LOG OVERLAY -->
+<div ng-controller="LogviewController" class="log-view-overlay-conatiner" style="display:none">
+  <div class="log-view-overlay-controls">
+    <a ng-click="wsstailLog($root.modalBuildId)" title="Refresh status"><i class="icon-refresh"></i></a>
+    <a ng-click="switchWrap()" title="Toggle Word Wrap"><i class="icon-frame"></i></a>
+    <a ng-click="hideLogOverlay($root.modalBuildId)" title="Close Log"><i class="icon-close"></i></a>
   </div>
-  <!-- END PAGE LOG OVERLAY -->
+  <div class="log-view-overlay log-view-body force-word-wrap" scroll-glue>
+    <div class="overlay-title">Build Log <span>{{$root.modalBuildId}}</span></div>
+    {{$root.logdata[$root.modalBuildId]}}
+  </div>
+</div>
+<!-- END PAGE LOG OVERLAY -->
 
-  <!-- BEGIN MAIN JS & CSS -->
-  <script>
-  Dashboard.init();
-  </script>
-  <!-- BEGIN MAIN JS & CSS
+<!-- BEGIN MAIN JS & CSS -->
+<script>
+Dashboard.init();
+</script>
+<!-- BEGIN MAIN JS & CSS

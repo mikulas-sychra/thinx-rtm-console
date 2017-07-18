@@ -392,3 +392,40 @@
   margin-left: 5px;
   color: rgba(91, 192, 222, 0.63)
 }
+
+.user-journey {
+  position: relative;;
+}
+
+.user-journey i {
+  font-size: 5em;
+}
+
+.journey-green-haze {
+  color: #59aea2;
+}
+
+.journey-info {
+  color: #e3f5f3;
+}
+.journey-info span {
+  background-color: #e3f5f3;
+  width: 0px;
+}
+
+.journey-success {
+  color: #26c281;
+}
+.journey-success span {
+  background-color: #26c281;
+  width: 100%;
+}
+
+.user-journey-bar1, .user-journey-bar2, .user-journey-bar3, .user-journey-bar4 {
+  display: inline-block;
+  width: 0px;
+  height: 8px;
+  position: absolute;
+  top: 3px;
+  left: 50%;
+}
