@@ -85,14 +85,12 @@ var PasswordReset = function() {
 
             if (typeof(response) !== "undefined") {
               if (response.success) {
-                if (response.status == "email_sent") {
                   $('.msg-error', $('.forget-form')).hide();
                   $('.forget-form').hide();
                   $('.msg-success').show();
 
-                  console.log('--Redirecting to login--' );
+                  console.log('--Continue to login--' );
                   $('.login-button').attr('href', '/');
-                }
               } else {
                 console.log(response.status)
                 if (response.status == 'user_not_found') {
