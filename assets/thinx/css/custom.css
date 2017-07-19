@@ -151,7 +151,6 @@
 .selected-row td {
   /*margin-left: 23px;*/
   padding-left: 23px !important;
-
 }
 .btn-icon-dark i {
   color: #333333;
@@ -453,4 +452,29 @@
   /*border-radius: 100px;*/
   /*background-color: #26c281;*/
   /*background-position: center center;*/
+}
+
+.device-block {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.selected-block::before {
+  content: '\f00c';
+  font-family: 'FontAwesome';
+  text-align: center;
+  font-size: 16px;
+  color: #aaaaaa;
+  position: absolute;
+  display: inline-block;
+  animation-name: fadeIn;
+  animation-duration: .5s;
+  width: 16px;
+  height: 16px;
+  margin-top: -0px;
+  margin-left: -23px;
+}
+.selected-block {
+  cursor: pointer;
+  padding-left: 23px !important;
 }
