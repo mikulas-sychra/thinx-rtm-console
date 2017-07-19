@@ -21,6 +21,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
       updateDevices(data);
       // save user-spcific goal achievement
       if ($rootScope.devices.length > 0 && !$rootScope.profile.info.goals.includes('enroll')) {
+        // TODO enable
         // $rootScope.profile.info.goals.push('enroll');
         // $rootScope.profile.info.goals.push('enroll-setup');
         $scope.$emit("saveProfile");
@@ -433,12 +434,16 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
   $scope.journeyClass = function(goal) {
     if ($rootScope.profile.info.goals.includes(goal)) {
       return 'journey-success';
+
     } else if ((goal == 'apikey') && (!$rootScope.profile.info.goals.includes('rsakey')) ) {
       return 'journey-active';
+
     } else if ((goal == 'enroll') && ($rootScope.profile.info.goals.includes('apikey') && (!$rootScope.profile.info.goals.includes('build'))) ) {
       return 'journey-active';
+
     } else if ((goal == 'build') && ($rootScope.profile.info.goals.includes('enroll') && (!$rootScope.profile.info.goals.includes('update'))) ) {
       return 'journey-active';
+
     } else {
       return 'journey-default';
     }

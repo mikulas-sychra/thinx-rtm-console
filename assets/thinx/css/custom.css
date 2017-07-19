@@ -395,10 +395,11 @@
 
 .user-journey {
   position: relative;
+  margin-bottom: 20px;
 }
 
 .user-journey i {
-  font-size: 5em;
+  font-size: 3em;
   margin-top: 10px;
   position: relative;
   z-index: 1;
@@ -408,8 +409,12 @@
   color: #00f383;
 }
 .journey-active span {
-  color: #00f383;
   width: 100%;
+  background: #26c281;
+  background: -moz-linear-gradient(left, #26c281 0%, #00f383 100%);
+  background: -webkit-linear-gradient(left, #26c281 0%,#00f383 100%);
+  background: linear-gradient(to right, #26c281 0%,#00f383 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#26c281', endColorstr='#00f383',GradientType=1 );
 }
 
 .journey-default {
@@ -430,9 +435,22 @@
 
 .user-journey-bar1, .user-journey-bar2, .user-journey-bar3, .user-journey-bar4 {
   display: inline-block;
-  width: 0px;
+  width: 100%;
   height: 8px;
   position: absolute;
   top: 13px;
   left: -50%;
+}
+
+.progress-medal {
+  display: inline-block;
+  width: 200px;
+  height: 200px;
+  background-image: url(/assets/thinx/img/goals/medal.png);
+  margin-top: 20px;
+
+  /*border: 10px solid #e3f5f3;*/
+  /*border-radius: 100px;*/
+  /*background-color: #26c281;*/
+  /*background-position: center center;*/
 }

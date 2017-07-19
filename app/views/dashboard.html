@@ -191,7 +191,7 @@
   <!-- END DEVICES -->
 
   <!-- BEGIN DASHBOARD STATS -->
-  <div class="row" ng-hide`="$root.profile.info.goals.includes('update')">
+  <div class="row" ng-hide="$root.profile.info.goals.includes('master')">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <!-- BEGIN PORTLET-->
       <div class="portlet light bordered ">
@@ -204,27 +204,34 @@
         <div class="portlet-body">
           <div class="row user-journey">
             <div class="col-xs-3 text-center " ng-class="journeyClass('apikey')">
-              <i class="fa fa-circle"></i><br>
+              <i class="fa fa-circle"></i><br><br>
               PREPARE
             </div>
             <div class="col-xs-3 text-center" ng-class="journeyClass('enroll')">
               <span class="user-journey-bar1"></span>
-              <i class="fa fa-circle"></i><br>
+              <i class="fa fa-circle"></i><br><br>
               ENROLL
             </div>
             <div class="col-xs-3 text-center" ng-class="journeyClass('build')">
               <span class="user-journey-bar2"></span>
-              <i class="fa fa-circle"></i><br>
+              <i class="fa fa-circle"></i><br><br>
               BUILD
             </div>
             <div class="col-xs-3 text-center" ng-class="journeyClass('update')">
               <span class="user-journey-bar3"></span>
-              <i class="fa fa-circle"></i><br>
+              <i class="fa fa-circle"></i><br><br>
               UPDATE
             </div>
           </div>
+          <div ng-show="$root.profile.info.goals.includes('update')" class="text-center">
+            <span class="progress-medal"></span>
+            <h2>Congratulations!</h2>
+            <p>You have mastered THiNX</p>
+            <br>
+            <button class="btn green-haze btn-outline btn-lg" ng-click="$root.profile.info.goals.push('master'); $emit('saveProfile');">Dismiss</button>
+            <br><br>
+          </div>
         </div>
-        {{$root.profile.info.goals | json}}
       </div>
       <!-- END PORTLET-->
     </div>
