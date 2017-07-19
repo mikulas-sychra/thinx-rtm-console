@@ -7,14 +7,21 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     .done(function(data) {
       updateStats(data);
     })
-    .fail(error => console.log('getStats Error:', error));
+    .fail(error => $scope.$emit("xhrFailed", error));
 
     Thinx.sourceList()
     .done(function(data) {
       console.log('+++ updateSources ');
       $scope.$emit("updateSources", data);
     })
-    .fail(error => console.log('sourceList Error:', error));
+    .fail(error => $scope.$emit("xhrFailed", error));
+
+    Thinx.apikeyList()
+    .done( function(data) {
+      console.log('+++ updateApikeys ');
+      $scope.$emit("updateApikeys", data);
+    })
+    .fail(error => $scope.$emit("xhrFailed", error));
 
     Thinx.deviceList()
     .done(function(data) {
@@ -27,14 +34,17 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
         $scope.$emit("saveProfile");
       };
     })
-    .fail(error => console.log('deviceList Error:', error));
+    .fail(error => $scope.$emit("xhrFailed", error));
 
     // $scope.hideLogOverlay();
 
-    $scope.deviceIndex = null;
-    $scope.deviceUdid = null;
-    $scope.deviceAlias = null;
-    $scope.devicePlatform = null;
+    $scope.deviceForm = {};
+    $scope.deviceForm.index = null;
+    $scope.deviceForm.udid = null;
+    $scope.deviceForm.alias = null;
+    $scope.deviceForm.platform = null;
+    $scope.deviceForm.keyhash = null;
+
     $scope.searchText = '';
 
     $scope.selectedItems = [];
@@ -173,25 +183,19 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
   };
 
   $scope.detachRepository = function(deviceUdid) {
-
     console.log('-- detaching source from ' + deviceUdid + '--');
-
     Thinx.detachRepository(deviceUdid)
     .done(function(response) {
-
       if (typeof(response) !== "undefined") {
         if (response.success) {
           console.log(response);
-
           for (var index in $rootScope.devices) {
             if ($rootScope.devices[index].udid == deviceUdid) {
               $rootScope.devices[index].source = undefined;
             }
           }
-
           toastr.success('Repository Detached.', 'THiNX RTM Console', {timeOut: 5000})
           $scope.$apply()
-
         } else {
           console.log(response);
           toastr.error('Detach Failed.', 'THiNX RTM Console', {timeOut: 5000})
@@ -205,7 +209,6 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
       console.error('Error:', error);
       toastr.error('Detach Failed.', 'THiNX RTM Console', {timeOut: 5000})
     });
-
   };
 
 
@@ -283,9 +286,9 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
 
   $scope.submitDeviceForm = function() {
 
-    console.log('-- changing device: ' + $scope.deviceUdid + ' -> ' + $scope.deviceAlias + ', ' + $scope.devicePlatform + ' --');
+    console.log('-- changing device: ' + $scope.deviceForm.udid + ' -> ' + $scope.deviceForm.alias + ', ' + $scope.deviceForm.platform + ', ' + $scope.deviceForm.keyhash + ' --');
 
-    Thinx.submitDevice($scope.deviceUdid, $scope.deviceAlias, $scope.devicePlatform)
+    Thinx.submitDevice($scope.deviceForm.udid, $scope.deviceForm.alias, $scope.deviceForm.platform, $scope.deviceForm.keyhash)
     .done(function(response) {
 
       if (typeof(response) !== "undefined") {
@@ -296,7 +299,6 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
           console.log('-- refreshing devices --');
           Thinx.deviceList()
           .done(function(data) {
-            console.log($('#deviceModal'));
             $('#deviceModal').modal('hide');
             updateDevices(data);
           })
@@ -407,20 +409,28 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     event.stopPropagation();
 
     console.log('Resetting modal form values...');
-    $scope.deviceUdid = $rootScope.devices[index].udid;
-    $scope.deviceAlias = $rootScope.devices[index].alias;
-    $scope.deviceIndex = index;
+    $scope.deviceForm.index = index;
+    $scope.deviceForm.udid = $rootScope.devices[index].udid;
+    $scope.deviceForm.alias = $rootScope.devices[index].alias;
 
     if (typeof($rootScope.devices[index].platform) !== "undefined") {
-      $scope.devicePlatform = $rootScope.devices[index].platform;
+      $scope.deviceForm.platform = $rootScope.devices[index].platform;
     } else {
-      $scope.devicePlatform = null;
+      $scope.deviceForm.platform = null;
     }
 
-    console.log("scope vars");
-    console.log("deviceUdid", $scope.deviceUdid);
-    console.log("deviceAlias", $scope.deviceAlias);
-    console.log("devicePlatform", $scope.devicePlatform);
+    if (typeof($rootScope.devices[index].keyhash) !== "undefined") {
+      $scope.deviceForm.keyhash = $rootScope.devices[index].keyhash;
+    } else {
+      $scope.deviceForm.keyhash = null;
+    }
+
+    console.log("form vars");
+    console.log("index", $scope.deviceForm.index);
+    console.log("udid", $scope.deviceForm.udid);
+    console.log("alias", $scope.deviceForm.alias);
+    console.log("platform", $scope.deviceForm.platform);
+    console.log("keyhash", $scope.deviceForm.keyhash);
 
     $('#deviceModal').modal('show');
   }

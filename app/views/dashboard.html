@@ -313,7 +313,7 @@
             <div class="form-group">
               <label class="control-label col-md-3">Platform</label>
               <div class="col-md-9">
-                <ui-select ng-model="devicePlatform" theme="bootstrap" title="Choose platfourm">
+                <ui-select ng-model="deviceForm.platform" theme="bootstrap" title="Choose platfourm">
                   <ui-select-match placeholder="Select platform from the list...">
                     <img ng-src="../assets/thinx/img/external/{{$select.selected.id}}_logo_200.png" class="platform-icon-sm pull-left {{$select.selected.id}}-platform-color" alt="{{$select.selected.id}} icon" />
                     {{$select.selected.value.name}}
@@ -328,14 +328,27 @@
             <div class="form-group">
               <label class="control-label col-md-3">Alias</label>
               <div class="col-md-9">
-                <input type="text" ng-model="deviceAlias" name="deviceAlias" class="form-control" />
+                <input type="text" ng-model="deviceForm.alias" name="deviceAlias" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">API Key</label>
+              <div class="col-md-9">
+                k: {{deviceForm.keyhash}}
+                <ui-select ng-model="deviceForm.keyhash" theme="bootstrap" title="Choose a key">
+                  <ui-select-match placeholder="Select key in the list...">{{$select.selected.value.alias}}</ui-select-match>
+                  <ui-select-choices repeat="apikey.value.hash as (key, apikey) in $root.apikeys | filter: { value: { alias: $select.search }}">
+                    <div ng-bind-html="apikey.value.alias | highlight: $select.search"></div>
+                    <small>{{apikey.value.hash | limitTo: 6 }}</small>
+                  </ui-select-choices>
+                </ui-select>
               </div>
             </div>
             <div class="form-group">
               <label class="control-label col-md-3">Source</label>
               <div class="col-md-9">
                 <div class="input-group">
-                  <ui-select ng-model="$root.devices[deviceIndex].source" theme="bootstrap" title="Choose a source" on-select="attachRepository($model, deviceUdid)">
+                  <ui-select ng-model="$root.devices[deviceForm.index].source" theme="bootstrap" title="Choose a source" on-select="attachRepository($model, deviceForm.udid)">
                     <ui-select-match placeholder="Select source in the list...">{{$select.selected.value.alias}}</ui-select-match>
                     <ui-select-choices repeat="source.key as (key, source) in $root.sources | filter: { value: { alias: $select.search }}">
                       <div ng-bind-html="source.value.alias | highlight: $select.search"></div>
@@ -343,7 +356,7 @@
                     </ui-select-choices>
                   </ui-select>
                   <span class="input-group-btn">
-                    <button type="button" ng-click="detachRepository(deviceUdid)" class="btn btn-default"><span class="fa fa-chain-broken"></span></button>
+                    <button type="button" ng-click="detachRepository(deviceForm.udid)" class="btn btn-default"><span class="fa fa-chain-broken"></span></button>
                   </span>
                 </div>
               </div>
@@ -352,7 +365,7 @@
               <label class="control-label col-md-3">MQTT Channel</label>
               <div class="col-md-9">
                 <div class="input-group">
-                  <label class="control-label">/thinx/device/{{deviceUdid}}</label>
+                  <label class="control-label">/thinx/device/{{deviceForm.udid}}</label>
                 </div>
               </div>
             </div>

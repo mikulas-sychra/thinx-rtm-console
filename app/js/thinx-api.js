@@ -54,8 +54,8 @@ var Thinx = {
   deviceList: function () {
     return deviceList();
   },
-  submitDevice: function (deviceUdid, deviceAlias, devicePlatform) {
-    return submitDevice(deviceUdid, deviceAlias, devicePlatform);
+  submitDevice: function (deviceUdid, deviceAlias, devicePlatform, deviceKeyhash) {
+    return submitDevice(deviceUdid, deviceAlias, devicePlatform, deviceKeyhash);
   },
   revokeDevice: function (deviceUdid) {
     return revokeDevice(deviceUdid);
@@ -162,6 +162,23 @@ function init($rootScope, $scope) {
     } else {
       console.log('auditHistory fetch error.') ;
     }
+  }
+
+  if (typeof($rootScope.updateApikeysListener) == "undefined") {
+        $rootScope.updateApikeysListener = $rootScope.$on('updateApikeys', function(event, data){
+        event.stopPropagation();
+        updateApikeys(data);
+    });
+  }
+
+  function updateApikeys(data) {
+    var response = JSON.parse(data);
+    $rootScope.apikeys = response.api_keys;
+
+    console.log('apikeys:');
+    console.log($rootScope.apikeys);
+    console.log('refreshing view...');
+    $rootScope.$apply()
   }
 
   // =================================================
@@ -296,12 +313,13 @@ function deviceList() {
   });
 }
 
-function submitDevice(deviceId, deviceAlias, devicePlatform) {
+function submitDevice(deviceId, deviceAlias, devicePlatform, deviceKeyhash) {
   var data = JSON.stringify({
     changes: {
       udid: deviceId,
       alias: deviceAlias,
-      platform: devicePlatform
+      platform: devicePlatform,
+      keyhash: deviceKeyhash
     }
   });
   return $.ajax({
