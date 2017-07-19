@@ -203,22 +203,22 @@
         </div>
         <div class="portlet-body">
           <div class="row user-journey">
-            <div class="col-xs-3 text-center" ng-class="$root.profile.info.goals.includes('apikey') ? 'journey-success' : 'journey-info'">
-              <span class="user-journey-bar1"></span>
+            <div class="col-xs-3 text-center " ng-class="journeyClass('apikey')">
               <i class="fa fa-circle"></i><br>
               PREPARE
             </div>
-            <div class="col-xs-3 text-center" ng-class="$root.profile.info.goals.includes('enroll') ? 'journey-success' : 'journey-info'">
-              <span class="user-journey-bar2"></span>
+            <div class="col-xs-3 text-center" ng-class="journeyClass('enroll')">
+              <span class="user-journey-bar1"></span>
               <i class="fa fa-circle"></i><br>
               ENROLL
             </div>
-            <div class="col-xs-3 text-center" ng-class="$root.profile.info.goals.includes('build') ? 'journey-success' : 'journey-info'">
-              <span class="user-journey-bar3"></span>
+            <div class="col-xs-3 text-center" ng-class="journeyClass('build')">
+              <span class="user-journey-bar2"></span>
               <i class="fa fa-circle"></i><br>
               BUILD
             </div>
-            <div class="col-xs-3 text-center" ng-class="$root.profile.info.goals.includes('update') ? 'journey-success' : 'journey-info'">
+            <div class="col-xs-3 text-center" ng-class="journeyClass('update')">
+              <span class="user-journey-bar3"></span>
               <i class="fa fa-circle"></i><br>
               UPDATE
             </div>

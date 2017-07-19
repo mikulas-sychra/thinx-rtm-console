@@ -394,23 +394,30 @@
 }
 
 .user-journey {
-  position: relative;;
+  position: relative;
 }
 
 .user-journey i {
   font-size: 5em;
+  margin-top: 10px;
+  position: relative;
+  z-index: 1;
 }
 
-.journey-green-haze {
-  color: #59aea2;
+.journey-active {
+  color: #00f383;
+}
+.journey-active span {
+  color: #00f383;
+  width: 100%;
 }
 
-.journey-info {
+.journey-default {
   color: #e3f5f3;
 }
-.journey-info span {
+.journey-default span {
   background-color: #e3f5f3;
-  width: 0px;
+  width: 100%;
 }
 
 .journey-success {
@@ -426,6 +433,6 @@
   width: 0px;
   height: 8px;
   position: absolute;
-  top: 3px;
-  left: 50%;
+  top: 13px;
+  left: -50%;
 }
