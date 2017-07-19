@@ -125,7 +125,7 @@
           <div class="row">
 
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 device-block"  ng-repeat="device in $root.devices | propsFilter:{'alias':searchText, 'mac':searchText}"  ng-click="checkItem(device.udid)" ng-class="selectedItems.indexOf(device.udid) > -1 ? 'selected-block' : 'default-row'">
-
+              <div>
                 <span class="device-lastseen-label">{{device.lastupdate | lastSeen}}</span>
                 <span class="device-mac-label"><span class="mac-label">MAC</span>{{device.mac}}</span>
 
@@ -137,24 +137,22 @@
                 <span ng-if="hasSource($index)" class="device-firmware">{{$root.sources[device.source].alias}}</span>
                 <br>
                 <small>{{device.firmware | limitTo: 32}}{{device.firmware.length > 32 ? '...' : ''}}</small>
-
                 <br><br>
-
                 <span ng-if="hasBuildId(device.udid)">
                   <a class="btn btn-circle btn-icon-only btn-default" ng-click="showDeviceLastBuild(device.udid, $event)">
                     <i class="fa fa-eye"></i>
                   </a>
                 </span>
-                <span ng-if="hasBuildId(device.udid) == null" ng-disabled="true" class="btn btn-circle">
-                  <i class="fa fa-spin fa-circle-o-notch"></i>
-                </span>
-                <a class="btn btn-circle btn-icon-only btn-default" href="#" ng-if="hasSource($index)" ng-click="build(device.udid, device.source, $index); $event.stopPropagation()" ng-hide="hasBuildId($index) == null">
-                  <i class="fa fa-cogs"></i>
-                </a>
                 <a class="btn btn-circle btn-icon-only btn-default" ng-click="openDeviceModal($index, $event)">
                   <i class="fa fa-wrench"></i>
                 </a>
-
+                <a class="btn btn-circle btn-icon-only btn-default" href="#" ng-if="hasSource($index)" ng-click="build(device.udid, device.source, $index); $event.stopPropagation()" ng-hide="hasBuildId($index) == null">
+                  <i class="fa fa-cogs"></i>
+                </a>
+                <span ng-if="hasBuildId(device.udid) == null" ng-disabled="true" class="btn btn-circle">
+                  <i class="fa fa-spin fa-circle-o-notch"></i>
+                </span>
+              </div>
             </div>
           </div>
         </div>

@@ -451,7 +451,17 @@
 
 .device-block {
   padding: 20px;
-  background-color: #f1f1f1;
+}
+
+.device-block > div {
+  padding: 20px;
+  margin-bottom: 0px;
+  background-color: #f9f9f9;
+}
+.selected-block > div {
+  cursor: pointer;
+  border: 1px solid #e9e9e9;
+  padding: 19px;
 }
 
 .selected-block::before {
@@ -466,10 +476,6 @@
   animation-duration: .5s;
   width: 16px;
   height: 16px;
-  margin-top: -0px;
-  margin-left: -23px;
-}
-.selected-block {
-  cursor: pointer;
-  padding-left: 23px !important;
+  top: 30px;
+  right: 32px;
 }
