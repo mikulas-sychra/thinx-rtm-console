@@ -321,7 +321,7 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
   .state('source', {
     url: "/source",
     templateUrl: "views/source.html",
-    data: {pageTitle: 'Source Management'},
+    data: {pageTitle: 'Application Management'},
     controller: "SourceController",
     resolve: {
       deps: ['$ocLazyLoad', function($ocLazyLoad) {

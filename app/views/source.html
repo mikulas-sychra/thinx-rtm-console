@@ -4,14 +4,14 @@
     <a ui-sref="dashboard">Home</a>
     <i class="fa fa-circle"></i>
   </li>
-  <li class="active"> Source Management </li>
+  <li class="active"> App Source Management </li>
 </ul>
 <!-- END PAGE BREADCRUMB -->
 <!-- BEGIN MAIN CONTENT -->
 <div class="row">
   <div class="col-md-12">
     <div class="note note-info" ng-hide="$root.profile.info.goals.includes('source-info')">
-      <h3>Sources
+      <h3>App Sources
         <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('source-info'); $emit('saveProfile');"></span>
       </h3>
       <p>
@@ -26,7 +26,7 @@
       <div class="portlet-title">
         <div class="caption font-green-sharp">
           <i class="icon-folder-alt font-green-sharp"></i>
-          <span class="caption-subject bold uppercase">Sources</span>
+          <span class="caption-subject bold uppercase">App Sources</span>
           <span class="caption-helper hide"></span>
         </div>
         <div class="actions hide">

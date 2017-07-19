@@ -409,11 +409,11 @@
 }
 .journey-active span {
   width: 100%;
-  background: #26c281;
-  background: -moz-linear-gradient(left, #26c281 0%, #00dc77 100%);
-  background: -webkit-linear-gradient(left, #26c281 0%,#00dc77 100%);
-  background: linear-gradient(to right, #26c281 0%,#00dc77 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#26c281', endColorstr='#00dc77',GradientType=1 );
+  background: #3ebbbd;
+  background: -moz-linear-gradient(left, #3ebbbd 0%, #00dc77 100%);
+  background: -webkit-linear-gradient(left, #3ebbbd 0%,#00dc77 100%);
+  background: linear-gradient(to right, #3ebbbd 0%,#00dc77 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3ebbbd', endColorstr='#00dc77',GradientType=1 );
 }
 
 .journey-default {
@@ -425,10 +425,10 @@
 }
 
 .journey-success {
-  color: #26c281;
+  color: #3ebbbd;
 }
 .journey-success span {
-  background-color: #26c281;
+  background-color: #3ebbbd;
   width: 100%;
 }
 
@@ -450,8 +450,8 @@
 }
 
 .device-block {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 20px;
+  background-color: #f1f1f1;
 }
 
 .selected-block::before {

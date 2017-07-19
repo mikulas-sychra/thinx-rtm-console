@@ -12,13 +12,13 @@
   <div class="col-md-12">
 
     <div class="note note-info" ng-hide="$root.profile.info.goals.includes('enviro-info')">
-      <h3>Enviros
+      <h3>Environment
         <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('enviro-info'); $emit('saveProfile');"></span>
       </h3>
       <p>
-        <b>Key-value based environment strings</b><br><br>
-        "Enviros" you define will be injected as variables to your source-code of the language you prefer.<br>
-        You can use this to inject SSID and PASSWORD of your WiFi (and even API Keys will be done like this soon) in case you don't want to store those in the GIT repository (e.g. your repo is public).
+        <b>Key-value based environment variables</b><br><br>
+        Strings, booleans and integers you define will be injected as variables to every source-code of the language you prefer using designated THiNX header or config file.<br><br>
+        You can use this to inject SSID and PASSWORD of your WiFi in case you don't want to store those in the GIT repository (e.g. in case where your repo is public).
       </p>
     </div>
 
