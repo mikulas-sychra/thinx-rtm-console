@@ -366,19 +366,19 @@
 }
 
 .arduino-platform-color {
-  background-color: #00979d;
+  background-color: #00979d !important;
 }
 .platformio-platform-color {
-  background-color: #ff9125;
+  background-color: #ff9125 !important;
 }
 .nodemcu-platform-color {
-  background-color: #005780;
+  background-color: #005780 !important;
 }
 .micropython-platform-color {
-  background-color: #3c393a;
+  background-color: #3c393a !important;
 }
 .mongoose-platform-color {
-  background-color: #0e7cad;
+  background-color: #0e7cad !important;
 }
 
 .top-list-search {
