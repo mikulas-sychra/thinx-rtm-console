@@ -64,6 +64,7 @@
           <table class="table table-hover table-light">
             <tr ng-repeat="source in $root.sources | propsFilter:{'alias':searchText, 'url':searchText}" ng-click="checkItem(source.sourceId)" ng-class="selectedItems.indexOf(source.sourceId) > -1 ? 'selected-row' : 'default-row'">
               <td>
+                <img ng-src="../assets/thinx/img/external/{{source.platform}}_logo_200.png" class="platform-icon-sm pull-left {{source.platform}}-platform-color" alt="{{source.platform}} icon" />
                 <div class="row-item-title">{{source.alias}}</div>
                 <div>
                   <span class="source-label" ng-if="source.branch.length > 0"><span class="source-origin">{{source.branch | split:"/":0}}</span> / <span class="source-branch">{{source.branch | split:"/":1}}</span></span>
