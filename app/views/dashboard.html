@@ -131,23 +131,14 @@
                     <span class="badge platform-badge {{$root.sources[device.source].platform}}-platform-color">{{$root.platforms[$root.sources[device.source].platform].name}}</span>
                 </span>
                 <span class="device-mac-label"><span class="mac-label">MAC</span>{{device.mac}}</span>
-                
                 <br>
-
                 <span class="green-haze device-alias">{{device.alias}}</span><br>
                 <span class="device-firmware"> <span ng-if="device.platform == undefined"> Plaform Unknown</span></span>
-
                 <br>
-
                 <span ng-if="hasSource($index)" class="device-firmware">{{$root.sources[device.source].alias}}</span>
                 <br>
                 <small>{{device.firmware | limitTo: 32}}{{device.firmware.length > 32 ? '...' : ''}}</small>
                 <br><br>
-                <span ng-if="hasBuildId(device.udid)">
-                  <a class="btn btn-circle btn-icon-only btn-default" ng-click="showDeviceLastBuild(device.udid, $event)">
-                    <i class="fa fa-eye"></i>
-                  </a>
-                </span>
                 <a class="btn btn-circle btn-icon-only btn-default" ng-click="openDeviceModal($index, $event)">
                   <i class="fa fa-wrench"></i>
                 </a>
@@ -156,6 +147,11 @@
                 </a>
                 <span ng-if="hasBuildId(device.udid) == null" ng-disabled="true" class="btn btn-circle">
                   <i class="fa fa-spin fa-circle-o-notch"></i>
+                </span>
+                <span ng-if="hasBuildId(device.udid)">
+                  <a class="btn btn-circle btn-icon-only btn-default" ng-click="showDeviceLastBuild(device.udid, $event)">
+                    <i class="fa fa-eye"></i>
+                  </a>
                 </span>
               </div>
             </div>
