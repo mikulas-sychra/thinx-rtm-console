@@ -80,44 +80,37 @@
             <span class="caption-subject font-red bold uppercase">Devices</span>
           </div>
           <div class="actions">
-              <div class="btn-group">
-                  <div class="btn-group dropdown open" uib-dropdown="">
-                    <button id="split-button" type="button" class="btn btn-default" ng-click="list.reverse = !list.reverse"><small>ORDER BY</small> {{list.orderBy.alias}}</button>
-                    <button type="button" class="btn btn-default dropdown-toggle" uib-dropdown-toggle="" aria-haspopup="true" aria-expanded="true">
-                        <span class="caret"></span>
-                        <span class="sr-only">Select...</span>
-                    </button>
-                    <ul class="dropdown-menu" uib-dropdown-menu="" role="menu" aria-labelledby="split-button">
-                        <li role="menuitem" ng-repeat="order in list.orderOptions">
-                            <a href="javascript:;" ng-click="list.orderBy = order">{{order.alias}}</a>
-                        </li>
-                    </ul>
-                </div>
+            <div class="btn-group">
+              <a ng-show="selectedItems.length > 0" class="btn red btn-outline" href="javascript:;" data-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-bars"></i> Actions
+                <i class="fa fa-angle-down"></i>
+              </a>
+              <ul class="dropdown-menu pull-left">
+                <li><a href="javascript:;" ng-click="revokeDevices()"><i class="icon-trash"></i> Revoke</a></li>
+                <li><a href="javascript:;" ng-click="openTransferModal()"><i class="fa fa-exchange"></i> Transfer</a></li>
+              </ul>
+            </div>
+            <div class="btn-group">
+              <span class="input-icon right xtop-list-search">
+                <i class="icon-magnifier"></i>
+                <input type="text" style="width: 110px; display: inline-block;" class="form-control form-control-solid" ng-model="list.searchText" placeholder="Search...">
+              </span>
+            </div>
+            <div class="btn-group dropdown open" uib-dropdown="">
+              <button id="split-button" type="button" class="btn btn-default" ng-click="list.reverse = !list.reverse"><small>ORDER BY</small> {{list.orderBy.alias}}</button>
+              <button type="button" class="btn btn-default dropdown-toggle" uib-dropdown-toggle="" aria-haspopup="true" aria-expanded="true">
+                <span class="caret"></span>
+                <span class="sr-only">Select...</span>
+              </button>
+              <ul class="dropdown-menu" uib-dropdown-menu="" role="menu" aria-labelledby="split-button">
+                <li role="menuitem" ng-repeat="order in list.orderOptions">
+                  <a href="javascript:;" ng-click="list.orderBy = order">{{order.alias}}</a>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
         <div class="portlet-body">
-          <div class="row">
-            <div class="col-xs-6">
-              <div class="btn-group">
-                <a ng-show="selectedItems.length > 0" class="btn red btn-outline" href="javascript:;" data-toggle="dropdown" aria-expanded="false">
-                  <i class="fa fa-bars"></i> Actions
-                  <i class="fa fa-angle-down"></i>
-                </a>
-                <ul class="dropdown-menu pull-left">
-                  <li><a href="javascript:;" ng-click="revokeDevices()"><i class="icon-trash"></i> Revoke</a></li>
-                  <li><a href="javascript:;" ng-click="openTransferModal()"><i class="fa fa-exchange"></i> Transfer</a></li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-xs-6 text-right">
-              <span class="input-icon right xtop-list-search">
-                <i class="icon-magnifier"></i>
-                <input type="text" class="form-control form-control-solid" ng-model="list.searchText" placeholder="Search...">
-              </span>
-            </div>
-          </div>
-
           <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 device-block"  ng-repeat="device in $root.devices | propsFilter:{'alias':list.searchText, 'mac':list.searchText} | orderBy:list.orderBy.prop:list.reverse"  ng-click="checkItem(device.udid)" ng-class="selectedItems.indexOf(device.udid) > -1 ? 'selected-block' : 'default-row'">
               <div>

@@ -86,7 +86,7 @@ RTM.factory('settings', ['$rootScope', function($rootScope) {
   $rootScope.platforms = {
     'arduino': {name: 'Arduino'},
     'platformio': {name: 'Platform.io'},
-    'nodemcu': {name: 'NodeMCU / LUA'},
+    'nodemcu': {name: 'NodeMCU'},
     'micropython': {name: 'Micropython'},
     'mongoose': {name: 'MongooseOS'}
   };

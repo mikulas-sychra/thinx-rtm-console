@@ -60,7 +60,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     {prop: 'alias', alias: 'Alias'}
   ];
   $scope.list.orderBy = $scope.list.orderOptions[0];
-  $scope.list.reverse = false;
+  $scope.list.reverse = true;
 
   Thinx.init($rootScope, $scope);
 
