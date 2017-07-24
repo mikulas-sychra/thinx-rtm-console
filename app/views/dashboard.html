@@ -80,23 +80,19 @@
             <span class="caption-subject font-red bold uppercase">Devices</span>
           </div>
           <div class="actions">
-            <div class="btn-group btn-group-devided" data-toggle="buttons">
-              <label class="btn btn-default btn-outline btn-circle btn-sm active">
-                <input type="radio" name="filterPlatform" class="toggle" id="platformio" ng-model="filterPlatform" />
-                Pl
-              </label>
-              <label class="btn btn-default btn-outline btn-circle btn-sm">
-                <input type="radio" name="filterPlatform" class="toggle" id="nodemcu" ng-model="filterPlatform" />
-                Lu
-              </label>
-              <label class="btn btn-default btn-circle btn-sm">
-                <input type="radio" name="filterPlatform" class="toggle" id="micropython" ng-model="filterPlatform" />
-                Mi
-              </label>
-              <label class="btn btn-default btn-circle btn-sm">
-                <input type="radio" name="filterPlatform" class="toggle" id="mongoose" ng-model="filterPlatform" />
-                Mo
-              </label>
+              <div class="btn-group">
+                  <div class="btn-group dropdown open" uib-dropdown="">
+                    <button id="split-button" type="button" class="btn btn-default" ng-click="list.reverse = !list.reverse"><small>ORDER BY</small> {{list.orderBy.alias}}</button>
+                    <button type="button" class="btn btn-default dropdown-toggle" uib-dropdown-toggle="" aria-haspopup="true" aria-expanded="true">
+                        <span class="caret"></span>
+                        <span class="sr-only">Select...</span>
+                    </button>
+                    <ul class="dropdown-menu" uib-dropdown-menu="" role="menu" aria-labelledby="split-button">
+                        <li role="menuitem" ng-repeat="order in list.orderOptions">
+                            <a href="javascript:;" ng-click="list.orderBy = order">{{order.alias}}</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
           </div>
         </div>
@@ -117,14 +113,13 @@
             <div class="col-xs-6 text-right">
               <span class="input-icon right xtop-list-search">
                 <i class="icon-magnifier"></i>
-                <input type="text" class="form-control form-control-solid" ng-model="searchText" placeholder="Search...">
+                <input type="text" class="form-control form-control-solid" ng-model="list.searchText" placeholder="Search...">
               </span>
             </div>
           </div>
 
           <div class="row">
-
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 device-block"  ng-repeat="device in $root.devices | propsFilter:{'alias':searchText, 'mac':searchText}"  ng-click="checkItem(device.udid)" ng-class="selectedItems.indexOf(device.udid) > -1 ? 'selected-block' : 'default-row'">
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 device-block"  ng-repeat="device in $root.devices | propsFilter:{'alias':list.searchText, 'mac':list.searchText} | orderBy:list.orderBy.prop:list.reverse"  ng-click="checkItem(device.udid)" ng-class="selectedItems.indexOf(device.udid) > -1 ? 'selected-block' : 'default-row'">
               <div>
                 <span class="device-lastseen-label">{{device.lastupdate | lastSeen}}</span>
                 <span ng-if="hasSource($index)">

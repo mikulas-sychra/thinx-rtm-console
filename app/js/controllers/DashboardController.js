@@ -51,8 +51,16 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     $scope.transferEmail = null;
   });
 
-  $scope.searchText = '';
-  $scope.filterPlatform = '';
+  $scope.list = {};
+  $scope.list.searchText = '';
+  $scope.list.filterPlatform = '';
+  $scope.list.orderOptions = [
+    {prop: 'lastupdate', alias: 'Last Update'},
+    {prop: 'platform', alias: 'Platform'},
+    {prop: 'alias', alias: 'Alias'}
+  ];
+  $scope.list.orderBy = $scope.list.orderOptions[0];
+  $scope.list.reverse = false;
 
   Thinx.init($rootScope, $scope);
 
