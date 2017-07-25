@@ -180,12 +180,13 @@
   border: #26c281 solid 1px;
 }
 .device-mac-label {
-  background-color: rgba(128, 128, 128, .08);
+  /*background-color: rgba(128, 128, 128, .08);*/
   padding: 3px 5px 3px 5px;
+  margin-bottom: 10px;
   font-size: .8em;
   display: inline-block;
-  color: #000000;
-  border: rgba(128, 128, 128, .08) solid 1px;
+  color: #666666;
+  border: #888888 solid 1px;
 }
 .mac-label {
   font-weight: bold;
@@ -201,7 +202,7 @@
 }
 .device-alias {
   margin-top: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
   font-size: 1.2em;
 }
 .device-card {
@@ -464,32 +465,59 @@
   padding: 20px;
   padding-right: 10px;
 }
-
 .device-block > div {
   padding: 20px;
   margin-bottom: 0px;
   background-color: #f9f9f9;
 }
 .selected-block > div {
-  cursor: pointer;
+  /*cursor: pointer;*/
   border: 1px solid #e9e9e9;
   padding: 19px;
 }
+.selected-block .device-checkarea {
+  border: 1px solid #e7505a;
+  cursor: pointer;
+}
+
+.selected-block .device-checkarea:hover {
+  border-color: #ff949a;
+}
 
 .selected-block::before {
-  content: '\f00c';
+  content: '\f10c';
   font-family: 'FontAwesome';
   text-align: center;
   font-size: 16px;
-  color: #aaaaaa;
+  color: #e7505a;
   position: absolute;
   display: inline-block;
   animation-name: fadeIn;
   animation-duration: .5s;
   width: 16px;
   height: 16px;
-  top: 30px;
-  right: 32px;
+  top: 41px;
+  right: 34px;
+  pointer-events: none;
+}
+
+.device-checkarea {
+  float: right;
+  margin-right: 0px;
+  margin-top: 0px;
+  border: 1px solid #DEDEDE;
+  width: 24px;
+  height: 24px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.device-checkarea:hover {
+  border-color: #BEBEBE;
+}
+
+.device-block-control {
+  margin-top: 10px;
 }
 
 .platform-badge {

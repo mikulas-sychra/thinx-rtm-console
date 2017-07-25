@@ -112,12 +112,12 @@
         </div>
         <div class="portlet-body">
           <div class="row">
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 device-block"  ng-repeat="device in $root.devices | propsFilter:{'alias':list.searchText, 'mac':list.searchText} | orderBy:list.orderBy.prop:list.reverse track by device.udid"  ng-click="checkItem(device.udid)" ng-class="selectedItems.indexOf(device.udid) > -1 ? 'selected-block' : 'default-row'">
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 device-block"  ng-repeat="device in $root.devices | propsFilter:{'alias':list.searchText, 'mac':list.searchText} | orderBy:list.orderBy.prop:list.reverse track by device.udid"  ng-class="selectedItems.indexOf(device.udid) > -1 ? 'selected-block' : ''">
               <div>
-                <span class="device-lastseen-label">{{device.lastupdate | lastSeen}}</span>
-                <span class="device-mac-label"><span class="mac-label">MAC</span>{{device.mac}}</span>
-                <br>
+                <div class="device-checkarea" ng-click="checkItem(device.udid)"></div>
+                <div class="device-lastseen-label">{{device.lastupdate | lastSeen}}</div>
                 <div class="device-alias">{{device.alias}}</div>
+                <div class="device-mac-label"><span class="mac-label">MAC</span>{{device.mac}}</div>
                 <div ng-if="hasSource(device)" class="device-firmware">{{getSourceById(device.source).alias}}
                   <br>
                   <small>{{device.firmware | limitTo: 32}}{{device.firmware.length > 32 ? '...' : ''}}</small>
@@ -127,27 +127,28 @@
                   <br>
                   <small>Firmware unknown</small>
                 </div>
-                <br>
-                <a class="btn btn-circle btn-icon-only btn-default" ng-click="openDeviceModal(device, $event)" title="Device Settings">
-                  <i class="fa fa-wrench"></i>
-                </a>
-                <a class="btn btn-circle btn-icon-only btn-default" href="#" ng-if="hasSource(device)" ng-click="build(device.udid, device.source, $index); $event.stopPropagation()" ng-hide="hasBuildId(device.udid) == null"  title="Build From Source">
-                  <i class="fa fa-cogs"></i>
-                </a>
-                <span ng-if="hasBuildId(device.udid) == null" ng-disabled="true" class="btn btn-circle">
-                  <i class="fa fa-spin fa-circle-o-notch"></i>
-                </span>
-                <span ng-if="hasBuildId(device.udid)">
-                  <a class="btn btn-circle btn-icon-only btn-default" ng-click="showDeviceLastBuild(device.udid, $event)" title="Open Build Log">
-                    <i class="fa fa-eye"></i>
+                <div class="device-block-control">
+                  <a class="btn btn-circle btn-icon-only btn-default" ng-click="openDeviceModal(device, $event)" title="Device Settings">
+                    <i class="fa fa-pencil"></i>
                   </a>
-                </span>
-                <span ng-if="hasSource(device)">
-                    <span class="badge platform-badge {{getSourceById(device.source).platform}}-platform-color" title="Source Platform: {{$root.platforms[getSourceById(device.source).platform].name}}">{{$root.platforms[getSourceById(device.source).platform].name}}</span>
-                </span>
-                <span ng-if="device.keyhash != null">
-                    <span class="btn btn-circle btn-icon-only" title="API Key: Attached"><i class="fa fa-key"></i></span>
-                </span>
+                  <a class="btn btn-circle btn-icon-only btn-default" href="#" ng-if="hasSource(device)" ng-click="build(device.udid, device.source, $index); $event.stopPropagation()" ng-hide="hasBuildId(device.udid) == null"  title="Build From Source">
+                    <i class="fa fa-cogs"></i>
+                  </a>
+                  <span ng-if="hasBuildId(device.udid) == null" ng-disabled="true" class="btn btn-circle">
+                    <i class="fa fa-spin fa-circle-o-notch"></i>
+                  </span>
+                  <span ng-if="hasBuildId(device.udid)">
+                    <a class="btn btn-circle btn-icon-only btn-default" ng-click="showDeviceLastBuild(device.udid, $event)" title="Open Build Log">
+                      <i class="fa fa-eye"></i>
+                    </a>
+                  </span>
+                  <span ng-if="hasSource(device)">
+                      <span class="badge platform-badge {{getSourceById(device.source).platform}}-platform-color" title="Source Platform: {{$root.platforms[getSourceById(device.source).platform].name}}">{{$root.platforms[getSourceById(device.source).platform].name}}</span>
+                  </span>
+                  <span ng-if="device.keyhash != null">
+                      <span class="btn btn-circle btn-icon-only" title="API Key: Attached"><i class="fa fa-key"></i></span>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
