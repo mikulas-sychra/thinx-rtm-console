@@ -88,7 +88,8 @@ RTM.factory('settings', ['$rootScope', function($rootScope) {
     'platformio': {name: 'Platform.io'},
     'nodemcu': {name: 'NodeMCU'},
     'micropython': {name: 'Micropython'},
-    'mongoose': {name: 'MongooseOS'}
+    'mongoose': {name: 'MongooseOS'},
+    'unknown': {name: 'Platform Unknown'}
   };
 
   $rootScope.profile = {

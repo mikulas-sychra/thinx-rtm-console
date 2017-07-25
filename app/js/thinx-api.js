@@ -145,20 +145,16 @@ function init($rootScope, $scope) {
     console.log('sources response:', response);
 
     if (typeof(response.success !== "undefined") && response.success) {
-
       $rootScope.sources = [];
-
       $.each(response.sources, function(sourceId, value) {
         value.sourceId = sourceId;
         $rootScope.sources.push(value);
       });
       // $rootScope.sources = response.sources;
-
       console.log('sources:');
       console.log($rootScope.sources);
       console.log('refreshing view...');
       $rootScope.$apply()
-
     } else {
       console.log('auditHistory fetch error.') ;
     }

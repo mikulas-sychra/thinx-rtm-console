@@ -112,34 +112,41 @@
         </div>
         <div class="portlet-body">
           <div class="row">
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 device-block"  ng-repeat="device in $root.devices | propsFilter:{'alias':list.searchText, 'mac':list.searchText} | orderBy:list.orderBy.prop:list.reverse"  ng-click="checkItem(device.udid)" ng-class="selectedItems.indexOf(device.udid) > -1 ? 'selected-block' : 'default-row'">
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 device-block"  ng-repeat="device in $root.devices | propsFilter:{'alias':list.searchText, 'mac':list.searchText} | orderBy:list.orderBy.prop:list.reverse track by device.udid"  ng-click="checkItem(device.udid)" ng-class="selectedItems.indexOf(device.udid) > -1 ? 'selected-block' : 'default-row'">
               <div>
                 <span class="device-lastseen-label">{{device.lastupdate | lastSeen}}</span>
-                <span ng-if="hasSource($index)">
-                    <span class="badge platform-badge {{$root.sources[device.source].platform}}-platform-color">{{$root.platforms[$root.sources[device.source].platform].name}}</span>
-                </span>
                 <span class="device-mac-label"><span class="mac-label">MAC</span>{{device.mac}}</span>
                 <br>
-                <span class="green-haze device-alias">{{device.alias}}</span><br>
-                <span class="device-firmware"> <span ng-if="device.platform == undefined"> Plaform Unknown</span></span>
+                <div class="device-alias">{{device.alias}}</div>
+                <div ng-if="hasSource(device)" class="device-firmware">{{getSourceById(device.source).alias}}
+                  <br>
+                  <small>{{device.firmware | limitTo: 32}}{{device.firmware.length > 32 ? '...' : ''}}</small>
+                </div>
+                <div ng-if="!hasSource(device)" class="device-firmware">
+                  Source not attached
+                  <br>
+                  <small>Firmware unknown</small>
+                </div>
                 <br>
-                <span ng-if="hasSource($index)" class="device-firmware">{{$root.sources[device.source].alias}}</span>
-                <br>
-                <small>{{device.firmware | limitTo: 32}}{{device.firmware.length > 32 ? '...' : ''}}</small>
-                <br><br>
-                <a class="btn btn-circle btn-icon-only btn-default" ng-click="openDeviceModal($index, $event)">
+                <a class="btn btn-circle btn-icon-only btn-default" ng-click="openDeviceModal(device, $event)" title="Device Settings">
                   <i class="fa fa-wrench"></i>
                 </a>
-                <a class="btn btn-circle btn-icon-only btn-default" href="#" ng-if="hasSource($index)" ng-click="build(device.udid, device.source, $index); $event.stopPropagation()" ng-hide="hasBuildId($index) == null">
+                <a class="btn btn-circle btn-icon-only btn-default" href="#" ng-if="hasSource(device)" ng-click="build(device.udid, device.source, $index); $event.stopPropagation()" ng-hide="hasBuildId(device.udid) == null"  title="Build From Source">
                   <i class="fa fa-cogs"></i>
                 </a>
                 <span ng-if="hasBuildId(device.udid) == null" ng-disabled="true" class="btn btn-circle">
                   <i class="fa fa-spin fa-circle-o-notch"></i>
                 </span>
                 <span ng-if="hasBuildId(device.udid)">
-                  <a class="btn btn-circle btn-icon-only btn-default" ng-click="showDeviceLastBuild(device.udid, $event)">
+                  <a class="btn btn-circle btn-icon-only btn-default" ng-click="showDeviceLastBuild(device.udid, $event)" title="Open Build Log">
                     <i class="fa fa-eye"></i>
                   </a>
+                </span>
+                <span ng-if="hasSource(device)">
+                    <span class="badge platform-badge {{getSourceById(device.source).platform}}-platform-color" title="Source Platform: {{$root.platforms[getSourceById(device.source).platform].name}}">{{$root.platforms[getSourceById(device.source).platform].name}}</span>
+                </span>
+                <span ng-if="device.keyhash != null">
+                    <span class="btn btn-circle btn-icon-only" title="API Key: Attached"><i class="fa fa-key"></i></span>
                 </span>
               </div>
             </div>
@@ -308,9 +315,9 @@
               <label class="control-label col-md-3">Source</label>
               <div class="col-md-9">
                 <div class="input-group">
-                  <ui-select ng-model="$root.devices[deviceForm.index].source" theme="bootstrap" title="Choose a source" on-select="attachRepository($model, deviceForm.udid)">
+                  <ui-select ng-model="deviceForm.source" theme="bootstrap" title="Choose a source" on-select="attachRepository($select.selected.value.sourceId, deviceForm.udid)">
                     <ui-select-match placeholder="Select source in the list..."><div class="badge platform-badge {{$select.selected.value.platform}}-platform-color" style="float: right; margin-top: 2px;">{{$root.platforms[$select.selected.value.platform].name}}</div> {{$select.selected.value.alias}}</ui-select-match>
-                    <ui-select-choices repeat="source.key as (key, source) in $root.sources | filter: { value: { alias: $select.search }}">
+                    <ui-select-choices repeat="source.value.sourceId as (key, source) in $root.sources | filter: { value: { alias: $select.search }}">
                       <div>
                         <span ng-bind-html="source.value.alias | highlight: $select.search"></span>
                         <span class="badge {{source.value.platform}}-platform-color platform-badge">{{$root.platforms[source.value.platform].name}}</span>

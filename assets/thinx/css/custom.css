@@ -174,7 +174,7 @@
 .device-lastseen-label {
   background-color: rgba(38, 194, 129, .08);
   padding: 3px 5px 3px 5px;
-  font-size: 1em;
+  font-size: .8em;
   display: inline-block;
   color: #20b376;
   border: #26c281 solid 1px;
@@ -182,7 +182,7 @@
 .device-mac-label {
   background-color: rgba(128, 128, 128, .08);
   padding: 3px 5px 3px 5px;
-  font-size: 1em;
+  font-size: .8em;
   display: inline-block;
   color: #000000;
   border: rgba(128, 128, 128, .08) solid 1px;
@@ -200,6 +200,8 @@
   font-size: .9em;
 }
 .device-alias {
+  margin-top: 15px;
+  margin-bottom: 15px;
   font-size: 1.2em;
 }
 .device-card {
@@ -380,6 +382,9 @@
 .mongoose-platform-color {
   background-color: #0e7cad !important;
 }
+.unknown-platform-color {
+  background-color: #333333 !important;
+}
 
 .top-list-search {
   margin: 8px;
@@ -457,6 +462,7 @@
 
 .device-block {
   padding: 20px;
+  padding-right: 10px;
 }
 
 .device-block > div {

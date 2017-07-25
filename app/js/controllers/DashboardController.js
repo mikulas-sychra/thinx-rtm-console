@@ -39,11 +39,12 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     // $scope.hideLogOverlay();
 
     $scope.deviceForm = {};
-    $scope.deviceForm.index = null;
+    // $scope.deviceForm.index = null;
     $scope.deviceForm.udid = null;
     $scope.deviceForm.alias = null;
     $scope.deviceForm.platform = null;
     $scope.deviceForm.keyhash = null;
+    $scope.deviceForm.source = null;
 
     $scope.searchText = '';
 
@@ -284,12 +285,19 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     return false;
   }
 
-  $scope.hasSource = function(index) {
-    if (typeof($rootScope.devices[index].source) !== "undefined" &&
-    $rootScope.devices[index].source !== null) {
+  $scope.hasSource = function(device) {
+    if (typeof(device.source) !== "undefined" && device.source !== null) {
       return true;
     }
     return false;
+  }
+
+  $scope.getSourceById = function(sourceId) {
+    for (var index in $rootScope.sources) {
+      if ($rootScope.sources[index].sourceId == sourceId) {
+        return $rootScope.sources[index];
+      }
+    }
   }
 
   $scope.submitDeviceForm = function() {
@@ -413,32 +421,38 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     }
   }
 
-  $scope.openDeviceModal = function(index, event) {
+  $scope.openDeviceModal = function(device, event) {
     event.stopPropagation();
 
     console.log('Resetting modal form values...');
-    $scope.deviceForm.index = index;
-    $scope.deviceForm.udid = $rootScope.devices[index].udid;
-    $scope.deviceForm.alias = $rootScope.devices[index].alias;
+    // $scope.deviceForm.index = index;
+    $scope.deviceForm.udid = device.udid;
+    $scope.deviceForm.alias = device.alias;
 
-    if (typeof($rootScope.devices[index].platform) !== "undefined") {
-      $scope.deviceForm.platform = $rootScope.devices[index].platform;
+    if (typeof(device.platform) !== "undefined") {
+      $scope.deviceForm.platform = device.platform;
     } else {
       $scope.deviceForm.platform = null;
     }
 
-    if (typeof($rootScope.devices[index].keyhash) !== "undefined") {
-      $scope.deviceForm.keyhash = $rootScope.devices[index].keyhash;
+    if (typeof(device.keyhash) !== "undefined") {
+      $scope.deviceForm.keyhash = device.keyhash;
     } else {
       $scope.deviceForm.keyhash = null;
     }
 
+    if (typeof(device.source) !== "undefined") {
+      $scope.deviceForm.source = device.source;
+    } else {
+      $scope.deviceForm.source = null;
+    }
+
     console.log("form vars");
-    console.log("index", $scope.deviceForm.index);
     console.log("udid", $scope.deviceForm.udid);
-    console.log("alias", $scope.deviceForm.alias);
     console.log("platform", $scope.deviceForm.platform);
+    console.log("alias", $scope.deviceForm.alias);
     console.log("keyhash", $scope.deviceForm.keyhash);
+    console.log("source", $scope.deviceForm.source);
 
     $('#deviceModal').modal('show');
   }
