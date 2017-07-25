@@ -13,7 +13,7 @@ angular.module('RTM').controller('ApikeyController', ['$rootScope', '$scope', 's
 
     Thinx.apikeyList()
     .done( function(data) {
-      $scope.$emit("updateKeys", data);
+      $scope.$emit("updateApikeys", data);
     })
     .fail(error => console.log('Error:', error));
 
@@ -49,7 +49,7 @@ angular.module('RTM').controller('ApikeyController', ['$rootScope', '$scope', 's
 
           Thinx.apikeyList()
           .done( function(data) {
-            $scope.$emit("updateKeys", data);;
+            $scope.$emit("updateApikeys", data);;
 
             // save user-spcific goal achievement
             if ($rootScope.apikeys.length > 0 && !$rootScope.profile.info.goals.includes('apikey')) {
@@ -90,7 +90,7 @@ angular.module('RTM').controller('ApikeyController', ['$rootScope', '$scope', 's
         .done( function(data) {
 
           toastr.success('Deleted.', 'THiNX RTM Console', {timeOut: 5000})
-          $scope.$emit("updateKeys", data);;
+          $scope.$emit("updateApikeys", data);;
         })
         .fail(error => console.log('Error:', error));
 
