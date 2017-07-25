@@ -505,7 +505,7 @@
   float: right;
   margin-right: 0px;
   margin-top: 0px;
-  border: 1px solid #DEDEDE;
+  border: 1px solid #CECECE;
   width: 24px;
   height: 24px;
   border-radius: 12px;
@@ -513,7 +513,7 @@
 }
 
 .device-checkarea:hover {
-  border-color: #BEBEBE;
+  border-color: #A4A4A4;
 }
 
 .device-block-control {
