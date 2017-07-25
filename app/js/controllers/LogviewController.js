@@ -17,7 +17,9 @@ angular.module('RTM').controller('LogviewController', ['$rootScope', '$scope', '
           console.log("## Websocket connection estabilished ##");
 
           if (typeof($rootScope.modalBuildId) !== "undefined") {
-            $rootScope.wsstailLog($rootScope.modalBuildId)
+            $rootScope.wsstailLog($rootScope.modalBuildId);
+          } else {
+            $rootScope.wssinit();
           }
         };
         $rootScope.wss.onmessage = function (message) {
@@ -26,7 +28,7 @@ angular.module('RTM').controller('LogviewController', ['$rootScope', '$scope', '
           var msgType = message.data.substr(2, 12);
           if (msgType == "notification") {
             var msgBody = JSON.parse(message.data);
-            toastr.info(msgBody.notification.title, msgBody.notification.body, {timeOut: 2000})
+            toastr.info(msgBody.notification.title, msgBody.notification.body, {timeOut: 5000})
           } else {
 
             // save build data to build buffer
@@ -76,6 +78,14 @@ angular.module('RTM').controller('LogviewController', ['$rootScope', '$scope', '
     // $rootScope.logdata.buffer[$rootScope.modalBuildId] = "";
     $rootScope.logdata[build_id] = "";
     $rootScope.modalBuildId = build_id;
+    $rootScope.wss.send(JSON.stringify(message));
+  }
+
+  $rootScope.wssinit = function() {
+    console.log('-- initializing websocket ')
+    var message = {
+      init: $rootScope.profile.owner
+    }
     $rootScope.wss.send(JSON.stringify(message));
   }
 
