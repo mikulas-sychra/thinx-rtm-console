@@ -28,7 +28,28 @@ angular.module('RTM').controller('LogviewController', ['$rootScope', '$scope', '
           var msgType = message.data.substr(2, 12);
           if (msgType == "notification") {
             var msgBody = JSON.parse(message.data);
-            toastr.info(msgBody.notification.title, msgBody.notification.body, {timeOut: 5000})
+
+            if (msgBody.notification.type == 'info') {
+                toastr.info(msgBody.notification.title, msgBody.notification.body, {
+                  progressBar: true,
+                  closeButton: true,
+                })
+            } else if (msgBody.notification.type == 'action') {
+              if (msgBody.notification.response_type == 'bool') {
+                // show yes/no
+                toastr['info'](msgBody.notification.body + "<br><br>" + msgBody.notification.nid + "<br><br>" + '<div><button type="button" id="okBtn" class="btn btn-success">Yes</button><button type="button" id="cancelBtn" class="btn btn-danger" style="margin: 0 8px 0 8px">Cancel</button></div>',
+                  msgBody.notification.title,
+                  {
+                    timeOut:0,
+                    extendedTimeOut:0,
+                    tapToDismiss: false
+                  }
+                );
+              } else {
+                // show data driven form
+              }
+            }
+
           } else {
 
             // save build data to build buffer
