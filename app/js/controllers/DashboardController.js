@@ -338,7 +338,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     });
   };
 
-  $scope.revokeDevices = function() {
+  $scope.revokeSelected = function() {
     console.log('-- processing selected items --');
     console.log($scope.selectedItems);
 
