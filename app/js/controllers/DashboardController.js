@@ -221,8 +221,8 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
   };
 
 
-  $scope.build = function(deviceUdid, sourceId, index) {
-    console.log('-- building firmware for ' + deviceUdid + '/' + $rootScope.sources[sourceId].alias + ' --');
+  $scope.build = function(deviceUdid, sourceId) {
+    console.log('-- building firmware for ' + deviceUdid + '/' + $scope.getSourceById(sourceId).alias + ' --');
 
     if (typeof($rootScope.meta.builds[deviceUdid]) == "undefined") {
       $rootScope.meta.builds[deviceUdid] = [];
