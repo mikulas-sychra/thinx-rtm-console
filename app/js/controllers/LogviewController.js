@@ -37,7 +37,15 @@ angular.module('RTM').controller('LogviewController', ['$rootScope', '$scope', '
             } else if (msgBody.notification.type == 'action') {
               if (msgBody.notification.response_type == 'bool') {
                 // show yes/no
-                toastr['info'](msgBody.notification.body + "<br><br>" + msgBody.notification.nid + "<br><br>" + '<div><button type="button" id="okBtn" class="btn btn-success">Yes</button><button type="button" id="cancelBtn" class="btn btn-danger" style="margin: 0 8px 0 8px">Cancel</button></div>',
+                toastr['info'](
+                  msgBody.notification.body + "<br><br>" +
+                  msgBody.notification.nid + "<br><br>" +
+                  '<div><button type="button" id="okBtn-' +
+                  msgBody.notification.nid.substring(4) +
+                  '" class="btn btn-success toastr-ok-btn">Yes</button><button type="button" id="cancelBtn-' +
+                  msgBody.notification.nid.substring(4) +
+                  '" class="btn btn-danger toastr-cancel-btn" style="margin: 0 8px 0 8px">Cancel</button></div>',
+
                   msgBody.notification.title,
                   {
                     timeOut:0,
@@ -47,6 +55,13 @@ angular.module('RTM').controller('LogviewController', ['$rootScope', '$scope', '
                 );
               } else {
                 // show data driven form
+                /*
+
+                Notifikace s text-fieldem (vrací string)
+                notification:
+                { nid: "nid:123467", title: "Please respond", body: "What's your name?", type: "action", response_type: "string" }
+
+                */
               }
             }
 
