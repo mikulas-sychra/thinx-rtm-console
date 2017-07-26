@@ -1,9 +1,7 @@
 /* Setup blank page controller */
 angular.module('RTM').controller('LogviewController', ['$rootScope', '$scope', 'settings', function($rootScope, $scope, settings) {
   $scope.$on('$viewContentLoaded', function() {
-
-    console.log('#### Build Log Overlauy init')
-
+    console.log('#### Build Log Overlay init')
   });
 
   function openSocket() {
@@ -25,53 +23,17 @@ angular.module('RTM').controller('LogviewController', ['$rootScope', '$scope', '
         $rootScope.wss.onmessage = function (message) {
           console.log("-> ", message.data);
 
+          // quick check before parsing
           var msgType = message.data.substr(2, 12);
           if (msgType == "notification") {
-            var msgBody = JSON.parse(message.data);
 
-            if (msgBody.notification.type == 'info') {
-                toastr.info(msgBody.notification.title, msgBody.notification.body, {
-                  progressBar: true,
-                  closeButton: true,
-                })
-            } else if (msgBody.notification.type == 'action') {
-              if (msgBody.notification.response_type == 'bool') {
-                // show yes/no
-                toastr['info'](
-                  msgBody.notification.body + "<br><br>" +
-                  msgBody.notification.nid + "<br><br>" +
-                  '<div><button type="button" id="okBtn-' +
-                  msgBody.notification.nid.substring(4) +
-                  '" class="btn btn-success toastr-ok-btn">Yes</button><button type="button" id="cancelBtn-' +
-                  msgBody.notification.nid.substring(4) +
-                  '" class="btn btn-danger toastr-cancel-btn" style="margin: 0 8px 0 8px">Cancel</button></div>',
-
-                  msgBody.notification.title,
-                  {
-                    timeOut:0,
-                    extendedTimeOut:0,
-                    tapToDismiss: false
-                  }
-                );
-              } else {
-                // show data driven form
-                /*
-
-                Notifikace s text-fieldem (vrací string)
-                notification:
-                { nid: "nid:123467", title: "Please respond", body: "What's your name?", type: "action", response_type: "string" }
-
-                */
-              }
-            }
+            parseNotification(message.data);
 
           } else {
-
             // save build data to build buffer
             if (typeof($rootScope.modalBuildId) !== "undefined") {
               $rootScope.logdata[$rootScope.modalBuildId] = $rootScope.logdata[$rootScope.modalBuildId] + "\n" + message.data;
             }
-
             $rootScope.logdata.buffer = $rootScope.logdata.buffer + "\n" + message.data;
           }
         };
@@ -176,5 +138,76 @@ angular.module('RTM').controller('LogviewController', ['$rootScope', '$scope', '
       $rootScope.ws.send(JSON.stringify(message));
     }
   */
+
+  $scope.toastrCancel = function() {
+    alert('test');
+  }
+
+  function parseNotification(data) {
+    var msgBody = JSON.parse(data);
+    var msg = msgBody.notification;
+
+    // determine what to do based on message type
+    if (typeof(msg.type) !== "undefined") {
+
+      switch(msg.type) {
+
+        case 'action':
+          // show toast with dialog
+          if (msg.response_type == 'bool') {
+            toastr['info'](
+              msg.title,
+              msg.body + "<br><br>" +
+              msg.nid + "<br><br>" +
+              '<div><button type="button" id="okBtn-' + msg.nid +
+              '" class="btn btn-success toastr-ok-btn">Yes</button>' +
+              + '<button type="button" id="cancelBtn-' + msg.nid +
+              '" class="btn btn-danger toastr-cancel-btn" style="margin: 0 8px 0 8px">No</button></div>',
+              {
+                timeOut:0,
+                extendedTimeOut:0,
+                tapToDismiss: false,
+                closeButton: false
+              }
+            );
+          } else if (msg.response_type == 'string') {
+            toastr['warning'](
+              msg.title,
+              msg.body + "<br><br>" +
+              msg.nid + "<br><br>" +
+              '<div><input class="input-small" name="reply-' + msg.nid + '" value=""/></div>' +
+              '<div><button type="button" id="sendBtn-' + msg.nid +
+              '" class="btn btn-success toastr-send-btn">Send</button></div>',
+              {
+                timeOut:0,
+                extendedTimeOut:0,
+                tapToDismiss: false,
+                closeButton: true
+              }
+            );
+          };
+          break;
+
+        case 'status':
+          // update devices
+          toastr['info'](JSON.stringify(msg.body), '[device list reload]', {
+            progressBar: true,
+            closeButton: true
+          });
+
+          Thinx.deviceList().done(function(data) {
+            updateDevices(data);
+          })
+          .fail(error => $scope.$emit("xhrFailed", error));
+          break;
+
+        default:
+          toastr[msg.type](JSON.stringify(msg.body), msg.title, {
+            progressBar: true,
+            closeButton: true,
+          });
+      }
+    }
+  }
 
 }]);
