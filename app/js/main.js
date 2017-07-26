@@ -232,6 +232,7 @@ RTM.controller('PageHeadController', ['$scope', function($scope) {
       $('.websocket-badge').fadeOut();
     }, 2000)
   }
+
 }]);
 
 /* Setup Layout Part - Quick Sidebar */
