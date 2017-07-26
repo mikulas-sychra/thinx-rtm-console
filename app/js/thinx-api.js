@@ -201,19 +201,19 @@ function init($rootScope, $scope) {
 
   function submitNotificationResponse(response) {
 
-    var boolResponse = null;
-    var stringResponse = null;
-
-    if (typeof(response) === 'boolean') {
-      boolResponse = response;
-    } else {
-      stringResponse = response;
+    var response_type = "string";
+    if (typeof(response) === "boolean") {
+      response_type = "bool";
     }
 
     return $.ajax({
-      url: urlBase + '/notification/response',
+      url: urlBase + "/device/notification",
       type: 'POST',
-      data: JSON.stringify({boolResponse: boolResponse, stringResponse: stringResponse}),
+      data: JSON.stringify({
+          device: 'nemam-udid',
+          response_type: response_type,
+          response: response
+        }),
       dataType: 'json'
     });
   }
