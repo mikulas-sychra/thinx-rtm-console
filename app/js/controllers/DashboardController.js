@@ -25,7 +25,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
 
     Thinx.deviceList()
     .done(function(data) {
-      updateDevices(data);
+      $scope.$emit("updateDevices", data);
       // save user-spcific goal achievement
       if ($rootScope.devices.length > 0 && !$rootScope.profile.info.goals.includes('enroll')) {
         // TODO enable
@@ -70,13 +70,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
   $rootScope.settings.layout.pageBodySolid = false;
   $rootScope.settings.layout.pageSidebarClosed = false;
 
-  function updateDevices(data) {
-    var devices = JSON.parse(data);
-    $rootScope.devices = devices.devices;
-    $scope.$apply();
-    console.log('devices:');
-    console.log($rootScope.devices);
-  }
+
 
   function updateStats(data) {
 
@@ -316,7 +310,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
           Thinx.deviceList()
           .done(function(data) {
             $('#deviceModal').modal('hide');
-            updateDevices(data);
+            $scope.$emit("updateDevices", data);
           })
           .fail(function(error) {
             console.log('Error:', error);
@@ -362,7 +356,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
         $scope.selectedItems = [];
         Thinx.deviceList()
         .done(function(data) {
-          updateDevices(data);
+          $scope.$emit("updateDevices", data);
         })
         .fail(error =>  $scope.$emit("xhrFailed", error));
 
@@ -386,7 +380,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
         $scope.transferEmail = null;
         Thinx.deviceList()
         .done(function(data) {
-          updateDevices(data);
+          $scope.$emit("updateDevices", data);
           //$('#deviceModal').modal('hide');
         })
         .fail(error =>  $scope.$emit("xhrFailed", error));

@@ -4,6 +4,8 @@ angular.module('RTM').controller('LogviewController', ['$rootScope', '$scope', '
     console.log('#### Build Log Overlay init')
   });
 
+  var actionNotifications = [];
+
   function openSocket() {
     if ("WebSocket" in window) {
       if (typeof($rootScope.wss) == "undefined") {
@@ -150,19 +152,22 @@ angular.module('RTM').controller('LogviewController', ['$rootScope', '$scope', '
     // determine what to do based on message type
     if (typeof(msg.type) !== "undefined") {
 
-      switch(msg.type) {
+      if (msg.type == "action") {
 
-        case 'action':
           // show toast with dialog
+
           if (msg.response_type == 'bool') {
-            toastr['info'](
-              msg.title,
+
+            // YES/NO
+
+            var formToast = toastr['info'](
               msg.body + "<br><br>" +
               msg.nid + "<br><br>" +
               '<div><button type="button" id="okBtn-' + msg.nid +
               '" class="btn btn-success toastr-ok-btn">Yes</button>' +
-              + '<button type="button" id="cancelBtn-' + msg.nid +
+              '<button type="button" id="cancelBtn-' + msg.nid +
               '" class="btn btn-danger toastr-cancel-btn" style="margin: 0 8px 0 8px">No</button></div>',
+              msg.title,
               {
                 timeOut:0,
                 extendedTimeOut:0,
@@ -170,14 +175,29 @@ angular.module('RTM').controller('LogviewController', ['$rootScope', '$scope', '
                 closeButton: false
               }
             );
-          } else if (msg.response_type == 'string') {
-            toastr['warning'](
-              msg.title,
+
+            $('#okBtn-' + msg.nid).on("click", function(e){
+              $(this).parent().slideToggle(500);
+              $scope.$emit("submitNotificationResponse", true);
+            });
+
+            $('#cancelBtn-' + msg.nid).on("click", function(e){
+              $(this).parent().slideToggle(500);
+              $scope.$emit("submitNotificationResponse", false);
+            });
+          }
+
+          if (msg.response_type == 'string') {
+
+            // INPUT string
+
+            var formToast = toastr['warning'](
               msg.body + "<br><br>" +
               msg.nid + "<br><br>" +
-              '<div><input class="input-small" name="reply-' + msg.nid + '" value=""/></div>' +
+              '<div><input class="toastr-input" name="reply-' + msg.nid + '" value=""/></div><br>' +
               '<div><button type="button" id="sendBtn-' + msg.nid +
               '" class="btn btn-success toastr-send-btn">Send</button></div>',
+              msg.title,
               {
                 timeOut:0,
                 extendedTimeOut:0,
@@ -185,29 +205,48 @@ angular.module('RTM').controller('LogviewController', ['$rootScope', '$scope', '
                 closeButton: true
               }
             );
-          };
-          break;
 
-        case 'status':
-          // update devices
-          toastr['info'](JSON.stringify(msg.body), '[device list reload]', {
-            progressBar: true,
-            closeButton: true
+            $('#sendBtn-' + msg.nid).on("click", function(e){
+              $(this).parent().slideToggle(500);
+              $scope.$emit("submitNotificationResponse", $('input[name=reply-' + msg.nid + ']').val());
+            });
+
+          };
+
+        } else if (typeof(msg.body.status) !== 'undefined') {
+
+          // process status message and reload devices
+
+          toastr[msg.type](
+            JSON.stringify(msg.body),
+            'Updating devices list...',
+            {
+              timeOut: 0,
+              tapToDismiss: true,
+              closeButton: false
+            }
+          );
+
+          $scope.$apply(function(){
+            Thinx.deviceList().done(function(data) {
+              $scope.$emit("updateDevices", data);
+            })
+            .fail(error => $scope.$emit("xhrFailed", error));
           });
 
-          Thinx.deviceList().done(function(data) {
-            updateDevices(data);
-          })
-          .fail(error => $scope.$emit("xhrFailed", error));
-          break;
 
-        default:
+        } else {
+
+          // default notification
+
           toastr[msg.type](JSON.stringify(msg.body), msg.title, {
             progressBar: true,
             closeButton: true,
           });
+
+        }
+
       }
     }
-  }
 
 }]);

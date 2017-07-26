@@ -177,6 +177,47 @@ function init($rootScope, $scope) {
     $rootScope.$apply()
   }
 
+  if (typeof($rootScope.updateDevicesListener) == "undefined") {
+        $rootScope.updateDevicesListener = $rootScope.$on('updateDevices', function(event, data){
+        event.stopPropagation();
+        updateDevices(data);
+    });
+  }
+
+  function updateDevices(data) {
+    var devices = JSON.parse(data);
+    $rootScope.devices = devices.devices;
+    $scope.$apply();
+    console.log('devices:');
+    console.log($rootScope.devices);
+  }
+
+  if (typeof($rootScope.submitNotificationResponseListener) == "undefined") {
+        $rootScope.submitNotificationResponseListener = $rootScope.$on('submitNotificationResponse', function(event, data){
+        event.stopPropagation();
+        submitNotificationResponse(data);
+    });
+  }
+
+  function submitNotificationResponse(response) {
+
+    var boolResponse = null;
+    var stringResponse = null;
+
+    if (typeof(response) === 'boolean') {
+      boolResponse = response;
+    } else {
+      stringResponse = response;
+    }
+
+    return $.ajax({
+      url: urlBase + '/notification/response',
+      type: 'POST',
+      data: JSON.stringify({boolResponse: boolResponse, stringResponse: stringResponse}),
+      dataType: 'json'
+    });
+  }
+
   // =================================================
   // api related functions
 
@@ -287,6 +328,8 @@ function init($rootScope, $scope) {
   .fail(error => $scope.$emit("xhrFailed", error));
 
 }
+
+//////////////////////// end of init
 
 function updateTimer() {
   counter--;
