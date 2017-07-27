@@ -219,11 +219,12 @@ angular.module('RTM').controller('LogviewController', ['$rootScope', '$scope', '
 
           toastr[msg.type](
             JSON.stringify(msg.body),
-            'Updating devices list...',
+            'Device Status Update',
             {
-              timeOut: 0,
+              timeOut: 6000,
               tapToDismiss: true,
-              closeButton: false
+              closeButton: true,
+              progressBar: true
             }
           );
 
