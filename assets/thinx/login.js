@@ -27,7 +27,7 @@ var Login = function() {
         }
       },
 
-      invalidHandler: function(event, validator) { //display error alert on form submit
+      invalidHandler: function(event, validator) { // display error alert on form submit
         $('.alert-danger', $('.login-form')).show();
       },
 

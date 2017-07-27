@@ -2,33 +2,36 @@ var PasswordReset = function() {
 
   var urlBase = 'https://rtm.thinx.cloud:7443/api';
 
-  var handleForgetPassword = function() {
-    $('.forget-form').validate({
+  var handleResetPassword = function() {
+    $('.reset-form').validate({
       errorElement: 'span', //default input error message container
       errorClass: 'help-block', // default input error message class
       focusInvalid: false, // do not focus the last invalid input
+      errorLabelContainer: '.msg-error',
       ignore: "",
       rules: {
         password: {
           required: true,
-          equalTo: "#rpassword"
+          minlength: 5
         },
         rpassword: {
-          required: true
+          required: true,
+          equalTo: "#password"
         }
       },
       messages: {
         password: {
-          required: "Password is required.",
-          equalTo: "Passwords must match."
+          required: "Please provide a password",
+          minLength: "Your password must be at least 5 characters long",
         },
         rpassword: {
-          required: "Passwords must match."
+          required: "Please re-type your password",
+          equalTo: "Passwords must match"
         }
       },
 
       invalidHandler: function(event, validator) { //display error alert on form submit
-
+          $('.reset-form .alert-danger').show();
       },
 
       highlight: function(element) { // hightlight error inputs
@@ -54,8 +57,8 @@ var PasswordReset = function() {
         var reset_key = $.getQuery('reset_key');
 
         var data = {
-          password: $('.forget-form input[name=password]').val(),
-          rpassword: $('.forget-form input[name=rpassword]').val(),
+          password: $('.reset-form input[name=password]').val(),
+          rpassword: $('.reset-form input[name=rpassword]').val(),
           owner: owner
         };
 
@@ -86,8 +89,8 @@ var PasswordReset = function() {
             if (typeof(response) !== "undefined") {
               if (response.success) {
                 if (response.status == "password_reset_successful") {
-                  $('.msg-error', $('.forget-form')).hide();
-                  $('.forget-form').hide();
+                  $('.msg-error', $('.reset-form')).hide();
+                  $('.reset-form').hide();
                   $('.msg-success').show();
 
                   console.log('--Redirecting to login--' );
@@ -96,12 +99,12 @@ var PasswordReset = function() {
               } else {
                 console.log(response.status)
                 if (response.status == 'user_not_found') {
-                  $('.msg-error', $('.forget-form')).text('User not found.');
-                  $('.msg-error', $('.forget-form')).show();
+                  $('.msg-error', $('.reset-form')).text('User not found.');
+                  $('.msg-error', $('.reset-form')).show();
                 }
                 if (response.status == 'activated_user_not_found') {
-                  $('.msg-error', $('.forget-form')).text('Activated User not found.');
-                  $('.msg-error', $('.forget-form')).show();
+                  $('.msg-error', $('.reset-form')).text('Activated User not found.');
+                  $('.msg-error', $('.reset-form')).show();
                 }
               }
             }
@@ -110,8 +113,8 @@ var PasswordReset = function() {
           error: function(data) {
             console.log('--password reset request failure--');
 
-            $('.msg-error', $('.forget-form')).text('Server error, try again later.');
-            $('.msg-error', $('.forget-form')).show();
+            $('.msg-error', $('.reset-form')).text('Server error, try again later.');
+            $('.msg-error', $('.reset-form')).show();
 
             console.log(data);
           }
@@ -120,10 +123,10 @@ var PasswordReset = function() {
       }
     });
 
-    $('.forget-form input').keypress(function(e) {
+    $('.reset-form input').keypress(function(e) {
       if (e.which == 13) {
-        if ($('.forget-form').validate().form()) {
-          $('.forget-form').submit();
+        if ($('.reset-form').validate().form()) {
+          $('.reset-form').submit();
         }
         return false;
       }
@@ -135,9 +138,9 @@ var PasswordReset = function() {
     //main function to initiate the module
     init: function() {
       // retrieve GET parameters
-      $('.forget-form').show();
-      $('.show-on-success', $('.forget-form')).hide();
-      handleForgetPassword();
+      $('.reset-form').show();
+      $('.show-on-success', $('.reset-form')).hide();
+      handleResetPassword();
     }
 
   };
