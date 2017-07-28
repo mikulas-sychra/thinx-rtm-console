@@ -334,6 +334,20 @@
                 </div>
               </div>
             </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">Auto Update</label>
+              <div class="col-md-9">
+                <input
+                  bs-switch
+                  ng-model="deviceForm.auto_update"
+                  type="checkbox"
+                  switch-size="tiny"
+                  switch-on-text="On"
+                  switch-off-text="Off"
+                  ng-true-value="true"
+                  ng-false-value="false">
+              </div>
+            </div>
             <div class="form-group last">
               <label class="control-label col-md-3">MQTT Channel</label>
               <div class="col-md-9">

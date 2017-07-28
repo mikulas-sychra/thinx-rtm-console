@@ -45,6 +45,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     $scope.deviceForm.platform = null;
     $scope.deviceForm.keyhash = null;
     $scope.deviceForm.source = null;
+    $scope.deviceForm.auto_update = null;
 
     $scope.searchText = '';
 
@@ -298,7 +299,13 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
 
     console.log('-- changing device: ' + $scope.deviceForm.udid + ' -> ' + $scope.deviceForm.alias + ', ' + $scope.deviceForm.platform + ', ' + $scope.deviceForm.keyhash + ' --');
 
-    Thinx.submitDevice($scope.deviceForm.udid, $scope.deviceForm.alias, $scope.deviceForm.platform, $scope.deviceForm.keyhash)
+    Thinx.submitDevice(
+      $scope.deviceForm.udid,
+      $scope.deviceForm.alias,
+      $scope.deviceForm.platform,
+      $scope.deviceForm.keyhash,
+      $scope.deviceForm.auto_update
+    )
     .done(function(response) {
 
       if (typeof(response) !== "undefined") {
@@ -439,6 +446,12 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
       $scope.deviceForm.source = device.source;
     } else {
       $scope.deviceForm.source = null;
+    }
+
+    if (typeof(device.auto_update) !== "undefined") {
+      $scope.deviceForm.auto_update = device.auto_update;
+    } else {
+      $scope.deviceForm.auto_update = false;
     }
 
     console.log("form vars");
