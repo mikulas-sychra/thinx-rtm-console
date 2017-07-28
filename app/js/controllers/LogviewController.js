@@ -172,7 +172,7 @@ angular.module('RTM').controller('LogviewController', ['$rootScope', '$scope', '
                 timeOut:0,
                 extendedTimeOut:0,
                 tapToDismiss: false,
-                closeButton: false
+                closeButton: true
               }
             );
 
