@@ -5,7 +5,7 @@ var Login = function() {
   var handleLogin = function() {
     $('.login-form').validate({
       errorElement: 'span', //default input error message container
-      errorClass: 'help-block', // default input error message class
+      errorClass: 'help-blockx', // default input error message class
       focusInvalid: false, // do not focus the last invalid input
       rules: {
         username: {
@@ -20,15 +20,15 @@ var Login = function() {
       },
       messages: {
         username: {
-          required: "Username is required."
+          required: "Please enter username"
         },
         password: {
-          required: "Password is required."
+          required: "Please enter uassword"
         }
       },
 
       invalidHandler: function(event, validator) { // display error alert on form submit
-        $('.alert-danger', $('.login-form')).show();
+        $('#login-error').show();
       },
 
       highlight: function(element) { // hightlight error inputs
@@ -67,21 +67,27 @@ var Login = function() {
             var response = JSON.parse(data);
             console.log(response);
             if (typeof(response) !== "undefined") {
+
               if (typeof(response.redirectURL) !== "undefined") {
                 console.log('-- Succes! Redirecting to "' + response.redirectURL + '"--' );
                 window.location = response.redirectURL;
               } else {
                 console.log('-- Error!');
-                $('.msg-error', $('.login-form')).text(response.status);
-                $('.msg-error', $('.login-form')).show();
+                if (response.status == "password_mismatch") {
+                  $('#login-error').text("Username or password does not match");
+                } else {
+                  $('#login-error').text(response.status);
+                }
+                $('#login-error').show();
               }
+
             }
 
           },
           error: function(data) {
-            console.log('--login failure--');
-            $('.msg-error', $('.login-form')).text('Server error, try again later.');
-            $('.msg-error', $('.login-form')).show();
+            console.log('--login or server failure--', data);
+            $('#login-error').text('Username or password does not match');
+            $('#login-error').show();
             console.log(data);
           }
         });
@@ -102,8 +108,9 @@ var Login = function() {
   var handleForgetPassword = function() {
     $('.forget-form').validate({
       errorElement: 'span', //default input error message container
-      errorClass: 'help-block', // default input error message class
+      errorClass: 'help-blockx', // default input error message class
       focusInvalid: false, // do not focus the last invalid input
+      errorLabelContainer: '#forget-error',
       ignore: "",
       rules: {
         email: {
@@ -113,12 +120,12 @@ var Login = function() {
       },
       messages: {
         email: {
-          required: "Email is required."
+          required: "Please enter e-mail"
         }
       },
 
       invalidHandler: function(event, validator) { //display error alert on form submit
-
+        $('#forget-error').show();
       },
 
       highlight: function(element) { // hightlight error inputs
@@ -237,11 +244,11 @@ var Login = function() {
 
     $('.register-form').validate({
       errorElement: 'span', //default input error message container
-      errorClass: 'help-block', // default input error message class
+      errorClass: 'help-blockx', // default input error message class
       focusInvalid: false, // do not focus the last invalid input
       ignore: "",
+      errorLabelContainer: '#register-error',
       rules: {
-
         first_name: {
           required: true
         },
@@ -262,12 +269,12 @@ var Login = function() {
 
       messages: { // custom messages for radio buttons and checkboxes
         tnc: {
-          required: "Please accept TNC first."
+          required: "Please accept TNC first"
         }
       },
 
       invalidHandler: function(event, validator) { //display error alert on form submit
-
+        $('#register-error').show();
       },
 
       highlight: function(element) { // hightlight error inputs

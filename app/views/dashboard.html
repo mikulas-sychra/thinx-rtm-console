@@ -118,16 +118,14 @@
               <div>
                 <div class="device-checkarea" ng-click="checkItem(device.udid)"></div>
                 <div class="device-lastseen-label">{{device.lastupdate | lastSeen}}</div>
-                <div class="device-alias">{{device.alias}}</div>
+                <div class="device-alias"><span class="device-icon"></span> {{device.alias}}</div>
                 <div class="device-mac-label"><span class="mac-label">MAC</span>{{device.mac}}</div>
                 <div ng-if="hasSource(device)" class="device-firmware">{{getSourceById(device.source).alias}}
                   <br>
                   <small>{{device.firmware | limitTo: 32}}{{device.firmware.length > 32 ? '...' : ''}}</small>
                 </div>
                 <div ng-if="!hasSource(device)" class="device-firmware">
-                  Source not attached
-                  <br>
-                  <small>Firmware unknown</small>
+                  Source not attached<br><small>Firmware unknown</small>
                 </div>
                 <div class="device-block-control">
                   <a class="btn btn-circle btn-icon-only btn-default" ng-click="openDeviceModal(device, $event)" title="Device Settings">
