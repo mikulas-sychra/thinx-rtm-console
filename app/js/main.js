@@ -89,6 +89,7 @@ RTM.factory('settings', ['$rootScope', function($rootScope) {
     'nodemcu': {name: 'NodeMCU'},
     'micropython': {name: 'Micropython'},
     'mongoose': {name: 'MongooseOS'},
+    'nodejs': {name: 'NodeJS'},
     'unknown': {name: 'Platform Unknown'}
   };
 

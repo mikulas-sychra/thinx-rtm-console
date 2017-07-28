@@ -385,7 +385,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="control-label col-md-3">Keep API Keys</label>
+              <label class="control-label col-md-3">Keep API Keys?</label>
               <div class="col-md-9">
                 <input
                   bs-switch
@@ -400,11 +400,12 @@
                   ng-false-value="false">
               </div>
             </div>
-            <div class="alert alert-warning" ng-if="!transferForm.mig_apikeys">
-              <strong>Warning!</strong> You are about to transfer API Key, that is shared across devices. Generate new key for transfer or those devices will loose access when transfer is completed.
+            <div class="alert alert-warning" ng-if="!transferForm.mig_apikeys && isSharedKey()">
+              <strong>Warning!</strong> You are about to transfer API Key, that is shared across multiple devices.<br>
+              Generate dedicated keys before transfer to keep access to all your devices when transfer is completed.
             </div>
             <div class="form-group">
-              <label class="control-label col-md-3">Copy Sources</label>
+              <label class="control-label col-md-3">Copy Sources?</label>
               <div class="col-md-9">
                 <input
                   bs-switch
@@ -419,13 +420,13 @@
             </div>
             <div class="alert alert-info" ng-if="transferForm.mig_sources">
               Links to selected public or private repositories will be copied into target account.<br>
-              Access to private repositories has to be resolved by adding valid RSA Key to target account.
+              Access to private repositories has to be resolved by adding <b>valid RSA Key to target account</b>.
             </div>
           </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-danger" ng-click="transferDevices()"><i class="fa fa-exchange"></i> Transfer</button>
+          <button type="button" class="btn btn-primary" ng-click="transferDevices()"><i class="fa fa-exchange"></i> Transfer</button>
         </div>
       </div>
     </div>

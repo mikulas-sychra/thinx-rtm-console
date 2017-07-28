@@ -383,6 +383,9 @@
 .mongoose-platform-color {
   background-color: #0e7cad !important;
 }
+.nodejs-platform-color {
+  background-color: #8ec64b !important;
+}
 .unknown-platform-color {
   background-color: #333333 !important;
 }
