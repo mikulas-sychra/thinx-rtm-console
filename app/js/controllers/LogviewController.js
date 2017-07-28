@@ -152,7 +152,7 @@ angular.module('RTM').controller('LogviewController', ['$rootScope', '$scope', '
     // determine what to do based on message type
     if (typeof(msg.type) !== "undefined") {
 
-      if (msg.type == "action") {
+      if (msg.type == "actionable") {
 
           // show toast with dialog
 
