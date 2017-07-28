@@ -379,10 +379,29 @@
         <div class="modal-body">
           <form action="#" class="form-horizontal">
             <div class="form-group">
-              <label class="control-label col-md-3">Email</label>
+              <label class="control-label col-md-3">Target Account</label>
               <div class="col-md-9">
-                <input type="text" ng-model="transferForm.email" class="form-control" />
+                <input type="text" ng-model="transferForm.email" class="form-control" placeholder="E-mail" />
               </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">Keep API Keys</label>
+              <div class="col-md-9">
+                <input
+                  bs-switch
+                  ng-model="transferForm.mig_apikeys"
+                  type="checkbox"
+                  switch-size="tiny"
+                  switch-on-text="Yes"
+                  switch-on-color="primary"
+                  switch-off-text="No"
+                  switch-off-color="danger"
+                  ng-true-value="true"
+                  ng-false-value="false">
+              </div>
+            </div>
+            <div class="alert alert-warning" ng-if="!transferForm.mig_apikeys">
+              <strong>Warning!</strong> You are about to transfer API Key, that is shared across devices. Generate new key for transfer or those devices will loose access when transfer is completed.
             </div>
             <div class="form-group">
               <label class="control-label col-md-3">Copy Sources</label>
@@ -398,19 +417,9 @@
                   ng-false-value="false">
               </div>
             </div>
-            <div class="form-group">
-              <label class="control-label col-md-3">Migrate Apikeys</label>
-              <div class="col-md-9">
-                <input
-                  bs-switch
-                  ng-model="transferForm.mig_apikeys"
-                  type="checkbox"
-                  switch-size="tiny"
-                  switch-on-text="Yes"
-                  switch-off-text="No"
-                  ng-true-value="true"
-                  ng-false-value="false">
-              </div>
+            <div class="alert alert-info" ng-if="transferForm.mig_sources">
+              Links to selected public or private repositories will be copied into target account.<br>
+              Access to private repositories has to be resolved by adding valid RSA Key to target account.
             </div>
           </form>
         </div>

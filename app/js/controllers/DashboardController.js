@@ -50,7 +50,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     $scope.transferForm = {};
     $scope.transferForm.email = null;
     $scope.transferForm.mig_sources = false;
-    $scope.transferForm.mig_apikeys = false;
+    $scope.transferForm.mig_apikeys = true;
 
     $scope.searchText = '';
     $scope.selectedItems = [];
@@ -387,7 +387,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
         $scope.selectedItems = [];
         $scope.transferForm.email = null;
         $scope.transferForm.mig_sources = false;
-        $scope.transferForm.mig_apikeys = false;
+        $scope.transferForm.mig_apikeys = true;
 
         Thinx.deviceList()
         .done(function(data) {
@@ -473,7 +473,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
 
     $scope.transferForm.email = null;
     $scope.transferForm.mig_sources = false;
-    $scope.transferForm.mig_apikeys = false;
+    $scope.transferForm.mig_apikeys = true;
 
     $('#transferModal').modal('show');
   }
