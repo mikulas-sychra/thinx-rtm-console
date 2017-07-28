@@ -47,10 +47,13 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     $scope.deviceForm.source = null;
     $scope.deviceForm.auto_update = null;
 
-    $scope.searchText = '';
+    $scope.transferForm = {};
+    $scope.transferForm.email = null;
+    $scope.transferForm.mig_sources = false;
+    $scope.transferForm.mig_apikeys = false;
 
+    $scope.searchText = '';
     $scope.selectedItems = [];
-    $scope.transferEmail = null;
   });
 
   $scope.list = {};
@@ -72,9 +75,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
   $rootScope.settings.layout.pageSidebarClosed = false;
 
 
-
   function updateStats(data) {
-
     // sparkline stats defaults
     $rootScope.stats = {
       daily: [
@@ -374,17 +375,20 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     .fail(error => $scope.$emit("xhrFailed", error));
   }
 
-  function transferDevices(email, deviceUdids) {
+  function transferDevices(transferForm, deviceUdids) {
     console.log('--transferring devices ' + deviceUdids.length +'--')
 
-    Thinx.transferDevices(email, deviceUdids)
+    Thinx.transferDevices(transferForm, deviceUdids)
     .done(function(data) {
       if (data.success) {
         console.log('Success:', data);
         toastr.success('Devices Transferred.', 'THiNX RTM Console', {timeOut: 5000})
 
         $scope.selectedItems = [];
-        $scope.transferEmail = null;
+        $scope.transferForm.email = null;
+        $scope.transferForm.mig_sources = false;
+        $scope.transferForm.mig_apikeys = false;
+
         Thinx.deviceList()
         .done(function(data) {
           $scope.$emit("updateDevices", data);
@@ -405,7 +409,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
 
     var selectedToTransfer = $scope.selectedItems.slice();
     if (selectedToTransfer.length > 0) {
-      transferDevices($scope.transferEmail, selectedToTransfer);
+      transferDevices($scope.transferForm, selectedToTransfer);
     } else {
       toastr.warning('Nothing selected.', 'THiNX RTM Console', {timeOut: 1000})
     }
@@ -466,7 +470,11 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
 
   $scope.openTransferModal = function() {
     console.log('Resetting transfer modal form values...');
-    $scope.transferEmail = null;
+
+    $scope.transferForm.email = null;
+    $scope.transferForm.mig_sources = false;
+    $scope.transferForm.mig_apikeys = false;
+
     $('#transferModal').modal('show');
   }
 
