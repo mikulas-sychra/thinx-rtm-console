@@ -475,6 +475,12 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     $scope.transferForm.mig_sources = false;
     $scope.transferForm.mig_apikeys = true;
 
+    $('#transferModal').modal('show');
+  }
+
+  $scope.isSharedKey = function() {
+
+    // check if some of selected devices using shared apikeys
     var deviceKeyhashes = [];
     var transferDeviceKeyhashes = [];
     for (var index in $rootScope.devices) {
@@ -486,38 +492,19 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
       }
       deviceKeyhashes.push($rootScope.devices[index].udid);
     }
-
     console.log('deviceKeyhashes', deviceKeyhashes);
     console.log('transferDeviceKeyhashes', transferDeviceKeyhashes);
 
-    uniqueArray = a.filter(function(item, pos) {
-    return a.indexOf(item) == pos;
-  })
+    // TODO: find duplicated items in deviceKeyhashes and find if some of them are in transferDeviceKeyhashes
+    // if so, return true
 
-    var keyhashMap = $rootScope.devices.map(function (device) {
-      if (device.keyhash != null) {
-        return device.keyhash;
-      }
-    });
-
-    console.log('keyhashMap', keyhashMap);
-
-
-
-// apikeys hash
-// devices keyhash
-
-    // for (var index in $scope.devices) {
-
-
-
-    // }
-
-    $('#transferModal').modal('show');
-  }
-
-  $scope.isSharedKey = function() {
     return true;
+
+    // var uniqueArray = deviceKeyhashes.filter(function(item, pos) {
+      // return deviceKeyhashes.indexOf(item) == pos;
+    // });
+    // console.log('uniqueArray', uniqueArray);
+
   }
 
   $scope.journeyClass = function(goal) {
