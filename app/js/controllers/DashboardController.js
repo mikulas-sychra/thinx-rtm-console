@@ -46,6 +46,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     $scope.deviceForm.keyhash = null;
     $scope.deviceForm.source = null;
     $scope.deviceForm.auto_update = null;
+    $scope.deviceForm.description = null;
 
     $scope.transferForm = {};
     $scope.transferForm.email = null;
@@ -305,6 +306,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
       $scope.deviceForm.alias,
       $scope.deviceForm.platform,
       $scope.deviceForm.keyhash,
+      $scope.deviceForm.description,
       $scope.deviceForm.auto_update
     )
     .done(function(response) {
@@ -433,6 +435,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     // $scope.deviceForm.index = index;
     $scope.deviceForm.udid = device.udid;
     $scope.deviceForm.alias = device.alias;
+    $scope.deviceForm.description = device.description;
 
     if (typeof(device.platform) !== "undefined") {
       $scope.deviceForm.platform = device.platform;
