@@ -462,6 +462,7 @@
 }
 
 .device-block {
+  border: 1px solid transparent;
   padding: 20px;
   /*padding-right: 10px;*/
 }
