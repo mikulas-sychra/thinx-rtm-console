@@ -475,7 +475,49 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     $scope.transferForm.mig_sources = false;
     $scope.transferForm.mig_apikeys = true;
 
+    var deviceKeyhashes = [];
+    var transferDeviceKeyhashes = [];
+    for (var index in $rootScope.devices) {
+      if ($scope.selectedItems.indexOf($rootScope.devices[index].udid) > -1) {
+        // this is selected device
+        transferDeviceKeyhashes.push($rootScope.devices[index].udid);
+      } else {
+        // this is non selected
+      }
+      deviceKeyhashes.push($rootScope.devices[index].udid);
+    }
+
+    console.log('deviceKeyhashes', deviceKeyhashes);
+    console.log('transferDeviceKeyhashes', transferDeviceKeyhashes);
+
+    uniqueArray = a.filter(function(item, pos) {
+    return a.indexOf(item) == pos;
+  })
+
+    var keyhashMap = $rootScope.devices.map(function (device) {
+      if (device.keyhash != null) {
+        return device.keyhash;
+      }
+    });
+
+    console.log('keyhashMap', keyhashMap);
+
+
+
+// apikeys hash
+// devices keyhash
+
+    // for (var index in $scope.devices) {
+
+
+
+    // }
+
     $('#transferModal').modal('show');
+  }
+
+  $scope.isSharedKey = function() {
+    return true;
   }
 
   $scope.journeyClass = function(goal) {
