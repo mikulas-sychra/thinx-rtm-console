@@ -47,6 +47,8 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     $scope.deviceForm.source = null;
     $scope.deviceForm.auto_update = null;
     $scope.deviceForm.description = null;
+    $scope.deviceForm.category = null;
+    $scope.deviceForm.tags = null;
 
     $scope.transferForm = {};
     $scope.transferForm.email = null;
@@ -301,14 +303,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
 
     console.log('-- changing device: ' + $scope.deviceForm.udid + ' -> ' + $scope.deviceForm.alias + ', ' + $scope.deviceForm.platform + ', ' + $scope.deviceForm.keyhash + ' --');
 
-    Thinx.submitDevice(
-      $scope.deviceForm.udid,
-      $scope.deviceForm.alias,
-      $scope.deviceForm.platform,
-      $scope.deviceForm.keyhash,
-      $scope.deviceForm.description,
-      $scope.deviceForm.auto_update
-    )
+    Thinx.submitDevice($scope.deviceForm)
     .done(function(response) {
 
       if (typeof(response) !== "undefined") {
@@ -461,13 +456,19 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
       $scope.deviceForm.auto_update = false;
     }
 
-    console.log("form vars");
-    console.log("udid", $scope.deviceForm.udid);
-    console.log("platform", $scope.deviceForm.platform);
-    console.log("alias", $scope.deviceForm.alias);
-    console.log("keyhash", $scope.deviceForm.keyhash);
-    console.log("source", $scope.deviceForm.source);
+    if (typeof(device.category) !== "undefined") {
+      $scope.deviceForm.category = device.category;
+    } else {
+      $scope.deviceForm.category = null;
+    }
 
+    if (typeof(device.tags) !== "undefined") {
+      $scope.deviceForm.tags = device.tags;
+    } else {
+      $scope.deviceForm.tags = null;
+    }
+
+    console.log("form vars", $scope.deviceForm);
     $('#deviceModal').modal('show');
   }
 
