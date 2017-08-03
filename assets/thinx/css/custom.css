@@ -577,3 +577,32 @@
 #toast-container > div {
   background-position: 15px 13px;
 }
+
+.color-dot-out {
+  width: 10px;
+  height: 32px;
+  display: inline-block;
+  margin-left: -12px;
+  margin-right: 10px;
+  margin-top: -6px;
+}
+
+.color-dot {
+  width: 10px;
+  height: 25px;
+  display: inline-block;
+  /* margin-left: -12px; */
+  /* margin-right: 10px; */
+  margin-top: 0px;
+  position: absolute;
+  /* top: 0; */
+  left: 0;
+}
+
+.color-ribbon-vert {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 100%;
+}

@@ -54,8 +54,8 @@ var Thinx = {
   deviceList: function () {
     return deviceList();
   },
-  submitDevice: function (deviceUdid, deviceAlias, devicePlatform, deviceKeyhash, description, auto_update) {
-    return submitDevice(deviceUdid, deviceAlias, devicePlatform, deviceKeyhash, description, auto_update);
+  submitDevice: function (deviceForm) {
+    return submitDevice(deviceForm);
   },
   revokeDevice: function (deviceUdid) {
     return revokeDevice(deviceUdid);
@@ -352,15 +352,17 @@ function deviceList() {
   });
 }
 
-function submitDevice(deviceId, deviceAlias, devicePlatform, deviceKeyhash, description, auto_update) {
+function submitDevice(deviceForm) {
   var data = JSON.stringify({
     changes: {
-      udid: deviceId,
-      alias: deviceAlias,
-      platform: devicePlatform,
-      keyhash: deviceKeyhash,
-      description: description,
-      auto_update: auto_update
+      udid: deviceForm.udid,
+      alias: deviceForm.alias,
+      platform: deviceForm.platform,
+      keyhash: deviceForm.keyhash,
+      description: deviceForm.description,
+      auto_update: deviceForm.auto_update,
+      category: deviceForm.category,
+      tags: deviceForm.tags
     }
   });
   return $.ajax({
