@@ -58,24 +58,32 @@
           <!-- STAT -->
           <div class="row list-separated profile-stat">
               <div class="col-md-4 col-sm-4 col-xs-6">
-                <div ng-show="$root.profile.info.goals.includes('update')" class="text-center">
-                  <span class="lott-badge"></span>
+                <div ng-if="$root.profile.info.goals.includes('update')" class="text-center">
+                  <span class="goal-badge lott-badge"></span>
                   <div class="uppercase profile-stat-text">Lord of the THiNX</div>
                 </div>
-                <div ng-hide="$root.profile.info.goals.includes('update')" class="text-center">
-                  <span class="locked-badge"></span>
+                <div ng-if="!$root.profile.info.goals.includes('update')" class="text-center">
+                  <span class="goal-badge locked-badge"></span>
                   <div class="uppercase profile-stat-text">Locked</div>
                 </div>
               </div>
               <div class="col-md-4 col-sm-4 col-xs-6">
-                <div ng-hide="$root.profile.info.goals.includes('goal2')" class="text-center">
-                  <span class="locked-badge"></span>
+                <div ng-if="$root.profile.info.goals.includes('tester')" class="text-center">
+                  <span class="goal-badge tester-badge"></span>
+                  <div class="uppercase profile-stat-text">Beta Tester</div>
+                </div>
+                <div ng-if="!$root.profile.info.goals.includes('tester')" class="text-center">
+                  <span class="goal-badge locked-badge"></span>
                   <div class="uppercase profile-stat-text">Locked</div>
                 </div>
               </div>
               <div class="col-md-4 col-sm-4 col-xs-6">
-                <div ng-hide="$root.profile.info.goals.includes('goal3')" class="text-center">
-                  <span class="locked-badge"></span>
+                <div ng-if="$root.profile.info.goals.includes('contributor')" class="text-center">
+                  <span class="goal-badge contributor-badge"></span>
+                  <div class="uppercase profile-stat-text">Contributor</div>
+                </div>
+                <div ng-if="!$root.profile.info.goals.includes('contributor')" class="text-center">
+                  <span class="goal-badge locked-badge"></span>
                   <div class="uppercase profile-stat-text">Locked</div>
                 </div>
               </div>
