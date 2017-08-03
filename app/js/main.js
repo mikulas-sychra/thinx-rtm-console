@@ -93,6 +93,16 @@ RTM.factory('settings', ['$rootScope', function($rootScope) {
     'unknown': {name: 'Platform Unknown'}
   };
 
+  $rootScope.categories = {
+    'yellow-crusta': {name: 'yellow-crusta'},
+    'red-intense': {name: 'red-intense'},
+    'purple-studio': {name: 'purple-studio'},
+    'blue': {name: 'blue'},
+    'green': {name: 'green'},
+    'green-dark': {name: 'green-dark'},
+    'grey-mint': {name: 'grey-mint'},
+  };
+
   $rootScope.profile = {
     avatar: '/assets/thinx/img/default_avatar_sm.png',
     info: {
