@@ -465,6 +465,26 @@
   margin-top: 20px;
 }
 
+.lott-badge {
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+  background-image: url(/assets/thinx/img/goals/medal_master.png);
+  background-size: cover;
+  vertical-align: middle;
+  margin: 10px;
+}
+
+.locked-badge {
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+  background-image: url(/assets/thinx/img/goals/medal_locked.png);
+  background-size: cover;
+  vertical-align: middle;
+  margin: 10px;
+}
+
 .device-block {
   border: 1px solid transparent;
   padding: 20px;
