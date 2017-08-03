@@ -132,7 +132,7 @@
                   <a class="btn btn-circle btn-icon-only btn-default" ng-click="openDeviceModal(device, $event)" title="Device Settings">
                     <i class="fa fa-pencil"></i>
                   </a>
-                  <a class="btn btn-circle btn-icon-only btn-default" href="#" ng-if="hasSource(device)" ng-click="build(device.udid, device.source); $event.stopPropagation()" ng-hide="hasBuildId(device.udid) == null"  title="Build From Source">
+                  <a class="btn btn-circle btn-icon-only btn-default" href="#" ng-if="hasSource(device) && getSourceById(device.source).platform != 'nodejs'" ng-click="build(device.udid, device.source); $event.stopPropagation()" ng-hide="hasBuildId(device.udid) == null"  title="Build From Source">
                     <i class="fa fa-cogs"></i>
                   </a>
                   <span ng-if="hasBuildId(device.udid) == null" ng-disabled="true" class="btn btn-circle">
