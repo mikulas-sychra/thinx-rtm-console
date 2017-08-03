@@ -465,6 +465,31 @@
   margin-top: 20px;
 }
 
+.goal-badge {
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+  background-size: cover;
+  vertical-align: middle;
+  margin: 10px;
+}
+
+.lott-badge {
+  background-image: url(/assets/thinx/img/goals/medal_master.png);
+}
+
+.tester-badge {
+  background-image: url(/assets/thinx/img/goals/medal_tester.png);
+}
+
+.contributor-badge {
+  background-image: url(/assets/thinx/img/goals/medal_contributor.png);
+}
+
+.locked-badge {
+  background-image: url(/assets/thinx/img/goals/medal_locked.png);
+}
+
 .device-block {
   border: 1px solid transparent;
   padding: 20px;
