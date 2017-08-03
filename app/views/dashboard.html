@@ -94,13 +94,7 @@
         </div>
         <div class="portlet-body">
           <div class="row" style="padding-left: 20px; padding-right: 20px;">
-            <div class="btn-group pull-left">
-              <span class="input-icon right">
-                <i class="icon-magnifier"></i>
-                <input type="text" style="width: 150px; display: inline-block;" class="form-control form-control-solid" ng-model="list.searchText" placeholder="Search...">
-              </span>
-            </div>
-            <div class="btn-group dropdown open pull-right" uib-dropdown="">
+            <div class="btn-group dropdown open pull-left" uib-dropdown="">
               <button id="split-button" type="button" class="btn btn-default" ng-click="list.reverse = !list.reverse"><small>ORDER BY</small> {{list.orderBy.alias}}</button>
               <button type="button" class="btn btn-default dropdown-toggle" uib-dropdown-toggle="" aria-haspopup="true" aria-expanded="true">
                 <span class="caret"></span>
@@ -112,6 +106,13 @@
                 </li>
               </ul>
             </div>
+            <div class="btn-group pull-right">
+              <span class="input-icon right">
+                <i class="icon-magnifier"></i>
+                <input type="text" style="width: 150px; display: inline-block;" class="form-control form-control-solid" ng-model="list.searchText" placeholder="Search...">
+              </span>
+            </div>
+
           </div>
           <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 device-block"  ng-repeat="device in $root.devices | propsFilter:{'alias':list.searchText, 'mac':list.searchText} | orderBy:list.orderBy.prop:list.reverse track by device.udid"  ng-class="selectedItems.indexOf(device.udid) > -1 ? 'selected-block' : ''">
