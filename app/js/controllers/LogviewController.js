@@ -172,7 +172,10 @@ angular.module('RTM').controller('LogviewController', ['$rootScope', '$scope', '
                 timeOut:0,
                 extendedTimeOut:0,
                 tapToDismiss: false,
-                closeButton: true
+                closeButton: true,
+                closeMethod: 'fadeOut',
+                closeDuration: 300,
+                closeEasing: 'swing'
               }
             );
 
@@ -202,7 +205,10 @@ angular.module('RTM').controller('LogviewController', ['$rootScope', '$scope', '
                 timeOut:0,
                 extendedTimeOut:0,
                 tapToDismiss: false,
-                closeButton: true
+                closeButton: true,
+                closeMethod: 'fadeOut',
+                closeDuration: 300,
+                closeEasing: 'swing'
               }
             );
 
@@ -224,6 +230,9 @@ angular.module('RTM').controller('LogviewController', ['$rootScope', '$scope', '
               timeOut: 6000,
               tapToDismiss: true,
               closeButton: true,
+              closeMethod: 'fadeOut',
+              closeDuration: 300,
+              closeEasing: 'swing',
               progressBar: true
             }
           );
@@ -243,6 +252,9 @@ angular.module('RTM').controller('LogviewController', ['$rootScope', '$scope', '
           toastr[msg.type](JSON.stringify(msg.body), msg.title, {
             progressBar: true,
             closeButton: true,
+            closeMethod: 'fadeOut',
+            closeDuration: 300,
+            closeEasing: 'swing'
           });
 
         }

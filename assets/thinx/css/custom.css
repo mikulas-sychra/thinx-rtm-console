@@ -548,3 +548,7 @@
   height: 48px;
   background-color: rgba(0, 0, 0, 0.3);
 }
+
+#toast-container > div {
+  background-position: 15px 13px;
+}
