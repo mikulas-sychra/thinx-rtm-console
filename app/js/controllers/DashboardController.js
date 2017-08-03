@@ -314,7 +314,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
       if (typeof(response) !== "undefined") {
         if (typeof(response.success) !== "undefined" && response.success) {
           console.log(response);
-          toastr.success('Alias updated.', 'THiNX RTM Console', {timeOut: 5000})
+          toastr.success('Device settings updated.', 'THiNX RTM Console', {timeOut: 5000})
 
           console.log('-- refreshing devices --');
           Thinx.deviceList()
