@@ -67,7 +67,6 @@ var Login = function() {
             var response = JSON.parse(data);
             console.log(response);
             if (typeof(response) !== "undefined") {
-
               if (typeof(response.redirectURL) !== "undefined") {
                 console.log('-- Succes! Redirecting to "' + response.redirectURL + '"--' );
                 window.location = response.redirectURL;
@@ -80,9 +79,7 @@ var Login = function() {
                 }
                 $('#login-error').show();
               }
-
             }
-
           },
           error: function(data) {
             console.log('--login or server failure--', data);
@@ -91,7 +88,6 @@ var Login = function() {
             console.log(data);
           }
         });
-
       }
     });
 
@@ -161,8 +157,8 @@ var Login = function() {
             }
 
             if (typeof(response) !== "undefined") {
-              if (response.success || response.status == 'email_sent') {
-                console.log(response.status)
+              console.log(response)
+              if (response.success) {
                 if (response.status == 'email_sent') {
                   $('.msg-error', $('.forget-form')).hide();
                   $('.forget-form').hide();
@@ -170,7 +166,6 @@ var Login = function() {
                   $('.msg-success').show();
                 }
               } else {
-                console.log(response.status)
                 if (response.status == 'email_not_found') {
                   $('.msg-error', $('.forget-form')).text('Email not found.');
                   $('.msg-error', $('.forget-form')).show();
@@ -181,12 +176,9 @@ var Login = function() {
           },
           error: function(data) {
             console.log('--password reset request failure--');
-
             console.log(data);
-
             $('.msg-error').text('Server error, try again later.');
             $('.msg-error').show();
-
           }
         });
       }
@@ -216,32 +208,6 @@ var Login = function() {
 
   var handleRegister = function() {
 
-    function format(state) {
-      if (!state.id) { return state.text; }
-      var $state = $(
-        '<span><img src="../assets/global/img/flags/' + state.element.value.toLowerCase() + '.png" class="img-flag" /> ' + state.text + '</span>'
-      );
-
-      return $state;
-    }
-
-    if (jQuery().select2 && $('#country_list').size() > 0) {
-      $("#country_list").select2({
-        placeholder: '<i class="fa fa-map-marker"></i>&nbsp;Select a Country',
-        templateResult: format,
-        templateSelection: format,
-        width: 'auto',
-        escapeMarkup: function(m) {
-          return m;
-        }
-      });
-
-
-      $('#country_list').change(function() {
-        $('.register-form').validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
-      });
-    }
-
     $('.register-form').validate({
       errorElement: 'span', //default input error message container
       errorClass: 'help-blockx', // default input error message class
@@ -269,7 +235,7 @@ var Login = function() {
 
       messages: { // custom messages for radio buttons and checkboxes
         tnc: {
-          required: "Please accept TNC first"
+          required: "Please accept T&C first"
         }
       },
 
@@ -312,19 +278,21 @@ var Login = function() {
           type: 'POST',
           datatype: 'json',
           success: function(data) {
-            console.log('--user create request success--');
+            console.log('--user create response--');
 
             try {
               var response = JSON.parse(data);
+              console.log('response', response)
             }
             catch(e) {
-              console.log(e);
+              console.log('error', e);
+              console.log('data', data)
             }
 
             if (typeof(response) !== "undefined") {
+
               if (response.success) {
-                console.log(response.status)
-                if (response.status == 'email_sent') {
+                if (response.status.status == 'email_sent') {
                   $('.msg-error', $('.register-form')).hide();
                   $('.register-form').hide();
 
@@ -332,8 +300,7 @@ var Login = function() {
                   $('.msg-success').show();
                 }
               } else {
-                console.log(response.status)
-                if (response.status == 'activation_failed') {
+                if (response.status.status == 'activation_failed') {
                   $('.msg-error', $('.register-form')).text('Registration failed.');
                   $('.msg-error', $('.register-form')).show();
                 }
