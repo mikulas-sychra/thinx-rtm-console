@@ -1,5 +1,5 @@
 /* Setup blank page controller */
-angular.module('RTM').controller('HistoryController', ['$rootScope', '$scope', 'settings', function($rootScope, $scope, settings) {
+angular.module('RTM').controller('HistoryController', ['$rootScope', '$scope', 'settings', '$stateParams', function($rootScope, $scope, settings, $stateParams) {
   $scope.$on('$viewContentLoaded', function() {
     // initialize core components
     App.initAjax();
@@ -12,8 +12,10 @@ angular.module('RTM').controller('HistoryController', ['$rootScope', '$scope', '
     Thinx.init($rootScope, $scope);
 
     $scope.searchText = '';
-  });
 
-  $scope.searchText = '';
+    var tab = $stateParams.tab;
+    $('[data-target="#tab_' + tab + '"]').parent().addClass("active");
+    $('#tab_' + tab).addClass("active");
+  });
 
 }]);

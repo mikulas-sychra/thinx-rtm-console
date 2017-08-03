@@ -385,7 +385,12 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 
   // Rsakey Page
   .state('history', {
-    url: "/history",
+    url: "/history:tab",
+    params: {
+      tab: {
+        value: 'auditlog'
+      }
+    },
     templateUrl: "views/history.html",
     data: {pageTitle: 'History'},
     controller: "HistoryController",
