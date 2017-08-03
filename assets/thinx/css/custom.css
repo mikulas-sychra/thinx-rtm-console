@@ -572,6 +572,7 @@
   width: 48px;
   height: 48px;
   background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
 }
 
 #toast-container > div {
@@ -606,3 +607,7 @@
   width: 10px;
   height: 100%;
 }
+
+/*.toast-top-right {
+  top: 77px !important;
+}*/
