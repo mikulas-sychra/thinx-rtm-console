@@ -12,6 +12,7 @@ var RTM = angular.module("RTM", [
   "tandibar/ng-rollbar",
   "luegg.directives",
   "frapontillo.bootstrap-switch",
+  "bootstrap-tagsinput"
 ]);
 
 RTM.config(['RollbarProvider', function(RollbarProvider) {
@@ -296,6 +297,9 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
             '../assets/thinx/js/plugins/ui-select/select.min.css',
             '../assets/thinx/js/plugins/ui-select/select.js',
             '../assets/global/plugins/clipboardjs/clipboard.js',
+
+            '../assets/global/plugins/typeahead/typeahead.css',
+            '../assets/global/plugins/typeahead/typeahead.bundle.min.js',
 
             '../assets/thinx/js/dashboard.js',
 

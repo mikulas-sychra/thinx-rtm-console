@@ -38,26 +38,51 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
 
     // $scope.hideLogOverlay();
 
-    $scope.deviceForm = {};
-    // $scope.deviceForm.index = null;
-    $scope.deviceForm.udid = null;
-    $scope.deviceForm.alias = null;
-    $scope.deviceForm.platform = null;
-    $scope.deviceForm.keyhash = null;
-    $scope.deviceForm.source = null;
-    $scope.deviceForm.auto_update = null;
-    $scope.deviceForm.description = null;
-    $scope.deviceForm.category = null;
-    $scope.deviceForm.tags = null;
-
-    $scope.transferForm = {};
-    $scope.transferForm.email = null;
-    $scope.transferForm.mig_sources = false;
-    $scope.transferForm.mig_apikeys = true;
 
     $scope.searchText = '';
     $scope.selectedItems = [];
   });
+
+  $scope.deviceForm = {};
+  // $scope.deviceForm.index = null;
+  $scope.deviceForm.udid = null;
+  $scope.deviceForm.alias = null;
+  $scope.deviceForm.platform = null;
+  $scope.deviceForm.keyhash = null;
+  $scope.deviceForm.source = null;
+  $scope.deviceForm.auto_update = null;
+  $scope.deviceForm.description = null;
+  $scope.deviceForm.category = null;
+  $scope.deviceForm.tags = [];
+
+  $scope.transferForm = {};
+  $scope.transferForm.email = null;
+  $scope.transferForm.mig_sources = false;
+  $scope.transferForm.mig_apikeys = true;
+
+  // end of onload function
+
+  $scope.cities = [
+        { "value": 1 , "text": "Amsterdam"   , "continent": "Europe"    },
+        { "value": 4 , "text": "Washington"  , "continent": "America"   },
+        { "value": 7 , "text": "Sydney"      , "continent": "Australia" },
+        { "value": 10, "text": "Beijing"     , "continent": "Asia"      },
+        { "value": 13, "text": "Cairo"       , "continent": "Africa"    }
+      ];
+
+      $scope.queryCities = function(query) {
+        return $http.get('cities.json');
+      };
+
+      $scope.getTagClass = function(city) {
+        switch (city.continent) {
+          case 'Europe'   : return 'badge badge-info';
+          case 'America'  : return 'label label-important';
+          case 'Australia': return 'badge badge-success';
+          case 'Africa'   : return 'label label-inverse';
+          case 'Asia'     : return 'badge badge-warning';
+        }
+      };
 
   $scope.list = {};
   $scope.list.searchText = '';
@@ -463,9 +488,11 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     }
 
     if (typeof(device.tags) !== "undefined") {
+      console.log('tagswitch', $scope.deviceForm.tags, device.tags);
       $scope.deviceForm.tags = device.tags;
+      $('bootstrap-tagsinput').tagsinput('refresh');
     } else {
-      $scope.deviceForm.tags = null;
+      $scope.deviceForm.tags = [];
     }
 
     console.log("form vars", $scope.deviceForm);

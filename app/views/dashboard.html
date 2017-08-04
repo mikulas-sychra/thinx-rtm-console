@@ -313,7 +313,12 @@
             <div class="form-group">
               <label class="control-label col-md-3">Tags</label>
               <div class="col-md-9">
-                <input type="text" ng-model="deviceForm.tags" name="deviceTags" class="form-control" />
+                <bootstrap-tagsinput
+                ng-model="deviceForm.tags"
+                tagclass="device-tag"
+                typeahead-source="[]"
+                allowDuplicates="false"
+                ></bootstrap-tagsinput>
               </div>
             </div>
             <div class="form-group">
