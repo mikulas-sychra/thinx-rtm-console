@@ -50,6 +50,71 @@
                 <!-- END MENU -->
             </div>
             <!-- END PORTLET MAIN -->
+
+            <!-- PORTLET MAIN -->
+            <div class="portlet light">
+
+              <div class="portlet-title ">
+                  <div class="caption caption-md">
+                      <i class="icon-globe theme-font hide"></i>
+                      <span class="caption-subject font-blue-madison bold uppercase">Stats</span>
+                  </div>
+              </div>
+              <div class="portlet-body">
+                <!-- STAT -->
+                <div class="row list-separated profile-stat">
+                    <div class="col-md-4 col-sm-4 col-xs-6">
+                        <div class="uppercase profile-stat-title"> {{$root.devices.length}} </div>
+                        <div class="uppercase profile-stat-text"> Devices </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-6">
+                        <div class="uppercase profile-stat-title"> {{$root.sources.length}} </div>
+                        <div class="uppercase profile-stat-text"> Sources </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-6">
+                        <div class="uppercase profile-stat-title"> {{$root.apikeys.length}} </div>
+                        <div class="uppercase profile-stat-text"> Apikeys </div>
+                    </div>
+                </div>
+                <!-- END STAT -->
+
+                <!-- GOALS -->
+                <div class="row list-separated profile-stat">
+                    <div class="col-md-4 col-sm-4 col-xs-6">
+                      <div ng-if="$root.profile.info.goals.includes('update')" class="text-center">
+                        <span class="goal-badge lott-badge"></span>
+                        <div class="uppercase profile-stat-text">Lord of the THiNX</div>
+                      </div>
+                      <div ng-if="!$root.profile.info.goals.includes('update')" class="text-center">
+                        <span class="goal-badge locked-badge"></span>
+                        <div class="uppercase profile-stat-text">Locked</div>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-6">
+                      <div ng-if="$root.profile.info.goals.includes('tester')" class="text-center">
+                        <span class="goal-badge tester-badge"></span>
+                        <div class="uppercase profile-stat-text">Beta Tester</div>
+                      </div>
+                      <div ng-if="!$root.profile.info.goals.includes('tester')" class="text-center">
+                        <span class="goal-badge locked-badge"></span>
+                        <div class="uppercase profile-stat-text">Locked</div>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-6">
+                      <div ng-if="$root.profile.info.goals.includes('contributor')" class="text-center">
+                        <span class="goal-badge contributor-badge"></span>
+                        <div class="uppercase profile-stat-text">Contributor</div>
+                      </div>
+                      <div ng-if="!$root.profile.info.goals.includes('contributor')" class="text-center">
+                        <span class="goal-badge locked-badge"></span>
+                        <div class="uppercase profile-stat-text">Locked</div>
+                      </div>
+                    </div>
+                </div>
+                <!-- END GOALS -->
+              </div>
+            </div>
+            <!-- END PORTLET MAIN -->
         </div>
         <!-- END BEGIN PROFILE SIDEBAR -->
         <!-- BEGIN PROFILE CONTENT -->

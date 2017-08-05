@@ -88,6 +88,7 @@ var PasswordReset = function() {
 
             if (typeof(response) !== "undefined") {
               if (response.success) {
+
                 if (response.status == "password_reset_successful") {
                   $('.msg-error', $('.reset-form')).hide();
                   $('.reset-form').hide();
