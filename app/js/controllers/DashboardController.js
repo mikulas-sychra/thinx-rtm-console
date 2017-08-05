@@ -36,15 +36,11 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     })
     .fail(error => $scope.$emit("xhrFailed", error));
 
-    // $scope.hideLogOverlay();
-
-
     $scope.searchText = '';
     $scope.selectedItems = [];
   });
 
   $scope.deviceForm = {};
-  // $scope.deviceForm.index = null;
   $scope.deviceForm.udid = null;
   $scope.deviceForm.alias = null;
   $scope.deviceForm.platform = null;

@@ -30,44 +30,13 @@
       <!-- BEGIN TOP NAVIGATION MENU -->
       <div class="top-menu">
         <ul class="nav navbar-nav pull-right">
-          <li class="separator hidden-xs" style="background: none"></li>
-          <!-- BEGIN AUDITLOG DROPDOWN -->
-          <li class="dropdown dropdown-extended dropdown-dark dropdown-notification hidden-xs" id="header_notification_bar">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-              <i class="icon-bell"></i>
-              <span class="badge badge-success" ng-if="$root.auditlog.total_rows > 0"> {{$root.auditlog.total_rows}} </span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="external">
-                <h3>
-                  <span class="bold">{{$root.auditlog.length}} New</span> Audit Messages
-                </h3>
-                <a ui-sref="history({tab: 'auditlog'})">view all</a>
-              </li>
-              <li>
-                <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
-                  <li ng-repeat="(date, value) in $root.auditlog | limitTo:10 track by date">
-                    <a href="javascript:;">
-                      <span class="time">{{date | lastSeen}}</span>
-                      <span class="details">
-                        <span class="label label-sm label-icon label-success">
-                          <i class="fa fa-plus"></i>
-                        </span> {{value}} </span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <!-- END AUDITLOG DROPDOWN -->
-            <li class="separator hidden-xs" style="background: none"></li>
             <!-- BEGIN BUILDLOG DROPDOWN -->
-            <li class="dropdown dropdown-extended dropdown-dark dropdown-notification hidden-xs" id="header_inbox_bar">
+            <li class="dropdown dropdown-extended dropdown-dark dropdown-notification" id="header_inbox_bar">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                <i class="icon-envelope-open"></i>
+                <i class="icon-drawer"></i>
                 <span class="badge badge-danger" ng-if="$root.buildHistory.length > 0"> {{$root.buildHistory.length}} </span>
               </a>
-              <ul class="dropdown-menu">
+              <ul class="dropdown-menu pull-left">
                 <li class="external">
                   <h3>You have
                     <span class="bold">{{$root.buildHistory.length}} New</span> Builds</h3>
@@ -79,9 +48,9 @@
                         <a href="javascript:;" ng-click="$emit('showLogOverlay', build.build_id)">
                           <span class="time">{{build.date | lastSeen}}</span>
                           <span class="details">
-                            <span class="label label-sm label-icon label-success">
-                              <i class="fa fa-plus"></i>
-                            </span>
+                            <!-- <span class="label label-sm label-icon label-success"> -->
+                              <!-- <i class="fa fa-plus"></i> -->
+                            <!-- </span> -->
                             <span class="">
                               {{build.udid | limitTo:6}} {{build.message}}
                             </span>

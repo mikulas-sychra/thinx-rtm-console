@@ -16,6 +16,13 @@ angular.module('RTM').controller('HistoryController', ['$rootScope', '$scope', '
     var tab = $stateParams.tab;
     $('[data-target="#tab_' + tab + '"]').parent().addClass("active");
     $('#tab_' + tab).addClass("active");
+
+    Thinx.getAuditHistory()
+    .done(function(data) {
+      $scope.$emit("updateAuditHistory", data);
+    })
+    .fail(error => $scope.$emit("xhrFailed", error));
+
   });
 
 }]);

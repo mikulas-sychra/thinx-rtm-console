@@ -260,6 +260,10 @@ function init($rootScope, $scope) {
     }
   }
 
+  $scope.$on("updateAuditHistory", function(event, data){
+    updateAuditHistory(data);
+  });
+
   function updateAuditHistory(data) {
     var response = JSON.parse(data);
     console.log('auditHistory response:', response);
@@ -312,12 +316,6 @@ function init($rootScope, $scope) {
   Thinx.getProfile()
   .done(function(data) {
     updateProfile(data);
-  })
-  .fail(error => $scope.$emit("xhrFailed", error));
-
-  Thinx.getAuditHistory()
-  .done(function(data) {
-    updateAuditHistory(data);
   })
   .fail(error => $scope.$emit("xhrFailed", error));
 
