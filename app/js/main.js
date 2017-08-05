@@ -402,7 +402,7 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
     url: "/history:tab",
     params: {
       tab: {
-        value: 'auditlog'
+        value: 'buildlog'
       }
     },
     templateUrl: "views/history.html",
