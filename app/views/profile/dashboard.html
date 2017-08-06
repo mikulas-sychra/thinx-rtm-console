@@ -1,62 +1,94 @@
 <div class="row">
   <div class="col-md-12">
-
-      <div class="portlet light">
-          <div class="portlet-title ">
-              <div class="caption caption-md">
-                  <i class="icon-globe theme-font hide"></i>
-                  <span class="caption-subject font-blue-madison bold uppercase">Profile</span>
-              </div>
-          </div>
-          <div class="portlet-body">
-              <div>
-                Name
-                <h3 style="margin-top: 0px;">
-                  {{$root.profile.info.first_name}} {{$root.profile.info.last_name}}
-                </h3><br>
-                Username
-                <h3 style="margin-top: 0px;">
-                  {{$root.profile.username}}
-                </h3><br>
-                Owner ID<br>
-                <small style="font-size: .58em">{{$root.profile.owner}}</small>
-              </div>
-          </div>
-      </div>
-
-      <!-- PORTLET MAIN -->
-      <div class="portlet light">
-        <div class="portlet-title ">
-            <div class="caption caption-md">
-                <i class="icon-globe theme-font hide"></i>
-                <span class="caption-subject font-blue-madison bold uppercase">Licence</span>
-            </div>
+    <div class="portlet light">
+      <div class="portlet-title ">
+        <div class="caption caption-md">
+          <i class="icon-globe theme-font hide"></i>
+          <span class="caption-subject font-blue-madison bold uppercase">Profile</span>
         </div>
-        <div class="portlet-body">
-          <div>
-              <h4 class="profile-desc-title">** Open alpha license **</h4>
-              <span class="profile-desc-text"> At this point nothing is guaranteed, except for that we don’t store your password and the source code is private, however open for reviews. </span>
-              <div class="margin-top-20 profile-desc-link">
-                  <i class="fa fa-globe"></i>
-                  <a href="//thinx.cloud">thinx.cloud</a>
-              </div>
-              <div class="margin-top-20 profile-desc-link">
-                  <i class="fa fa-twitter"></i>
-                  <a href="//www.twitter.com/thinxcloud/">@thinxcloud</a>
-              </div>
-              <div class="margin-top-20 profile-desc-link">
-                  <i class="fa fa-facebook"></i>
-                  <a href="//fb.me/thinx.cloud/">THiNX Cloud</a>
-              </div>
-          </div>
       </div>
-      <!-- END PORTLET MAIN -->
-
+      <div class="portlet-body">
+        <div>
+          Name
+          <h3 style="margin-top: 0px;">
+            {{$root.profile.info.first_name}} {{$root.profile.info.last_name}}
+          </h3><br>
+          Username
+          <h3 style="margin-top: 0px;">
+            {{$root.profile.username}}
+          </h3><br>
+          Owner ID<br>
+          <small style="font-size: .58em">{{$root.profile.owner}}</small>
+        </div>
+      </div>
+    </div>
+    <!-- PORTLET MAIN -->
+    <div class="portlet light">
+      <div class="portlet-title ">
+        <div class="caption caption-md">
+          <i class="icon-globe theme-font hide"></i>
+          <span class="caption-subject font-blue-madison bold uppercase">Stats</span>
+        </div>
+      </div>
+      <div class="portlet-body">
+        <!-- STAT -->
+        <div class="row list-separated profile-stat">
+          <div class="col-md-4 col-sm-4 col-xs-6">
+            <div class="uppercase profile-stat-title"> {{$root.devices.length}} </div>
+            <div class="uppercase profile-stat-text"> Devices </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-6">
+            <div class="uppercase profile-stat-title"> {{$root.sources.length}} </div>
+            <div class="uppercase profile-stat-text"> Sources </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-6">
+            <div class="uppercase profile-stat-title"> {{$root.apikeys.length}} </div>
+            <div class="uppercase profile-stat-text"> Apikeys </div>
+          </div>
+        </div>
+        <!-- END STAT -->
+        <!-- GOALS -->
+        <div class="row list-separated profile-stat">
+          <div class="col-md-4 col-sm-4 col-xs-6">
+            <div ng-if="$root.profile.info.goals.includes('update')" class="text-center">
+              <span class="goal-badge lott-badge"></span>
+              <div class="uppercase profile-stat-text">Lord of the THiNX</div>
+            </div>
+            <div ng-if="!$root.profile.info.goals.includes('update')" class="text-center">
+              <span class="goal-badge locked-badge"></span>
+              <div class="uppercase profile-stat-text">Locked</div>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-6">
+            <div ng-if="$root.profile.info.goals.includes('tester')" class="text-center">
+              <span class="goal-badge tester-badge"></span>
+              <div class="uppercase profile-stat-text">Beta Tester</div>
+            </div>
+            <div ng-if="!$root.profile.info.goals.includes('tester')" class="text-center">
+              <span class="goal-badge locked-badge"></span>
+              <div class="uppercase profile-stat-text">Locked</div>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-6">
+            <div ng-if="$root.profile.info.goals.includes('contributor')" class="text-center">
+              <span class="goal-badge contributor-badge"></span>
+              <div class="uppercase profile-stat-text">Contributor</div>
+            </div>
+            <div ng-if="!$root.profile.info.goals.includes('contributor')" class="text-center">
+              <span class="goal-badge locked-badge"></span>
+              <div class="uppercase profile-stat-text">Locked</div>
+            </div>
+          </div>
+        </div>
+        <!-- END GOALS -->
+      </div>
+    </div>
+    <!-- END PORTLET MAIN -->
   </div>
 </div>
 
 <!-- BEGIN MAIN JS-->
 <script>
-    Profile.init(); // init page demo
+Profile.init(); // init page demo
 </script>
 <!-- BEGIN MAIN JS -->
