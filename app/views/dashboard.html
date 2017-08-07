@@ -144,10 +144,10 @@
                     </a>
                   </span>
                   <span ng-if="hasSource(device)">
-                      <span class="badge platform-badge {{getSourceById(device.source).platform}}-platform-color" title="Source Platform: {{$root.platforms[getSourceById(device.source).platform].name}}">{{$root.platforms[getSourceById(device.source).platform].name}}</span>
+                    <span class="badge platform-badge {{getSourceById(device.source).platform}}-platform-color" title="Source Platform {{$root.platforms[getSourceById(device.source).platform].name}}">{{$root.platforms[getSourceById(device.source).platform].name}}</span>
                   </span>
                   <span ng-if="device.keyhash != null">
-                      <span class="btn btn-circle btn-icon-only" title="API Key: Attached"><i class="fa fa-key"></i></span>
+                    <span title="API Key Attached" class="api-key-indicator"><i class="fa fa-key"></i></span>
                   </span>
                 </div>
               </div>
@@ -338,20 +338,25 @@
             <div class="form-group">
               <label class="control-label col-md-3">API Key</label>
               <div class="col-md-9">
-                <ui-select ng-model="deviceForm.keyhash" theme="bootstrap" title="Choose a key">
-                  <ui-select-match placeholder="Select key in the list...">{{$select.selected.value.alias}}</ui-select-match>
-                  <ui-select-choices repeat="apikey.value.hash as (key, apikey) in $root.apikeys | filter: { value: { alias: $select.search }}">
-                    <div ng-bind-html="apikey.value.alias | highlight: $select.search"></div>
-                    <small>{{apikey.value.hash | limitTo: 6 }}</small>
-                  </ui-select-choices>
-                </ui-select>
+                <div class="input-group">
+                  <ui-select ng-model="deviceForm.keyhash" theme="bootstrap" title="Choose a key">
+                    <ui-select-match placeholder="Select key in the list...">{{$select.selected.value.alias}}</ui-select-match>
+                    <ui-select-choices repeat="apikey.value.hash as (key, apikey) in $root.apikeys | filter: { value: { alias: $select.search }}">
+                      <div ng-bind-html="apikey.value.alias | highlight: $select.search"></div>
+                      <small>{{apikey.value.hash | limitTo: 6 }}</small>
+                    </ui-select-choices>
+                  </ui-select>
+                  <span class="input-group-btn">
+                    <button type="button" ng-click="deviceForm.keyhash = null" class="btn btn-default"><span class="fa fa-chain-broken"></span></button>
+                  </span>
+                </div>
               </div>
             </div>
             <div class="form-group">
               <label class="control-label col-md-3">Source</label>
               <div class="col-md-9">
                 <div class="input-group">
-                  <ui-select ng-model="deviceForm.source" theme="bootstrap" title="Choose a source" on-select="attachRepository($select.selected.value.sourceId, deviceForm.udid)">
+                  <ui-select ng-model="deviceForm.source" theme="bootstrap" title="Choose a source" on-select="attachSource($select.selected.value.sourceId, deviceForm.udid)">
                     <ui-select-match placeholder="Select source in the list..."><div class="badge platform-badge {{$select.selected.value.platform}}-platform-color" style="float: right; margin-top: 2px;">{{$root.platforms[$select.selected.value.platform].name}}</div> {{$select.selected.value.alias}}</ui-select-match>
                     <ui-select-choices repeat="source.value.sourceId as (key, source) in $root.sources | filter: { value: { alias: $select.search }}">
                       <div>
@@ -362,7 +367,7 @@
                     </ui-select-choices>
                   </ui-select>
                   <span class="input-group-btn">
-                    <button type="button" ng-click="detachRepository(deviceForm.udid)" class="btn btn-default"><span class="fa fa-chain-broken"></span></button>
+                    <button type="button" ng-click="detachSource(deviceForm.udid)" class="btn btn-default"><span class="fa fa-chain-broken"></span></button>
                   </span>
                 </div>
               </div>
@@ -371,14 +376,14 @@
               <label class="control-label col-md-3">Auto Update</label>
               <div class="col-md-9">
                 <input
-                  bs-switch
-                  ng-model="deviceForm.auto_update"
-                  type="checkbox"
-                  switch-size="tiny"
-                  switch-on-text="On"
-                  switch-off-text="Off"
-                  ng-true-value="true"
-                  ng-false-value="false">
+                bs-switch
+                ng-model="deviceForm.auto_update"
+                type="checkbox"
+                switch-size="tiny"
+                switch-on-text="On"
+                switch-off-text="Off"
+                ng-true-value="true"
+                ng-false-value="false">
               </div>
             </div>
             <div class="form-group last">
@@ -423,16 +428,16 @@
               <label class="control-label col-md-3">Keep API Keys?</label>
               <div class="col-md-9">
                 <input
-                  bs-switch
-                  ng-model="transferForm.mig_apikeys"
-                  type="checkbox"
-                  switch-size="tiny"
-                  switch-on-text="Yes"
-                  switch-on-color="primary"
-                  switch-off-text="No"
-                  switch-off-color="danger"
-                  ng-true-value="true"
-                  ng-false-value="false">
+                bs-switch
+                ng-model="transferForm.mig_apikeys"
+                type="checkbox"
+                switch-size="tiny"
+                switch-on-text="Yes"
+                switch-on-color="primary"
+                switch-off-text="No"
+                switch-off-color="danger"
+                ng-true-value="true"
+                ng-false-value="false">
               </div>
             </div>
             <div class="alert alert-warning" ng-if="!transferForm.mig_apikeys && isSharedKey()">
@@ -443,14 +448,14 @@
               <label class="control-label col-md-3">Copy Sources?</label>
               <div class="col-md-9">
                 <input
-                  bs-switch
-                  ng-model="transferForm.mig_sources"
-                  type="checkbox"
-                  switch-size="tiny"
-                  switch-on-text="Yes"
-                  switch-off-text="No"
-                  ng-true-value="true"
-                  ng-false-value="false">
+                bs-switch
+                ng-model="transferForm.mig_sources"
+                type="checkbox"
+                switch-size="tiny"
+                switch-on-text="Yes"
+                switch-off-text="No"
+                ng-true-value="true"
+                ng-false-value="false">
               </div>
             </div>
             <div class="alert alert-info" ng-if="transferForm.mig_sources">

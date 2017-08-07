@@ -154,11 +154,11 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     console.log($rootScope.stats);
   }
 
-  $scope.attachRepository = function(sourceId, deviceUdid) {
+  $scope.attachSource = function(sourceId, deviceUdid) {
 
     console.log('-- attaching ' + sourceId + ' to  ' + deviceUdid + '--');
 
-    Thinx.attachRepository(sourceId, deviceUdid)
+    Thinx.attachSource(sourceId, deviceUdid)
     .done(function(response) {
       if (typeof(response) !== "undefined") {
         if (response.success) {
@@ -189,9 +189,9 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
 
   };
 
-  $scope.detachRepository = function(deviceUdid) {
+  $scope.detachSource = function(deviceUdid) {
     console.log('-- detaching source from ' + deviceUdid + '--');
-    Thinx.detachRepository(deviceUdid)
+    Thinx.detachSource(deviceUdid)
     .done(function(response) {
       if (typeof(response) !== "undefined") {
         if (response.success) {
@@ -202,6 +202,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
             }
           }
           toastr.success('Repository Detached.', 'THiNX RTM Console', {timeOut: 5000})
+          $scope.deviceForm.source = null;
           $scope.$apply()
         } else {
           console.log(response);

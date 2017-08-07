@@ -630,6 +630,7 @@
   /*vertical-align: baseline;*/
 }
 
+/* fix for ui-select searchbox width */
 .ui-select-multiple input.ui-select-search {
   width: 100% !important;
   position: absolute;
@@ -637,4 +638,8 @@
 }
 .ui-select-multiple.ui-select-bootstrap {
   min-height: 33px;
+}
+
+.api-key-indicator {
+  margin-left: 6px;
 }

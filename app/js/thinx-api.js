@@ -66,11 +66,11 @@ var Thinx = {
   transferDevices: function (transferForm, deviceUdids) {
     return transferDevices(transferForm, deviceUdids);
   },
-  attachRepository: function (sourceId, deviceUdid) {
-    return attachRepository(sourceId, deviceUdid);
+  attachSource: function (sourceId, deviceUdid) {
+    return attachSource(sourceId, deviceUdid);
   },
-  detachRepository: function (deviceUdid) {
-    return detachRepository(deviceUdid);
+  detachSource: function (deviceUdid) {
+    return detachSource(deviceUdid);
   },
   build: function (deviceUdid, sourceId) {
     return build(deviceUdid, sourceId);
@@ -424,7 +424,7 @@ function transferDevices(transferForm, deviceUdids) {
   });
 }
 
-function attachRepository(sourceId, deviceUdid) {
+function attachSource(sourceId, deviceUdid) {
   return $.ajax({
     url: urlBase + '/device/attach',
     type: 'POST',
@@ -436,7 +436,7 @@ function attachRepository(sourceId, deviceUdid) {
   });
 }
 
-function detachRepository(deviceUdid) {
+function detachSource(deviceUdid) {
   return $.ajax({
     url: urlBase + '/device/detach',
     type: 'POST',
