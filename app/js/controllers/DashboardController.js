@@ -234,7 +234,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
       console.log(response);
 
       if (typeof(response) !== "undefined") {
-        if (typeof(response) !== "undefined" && response.success) {
+        if (response.success) {
           console.log(' --- save last build id: ' + response.build_id + ' ---');
 
           // prepare user metadata for particular device
@@ -246,10 +246,24 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
             $scope.$emit("saveProfile");
           };
 
+          // toastr.info(response.status, 'THiNX RTM Console', {timeOut: 5000});
+
+          var buildToast = toastr.info(
+            response.status + '<br><br>Click to show build log...',
+            'THiNX Builder',
+            {
+              timeOut:3000,
+              extendedTimeOut:5000,
+              tapToDismiss: false,
+              closeButton: false,
+              progressBar: true,
+              onclick: function () {
+                  $scope.$emit('showLogOverlay', response.build_id);
+              }
+            }
+          );
+
           $scope.$apply();
-
-          toastr.info(response.status, 'THiNX RTM Console', {timeOut: 5000});
-
         } else {
           console.log(response);
           toastr.error(response.status, 'THiNX RTM Console', {timeOut: 5000})
