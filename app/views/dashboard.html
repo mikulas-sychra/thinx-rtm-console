@@ -313,12 +313,22 @@
             <div class="form-group">
               <label class="control-label col-md-3">Tags</label>
               <div class="col-md-9">
-                <bootstrap-tagsinput
-                ng-model="deviceForm.tags"
-                tagclass="device-tag"
-                typeahead-source="[]"
-                allowDuplicates="false"
-                ></bootstrap-tagsinput>
+                <!-- <bootstrap-tagsinput -->
+                <!-- ng-model="deviceForm.tags" -->
+                <!-- tagclass="device-tag" -->
+                <!-- typeahead-source="[]" -->
+                <!-- allowDuplicates="false" -->
+                <!-- ></bootstrap-tagsinput> -->
+
+                <ui-select multiple tagging tagging-label="(create new tag)" ng-model="deviceForm.tags" theme="bootstrap" sortable="true" title="Enter tag">
+                  <ui-select-match placeholder="Select or enter tags...">
+                    <span class="device-tag">{{$item}}</span>
+                  </ui-select-match>
+                  <ui-select-choices repeat="tag in $root.profile.info.tags | filter:$select.search track by $index">
+                    {{tag}}
+                  </ui-select-choices>
+                </ui-select>
+
               </div>
             </div>
             <div class="form-group">

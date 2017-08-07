@@ -122,7 +122,8 @@ RTM.factory('settings', ['$rootScope', function($rootScope) {
       },
       goals: [], // ['apikey','enroll', 'enroll-setup','rsakey','source','update','build','profile-privacy','profile-avatar']
       username: '',
-      owner: ''
+      owner: '',
+      tags: []
     }
   };
 

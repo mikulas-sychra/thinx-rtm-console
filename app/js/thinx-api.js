@@ -187,9 +187,35 @@ function init($rootScope, $scope) {
   function updateDevices(data) {
     var devices = JSON.parse(data);
     $rootScope.devices = devices.devices;
+    updateTags();
     $scope.$apply();
     console.log('devices:');
     console.log($rootScope.devices);
+
+  }
+
+  function updateTags() {
+    $rootScope.profile.info.tags = [];
+
+    console.log("profile tags", $rootScope.profile.info.tags);
+
+    for (var index in $rootScope.devices) {
+      var tagsArray = $rootScope.devices[index].tags;
+      console.log("device tags", tagsArray);
+      if (tagsArray !== null) {
+        for (var tagIndex in tagsArray) {
+          if ( $rootScope.profile.info.tags.includes(tagsArray[tagIndex]) ) {
+            // duplicate tag found, skipping
+            console.log("duplicate tag found, skipping", tagsArray[tagIndex]);
+          } else {
+             $rootScope.profile.info.tags.push(tagsArray[tagIndex]);
+          }
+        }
+      }
+
+    }
+    console.log('tags:');
+    console.log($rootScope.profile.info.tags);
   }
 
   if (typeof($rootScope.submitNotificationResponseListener) == "undefined") {
@@ -250,6 +276,10 @@ function init($rootScope, $scope) {
         if (typeof(profile.info.goals) == "undefined") {
           console.log('- goals not defined, retaining current -');
           profile.info['goals'] = $rootScope.profile.info.goals;
+        }
+        if (typeof(profile.info.tags) == "undefined") {
+          console.log('- tags not defined, creating -');
+          profile.info['tags'] = $rootScope.profile.info.tags;
         }
 
         $rootScope.profile = profile;
@@ -608,10 +638,10 @@ function submitProfile(profile) {
     // },
 
     security: profile.info.security,
-
     goals: profile.info.goals,
     username: profile.info.username,
-    owner: profile.info.owner
+    owner: profile.info.owner,
+    tags: profile.info.tags
   }
 
   return $.ajax({

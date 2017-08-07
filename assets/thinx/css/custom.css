@@ -613,19 +613,35 @@
 }*/
 
 .device-tag {
-  background-color: #337ab7;
-  color: white;
+  /*background-color: #337ab7;*/
+  /*color: white;*/
 
-  display: inline-block;
-  margin-top: 2px;
-  padding: 4px 6px;
-  margin-right: 2px;
+  /*display: inline-block;*/
+  /*margin-top: 2px;*/
+  /*padding: 4px 6px;*/
+  /*margin-right: 2px;*/
 
-  text-shadow: none!important;
-  font-size: 14px;
-  font-weight: 300;
-  font-family: "Open Sans",sans-serif;
-  white-space: nowrap;
-  text-align: center;
-  vertical-align: baseline;
+  /*text-shadow: none!important;*/
+  /*font-size: 14px;*/
+  /*font-weight: 300;*/
+  /*font-family: "Open Sans",sans-serif;*/
+  /*white-space: nowrap;*/
+  /*text-align: center;*/
+  /*vertical-align: baseline;*/
+}
+
+/*.ui-select-container .ui-select-multiple {*/
+  /*position: relative;*/
+/*}*/
+/*.ui-select-container .ui-select-multiple .ui-select-match {*/
+  /*position: absolute;*/
+/*}*/
+
+.ui-select-multiple input.ui-select-search {
+  width: 100% !important;
+  position: absolute;
+  margin-left: 7px;
+}
+.ui-select-multiple.ui-select-bootstrap {
+  min-height: 33px;
 }

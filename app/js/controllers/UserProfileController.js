@@ -133,4 +133,14 @@ angular.module('RTM').controller('UserProfileController', function($rootScope, $
     };
   };
 
+  $scope.removeTag = function(tagId) {
+    console.log('-- current tags: ' + $rootScope.profile.info.tags);
+    console.log('-- removing tag: ' + tagId);
+
+    var index = $rootScope.profile.info.tags.indexOf(tagId);
+    if (index > -1) {
+      $rootScope.profile.info.tags.splice(index, 1);
+    };
+  };
+
 });
