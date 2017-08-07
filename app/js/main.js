@@ -11,8 +11,7 @@ var RTM = angular.module("RTM", [
   "angular-web-notification",
   "tandibar/ng-rollbar",
   "luegg.directives",
-  "frapontillo.bootstrap-switch",
-  "bootstrap-tagsinput"
+  "frapontillo.bootstrap-switch"
 ]);
 
 RTM.config(['RollbarProvider', function(RollbarProvider) {
