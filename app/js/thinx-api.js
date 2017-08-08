@@ -264,29 +264,29 @@ function init($rootScope, $scope) {
       console.log('profile response:', response);
 
       // validate response and refresh view
-      if (typeof(response) !== "undefined" && typeof(response.success) !== "undefined" && response.success) {
+      if (typeof(response) !== "undefined" && typeof(response.success) !== "undefined") {
+        if (response.success) {
+          var profile = response.profile;
 
-        var profile = response.profile;
-
-        // set default avatar if one's missing
-        if (typeof(profile.avatar) == "undefined" || profile.avatar.length == 0) {
-          console.log('- avatar not defined, falling back to default -');
-          profile.avatar = '/assets/thinx/img/default_avatar_sm.png';
+          // set default avatar if one's missing
+          if (typeof(profile.avatar) == "undefined" || profile.avatar.length == 0) {
+            console.log('- avatar not defined, falling back to default -');
+            profile.avatar = '/assets/thinx/img/default_avatar_sm.png';
+          }
+          if (typeof(profile.info.goals) == "undefined") {
+            console.log('- goals not defined, retaining current -');
+            profile.info['goals'] = $rootScope.profile.info.goals;
+          }
+          if (typeof(profile.info.tags) == "undefined") {
+            console.log('- tags not defined, creating -');
+            profile.info['tags'] = $rootScope.profile.info.tags;
+          }
+          $rootScope.profile = profile;
+          $scope.$apply();
+        } else {
+          console.log('error', response);
         }
-        if (typeof(profile.info.goals) == "undefined") {
-          console.log('- goals not defined, retaining current -');
-          profile.info['goals'] = $rootScope.profile.info.goals;
-        }
-        if (typeof(profile.info.tags) == "undefined") {
-          console.log('- tags not defined, creating -');
-          profile.info['tags'] = $rootScope.profile.info.tags;
-        }
-
-        $rootScope.profile = profile;
       }
-      $scope.$apply();
-    } else {
-      console.log('// updateProfile with no argument is deprecated');
     }
   }
 

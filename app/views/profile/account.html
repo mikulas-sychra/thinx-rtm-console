@@ -70,7 +70,8 @@
                     <!-- END PERSONAL INFO TAB -->
                     <!-- CHANGE AVATAR TAB -->
                     <div class="tab-pane" id="tab_1_2">
-                        <p> *** At this time file upload is limited to 500kB *** <br> Module was not tested for code injection vulnerability! </p>
+                        <div class="alert alert-warning">
+                          <strong>Warning!</strong> At this time file upload is limited to 500kB *** </div>
                         <form action="#"
                             role="form" name="avatarForm">
                             <div class="form-group">
@@ -98,13 +99,11 @@
                     <!-- PRIVACY SETTINGS TAB -->
                     <div class="tab-pane" id="tab_1_3">
 
-                    <p>Security: <code>{{$root.profile.info.security | json}}</code></p>
-
                         <form action="#">
                             <table class="table table-light table-hover">
                                 <tr>
                                     <td>
-                                        Disable push notifications globally
+                                        <h4>Disable push notifications globally</h4>
                                         <p><small>Disables Push Notifications for all devices.</small></p>
                                     </td>
                                     <td>
@@ -121,7 +120,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        Notify owner on important events
+                                        <h4>Notify owner on important events</h4>
                                         <p><small>Device owner will get email on API outages or important updates.</small></p>
                                     </td>
                                     <td>
@@ -138,7 +137,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        Force unique API Keys
+                                        <h4>Force unique API Keys</h4>
                                         <p><small>Allow each key for single device only</small></p>
                                     </td>
                                     <td>
