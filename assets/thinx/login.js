@@ -83,7 +83,7 @@ var Login = function() {
           },
           error: function(data) {
             console.log('--login or server failure--', data);
-            $('#login-error').text('Username or password does not match');
+            $('#login-error').text('Connection failed');
             $('#login-error').show();
             console.log(data);
           }
