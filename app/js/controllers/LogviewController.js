@@ -23,7 +23,7 @@ angular.module('RTM').controller('LogviewController', ['$rootScope', '$scope', '
           }
         };
         $rootScope.wss.onmessage = function (message) {
-          console.log("-> ", message.data);
+          // console.log("-> ", message.data);
 
           // quick check before parsing
           var msgType = message.data.substr(2, 12);

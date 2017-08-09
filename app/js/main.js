@@ -212,10 +212,20 @@ initialization can be disabled and Layout.init() should be called on page load c
 ***/
 
 /* Setup Layout Part - Header */
-RTM.controller('HeaderController', ['$scope', function($scope) {
+RTM.controller('HeaderController', ['$scope', '$rootScope', function($scope, $rootScope) {
   $scope.$on('$includeContentLoaded', function() {
     Layout.initHeader(); // init header
   });
+
+  $scope.getDeviceByUdid = function(deviceUdid) {
+    for (var index in $rootScope.devices) {
+      if ($rootScope.devices[index].udid == deviceUdid) {
+        return $rootScope.devices[index];
+      }
+    }
+    return false;
+  }
+
 }]);
 
 /* Setup Layout Part - Sidebar */
