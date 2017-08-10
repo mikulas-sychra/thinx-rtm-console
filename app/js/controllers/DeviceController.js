@@ -3,29 +3,31 @@ angular.module('RTM').controller('DeviceController', function($rootScope, $scope
     // initialize core components
     App.initAjax();
 
-    var device = {};
-    if (!$stateParams.udid) {
-      // TODO udid not set, return to dashboard
-    } else {
-        device = getDeviceByUdid($stateParams.udid);
-    }
 
     console.log("edited device", device);
 
-    $scope.initDeviceForm(device);
+
+    var device = {};
 
     Thinx.deviceList()
     .done(function(data) {
       $scope.$emit("updateDevices", data);
-      // save user-spcific goal achievement
-      if ($rootScope.devices.length > 0 && !$rootScope.profile.info.goals.includes('enroll')) {
-        // TODO enable
-        // $rootScope.profile.info.goals.push('enroll');
-        // $rootScope.profile.info.goals.push('enroll-setup');
-        $scope.$emit("saveProfile");
-      };
+
+      if (!$stateParams.udid) {
+        // TODO udid not set, return to dashboard
+      } else {
+        for (var index in $rootScope.devices) {
+          if ($rootScope.devices[index].udid == $stateParams.udid) {
+            device = $rootScope.devices[index];
+          }
+        }
+      }
+      $scope.initDeviceForm(device);
+
     })
     .fail(error => $scope.$emit("xhrFailed", error));
+
+
 
     Thinx.sourceList()
     .done(function(data) {
@@ -43,6 +45,8 @@ angular.module('RTM').controller('DeviceController', function($rootScope, $scope
 
   });
 
+
+
   // end of onload function
 
   $scope.deviceForm = {};
@@ -55,17 +59,6 @@ angular.module('RTM').controller('DeviceController', function($rootScope, $scope
   $scope.deviceForm.description = null;
   $scope.deviceForm.category = null;
   $scope.deviceForm.tags = [];
-
-  $scope.list = {};
-  $scope.list.searchText = '';
-  $scope.list.filterPlatform = '';
-  $scope.list.orderOptions = [
-    {prop: 'lastupdate', alias: 'Last Update'},
-    {prop: 'platform', alias: 'Platform'},
-    {prop: 'alias', alias: 'Alias'}
-  ];
-  $scope.list.orderBy = $scope.list.orderOptions[0];
-  $scope.list.reverse = true;
 
   Thinx.init($rootScope, $scope);
 
@@ -141,7 +134,7 @@ angular.module('RTM').controller('DeviceController', function($rootScope, $scope
   };
 
 
-  $scope.submitDeviceForm = function() {
+  $scope.submitDeviceFormChange = function() {
 
     console.log('-- changing device: ' + $scope.deviceForm.udid + ' -> ' + $scope.deviceForm.alias + ', ' + $scope.deviceForm.platform + ', ' + $scope.deviceForm.keyhash + ' --');
 
@@ -156,7 +149,6 @@ angular.module('RTM').controller('DeviceController', function($rootScope, $scope
           console.log('-- refreshing devices --');
           Thinx.deviceList()
           .done(function(data) {
-            $('#deviceModal').modal('hide');
             $scope.$emit("updateDevices", data);
           })
           .fail(function(error) {
@@ -228,4 +220,7 @@ angular.module('RTM').controller('DeviceController', function($rootScope, $scope
 
     console.log("form vars", $scope.deviceForm);
   }
+
+  $scope.initDeviceForm($scope.deviceForm);
+
 });

@@ -11,7 +11,8 @@ var RTM = angular.module("RTM", [
   "angular-web-notification",
   "tandibar/ng-rollbar",
   "luegg.directives",
-  "frapontillo.bootstrap-switch"
+  "frapontillo.bootstrap-switch",
+  "xeditable"
 ]);
 
 RTM.config(['RollbarProvider', function(RollbarProvider) {
@@ -547,3 +548,10 @@ RTM.run(["$rootScope", "settings", "$state", function($rootScope, settings, $sta
   $rootScope.$state = $state; // state to be accessed from view
   $rootScope.$settings = settings; // state to be accessed from view
 }]);
+
+RTM.run(function(editableOptions,editableThemes) {
+      editableOptions.theme = 'default';
+      editableThemes['default'].submitTpl = '<button class="btn grey-mint btn-outline btn-circle btn-sm" type="submit"><i class="fa fa-check"></i></button>';
+      editableThemes['default'].cancelTpl = '<button class="btn grey-mint btn-outline btn-circle btn-sm" ng-click="$form.$cancel()"><i class="fa fa-times"></i></button>';
+      // editableOptions.buttons = 'right';
+});

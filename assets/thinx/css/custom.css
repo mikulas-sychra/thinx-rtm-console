@@ -686,3 +686,10 @@
 .page-header.navbar .top-menu .navbar-nav>li.dropdown .dropdown-toggle>i {
     color: #9397ad;
 }
+
+.editable-buttons button {
+  border: 0;
+  /*background: none;*/
+  /*opacity: .4;*/
+  /*font-size: initial;*/
+}
