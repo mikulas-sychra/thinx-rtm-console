@@ -322,6 +322,39 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
     }
   })
 
+  // Dashboard
+  .state('device', {
+    url: "/device:udid",
+    params: {
+      device: {
+        value: null
+      }
+    },
+    templateUrl: "views/device.html",
+    data: {pageTitle: 'Device'},
+    controller: "DeviceController",
+    resolve: {
+      deps: ['$ocLazyLoad', function($ocLazyLoad) {
+        return $ocLazyLoad.load({
+          name: 'RTM',
+          insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+          files: [
+            '../assets/thinx/js/plugins/ui-select/select.min.css',
+            '../assets/thinx/js/plugins/ui-select/select.js',
+            '../assets/global/plugins/clipboardjs/clipboard.js',
+
+            '../assets/global/plugins/typeahead/typeahead.css',
+            '../assets/global/plugins/typeahead/typeahead.bundle.min.js',
+
+            'js/thinx-api.js',
+
+            'js/controllers/DeviceController.js'
+          ]
+        });
+      }]
+    }
+  })
+
   // Apikey Page
   .state('apikey', {
     url: "/apikey",
