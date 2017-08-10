@@ -681,3 +681,8 @@
     margin-left: 7px;
     margin-top: 8px;
 }
+
+/* header icons color override */
+.page-header.navbar .top-menu .navbar-nav>li.dropdown .dropdown-toggle>i {
+    color: #9397ad;
+}
