@@ -89,7 +89,7 @@
                     <label class="control-label col-md-3">API Key</label>
                     <div class="col-md-9">
                       <div class="input-group">
-                        <ui-select ng-model="deviceForm.keyhash" theme="bootstrap" title="Choose a key" ng-change="submitDeviceFormChange('key')">
+                        <ui-select ng-model="deviceForm.keyhash" theme="bootstrap" title="Choose a key" ng-change="submitDeviceFormChange('keyhash')">
                           <ui-select-match placeholder="Select key in the list...">{{$select.selected.value.alias}}</ui-select-match>
                           <ui-select-choices repeat="apikey.value.hash as (key, apikey) in $root.apikeys | filter: { value: { alias: $select.search }}">
                             <div ng-bind-html="apikey.value.alias | highlight: $select.search"></div>
