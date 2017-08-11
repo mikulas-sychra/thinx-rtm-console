@@ -3,31 +3,12 @@ angular.module('RTM').controller('DeviceController', function($rootScope, $scope
     // initialize core components
     App.initAjax();
 
-
-    console.log("edited device", device);
-
-
-    var device = {};
-
     Thinx.deviceList()
     .done(function(data) {
       $scope.$emit("updateDevices", data);
-
-      if (!$stateParams.udid) {
-        // TODO udid not set, return to dashboard
-      } else {
-        for (var index in $rootScope.devices) {
-          if ($rootScope.devices[index].udid == $stateParams.udid) {
-            device = $rootScope.devices[index];
-          }
-        }
-      }
-      $scope.initDeviceForm(device);
-
+      $scope.initDeviceForm();
     })
     .fail(error => $scope.$emit("xhrFailed", error));
-
-
 
     Thinx.sourceList()
     .done(function(data) {
@@ -45,14 +26,17 @@ angular.module('RTM').controller('DeviceController', function($rootScope, $scope
 
   });
 
-
-
   // end of onload function
+
+  // set sidebar closed and body solid layout mode
+  $rootScope.settings.layout.pageContentWhite = true;
+  $rootScope.settings.layout.pageBodySolid = false;
+  $rootScope.settings.layout.pageSidebarClosed = false;
 
   $scope.deviceForm = {};
   $scope.deviceForm.udid = null;
   $scope.deviceForm.alias = null;
-  $scope.deviceForm.platform = null;
+  $scope.deviceForm.platform = 'unknown';
   $scope.deviceForm.keyhash = null;
   $scope.deviceForm.source = null;
   $scope.deviceForm.auto_update = null;
@@ -60,16 +44,12 @@ angular.module('RTM').controller('DeviceController', function($rootScope, $scope
   $scope.deviceForm.category = null;
   $scope.deviceForm.tags = [];
 
-  Thinx.init($rootScope, $scope);
+  var formBeforeEdit = JSON.parse(JSON.stringify($scope.deviceForm));
 
-  // set sidebar closed and body solid layout mode
-  $rootScope.settings.layout.pageContentWhite = true;
-  $rootScope.settings.layout.pageBodySolid = false;
-  $rootScope.settings.layout.pageSidebarClosed = false;
+  Thinx.init($rootScope, $scope);
 
 
   $scope.attachSource = function(sourceId, deviceUdid) {
-
     console.log('-- attaching ' + sourceId + ' to  ' + deviceUdid + '--');
 
     Thinx.attachSource(sourceId, deviceUdid)
@@ -134,11 +114,14 @@ angular.module('RTM').controller('DeviceController', function($rootScope, $scope
   };
 
 
-  $scope.submitDeviceFormChange = function() {
+  $scope.submitDeviceFormChange = function(prop) {
 
-    console.log('-- changing device: ' + $scope.deviceForm.udid + ' -> ' + $scope.deviceForm.alias + ', ' + $scope.deviceForm.platform + ', ' + $scope.deviceForm.keyhash + ' --');
+    console.log('-- changing device: ' + $scope.deviceForm.udid + ' (' + $scope.deviceForm.alias + ') --');
 
-    Thinx.submitDevice($scope.deviceForm)
+    var updatedProps = {udid: $scope.deviceForm.udid};
+    updatedProps[prop] = $scope.deviceForm[prop];
+
+    Thinx.submitDevice(updatedProps)
     .done(function(response) {
 
       if (typeof(response) !== "undefined") {
@@ -150,6 +133,7 @@ angular.module('RTM').controller('DeviceController', function($rootScope, $scope
           Thinx.deviceList()
           .done(function(data) {
             $scope.$emit("updateDevices", data);
+            $scope.initDeviceForm();
           })
           .fail(function(error) {
             console.log('Error:', error);
@@ -172,7 +156,19 @@ angular.module('RTM').controller('DeviceController', function($rootScope, $scope
   };
 
 
-  $scope.initDeviceForm = function(device) {
+  $scope.initDeviceForm = function() {
+
+    var device = {};
+    if (!$stateParams.udid) {
+      // TODO udid not set, return to dashboard
+    } else {
+      for (var index in $rootScope.devices) {
+        if ($rootScope.devices[index].udid == $stateParams.udid) {
+          device = $rootScope.devices[index];
+          console.log("edited device", device);
+        }
+      }
+    }
 
     console.log('Initializing form values...');
     // $scope.deviceForm.index = index;
@@ -183,7 +179,7 @@ angular.module('RTM').controller('DeviceController', function($rootScope, $scope
     if (typeof(device.platform) !== "undefined") {
       $scope.deviceForm.platform = device.platform;
     } else {
-      $scope.deviceForm.platform = null;
+      $scope.deviceForm.platform = 'unknown';
     }
 
     if (typeof(device.keyhash) !== "undefined") {
@@ -211,16 +207,14 @@ angular.module('RTM').controller('DeviceController', function($rootScope, $scope
     }
 
     if (typeof(device.tags) !== "undefined") {
-      console.log('tagswitch', $scope.deviceForm.tags, device.tags);
       $scope.deviceForm.tags = device.tags;
-      // $('bootstrap-tagsinput').tagsinput('refresh');
     } else {
       $scope.deviceForm.tags = [];
     }
 
+    /* save start values to compare with changes */
+    formBeforeEdit = JSON.parse(JSON.stringify($scope.deviceForm));
     console.log("form vars", $scope.deviceForm);
+
   }
-
-  $scope.initDeviceForm($scope.deviceForm);
-
 });

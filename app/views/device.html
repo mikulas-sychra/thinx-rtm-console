@@ -24,18 +24,18 @@
       <button ui-sref="dashboard" class="btn grey-mint btn-outline btn-circle btn-sm"><i class="fa fa-arrow-left"></i></button>
     </div>
   </div>
-  <div class="portlet-body">
+  <div class="portlet-body" ng-if="deviceForm.udid != null">
 
     <div class="row" style="padding-bottom: 20px;">
       <div class="col-md-3">
       </div>
       <div class="col-md-9">
         <h2>
-          <span editable-text="deviceForm.alias" editable-buttons="no" e-form="aliasBtnForm" onbeforesave="submitDeviceFormChange()">{{deviceForm.alias}}</span>
+          <span editable-text="deviceForm.alias" editable-buttons="no" e-form="aliasBtnForm" onaftersave="submitDeviceFormChange('alias')">{{deviceForm.alias}}</span>
           <button style="border: 0" class="btn grey-mint btn-outline btn-circle btn-sm" ng-click="aliasBtnForm.$show()" ng-hide="aliasBtnForm.$visible"><i class="fa fa-pencil"></i></button>
         </h2>
         <div>
-          <span editable-text="deviceForm.description" editable-buttons="no" e-form="descBtnForm" onbeforesave="submitDeviceFormChange()">{{deviceForm.description}}</span>
+          <span editable-text="deviceForm.description" editable-buttons="no" e-form="descBtnForm" onaftersave="submitDeviceFormChange('description')">{{deviceForm.description}}</span>
           <button style="border: 0" class="btn grey-mint btn-outline btn-circle btn-sm" ng-click="descBtnForm.$show()" ng-hide="descBtnForm.$visible"><i class="fa fa-pencil"></i></button>
         </div>
       </div>
@@ -59,7 +59,7 @@
                   <div class="form-group">
                     <label class="control-label col-md-3">Category</label>
                     <div class="col-md-9">
-                      <ui-select ng-model="deviceForm.category" theme="bootstrap" title="Choose category" ng-change="submitDeviceFormChange()">
+                      <ui-select ng-model="deviceForm.category" theme="bootstrap" title="Choose category" ng-change="submitDeviceFormChange('category')">
                         <ui-select-match placeholder="Select category from the list...">
                           <i class="pull-left bg-{{$select.selected.id}} color-dot-out" alt="{{$select.selected.value.name}}"></i>
                           {{$select.selected.value.name}}
@@ -74,7 +74,7 @@
                   <div class="form-group">
                     <label class="control-label col-md-3">Tags</label>
                     <div class="col-md-9">
-                      <ui-select multiple tagging tagging-label="(create new tag)" ng-model="deviceForm.tags" theme="bootstrap" sortable="true" title="Enter tag"  ng-change="submitDeviceFormChange()">
+                      <ui-select multiple tagging tagging-label="(create new tag)" ng-model="deviceForm.tags" theme="bootstrap" sortable="true" title="Enter tag"  ng-change="submitDeviceFormChange('tags')">
                         <ui-select-match placeholder="Select or enter tags...">
                           <span class="device-tag">{{$item}}</span>
                         </ui-select-match>
@@ -89,7 +89,7 @@
                     <label class="control-label col-md-3">API Key</label>
                     <div class="col-md-9">
                       <div class="input-group">
-                        <ui-select ng-model="deviceForm.keyhash" theme="bootstrap" title="Choose a key" ng-change="submitDeviceFormChange()">
+                        <ui-select ng-model="deviceForm.keyhash" theme="bootstrap" title="Choose a key" ng-change="submitDeviceFormChange('key')">
                           <ui-select-match placeholder="Select key in the list...">{{$select.selected.value.alias}}</ui-select-match>
                           <ui-select-choices repeat="apikey.value.hash as (key, apikey) in $root.apikeys | filter: { value: { alias: $select.search }}">
                             <div ng-bind-html="apikey.value.alias | highlight: $select.search"></div>
@@ -97,7 +97,7 @@
                           </ui-select-choices>
                         </ui-select>
                         <span class="input-group-btn">
-                          <button type="button" ng-click="deviceForm.keyhash = null" class="btn btn-default"><span class="fa fa-chain-broken"></span></button>
+                          <button type="button" ng-click="deviceForm.keyhash = null; submitDeviceFormChange('keyhash')" class="btn btn-default"><span class="fa fa-chain-broken"></span></button>
                         </span>
                       </div>
                     </div>
@@ -127,7 +127,7 @@
                     <div class="col-md-9">
                       <input
                       bs-switch
-                      ng-change="submitDeviceFormChange()"
+                      ng-change="submitDeviceFormChange('auto_update')"
                       ng-model="deviceForm.auto_update"
                       type="checkbox"
                       switch-size="tiny"

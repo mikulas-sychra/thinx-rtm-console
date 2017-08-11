@@ -191,7 +191,6 @@ function init($rootScope, $scope) {
     $scope.$apply();
     console.log('devices:');
     console.log($rootScope.devices);
-
   }
 
   function updateTags() {
