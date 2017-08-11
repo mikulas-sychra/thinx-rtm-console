@@ -129,11 +129,11 @@
                   Source not attached<br><small>Firmware unknown</small>
                 </div>
                 <div class="device-block-control">
-                  <a class="btn btn-circle btn-icon-only btn-default" ng-click="openDeviceModal(device, $event)" title="Device Settings Modal">
-                    <i class="fa fa-pencil"></i>
-                  </a>
+                  <!-- <a class="btn btn-circle btn-icon-only btn-default" ng-click="openDeviceModal(device, $event)" title="Device Settings Modal"> -->
+                    <!-- <i class="fa fa-pencil"></i> -->
+                  <!-- </a> -->
                   <a ui-sref="device({udid: device.udid})" class="btn btn-circle btn-icon-only btn-default" title="Device Settings">
-                    <i class="fa fa-umbrella"></i>
+                    <i class="fa fa-pencil"></i>
                   </a>
                   <a class="btn btn-circle btn-icon-only btn-default" href="#" ng-if="hasSource(device) && getSourceById(device.source).platform != 'nodejs'" ng-click="build(device.udid, device.source); $event.stopPropagation()" ng-hide="hasBuildId(device.udid) == null"  title="Build From Source">
                     <i class="fa fa-cogs"></i>
