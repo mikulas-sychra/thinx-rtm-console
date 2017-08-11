@@ -31,11 +31,11 @@
       </div>
       <div class="col-md-9">
         <h2>
-          <span editable-text="deviceForm.alias" editable-buttons="no" e-form="aliasBtnForm" onaftersave="submitDeviceFormChange('alias')">{{deviceForm.alias}}</span>
+          <span editable-text="deviceForm.alias" editable-buttons="no" e-form="aliasBtnForm" onaftersave="submitDeviceFormChange('alias')">{{deviceForm.alias | limitTo: 24}}{{deviceForm.alias.length > 24 ? '…' : ''}}</span>
           <button style="border: 0" class="btn grey-mint btn-outline btn-circle btn-sm" ng-click="aliasBtnForm.$show()" ng-hide="aliasBtnForm.$visible"><i class="fa fa-pencil"></i></button>
         </h2>
         <div>
-          <span editable-text="deviceForm.description" editable-buttons="no" e-form="descBtnForm" onaftersave="submitDeviceFormChange('description')">{{deviceForm.description}}</span>
+          <span editable-text="deviceForm.description" editable-buttons="no" e-form="descBtnForm" onaftersave="submitDeviceFormChange('description')">{{deviceForm.description | limitTo: 48}}{{deviceForm.description.length > 48 ? '…' : ''}}</span>
           <button style="border: 0" class="btn grey-mint btn-outline btn-circle btn-sm" ng-click="descBtnForm.$show()" ng-hide="descBtnForm.$visible"><i class="fa fa-pencil"></i></button>
         </div>
       </div>
