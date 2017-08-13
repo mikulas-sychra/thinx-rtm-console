@@ -328,7 +328,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
           console.log('-- refreshing devices --');
           Thinx.deviceList()
           .done(function(data) {
-            $('#deviceModal').modal('hide');
+            // $('#deviceModal').modal('hide');
             $scope.$emit("updateDevices", data);
           })
           .fail(function(error) {
@@ -436,7 +436,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
       $scope.selectedItems.push(udid);
     }
   }
-
+/*
   $scope.openDeviceModal = function(device, event) {
     event.stopPropagation();
 
@@ -485,8 +485,9 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     }
 
     console.log("form vars", $scope.deviceForm);
-    $('#deviceModal').modal('show');
+    // $('#deviceModal').modal('show');
   }
+  */
 
   $scope.openTransferModal = function() {
     console.log('Resetting transfer modal form values...');
