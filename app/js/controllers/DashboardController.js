@@ -379,6 +379,8 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
         console.log('Success:', data);
         toastr.success('Configuration Pushed.', 'THiNX RTM Console', {timeOut: 5000})
 
+        $('#configModal').modal('hide');
+
         $scope.selectedItems = [];
         $scope.configForm.devices = [];
         $scope.configForm.enviros = {};
