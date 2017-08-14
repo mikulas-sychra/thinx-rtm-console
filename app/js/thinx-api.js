@@ -437,7 +437,7 @@ function pushConfig(configForm, deviceUdids) {
   console.log('enabledEnviros', enabledEnviros);
 
   return $.ajax({
-    url: urlBase + '/devices/push',
+    url: urlBase + '/device/push',
     type: 'POST',
     data: JSON.stringify({
       enviros: enabledEnviros,
