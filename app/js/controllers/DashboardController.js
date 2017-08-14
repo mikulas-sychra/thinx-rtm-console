@@ -474,6 +474,39 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
   }
 
 
+  function pushConfig(configForm, deviceUdids) {
+    console.log('--pushing config to devices ' + deviceUdids.length +'--')
+
+    Thinx.pushConfig(configForm, deviceUdids)
+    .done(function(data) {
+      if (data.success) {
+        console.log('Success:', data);
+        toastr.success('Configuration Pushed.', 'THiNX RTM Console', {timeOut: 5000})
+
+        $scope.selectedItems = [];
+        $scope.configForm.devices = [];
+        $scope.configForm.enviros = {};
+        $scope.configForm.resetDevices = false;
+
+      } else {
+        toastr.error('Push Configuration failed.', 'THiNX RTM Console', {timeOut: 5000})
+      }
+    })
+    .fail(error => $scope.$emit("xhrFailed", error));
+  }
+
+  $scope.pushConfig = function() {
+    console.log('-- processing selected items (pushconfig) --');
+    console.log($scope.selectedItems);
+
+    var selectedToProcess = $scope.selectedItems.slice();
+    if (selectedToProcess.length > 0) {
+      pushConfig($scope.configForm, selectedToProcess);
+    } else {
+      toastr.warning('Nothing selected.', 'THiNX RTM Console', {timeOut: 1000})
+    }
+  };
+
   $scope.openTransferModal = function() {
     console.log('Resetting transfer modal form values...');
 

@@ -66,6 +66,9 @@ var Thinx = {
   transferDevices: function (transferForm, deviceUdids) {
     return transferDevices(transferForm, deviceUdids);
   },
+  pushConfig: function (configForm, deiceUdids) {
+    return pushConfig(configForm, deiceUdids);
+  },
   attachSource: function (sourceId, deviceUdid) {
     return attachSource(sourceId, deviceUdid);
   },
@@ -418,6 +421,25 @@ function transferDevices(transferForm, deviceUdids) {
       to: transferForm.email,
       mig_sources: transferForm.mig_sources,
       mig_apikeys: transferForm.mig_apikeys
+    }),
+    dataType: 'json'
+  });
+}
+
+function pushConfig(configForm, deviceUdids) {
+  var enabledEnviros = [];
+  for (var index in configForm.enviros) {
+    console.log(configForm.enviros[index]);
+    enabledEnviros.push(configForm.enviros[index]);
+  }
+
+  return $.ajax({
+    url: urlBase + '/devices/push',
+    type: 'POST',
+    data: JSON.stringify({
+      enviros: enabledEnviros,
+      udids: deviceUdid,
+      reset_devices: configForm.resetDevices
     }),
     dataType: 'json'
   });

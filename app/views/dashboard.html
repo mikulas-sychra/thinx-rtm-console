@@ -488,41 +488,35 @@
           <h4 class="modal-title">Push Configuration</h4>
         </div>
         <div class="modal-body">
-
-          <div class="form-group">
-            <label class="control-label col-md-3">Target Devices</label>
-            <div class="col-md-9">
-              <div ng-repeat="device in configForm.devices">
-                {{$root.getDeviceByUdid(device).alias}}
+          <form action="#" class="form-horizontal">
+            <div class="form-group">
+              <label class="control-label col-md-3 align-top">Target Devices</label>
+              <div class="col-md-9" style="padding-top: 8px">
+                <div ng-repeat="device in configForm.devices">
+                  {{$root.getDeviceByUdid(device).alias}}
+                </div>
               </div>
             </div>
-          </div>
-
-
-
-                    <div class="form-group">
-                      <label class="control-label col-md-3">Environmental Variables</label>
-                      <div class="col-md-9">
-                        <div ng-repeat="(key, value) in configForm.enviros" class="row">
-                          <div class="col-md-6">
-                            {{key}}
-                          </div>
-                          <div class="col-md-6 text-right">
-                            <input
-                              bs-switch
-                              ng-model="configForm.enviros[key]"
-                              type="checkbox"
-                              switch-size="tiny"
-                              switch-on-text="<i class='fa fa-check'></i>"
-                              switch-on-value="true"
-                              switch-off-text="<i class='fa fa-ban'></i>"
-                              switch-off-value="false" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-
+            <div class="form-group">
+              <label class="control-label col-md-3 align-top">Environmental Variables</label>
+              <div class="col-md-9" style="padding-top: 8px">
+                <div ng-repeat="(key, value) in configForm.enviros" style="margin-bottom: 25px;">
+                    {{key}}
+                  <div class="pull-right">
+                    <input
+                      bs-switch
+                      ng-model="configForm.enviros[key]"
+                      type="checkbox"
+                      switch-size="tiny"
+                      switch-on-text="<i class='fa fa-check'></i>"
+                      switch-on-value="true"
+                      switch-off-text="<i class='fa fa-ban'></i>"
+                      switch-off-value="false" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
