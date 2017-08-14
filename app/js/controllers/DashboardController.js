@@ -159,72 +159,6 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     console.log($rootScope.stats);
   }
 
-  $scope.attachSource = function(sourceId, deviceUdid) {
-
-    console.log('-- attaching ' + sourceId + ' to  ' + deviceUdid + '--');
-
-    Thinx.attachSource(sourceId, deviceUdid)
-    .done(function(response) {
-      if (typeof(response) !== "undefined") {
-        if (response.success) {
-          console.log("-- attach success --");
-          console.log(response);
-
-          for (var index in $rootScope.devices) {
-            if ($rootScope.devices[index].udid == deviceUdid) {
-              console.log('updating device source and selector...');
-              $rootScope.devices[index].source = response.attached;
-            }
-          }
-
-          toastr.success('Repository Attached.', 'THiNX RTM Console', {timeOut: 5000})
-        } else {
-          console.log(response);
-          toastr.error('Attach Failed.', 'THiNX RTM Console', {timeOut: 5000})
-        }
-      } else {
-        console.log('error');
-        console.log(response);
-      }
-    })
-    .fail(function(error) {
-      console.error('Error:', error);
-      toastr.error('Attach Failed.', 'THiNX RTM Console', {timeOut: 5000})
-    });
-
-  };
-
-  $scope.detachSource = function(deviceUdid) {
-    console.log('-- detaching source from ' + deviceUdid + '--');
-    Thinx.detachSource(deviceUdid)
-    .done(function(response) {
-      if (typeof(response) !== "undefined") {
-        if (response.success) {
-          console.log(response);
-          for (var index in $rootScope.devices) {
-            if ($rootScope.devices[index].udid == deviceUdid) {
-              $rootScope.devices[index].source = undefined;
-            }
-          }
-          toastr.success('Repository Detached.', 'THiNX RTM Console', {timeOut: 5000})
-          $scope.deviceForm.source = null;
-          $scope.$apply()
-        } else {
-          console.log(response);
-          toastr.error('Detach Failed.', 'THiNX RTM Console', {timeOut: 5000})
-        }
-      } else {
-        console.log('error');
-        console.log(response);
-      }
-    })
-    .fail(function(error) {
-      console.error('Error:', error);
-      toastr.error('Detach Failed.', 'THiNX RTM Console', {timeOut: 5000})
-    });
-  };
-
-
   $scope.build = function(deviceUdid, sourceId) {
     console.log('-- building firmware for ' + deviceUdid + '/' + $scope.getSourceById(sourceId).alias + ' --');
 
@@ -317,44 +251,6 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
       }
     }
   }
-
-  $scope.submitDeviceForm = function() {
-
-    console.log('-- changing device: ' + $scope.deviceForm.udid + ' -> ' + $scope.deviceForm.alias + ', ' + $scope.deviceForm.platform + ', ' + $scope.deviceForm.keyhash + ' --');
-
-    Thinx.submitDevice($scope.deviceForm)
-    .done(function(response) {
-
-      if (typeof(response) !== "undefined") {
-        if (typeof(response.success) !== "undefined" && response.success) {
-          console.log(response);
-          toastr.success('Device settings updated.', 'THiNX RTM Console', {timeOut: 5000})
-
-          console.log('-- refreshing devices --');
-          Thinx.deviceList()
-          .done(function(data) {
-            // $('#deviceModal').modal('hide');
-            $scope.$emit("updateDevices", data);
-          })
-          .fail(function(error) {
-            console.log('Error:', error);
-          });
-
-        } else {
-          console.log(response);
-          toastr.error('Alias Update Failed.', 'THiNX RTM Console', {timeOut: 5000})
-        }
-      } else {
-        console.log('error');
-        console.log(response);
-      }
-
-    })
-    .fail(function(error) {
-      console.error('Error:', error);
-      toastr.error('Alias Update Failed Badly.', 'THiNX RTM Console', {timeOut: 5000})
-    });
-  };
 
   $scope.revokeSelected = function() {
     console.log('-- processing selected items --');
