@@ -86,6 +86,7 @@
                 <i class="fa fa-angle-down"></i>
               </a>
               <ul class="dropdown-menu pull-right">
+                <li><a href="javascript:;" ng-click="openConfigModal()"><i class="icon-paper-plane"></i> Push Config</a></li>
                 <li><a href="javascript:;" ng-click="revokeSelected()"><i class="icon-trash"></i> Revoke</a></li>
                 <li><a href="javascript:;" ng-click="openTransferModal()"><i class="fa fa-exchange"></i> Transfer</a></li>
               </ul>
@@ -472,6 +473,62 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary" ng-click="transferDevices()"><i class="fa fa-exchange"></i> Transfer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END MODAL TRANSFER -->
+
+  <!-- BEGIN MODAL CONFIG -->
+  <div id="configModal" class="modal container fade" role="dialog" aria-hidden="true">
+    <div class="modal-dialog config-modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+          <h4 class="modal-title">Push Configuration</h4>
+        </div>
+        <div class="modal-body">
+          <form action="#" class="form-horizontal">
+            <div class="form-group">
+              <label class="control-label col-md-3">Target Devices</label>
+              <div class="col-md-9">
+                <div ng-repeat="device in configForm.devices">
+                  {{$root.getDeviceByUdid(device).alias}}
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">Variables</label>
+              <div class="col-md-9">
+                <div ng-repeat="(key, value) in configForm.enviros" class="row">
+
+                  <div class="col-md-6">
+                    {{key}}
+                  </div>
+
+                      <div class="col-md-6 text-right">
+                        <input
+                          bs-switch
+                          ng-model="configForm.enviros[key]"
+                          type="checkbox"
+                          switch-size="tiny"
+                          switch-on-text="PUSH"
+                          switch-on-value="true"
+                          switch-off-text="IGNORE"
+                          switch-off-value="false" />
+
+                      </div>
+
+
+                </div>
+              </div>
+            </div>
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" ng-click="pushConfig()"><i class="icon-paper-plane"></i> Push Configuration</button>
         </div>
       </div>
     </div>

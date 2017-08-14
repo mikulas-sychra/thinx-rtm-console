@@ -218,7 +218,7 @@ RTM.controller('HeaderController', ['$scope', '$rootScope', function($scope, $ro
     Layout.initHeader(); // init header
   });
 
-  $scope.getDeviceByUdid = function(deviceUdid) {
+  $rootScope.getDeviceByUdid = function(deviceUdid) {
     for (var index in $rootScope.devices) {
       if ($rootScope.devices[index].udid == deviceUdid) {
         return $rootScope.devices[index];

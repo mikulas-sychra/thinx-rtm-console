@@ -52,8 +52,8 @@
                         <!-- <span class="label label-sm label-icon label-success"> -->
                         <!-- <i class="fa fa-plus"></i> -->
                         <!-- </span> -->
-                        <div ng-if="getDeviceByUdid(build.udid) != false" class="header-build-udid"><span class="bg-{{getDeviceByUdid(build.udid).category}}"><i class="fa fa-cogs"></i></span> {{getDeviceByUdid(build.udid).alias}}</div>
-                        <div ng-if="getDeviceByUdid(build.udid) == false" class="header-build-udid"><span><i class="fa fa-cogs"></i></span> {{build.udid | limitTo:6}}</div>
+                        <div ng-if="$root.getDeviceByUdid(build.udid) != false" class="header-build-udid"><span class="bg-{{getDeviceByUdid(build.udid).category}}"><i class="fa fa-cogs"></i></span> {{getDeviceByUdid(build.udid).alias}}</div>
+                        <div ng-if="$root.getDeviceByUdid(build.udid) == false" class="header-build-udid"><span><i class="fa fa-cogs"></i></span> {{build.udid | limitTo:6}}</div>
                         <div class="header-build-message">{{build.message}}</div>
                       </span>
                     </a>

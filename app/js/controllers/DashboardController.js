@@ -53,6 +53,11 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
   $scope.deviceForm.category = null;
   $scope.deviceForm.tags = [];
 
+  $scope.configForm = {};
+  $scope.configForm.devices = [];
+  $scope.configForm.enviros = {};
+  $scope.configForm.resetDevices = false;
+
   $scope.transferForm = {};
   $scope.transferForm.email = null;
   $scope.transferForm.mig_sources = false;
@@ -386,6 +391,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     .fail(error => $scope.$emit("xhrFailed", error));
   }
 
+
   function transferDevices(transferForm, deviceUdids) {
     console.log('--transferring devices ' + deviceUdids.length +'--')
 
@@ -436,58 +442,37 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
       $scope.selectedItems.push(udid);
     }
   }
-/*
-  $scope.openDeviceModal = function(device, event) {
-    event.stopPropagation();
 
-    console.log('Resetting modal form values...');
+  $scope.openConfigModal = function() {
+    console.log('Resetting config form values...');
     // $scope.deviceForm.index = index;
-    $scope.deviceForm.udid = device.udid;
-    $scope.deviceForm.alias = device.alias;
-    $scope.deviceForm.description = device.description;
 
-    if (typeof(device.platform) !== "undefined") {
-      $scope.deviceForm.platform = device.platform;
-    } else {
-      $scope.deviceForm.platform = null;
-    }
+    Thinx.enviroList()
+    .done( function(data) {
 
-    if (typeof(device.keyhash) !== "undefined") {
-      $scope.deviceForm.keyhash = device.keyhash;
-    } else {
-      $scope.deviceForm.keyhash = null;
-    }
+      var enviros = JSON.parse(data);
+      $rootScope.enviros = enviros.env_vars;
 
-    if (typeof(device.source) !== "undefined") {
-      $scope.deviceForm.source = device.source;
-    } else {
-      $scope.deviceForm.source = null;
-    }
+      var defVal = false;
+      if ($rootScope.enviros.length < 3) {
+          defVal = true;
+      }
+      for (var index in enviros.env_vars) {
+          $scope.configForm.enviros[enviros.env_vars[index]] = defVal;
+      }
 
-    if (typeof(device.auto_update) !== "undefined") {
-      $scope.deviceForm.auto_update = device.auto_update;
-    } else {
-      $scope.deviceForm.auto_update = false;
-    }
+      $scope.configForm.resetDevices = false;
+      $scope.configForm.devices = $scope.selectedItems;
+      $scope.$apply()
 
-    if (typeof(device.category) !== "undefined") {
-      $scope.deviceForm.category = device.category;
-    } else {
-      $scope.deviceForm.category = null;
-    }
+      console.log("config form vars", $scope.configForm);
+      $('#configModal').modal('show');
 
-    if (typeof(device.tags) !== "undefined") {
-      console.log('tagswitch', $scope.deviceForm.tags, device.tags);
-      $scope.deviceForm.tags = device.tags;
-      // $('bootstrap-tagsinput').tagsinput('refresh');
-    } else {
-      $scope.deviceForm.tags = [];
-    }
+    })
+    .fail(error => console.log('Error:', error));
 
-    console.log("form vars", $scope.deviceForm);
-    // $('#deviceModal').modal('show');
   }
-  */
+
 
   $scope.openTransferModal = function() {
     console.log('Resetting transfer modal form values...');
