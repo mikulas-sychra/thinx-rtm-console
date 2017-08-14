@@ -391,7 +391,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     .fail(error => $scope.$emit("xhrFailed", error));
   }
 
-  $scope.pushConfig = function() {
+  $scope.submitPushConfig = function() {
     console.log('-- processing selected items (pushconfig) --');
     console.log($scope.selectedItems);
 
