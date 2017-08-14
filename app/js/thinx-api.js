@@ -428,17 +428,20 @@ function transferDevices(transferForm, deviceUdids) {
 
 function pushConfig(configForm, deviceUdids) {
   var enabledEnviros = [];
+  console.log('enviros', configForm.enviros);
   for (var index in configForm.enviros) {
-    console.log(configForm.enviros[index]);
-    enabledEnviros.push(configForm.enviros[index]);
+    if (configForm.enviros[index]) {
+      enabledEnviros.push(index);
+    }
   }
+  console.log('enabledEnviros', enabledEnviros);
 
   return $.ajax({
     url: urlBase + '/devices/push',
     type: 'POST',
     data: JSON.stringify({
       enviros: enabledEnviros,
-      udids: deviceUdid,
+      udids: deviceUdids,
       reset_devices: configForm.resetDevices
     }),
     dataType: 'json'
