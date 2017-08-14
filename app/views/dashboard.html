@@ -352,7 +352,13 @@
               <label class="control-label col-md-3 align-top">Target Devices</label>
               <div class="col-md-9" style="padding-top: 8px">
                 <div ng-repeat="device in configForm.devices">
-                  {{$root.getDeviceByUdid(device).alias}}
+
+                  <span style="font-size: 1.2em">{{$root.getDeviceByUdid(device).alias}}</span>
+
+                  <div class="device-mac-label font-{{$root.getDeviceByUdid(device).category}}">
+                    {{$root.getDeviceByUdid(device).mac}}
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -360,7 +366,7 @@
               <label class="control-label col-md-3 align-top">Environmental Variables</label>
               <div class="col-md-9" style="padding-top: 8px">
                 <div ng-repeat="(key, value) in configForm.enviros" style="margin-bottom: 25px;">
-                    {{key}}
+                    <span style="font-size: 1.2em">{{key}}</span>
                   <div class="pull-right">
                     <input
                       bs-switch
