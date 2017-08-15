@@ -25,4 +25,8 @@ angular.module('RTM').controller('HistoryController', ['$rootScope', '$scope', '
 
   });
 
+  $scope.downloadArtifacts = function(build_id) {
+    toastr.warning('Not implemented.', 'THiNX RTM Console', {timeOut: 2000})
+  };
+
 }]);
