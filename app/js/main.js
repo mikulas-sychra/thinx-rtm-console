@@ -512,7 +512,7 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
   .state("profile.account", {
     url: "/account",
     templateUrl: "views/profile/account.html",
-    data: {pageTitle: 'User Account'}
+    data: {pageTitle: 'Settings'}
   })
 
   // User Profile Help
@@ -520,6 +520,13 @@ RTM.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
     url: "/help",
     templateUrl: "views/profile/help.html",
     data: {pageTitle: 'User Help'}
+  })
+
+  // User Delete Profile
+  .state("profile.delete", {
+    url: "/delete",
+    templateUrl: "views/profile/delete.html",
+    data: {pageTitle: 'Delete Profile'}
   })
 
   // Blank Page

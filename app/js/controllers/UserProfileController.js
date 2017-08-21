@@ -6,6 +6,11 @@ angular.module('RTM').controller('UserProfileController', function($rootScope, $
     $scope.newAvatar = null;
     $scope.searchText = "";
 
+    $scope.deleteForm = {
+      username: null,
+      owner: null
+    };
+
   });
 
   Thinx.init($rootScope, $scope);
@@ -133,6 +138,8 @@ angular.module('RTM').controller('UserProfileController', function($rootScope, $
     };
   };
 
+
+
   $scope.removeTag = function(tagId) {
     console.log('-- current tags: ' + $rootScope.profile.info.tags);
     console.log('-- removing tag: ' + tagId);
@@ -141,6 +148,38 @@ angular.module('RTM').controller('UserProfileController', function($rootScope, $
     if (index > -1) {
       $rootScope.profile.info.tags.splice(index, 1);
     };
+  };
+
+  $scope.submitUserDelete = function() {
+    Thinx.userDelete($scope.deleteForm)
+    .done(function(response) {
+
+      if (typeof(response) !== "undefined") {
+        if (typeof(response.success) !== "undefined" && response.success) {
+          console.log(response);
+          window.location = "//rtm.thinx.cloud:7443/api/logout";
+        } else {
+          console.log(response);
+          toastr.error('User Delete Failed.', 'THiNX RTM Console', {timeOut: 5000})
+        }
+      } else {
+        console.log('error');
+        console.log(response);
+      }
+    })
+    .fail(function(error) {
+      console.error('Error:', error);
+      toastr.error('Avatar Update Failed Badly.', 'THiNX RTM Console', {timeOut: 5000})
+    });
+  };
+
+  $scope.checkDeleteForm = function() {
+    if (
+        $scope.deleteForm.username == $rootScope.profile.username
+        && $scope.deleteForm.owner == $rootScope.profile.owner) {
+      return false;
+    }
+    return true;
   };
 
 });

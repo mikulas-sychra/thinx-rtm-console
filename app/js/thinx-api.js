@@ -88,8 +88,8 @@ var Thinx = {
   submitProfileAvatar: function (avatar) {
     return submitProfileAvatar(avatar);
   },
-  submitProfileSecurity: function (security) {
-    return submitProfileSecurity(security);
+  userDelete: function (deleteForm) {
+    return userDelete(deleteForm);
   },
   getAuditHistory: function () {
     return getAuditHistory();
@@ -711,6 +711,20 @@ function submitProfileAvatar(avatar) {
   });
 }
 
+// User Delete
+function userDelete(deleteForm) {
+  // var avatar = btoa(avatar);
+
+  return $.ajax({
+    url: urlBase + '/user/delete',
+    type: 'POST',
+    data: JSON.stringify({
+      username: deleteForm.username,
+      owner: deleteForm.owner
+    }),
+    dataType: 'json'
+  });
+}
 
 // Audit log
 
