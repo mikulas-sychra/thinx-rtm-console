@@ -5,7 +5,7 @@
   "main": "gulpfile.js",
   "scripts": {
     "test": "protractor test/conf.js",
-    "coverage": "npm test; nyc report --reporter=text-lcov > ./coverage/coverage.lcov"
+    "coverage": "npm test; nyc report --reporter=text-lcov | coveralls"
   },
   "author": "Mikulas Sychra @ THiNX",
   "repository" : {

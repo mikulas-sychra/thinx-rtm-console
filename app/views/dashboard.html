@@ -394,49 +394,47 @@
 
   <!-- START GOALS -->
   <div class="note note-info" ng-hide="$root.profile.info.goals.includes('apikey')">
-    <h3>1. API Key <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('apikey'); $emit('saveProfile');"></span></h3>
-    <a ui-sref="apikey">Create your first API Key</a>
-    <p>
-      Enter API Keys Management
-    </p>
+    <h3>1. Create first API Key <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('apikey'); $emit('saveProfile');"></span></h3>
+    <p>In General &gt; <a ui-sref="apikey">API Keys</a> choose <b>Create API Key</b>.
+    <br>Store the key in clipboard.</p>
   </div>
   <div class="note note-info" ng-hide="$root.profile.info.goals.includes('enroll')">
     <h3>2. Device Enrollment
       <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('enroll'); $emit('saveProfile');"></span>
     </h3>
-    <a>Enroll your device</a>
     <p>
-      To start managing your first device via THiNX RTM Console you need to flash Vanilla Firmware with new API Key first.
-      <br><br>
-      Si má uživatel nainstalovat platformio, příslušnej USB driver, a uploadnout si na svoje ESP8266 vanilla binárku
+      To start managing your first device via THiNX RTM Console you need to flash it with THiNX Vanilla Firmware and set your API Key first.
+      <br>You can insert your API Key right into <b>thinx.h</b> file, or paste from clipboard later in AP mode.
+      <br>Flash the firmware like you usually do using <a href="https://github.com/espressif/esptool" target="_blank">esptool</a> or <a href="https://platformio.io" target="_blank">platformio</a>.
+</pre>
     </p>
   </div>
   <div class="note note-info" ng-hide="$root.profile.info.goals.includes('enroll-setup')">
     <h3>3. Device Setup
       <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('enroll-setup'); $emit('saveProfile');"></span>
     </h3>
-    <a>Connect your device to internet</a>
     <p>
-      Na device se pak uživatel připojí jako na AP, zadá login do WiFi a API Key… a je to.
-      A mohla by mu přijít desktop notifikace, že se zaregistroval nový device.
+      The device will start in AP mode with essid "THiNX-AP" and password "PASSWORD".
+      <br>Connect to AP and navigate to 192.168.4.1 in browser. You will be redirected to Network and API Key setup where you enter your SSID/password and paste the API key.
+      <br><br>
+      <span class="badge badge-roundless badge-success">HINT</span> Avoid this step completely by defining your essid, password and apikey in firmware header <b>thinx.h</b>.
+
     </p>
   </div>
   <div class="note note-danger" ng-hide="$root.profile.info.goals.includes('rsakey')">
     <h3>Security
       <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('rsakey'); $emit('saveProfile')"></span>
     </h3>
-    <a ui-sref="rsakey">Add RSA Key</a>
     <p>
-      Adding your public key will enable access to your private repositories.
+      Add your public key to <a ui-sref="rsakey">RSA Key panel</a> to enable access to your private repositories.
     </p>
   </div>
   <div class="note note-success" ng-hide="$root.profile.info.goals.includes('update')">
     <h3>Well Done!
       <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('update'); $emit('saveProfile');"></span>
     </h3>
-    <a>Update your device</a>
     <p>
-      Ale na to musíme dořešit HTTPS.
+      If everything went well, you can now manage or update your device from Dashboard.
     </p>
   </div>
   <!-- END GOALS -->
