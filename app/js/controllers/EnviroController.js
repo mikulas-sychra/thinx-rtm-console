@@ -13,7 +13,7 @@ angular.module('RTM').controller('EnviroController', ['$rootScope', '$scope', 's
 
     Thinx.enviroList()
     .done( function(data) {
-      updateKeys(data)
+      updateEnviros(data)
     })
     .fail(error => console.log('Error:', error));
 
@@ -23,7 +23,7 @@ angular.module('RTM').controller('EnviroController', ['$rootScope', '$scope', 's
 
   $scope.searchText = '';
 
-  function updateKeys(data) {
+  function updateEnviros(data) {
     var keys = JSON.parse(data);
 
     $rootScope.enviros = keys.env_vars;
@@ -58,7 +58,7 @@ angular.module('RTM').controller('EnviroController', ['$rootScope', '$scope', 's
 
           Thinx.enviroList()
           .done( function(data) {
-            updateKeys(data)
+            updateEnviros(data)
           })
           .fail(error => console.log('Error:', error));
 
@@ -97,9 +97,8 @@ angular.module('RTM').controller('EnviroController', ['$rootScope', '$scope', 's
         $scope.selectedItems = [];
         Thinx.enviroList()
         .done( function(data) {
-
           toastr.success('Deleted.', 'THiNX RTM Console', {timeOut: 5000})
-          updateKeys(data);
+          updateEnviros(data);
         })
         .fail(error => console.log('Error:', error));
 

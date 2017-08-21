@@ -53,12 +53,6 @@ angular.module('RTM').controller('SourceController', ['$rootScope', '$scope', 's
           Thinx.sourceList()
           .done( function(data) {
             $scope.$emit("updateSources", data);
-
-            // save user-spcific goal achievement
-            if (Object.keys($rootScope.sources).length > 0 && !$rootScope.profile.info.goals.includes('source')) {
-              $rootScope.profile.info.goals.push('source');
-              $scope.$emit("saveProfile");
-            }
           })
           .fail(error => console.log('Error:', error));
 

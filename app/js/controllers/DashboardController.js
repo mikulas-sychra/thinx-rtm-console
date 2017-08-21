@@ -26,13 +26,6 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
     Thinx.deviceList()
     .done(function(data) {
       $scope.$emit("updateDevices", data);
-      // save user-spcific goal achievement
-      if ($rootScope.devices.length > 0 && !$rootScope.profile.info.goals.includes('enroll')) {
-        // TODO enable
-        // $rootScope.profile.info.goals.push('enroll');
-        // $rootScope.profile.info.goals.push('enroll-setup');
-        $scope.$emit("saveProfile");
-      };
     })
     .fail(error => $scope.$emit("xhrFailed", error));
 
@@ -451,7 +444,7 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
       return 'journey-active';
     } else if ((goal == 'enroll') && ($rootScope.profile.info.goals.includes('apikey') && (!$rootScope.profile.info.goals.includes('build'))) ) {
       return 'journey-active';
-    } else if ((goal == 'build') && ($rootScope.profile.info.goals.includes('enroll') && (!$rootScope.profile.info.goals.includes('update'))) ) {
+    } else if ((goal == 'build')  && ($rootScope.profile.info.goals.includes('enroll') && (!$rootScope.profile.info.goals.includes('update'))) ) {
       return 'journey-active';
     } else if ((goal == 'update') && ($rootScope.profile.info.goals.includes('build') && (!$rootScope.profile.info.goals.includes('update'))) ) {
       return 'journey-active';

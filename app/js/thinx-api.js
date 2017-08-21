@@ -158,6 +158,12 @@ function init($rootScope, $scope) {
       console.log($rootScope.sources);
       console.log('refreshing view...');
       $rootScope.$apply()
+
+      // save user-spcific goal achievement
+      if (!$rootScope.profile.info.goals.includes('source') && Object.keys($rootScope.sources).length > 0) {
+        $rootScope.profile.info.goals.push('source');
+        $scope.$emit("saveProfile");
+      }
     } else {
       console.log('auditHistory fetch error.') ;
     }
@@ -178,6 +184,12 @@ function init($rootScope, $scope) {
     console.log($rootScope.apikeys);
     console.log('refreshing view...');
     $rootScope.$apply()
+
+    // save user-spcific goal achievement
+    if (!$rootScope.profile.info.goals.includes('apikey') && $rootScope.apikeys.length > 0) {
+      $rootScope.profile.info.goals.push('apikey');
+      $scope.$emit("saveProfile");
+    };
   }
 
   if (typeof($rootScope.updateDevicesListener) == "undefined") {
@@ -194,6 +206,14 @@ function init($rootScope, $scope) {
     $scope.$apply();
     console.log('devices:');
     console.log($rootScope.devices);
+
+    // save user-spcific goal achievement
+    if (!$rootScope.profile.info.goals.includes('enroll') && $rootScope.devices.length > 0) {
+      // TODO enable
+      $rootScope.profile.info.goals.push('enroll');
+      $rootScope.profile.info.goals.push('enroll-setup');
+      $scope.$emit("saveProfile");
+    };
   }
 
   function updateTags() {
