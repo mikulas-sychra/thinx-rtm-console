@@ -162,7 +162,7 @@ var Login = function() {
                 if (response.status == 'email_sent') {
                   $('.msg-error', $('.forget-form')).hide();
                   $('.forget-form').hide();
-                  $('.msg-success .form-subtitle').text('Check your email for reset link.');
+                  $('.msg-success .form-subtitle').text('Check your email or spam folder for reset link.');
                   $('.msg-success').show();
                 }
               } else {
@@ -296,7 +296,7 @@ var Login = function() {
                   $('.msg-error', $('.register-form')).hide();
                   $('.register-form').hide();
 
-                  $('.msg-success .form-subtitle').text('Check your email for activation link.');
+                  $('.msg-success .form-subtitle').text('Check your email or spam folder for activation link.');
                   $('.msg-success').show();
                 }
               } else {
