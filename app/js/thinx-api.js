@@ -329,6 +329,10 @@ function init($rootScope, $scope) {
     }
   }
 
+  $scope.$on("updateBuildHistory", function(event, data){
+    updateBuildHistory(data);
+  });
+
   function updateBuildHistory(data) {
     var response = JSON.parse(data);
     console.log('buildHistory list response:', response);

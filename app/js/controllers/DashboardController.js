@@ -172,6 +172,12 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
           // prepare user metadata for particular device
           $rootScope.meta.builds[deviceUdid].push(response.build_id);
 
+          Thinx.getBuildHistory()
+          .done(function(data) {
+            $scope.$emit("updateBuildHistory", data);
+          })
+          .fail(error => $scope.$emit("xhrFailed", error));
+
           // save user-spcific goal achievement
           if (!$rootScope.profile.info.goals.includes('build')) {
             $rootScope.profile.info.goals.push('build');
