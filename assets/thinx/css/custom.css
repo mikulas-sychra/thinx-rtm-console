@@ -645,15 +645,23 @@
 }
 
 .header-build-udid {
-  padding: 3px 5px 3px 5px;
-  /*margin-bottom: 10px;*/
-  /*margin-right: -10px;*/
   font-size: .9em;
-  display: inline-block;
   color: #BBBBBB;
+  margin-right: 6px;
+  display: inline-block;
 }
 
-.header-build-udid > span {
+.header-build-divider {
+  border-bottom: 1px solid rgba(96, 214, 159, 0.76);
+  position: relative;
+  margin-top: 10px;
+}
+
+.header-build-divider > div {
+  margin-bottom: -11px;
+}
+
+.header-build-icon {
   display: inline-block;
   width: 32px;
   height: 32px;
@@ -664,7 +672,7 @@
   position: relative;
 }
 
-.header-build-udid i {
+.header-build-icon i {
   background-color: rgba(255, 255, 255, 0.55);
   display: inline-block;
   width: 25px;
@@ -678,8 +686,8 @@
 }
 
 .header-build-message {
-    margin-left: 7px;
-    margin-top: 8px;
+    margin-left: 0px;
+    margin-top: 10px;
 }
 
 /* header icons color override */
@@ -702,4 +710,15 @@
   .page-header.navbar .top-menu .navbar-nav>li.dropdown-notification .dropdown-menu:after, .page-header.navbar .top-menu .navbar-nav>li.dropdown-notification .dropdown-menu:before {
       margin-right: initial;
   }
+}
+
+.build-time {
+  font-size: .8em;
+  display: inline-block;
+  background-color: #575d77;
+  top: -11px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-bottom: 2px;
+  color: #60d69f;
 }

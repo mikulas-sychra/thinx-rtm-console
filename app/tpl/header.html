@@ -47,14 +47,30 @@
                 <ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
                   <li ng-repeat="(key, build) in $root.buildHistory | limitTo:10 track by key">
                     <a href="javascript:;" ng-click="$emit('showLogOverlay', build.build_id)">
-                      <span class="time">{{build.date | lastSeen}}</span>
+
                       <span class="details">
                         <!-- <span class="label label-sm label-icon label-success"> -->
                         <!-- <i class="fa fa-plus"></i> -->
                         <!-- </span> -->
-                        <div ng-if="$root.getDeviceByUdid(build.udid) != false" class="header-build-udid"><span class="bg-{{getDeviceByUdid(build.udid).category}}"><i class="fa fa-cogs"></i></span> {{getDeviceByUdid(build.udid).alias}}</div>
-                        <div ng-if="$root.getDeviceByUdid(build.udid) == false" class="header-build-udid"><span><i class="fa fa-cogs"></i></span> {{build.udid | limitTo:6}}</div>
+
+                        <div ng-if="$root.getDeviceByUdid(build.udid) != false">
+                          <span class="header-build-icon bg-{{getDeviceByUdid(build.udid).category}}">
+                            <i class="fa fa-cogs"></i>
+                          </span>
+                          <div class="header-build-udid font-{{getDeviceByUdid(build.udid).category}}">
+                            {{build.udid | limitTo:6}}
+                          </div>
+                          {{getDeviceByUdid(build.udid).alias}}
+                        </div>
+
                         <div class="header-build-message">{{build.message}}</div>
+
+                        <div class="header-build-divider">
+                          <div class="text-center">
+                            <span class="build-time">{{build.date | lastSeen}}</span>
+                          </div>
+                        </div>
+
                       </span>
                     </a>
                   </li>
