@@ -308,6 +308,10 @@ var Login = function() {
                   $('.msg-error', $('.register-form')).text('Email already exists.');
                   $('.msg-error', $('.register-form')).show();
                 }
+                if (response.status == 'username_already_exists') {
+                  $('.msg-error', $('.register-form')).text('Username already exists.');
+                  $('.msg-error', $('.register-form')).show();
+                }
               }
             }
 
