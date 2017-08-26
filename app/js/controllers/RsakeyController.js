@@ -13,7 +13,7 @@ angular.module('RTM').controller('RsakeyController', ['$rootScope', '$scope', 's
 
     Thinx.rsakeyList()
     .done( function(data) {
-      updateRSAKeys(data)
+      updateRsaKeys(data)
     })
     .fail(error => $scope.$emit("xhrFailed", error));
 
@@ -23,7 +23,7 @@ angular.module('RTM').controller('RsakeyController', ['$rootScope', '$scope', 's
 
   $scope.searchText = '';
 
-  function updateRSAKeys(data) {
+  function updateRsaKeys(data) {
     var keys = JSON.parse(data);
     $rootScope.rsakeys = keys.rsa_keys;
     $scope.$apply()
@@ -31,10 +31,14 @@ angular.module('RTM').controller('RsakeyController', ['$rootScope', '$scope', 's
     console.log($rootScope.rsakeys);
 
     // save user-spcific goal achievement
-    if (!$rootScope.profile.info.goals.includes('rsakey') && $rootScope.rsakeys.length > 0) {
-      $rootScope.profile.info.goals.push('rsakey');
-      $scope.$emit("saveProfile");
-    };
+    if ($rootScope.profile.info.goals.length > 0) {
+      if (!$rootScope.profile.info.goals.includes('rsakey')
+        && $rootScope.rsakeys.length > 0) {
+        $rootScope.profile.info.goals.push('rsakey');
+        $scope.$emit("saveProfile");
+      }
+    }
+
   }
 
   $scope.addRsakey = function() {
@@ -61,7 +65,7 @@ angular.module('RTM').controller('RsakeyController', ['$rootScope', '$scope', 's
 
           Thinx.rsakeyList()
           .done( function(data) {
-            updateRSAKeys(data);
+            updateRsaKeys(data);
           })
           .fail(error => $scope.$emit("xhrFailed", error));
 
@@ -101,7 +105,7 @@ angular.module('RTM').controller('RsakeyController', ['$rootScope', '$scope', 's
         Thinx.rsakeyList()
         .done( function(data) {
           toastr.success('Deleted.', 'THiNX RTM Console', {timeOut: 5000})
-          updateRSAKeys(data);
+          updateRsaKeys(data);
         })
         .fail(error => $scope.$emit("xhrFailed", error));
 

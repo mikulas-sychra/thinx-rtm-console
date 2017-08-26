@@ -50,6 +50,14 @@ angular.module('RTM').controller('ApikeyController', ['$rootScope', '$scope', 's
           Thinx.apikeyList()
           .done( function(data) {
             $scope.$emit("updateApikeys", data);;
+
+            // save user-spcific goal achievement
+            if ($rootScope.profile.info.goals.length > 0) {
+              if (!$rootScope.profile.info.goals.includes('apikey') && $rootScope.apikeys.length > 0) {
+                $rootScope.profile.info.goals.push('apikey');
+                $scope.$emit("saveProfile");
+              }
+            }
           })
           .fail(error => console.log('Error:', error));
 

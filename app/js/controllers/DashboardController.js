@@ -179,12 +179,12 @@ angular.module('RTM').controller('DashboardController', function($rootScope, $sc
           .fail(error => $scope.$emit("xhrFailed", error));
 
           // save user-spcific goal achievement
-          if (!$rootScope.profile.info.goals.includes('build')) {
-            $rootScope.profile.info.goals.push('build');
-            $scope.$emit("saveProfile");
-          };
-
-          // toastr.info(response.status, 'THiNX RTM Console', {timeOut: 5000});
+          if ($rootScope.profile.info.goals.length > 0) {
+            if (!$rootScope.profile.info.goals.includes('build')) {
+              $rootScope.profile.info.goals.push('build');
+              $scope.$emit("saveProfile");
+            }
+          }
 
           var buildToast = toastr.info(
             response.status + '<br><br>Click to show build log...',
