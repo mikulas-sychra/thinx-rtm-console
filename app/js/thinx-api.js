@@ -109,6 +109,9 @@ var Thinx = {
   getLogout: function () {
     return getLogout();
   },
+  submitSystemMessage: function (messageForm) {
+    return submitSystemMessage(messageForm);
+  },
   init: function ($rootScope, $scope) {
     return init($rootScope, $scope);
   }
@@ -497,6 +500,23 @@ function getLogout() {
   return $.ajax({
     url: urlBase + '/logout',
     type: 'GET',
+    success: function() {
+      console.log('SUCCESS');
+    },
+    error: function() {
+      console.log('ERROR');
+    }
+  });
+}
+
+function submitSystemMessage(messageForm) {
+  return $.ajax({
+    url: urlBase + '/user/message',
+    type: 'POST',
+    data: JSON.stringify({
+      message: messageForm.text
+    }),
+    dataType: 'json',
     success: function() {
       console.log('SUCCESS');
     },

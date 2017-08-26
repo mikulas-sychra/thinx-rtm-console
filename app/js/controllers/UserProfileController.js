@@ -11,6 +11,10 @@ angular.module('RTM').controller('UserProfileController', function($rootScope, $
       owner: null
     };
 
+    $scope.messageForm = {
+      text: null
+    };
+
   });
 
   Thinx.init($rootScope, $scope);
@@ -180,6 +184,31 @@ angular.module('RTM').controller('UserProfileController', function($rootScope, $
       return false;
     }
     return true;
+  };
+
+  $scope.submitSystemMessageForm = function() {
+
+    Thinx.submitSystemMessage($scope.messageForm)
+    .done(function(response) {
+
+      if (typeof(response) !== "undefined") {
+        if (typeof(response.success) !== "undefined" && response.success) {
+          console.log(response);
+          toastr.success('Message sent.', 'THiNX RTM Console', {timeOut: 5000})
+          $scope.messageForm.text = null;
+        } else {
+          console.log(response);
+          toastr.error('Message Submit Failed.', 'THiNX RTM Console', {timeOut: 5000})
+        }
+      } else {
+        console.log('error');
+        console.log(response);
+      }
+    })
+    .fail(function(error) {
+      console.error('Error:', error);
+      toastr.error('Message Submit Failed Badly.', 'THiNX RTM Console', {timeOut: 5000})
+    });
   };
 
 });
