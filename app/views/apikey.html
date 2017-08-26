@@ -92,12 +92,15 @@
                 <label class="control-label col-md-3">Key Value</label>
                 <div class="col-md-9">
                   <input type="text" id="newApikey" name="newApikey" class="form-control new-apikey" ng-value="newApikey" ng-readonly="true" />
+                  <br>
+                  <div class="alert alert-warning" ng-if="newApikey !== null">
+                    <strong>WARNING</strong> Save your Key Value now. Otherwise will be lost!
+                  </div>
                 </div>
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <p class="msg-warning display-hide">WARNING: Now is the last time you can save your key!</p>
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             <button type="button" ng-show="createButtonVisible" class="btn btn-primary" ng-click="createApikey(newApikeyAlias)" ng-disabled="(newApikeyAlias == null || newApikeyAlias.length < 1)"><i class="fa fa-check"></i> Create</button>
             <button type="button" ng-hide="createButtonVisible" class="btn btn-default copy-btn" data-clipboard-target="#newApikey"><i class="fa fa-clipboard"></i> Copy</button>
