@@ -73,7 +73,7 @@
     </div>
   </div>
   <!-- BEGIN FORM-->
-  <form action="#" class="form-horizontal form-bordered" name="enviroModal">
+  <form ng-submit="addEnviro()" class="form-horizontal form-bordered" name="enviroModal">
     <div id="pageModal" class="modal fade" role="dialog" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -82,20 +82,18 @@
             <h4 class="modal-title">New Environment Value</h4>
           </div>
           <div class="modal-body">
-            <form action="#" class="form-horizontal">
-              <div class="form-group">
-                <label class="control-label col-md-3">Name</label>
-                <div class="col-md-9">
-                  <input type="text" name="enviroName" ng-model="enviroName" class="form-control" placeholder="Variable Name" />
-                </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">Name</label>
+              <div class="col-md-9">
+                <input type="text" name="enviroName" ng-model="enviroName" class="form-control" placeholder="Variable Name" />
               </div>
-              <div class="form-group last">
-                <label class="control-label col-md-3">Value</label>
-                <div class="col-md-9">
-                  <textarea name="enviroValue" ng-model="enviroValue" class="form-control" placeholder="Enter value here...")></textarea>
-                </div>
+            </div>
+            <div class="form-group last">
+              <label class="control-label col-md-3">Value</label>
+              <div class="col-md-9">
+                <textarea name="enviroValue" ng-model="enviroValue" class="form-control" placeholder="Enter value here...")></textarea>
               </div>
-            </form>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -108,7 +106,6 @@
   <!-- END FORM-->
 </div>
 <!-- END MAIN CONTENT -->
-
 
 <!-- START PAGE LOG OVERLAY -->
 <div ng-controller="LogviewController" class="log-view-overlay-conatiner" style="display:none">
@@ -123,7 +120,6 @@
   </div>
 </div>
 <!-- END PAGE LOG OVERLAY -->
-
 
 <!-- BEGIN MAIN JS-->
 <script>

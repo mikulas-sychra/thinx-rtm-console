@@ -4,12 +4,15 @@
     <a ui-sref="dashboard">Home</a>
     <i class="fa fa-circle"></i>
   </li>
-  <li class="active"> API Key Management </li>
+  <li class="active">
+    API Key Management
+  </li>
 </ul>
 <!-- END PAGE BREADCRUMB -->
 <!-- BEGIN MAIN CONTENT -->
 <div class="row">
   <div class="col-md-12">
+
     <div class="note note-info" ng-hide="$root.profile.info.goals.includes('apikey-info')">
       <h3>API Keys
         <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('apikey-info'); $emit('saveProfile');"></span>
@@ -54,8 +57,8 @@
           </div>
           <div class="col-xs-6 text-right">
             <span class="input-icon right xtop-list-search">
-                <i class="icon-magnifier"></i>
-                <input type="text" class="form-control form-control-solid" ng-model="searchText" placeholder="Search...">
+              <i class="icon-magnifier"></i>
+              <input type="text" class="form-control form-control-solid" ng-model="searchText" placeholder="Search...">
             </span>
           </div>
         </div>
@@ -63,7 +66,13 @@
           <table class="table table-hover table-light">
             <tr ng-repeat="apikey in $root.apikeys | propsFilter:{hash:searchText,alias:searchText}" ng-click="checkItem(apikey.hash)" ng-class="selectedItems.indexOf(apikey.hash) > -1 ? 'selected-row' : 'default-row'">
               <td>
-                <div class="row-item-title-small"><span class="key-label monospace-info"><i class="fa fa-key apikey-icon"></i> {{apikey.name | limitTo : 10 : apikey.name.length - 10 }}</span>  &nbsp; <span class="apikey-alias">{{apikey.alias}}<span></div>
+                <div class="row-item-title-small">
+                  <span class="key-label monospace-info">
+                    <i class="fa fa-key apikey-icon"></i> {{apikey.name | limitTo : 10 : apikey.name.length - 10 }}
+                  </span>
+                  &nbsp;
+                  <span class="apikey-alias">{{apikey.alias}}</span>
+                </div>
               </td>
             </tr>
           </table>
@@ -71,8 +80,9 @@
       </div>
     </div>
   </div>
+
   <!-- BEGIN FORM-->
-  <form action="#" class="form-horizontal form-bordered" name="apikeyModal">
+  <form class="form-horizontal form-bordered" name="apikeyModal">
     <div id="pageModal" class="modal fade" role="dialog" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -81,24 +91,23 @@
             <h4 class="modal-title">New API Key</h4>
           </div>
           <div class="modal-body">
-            <form action="#" class="form-horizontal">
-              <div class="form-group">
-                <label class="control-label col-md-3">Key Alias</label>
-                <div class="col-md-9">
-                  <input type="text" ng-model="newApikeyAlias" name="newApikeyAlias" class="form-control" placeholder="New Alias" />
+            <div class="form-group">
+              <label class="control-label col-md-3">Key Alias</label>
+              <div class="col-md-9">
+                <input type="text" ng-model="newApikeyAlias" name="newApikeyAlias" class="form-control" placeholder="New Alias" />
+              </div>
+            </div>
+            <div class="form-group last">
+              <label class="control-label col-md-3">Key Value</label>
+              <div class="col-md-9">
+                <input type="text" id="newApikey" name="newApikey" class="form-control new-apikey" ng-value="newApikey" ng-readonly="true" />
+                <br>
+                <div class="alert alert-warning" ng-if="newApikey !== null">
+                  <strong>WARNING</strong> Save your Key Value now. Otherwise will be lost!
                 </div>
               </div>
-              <div class="form-group last">
-                <label class="control-label col-md-3">Key Value</label>
-                <div class="col-md-9">
-                  <input type="text" id="newApikey" name="newApikey" class="form-control new-apikey" ng-value="newApikey" ng-readonly="true" />
-                  <br>
-                  <div class="alert alert-warning" ng-if="newApikey !== null">
-                    <strong>WARNING</strong> Save your Key Value now. Otherwise will be lost!
-                  </div>
-                </div>
-              </div>
-            </form>
+            </div>
+
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -113,21 +122,19 @@
 </div>
 <!-- END MAIN CONTENT -->
 
-
-  <!-- START PAGE LOG OVERLAY -->
-  <div ng-controller="LogviewController" class="log-view-overlay-conatiner" style="display:none">
-    <div class="log-view-overlay-controls">
-      <a ng-click="wsstailLog($root.modalBuildId)" title="Refresh status"><i class="icon-refresh"></i></a>
-      <a ng-click="switchWrap()" title="Toggle Word Wrap"><i class="icon-frame"></i></a>
-      <a ng-click="hideLogOverlay($root.modalBuildId)" title="Close Log"><i class="icon-close"></i></a>
-    </div>
-    <div class="log-view-overlay log-view-body force-word-wrap" scroll-glue>
-      <div class="overlay-title">Build Log <span>{{$root.modalBuildId}}</span></div>
-      {{$root.logdata[$root.modalBuildId]}}
-    </div>
+<!-- START PAGE LOG OVERLAY -->
+<div ng-controller="LogviewController" class="log-view-overlay-conatiner" style="display:none">
+  <div class="log-view-overlay-controls">
+    <a ng-click="wsstailLog($root.modalBuildId)" title="Refresh status"><i class="icon-refresh"></i></a>
+    <a ng-click="switchWrap()" title="Toggle Word Wrap"><i class="icon-frame"></i></a>
+    <a ng-click="hideLogOverlay($root.modalBuildId)" title="Close Log"><i class="icon-close"></i></a>
   </div>
-  <!-- END PAGE LOG OVERLAY -->
-
+  <div class="log-view-overlay log-view-body force-word-wrap" scroll-glue>
+    <div class="overlay-title">Build Log <span>{{$root.modalBuildId}}</span></div>
+    {{$root.logdata[$root.modalBuildId]}}
+  </div>
+</div>
+<!-- END PAGE LOG OVERLAY -->
 
 <!-- BEGIN MAIN JS-->
 <script>

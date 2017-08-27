@@ -1,168 +1,170 @@
 <div class="row">
-    <div class="col-md-12">
-        <div class="portlet light">
-            <div class="portlet-title tabbable-line">
-                <div class="caption caption-md">
-                    <i class="icon-globe theme-font hide"></i>
-                    <span class="caption-subject font-blue-madison bold uppercase">Profile Account</span>
-                </div>
-                <ul class="nav nav-tabs">
-                    <li class="active">
-                        <a href="#" data-target="#tab_1_1" data-toggle="tab">Personal Info</a>
-                    </li>
-                    <li>
-                        <a href="#" data-target="#tab_1_2" data-toggle="tab">Avatar</a>
-                    </li>
-                    <li>
-                        <a href="#" data-target="#tab_1_3" data-toggle="tab">Settings</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="portlet-body">
-                <div class="tab-content">
-                    <!-- PERSONAL INFO TAB -->
-                    <div class="tab-pane active" id="tab_1_1">
-                        <form role="form" action="#">
-                            <div class="form-group">
-                                <label class="control-label">First Name</label>
-                                <input type="text" placeholder="John" class="form-control" ng-model="$root.profile.info.first_name"/>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">Last Name</label>
-                                <input type="text" placeholder="Doe" class="form-control" ng-model="$root.profile.info.last_name"/>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">Mobile Number</label>
-                                <input type="text" class="form-control" ng-model="$root.profile.info.mobile_phone" placeholder="+420 123 456 789"/>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">Email</label>
-                                <input type="text" placeholder="john@doe.com" class="form-control" value="{{$root.profile.email}}" ng-readonly="true"/>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">Goals</label>
-                                <div>
-                                    <span ng-repeat="goal in $root.profile.info.goals track by $index">
-                                        <span class="tag label label-info">
-                                          <span>{{goal}}</span>
-                                          <a ng-click="removeGoal(goal)"><i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
-                                        </span>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">Tags</label>
-                                <div>
-                                    <span ng-repeat="tag in $root.profile.info.tags track by $index">
-                                        <span class="tag label label-info">
-                                          <span>{{tag}}</span>
-                                          <a ng-click="removeTag(tag)"><i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
-                                        </span>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="margiv-top-10">
-                                <a href="#" ng-click="submitProfileForm()" class="btn green-haze">Save Changes </a>
-                                <a href="#" class="btn default">Cancel </a>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- END PERSONAL INFO TAB -->
-                    <!-- CHANGE AVATAR TAB -->
-                    <div class="tab-pane" id="tab_1_2">
-                        <div class="alert alert-warning">
-                          <strong>Warning!</strong> At this time file upload is limited to 500kB *** </div>
-                        <form action="#"
-                            role="form" name="avatarForm">
-                            <div class="form-group">
-                                <div class="fileinput fileinput-new" data-provides="fileinput">
-                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-                                        <img src="//www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" /> </div>
-                                    <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
-                                    <div>
-                                        <span class="btn default btn-file">
-                                            <span class="fileinput-new"> Select image </span>
-                                            <span class="fileinput-exists"> Change </span>
-                                            <input type="file" id="newAvatarInput" name="newAvatar" ng-model="newAvatar"
-                                            onchange="angular.element(this).scope().processAvatar()"> </span>
-                                        <a href="#" class="btn default fileinput-exists" data-dismiss="fileinput"> Remove </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="margin-top-10">
-                                <a href="#" ng-disabled="newAvatar == null" ng-click="submitAvatarForm()"  class="btn green-haze"> Submit </a>
-                                <a href="#" class="btn default"> Cancel </a>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- END CHANGE AVATAR TAB -->
-                    <!-- PRIVACY SETTINGS TAB -->
-                    <div class="tab-pane" id="tab_1_3">
-
-                        <form action="#">
-                            <table class="table table-light table-hover">
-                                <tr>
-                                    <td>
-                                        <h4>Disable push notifications globally</h4>
-                                        <p><small>Disables Push Notifications for all devices.</small></p>
-                                    </td>
-                                    <td>
-                                      <input
-                                        bs-switch
-                                        ng-model="$root.profile.info.security.global_push"
-                                        type="checkbox"
-                                        switch-size="tiny"
-                                        switch-on-text="YES"
-                                        switch-off-text="NO"
-                                        ng-true-value="true"
-                                        ng-false-value="false">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h4>Notify owner on important events</h4>
-                                        <p><small>Device owner will get email on API outages or important updates.</small></p>
-                                    </td>
-                                    <td>
-                                      <input
-                                        bs-switch
-                                        ng-model="$root.profile.info.security.important_notifications"
-                                        type="checkbox"
-                                        switch-size="tiny"
-                                        switch-on-text="YES"
-                                        switch-off-text="NO"
-                                        ng-true-value="true"
-                                        ng-false-value="false">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h4>Force unique API Keys</h4>
-                                        <p><small>Allow each key for single device only</small></p>
-                                    </td>
-                                    <td>
-                                      <input
-                                        bs-switch
-                                        ng-model="$root.profile.info.security.unique_api_keys"
-                                        type="checkbox"
-                                        switch-size="tiny"
-                                        switch-on-text="YES"
-                                        switch-off-text="NO"
-                                        ng-true-value="true"
-                                        ng-false-value="false">
-                                    </td>
-                                </tr>
-                            </table>
-                            <!--end profile-settings-->
-                            <div class="margin-top-10">
-                                <a href="#" ng-click="submitProfileForm()" class="btn green-haze"> Save Changes </a>
-                                <a href="#" class="btn default"> Cancel </a>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- END PRIVACY SETTINGS TAB -->
-                </div>
-            </div>
+  <div class="col-md-12">
+    <div class="portlet light">
+      <div class="portlet-title tabbable-line">
+        <div class="caption caption-md">
+          <i class="icon-globe theme-font hide"></i>
+          <span class="caption-subject font-blue-madison bold uppercase">Profile Account</span>
         </div>
+        <ul class="nav nav-tabs">
+          <li class="active">
+            <a href="#" data-target="#tab_1_1" data-toggle="tab">Personal Info</a>
+          </li>
+          <li>
+            <a href="#" data-target="#tab_1_2" data-toggle="tab">Avatar</a>
+          </li>
+          <li>
+            <a href="#" data-target="#tab_1_3" data-toggle="tab">Settings</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="portlet-body">
+        <div class="tab-content">
+          <!-- PERSONAL INFO TAB -->
+          <div class="tab-pane active" id="tab_1_1">
+            <form role="form" ng-submit="submitProfileForm()">
+              <div class="form-group">
+                <label class="control-label">First Name</label>
+                <input type="text" placeholder="John" class="form-control" ng-model="$root.profile.info.first_name"/>
+              </div>
+              <div class="form-group">
+                <label class="control-label">Last Name</label>
+                <input type="text" placeholder="Doe" class="form-control" ng-model="$root.profile.info.last_name"/>
+              </div>
+              <div class="form-group">
+                <label class="control-label">Mobile Number</label>
+                <input type="text" class="form-control" ng-model="$root.profile.info.mobile_phone" placeholder="+420 123 456 789"/>
+              </div>
+              <div class="form-group">
+                <label class="control-label">Email</label>
+                <input type="text" placeholder="john@doe.com" class="form-control" value="{{$root.profile.email}}" ng-readonly="true"/>
+              </div>
+              <div class="form-group">
+                <label class="control-label">Goals</label>
+                <div>
+                  <span ng-repeat="goal in $root.profile.info.goals track by $index">
+                    <span class="tag label label-info">
+                      <span>{{goal}}</span>
+                      <a ng-click="removeGoal(goal)"><i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label">Tags</label>
+                <div>
+                  <span ng-repeat="tag in $root.profile.info.tags track by $index">
+                    <span class="tag label label-info">
+                      <span>{{tag}}</span>
+                      <a ng-click="removeTag(tag)"><i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <div class="margiv-top-10">
+                <a href="#" ng-click="submitProfileForm()" class="btn green-haze">Save Changes </a>
+                <a href="#" class="btn default">Cancel </a>
+              </div>
+            </form>
+          </div>
+          <!-- END PERSONAL INFO TAB -->
+          <!-- CHANGE AVATAR TAB -->
+          <div class="tab-pane" id="tab_1_2">
+            <div class="alert alert-warning">
+              <strong>Warning!</strong> At this time file upload is limited to 500kB ***
+            </div>
+            <form role="form" name="avatarForm">
+              <div class="form-group">
+                <div class="fileinput fileinput-new" data-provides="fileinput">
+                  <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                    <img src="//www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
+                  </div>
+                  <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
+                  <div>
+                    <span class="btn default btn-file">
+                      <span class="fileinput-new"> Select image </span>
+                      <span class="fileinput-exists"> Change </span>
+                      <input type="file" id="newAvatarInput" name="newAvatar" ng-model="newAvatar" onchange="angular.element(this).scope().processAvatar()">
+                    </span>
+                    <a href="#" class="btn default fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                  </div>
+                </div>
+              </div>
+              <div class="margin-top-10">
+                <a href="#" ng-disabled="newAvatar == null" ng-click="submitAvatarForm()"  class="btn green-haze"> Submit </a>
+                <a href="#" class="btn default"> Cancel </a>
+              </div>
+            </form>
+          </div>
+          <!-- END CHANGE AVATAR TAB -->
+          <!-- PRIVACY SETTINGS TAB -->
+          <div class="tab-pane" id="tab_1_3">
+
+            <form>
+              <table class="table table-light table-hover">
+                <tr>
+                  <td>
+                    <h4>Disable push notifications globally</h4>
+                    <p><small>Disables Push Notifications for all devices.</small></p>
+                  </td>
+                  <td>
+                    <input
+                    bs-switch
+                    ng-model="$root.profile.info.security.global_push"
+                    type="checkbox"
+                    switch-size="tiny"
+                    switch-on-text="YES"
+                    switch-off-text="NO"
+                    ng-true-value="true"
+                    ng-false-value="false">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <h4>Notify owner on important events</h4>
+                    <p><small>Device owner will get email on API outages or important updates.</small></p>
+                  </td>
+                  <td>
+                    <input
+                    bs-switch
+                    ng-model="$root.profile.info.security.important_notifications"
+                    type="checkbox"
+                    switch-size="tiny"
+                    switch-on-text="YES"
+                    switch-off-text="NO"
+                    ng-true-value="true"
+                    ng-false-value="false">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <h4>Force unique API Keys</h4>
+                    <p><small>Allow each key for single device only</small></p>
+                  </td>
+                  <td>
+                    <input
+                    bs-switch
+                    ng-model="$root.profile.info.security.unique_api_keys"
+                    type="checkbox"
+                    switch-size="tiny"
+                    switch-on-text="YES"
+                    switch-off-text="NO"
+                    ng-true-value="true"
+                    ng-false-value="false">
+                  </td>
+                </tr>
+              </table>
+              <!--end profile-settings-->
+              <div class="margin-top-10">
+                <a href="#" ng-click="submitProfileForm()" class="btn green-haze"> Save Changes </a>
+                <a href="#" class="btn default"> Cancel </a>
+              </div>
+            </form>
+          </div>
+          <!-- END PRIVACY SETTINGS TAB -->
+        </div>
+      </div>
     </div>
+  </div>
 </div>

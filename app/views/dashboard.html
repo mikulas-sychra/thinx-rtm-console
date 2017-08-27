@@ -131,7 +131,7 @@
                 </div>
                 <div class="device-block-control">
                   <!-- <a class="btn btn-circle btn-icon-only btn-default" ng-click="openDeviceModal(device, $event)" title="Device Settings Modal"> -->
-                    <!-- <i class="fa fa-pencil"></i> -->
+                  <!-- <i class="fa fa-pencil"></i> -->
                   <!-- </a> -->
                   <a ui-sref="device({udid: device.udid})" class="btn btn-circle btn-icon-only btn-default" title="Device Settings">
                     <i class="fa fa-pencil"></i>
@@ -282,7 +282,7 @@
           <h4 class="modal-title">Transfer Devices</h4>
         </div>
         <div class="modal-body">
-          <form action="#" class="form-horizontal">
+          <form class="form-horizontal">
             <div class="form-group">
               <label class="control-label col-md-3">Target Account</label>
               <div class="col-md-9">
@@ -347,7 +347,7 @@
           <h4 class="modal-title">Push Configuration</h4>
         </div>
         <div class="modal-body">
-          <form action="#" class="form-horizontal">
+          <form class="form-horizontal">
             <div class="form-group">
               <label class="control-label col-md-3 align-top">Target Devices</label>
               <div class="col-md-9" style="padding-top: 8px">
@@ -366,17 +366,17 @@
               <label class="control-label col-md-3 align-top">Environmental Variables</label>
               <div class="col-md-9" style="padding-top: 8px">
                 <div ng-repeat="(key, value) in configForm.enviros" style="margin-bottom: 25px;">
-                    <span style="font-size: 1.2em">{{key}}</span>
+                  <span style="font-size: 1.2em">{{key}}</span>
                   <div class="pull-right">
                     <input
-                      bs-switch
-                      ng-model="configForm.enviros[key]"
-                      type="checkbox"
-                      switch-size="tiny"
-                      switch-on-text="<i class='fa fa-check'></i>"
-                      switch-on-value="true"
-                      switch-off-text="<i class='fa fa-ban'></i>"
-                      switch-off-value="false" />
+                    bs-switch
+                    ng-model="configForm.enviros[key]"
+                    type="checkbox"
+                    switch-size="tiny"
+                    switch-on-text="<i class='fa fa-check'></i>"
+                    switch-on-value="true"
+                    switch-off-text="<i class='fa fa-ban'></i>"
+                    switch-off-value="false" />
                   </div>
                 </div>
               </div>
@@ -396,17 +396,17 @@
   <div class="note note-info" ng-hide="$root.profile.info.goals.includes('apikey') || $root.profile.info.goals.includes('help-apikey')">
     <h3>1. Create first API Key <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('apikey'); $emit('saveProfile');"></span></h3>
     <p>In General &gt; <a ui-sref="apikey">API Keys</a> choose <b>Create API Key</b>.
-    <br>Store the key in clipboard.</p>
-  </div>
-  <div class="note note-info" ng-hide="$root.profile.info.goals.includes('enroll') || $root.profile.info.goals.includes('help-enroll')">
-    <h3>2. Device Enrollment
-      <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('help-enroll'); $emit('saveProfile');"></span>
-    </h3>
-    <p>
-      To start managing your first device via THiNX RTM Console you need to flash it with THiNX Vanilla Firmware and set your API Key first.
-      <br>You can insert your API Key right into <b>thinx.h</b> file, or paste from clipboard later in AP mode.
-      <br>Flash the firmware like you usually do using <a href="https://github.com/espressif/esptool" target="_blank">esptool</a> or <a href="https://platformio.io" target="_blank">platformio</a>.
-</pre>
+      <br>Store the key in clipboard.</p>
+    </div>
+    <div class="note note-info" ng-hide="$root.profile.info.goals.includes('enroll') || $root.profile.info.goals.includes('help-enroll')">
+      <h3>2. Device Enrollment
+        <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('help-enroll'); $emit('saveProfile');"></span>
+      </h3>
+      <p>
+        To start managing your first device via THiNX RTM Console you need to flash it with THiNX Vanilla Firmware and set your API Key first.
+        <br>You can insert your API Key right into <b>thinx.h</b> file, or paste from clipboard later in AP mode.
+        <br>Flash the firmware like you usually do using <a href="https://github.com/espressif/esptool" target="_blank">esptool</a> or <a href="https://platformio.io" target="_blank">platformio</a>.
+      </pre>
     </p>
   </div>
   <div class="note note-info" ng-hide="$root.profile.info.goals.includes('enroll-setup') || $root.profile.info.goals.includes('help-enroll-setup')">

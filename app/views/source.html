@@ -15,9 +15,9 @@
         <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('source-info'); $emit('saveProfile');"></span>
       </h3>
       <p>
-        <b>Add your GIT repositories with sources</b><br>
-        <br>
-        In case the repositories are private, add a key in the <a ui-sref="rsakey">RSA Keys section<a/> to access them securely.
+        <b>Add your GIT repositories with sources</b>
+        <br><br>
+        In case the repositories are private, add a key in the <a ui-sref="rsakey">RSA Keys section</a> to access them securely.
       </p>
     </div>
 
@@ -55,8 +55,8 @@
           </div>
           <div class="col-xs-6 text-right">
             <span class="input-icon right xtop-list-search">
-                <i class="icon-magnifier"></i>
-                <input type="text" class="form-control form-control-solid" ng-model="searchText" placeholder="Search...">
+              <i class="icon-magnifier"></i>
+              <input type="text" class="form-control form-control-solid" ng-model="searchText" placeholder="Search...">
             </span>
           </div>
         </div>
@@ -81,7 +81,7 @@
           </table>
         </div>
         <!-- BEGIN FORM-->
-        <form action="#" class="form-horizontal form-bordered" name="sourceModal">
+        <form ng-submit="addSource()" class="form-horizontal form-bordered" name="sourceModal">
           <div id="pageModal" class="modal fade" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
@@ -90,26 +90,24 @@
                   <h4 class="modal-title">New Source</h4>
                 </div>
                 <div class="modal-body">
-                  <form action="#" class="form-horizontal">
-                    <div class="form-group">
-                      <label class="control-label col-md-3">Git URL</label>
-                      <div class="col-md-9">
-                        <input ng-change="getAliasFromUrl()" ng-model="sourceUrl" type="text" class="form-control" name="sourceUrl" placeholder="git@github.com:username/repository.git" />
-                      </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3">Git URL</label>
+                    <div class="col-md-9">
+                      <input ng-change="getAliasFromUrl()" ng-model="sourceUrl" type="text" class="form-control" name="sourceUrl" placeholder="git@github.com:username/repository.git" />
                     </div>
-                    <div class="form-group">
-                      <label class="control-label col-md-3">Source Alias</label>
-                      <div class="col-md-9">
-                        <input type="text" class="form-control"  ng-model="sourceAlias" name="sourceAlias" placeholder="Project Name" />
-                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3">Source Alias</label>
+                    <div class="col-md-9">
+                      <input type="text" class="form-control"  ng-model="sourceAlias" name="sourceAlias" placeholder="Project Name" />
                     </div>
-                    <div class="form-group">
-                      <label class="control-label col-md-3">Branch</label>
-                      <div class="col-md-9">
-                        <input type="text" class="form-control"  ng-model="sourceBranch" name="sourceBranch" placeholder="origin/master" />
-                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3">Branch</label>
+                    <div class="col-md-9">
+                      <input type="text" class="form-control"  ng-model="sourceBranch" name="sourceBranch" placeholder="origin/master" />
                     </div>
-                  </form>
+                  </div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -129,19 +127,19 @@
 <!-- END MAIN CONTENT -->
 
 
-  <!-- START PAGE LOG OVERLAY -->
-  <div ng-controller="LogviewController" class="log-view-overlay-conatiner" style="display:none">
-    <div class="log-view-overlay-controls">
-      <a ng-click="wsstailLog($root.modalBuildId)" title="Refresh status"><i class="icon-refresh"></i></a>
-      <a ng-click="switchWrap()" title="Toggle Word Wrap"><i class="icon-frame"></i></a>
-      <a ng-click="hideLogOverlay($root.modalBuildId)" title="Close Log"><i class="icon-close"></i></a>
-    </div>
-    <div class="log-view-overlay log-view-body force-word-wrap" scroll-glue>
-      <div class="overlay-title">Build Log <span>{{$root.modalBuildId}}</span></div>
-      {{$root.logdata[$root.modalBuildId]}}
-    </div>
+<!-- START PAGE LOG OVERLAY -->
+<div ng-controller="LogviewController" class="log-view-overlay-conatiner" style="display:none">
+  <div class="log-view-overlay-controls">
+    <a ng-click="wsstailLog($root.modalBuildId)" title="Refresh status"><i class="icon-refresh"></i></a>
+    <a ng-click="switchWrap()" title="Toggle Word Wrap"><i class="icon-frame"></i></a>
+    <a ng-click="hideLogOverlay($root.modalBuildId)" title="Close Log"><i class="icon-close"></i></a>
   </div>
-  <!-- END PAGE LOG OVERLAY -->
+  <div class="log-view-overlay log-view-body force-word-wrap" scroll-glue>
+    <div class="overlay-title">Build Log <span>{{$root.modalBuildId}}</span></div>
+    {{$root.logdata[$root.modalBuildId]}}
+  </div>
+</div>
+<!-- END PAGE LOG OVERLAY -->
 
 
 <!-- BEGIN MAIN JS-->
