@@ -394,9 +394,9 @@
 
   <!-- START GOALS -->
   <div class="note note-info" ng-hide="$root.profile.info.goals.includes('apikey') || $root.profile.info.goals.includes('help-apikey')">
-    <h3>1. Create first API Key <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('apikey'); $emit('saveProfile');"></span></h3>
+    <h3>1. Create private API Key <span class="close" data-close="note" ng-click="$root.profile.info.goals.push('apikey'); $emit('saveProfile');"></span></h3>
     <p>In General &gt; <a ui-sref="apikey">API Keys</a> choose <b>Create API Key</b>.
-      <br>Store the key in clipboard.</p>
+      <br><span class="badge badge-roundless badge-success">HINT</span> Don't forget to store the key in clipboard.
     </div>
     <div class="note note-info" ng-hide="$root.profile.info.goals.includes('enroll') || $root.profile.info.goals.includes('help-enroll')">
       <h3>2. Device Enrollment
