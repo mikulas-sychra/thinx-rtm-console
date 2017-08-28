@@ -161,7 +161,7 @@ angular.module('RTM').controller('UserProfileController', function($rootScope, $
       if (typeof(response) !== "undefined") {
         if (typeof(response.success) !== "undefined" && response.success) {
           console.log(response);
-          window.location = "//rtm.thinx.cloud:7443/api/logout";
+          window.location = "https://rtm.thinx.cloud:7443/api/logout";
         } else {
           console.log(response);
           toastr.error('User Delete Failed.', 'THiNX RTM Console', {timeOut: 5000})
