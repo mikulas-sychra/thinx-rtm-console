@@ -722,3 +722,10 @@
   margin-bottom: 2px;
   color: #60d69f;
 }
+
+.input-hint {
+  font-size: .8em;
+  display: inline-block;
+  margin-left: 12px;
+  margin-top: 6px;
+}

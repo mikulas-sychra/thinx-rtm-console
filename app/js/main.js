@@ -115,6 +115,8 @@ RTM.factory('settings', ['$rootScope', function($rootScope) {
         // 'important': false,
         // 'info': false
       // },
+      git_webhook: '',
+      slack_token: '',
       security: {
         "unique_api_keys": null,
         "global_push": null,

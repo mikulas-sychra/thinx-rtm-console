@@ -703,6 +703,10 @@ function submitProfile(profile) {
       // "info" : profile.info.notifications.info
     // },
 
+    git_webhook: profile.info.git_webhook,
+    slack_token: profile.info.slack_token,
+
+    goals: profile.info.goals,
     security: profile.info.security,
     goals: profile.info.goals,
     username: profile.info.username,
