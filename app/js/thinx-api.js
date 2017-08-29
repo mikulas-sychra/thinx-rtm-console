@@ -511,7 +511,7 @@ function getLogout() {
 
 function submitSystemMessage(messageForm) {
   return $.ajax({
-    url: urlBase + '/user/message',
+    url: urlBase + '/user/chat',
     type: 'POST',
     data: JSON.stringify({
       message: messageForm.text
